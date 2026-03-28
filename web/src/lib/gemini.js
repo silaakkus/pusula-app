@@ -1,5 +1,5 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { getDisciplineById } from './dataLoader.js';
+import { getDisciplineById, validateDayInLife } from './dataLoader.js';
 import { loadPusulaSession } from './pusulaSession.js';
 
 /**
@@ -160,6 +160,17 @@ function normalizeRole(r, index) {
     ? r.employersTurkey.filter(isNonEmptyString).map((s) => s.trim()).slice(0, 5)
     : [];
 
+  const roleId = isNonEmptyString(r?.roleId) ? r.roleId.trim() : undefined;
+
+  let dayInLife;
+  if (validateDayInLife(r?.dayInLife)) {
+    dayInLife = {
+      morning: r.dayInLife.morning.trim(),
+      afternoon: r.dayInLife.afternoon.trim(),
+      evening: r.dayInLife.evening.trim(),
+    };
+  }
+
   if (!firstSteps.length) {
     const r0 = starterResources[0] ?? 'Patika.dev veya Kodluyoruz giriş modülü';
     firstSteps = [
@@ -169,7 +180,10 @@ function normalizeRole(r, index) {
     ];
   }
 
-  return { roleName, whyFits, firstSteps, starterResources, tags, employersTurkey };
+  const out = { roleName, whyFits, firstSteps, starterResources, tags, employersTurkey };
+  if (roleId) out.roleId = roleId;
+  if (dayInLife) out.dayInLife = dayInLife;
+  return out;
 }
 
 /**

@@ -276,6 +276,7 @@ const App = () => {
       {step === 'results' && profile && opportunities && (
         <ResultsPage
           profile={profile}
+          matrix={matrix}
           roles={roles}
           opportunities={opportunities}
           analysisSource={analysisSource}

@@ -16,7 +16,16 @@
           "SQL temelleri için Patika.dev veya Kodluyoruz ücretsiz modüllerinden birini seç.",
           "Kaggle’da basit bir notebook ile pandas girişi yap."
         ],
-        "tags": ["data", "analytics", "fintech"]
+        "tags": [
+          "data",
+          "analytics",
+          "fintech"
+        ],
+        "dayInLife": {
+          "morning": "Sabah günlük KPI tablolarını ve dünkü kampanya metriklerini kontrol edersin; SQL ile küçük bir veri çekmesi veya mevcut dashboard’u güncellersin.",
+          "afternoon": "Öğleden sonra ürün veya pazarlama ekibiyle kısa bir senkron yapar, A/B testi sonuçlarını slaytta özetlersin; soru gelirse tek grafikle cevap üretirsin.",
+          "evening": "Akşam notlarını ve veri kaynaklarını dokümante eder, ertesi gün için analiz backlog’una iki madde eklersin."
+        }
       },
       {
         "roleId": "ml-associate",
@@ -31,7 +40,16 @@
           "Bir açık veri setinde basit bir regresyon problemi seç ve sonuçları yorumla.",
           "AI güvenliği ve önyargı konularında kısa bir makale oku; etik farkındalık işe alımda artı puan."
         ],
-        "tags": ["data", "ai-ethics", "research"]
+        "tags": [
+          "data",
+          "ai-ethics",
+          "research"
+        ],
+        "dayInLife": {
+          "morning": "Sabah dün eğittiğin modelin metriklerini ve logları incelersin; notebook’ta küçük bir hiperparametre denemesi veya veri temizliği yaparsın.",
+          "afternoon": "Öğleden sonra mühendislik ekibiyle model çıktısının ürüne nasıl bağlanacağını konuşur, önyargı veya kalite kontrolü için kısa bir checklist üzerinden geçersin.",
+          "evening": "Akşam deney sonuçlarını özetleyip paylaşılan dokümana işlersin, yarın denenecek bir hipotez notu bırakırsın."
+        }
       },
       {
         "roleId": "risk-analytics",
@@ -46,7 +64,16 @@
           "Finansal terimler için Türkçe/İngilizce bir sözlük çıkar ve haftada 3 terim öğren.",
           "Açık kaynak bir risk vaka çalışmasını okuyup iki paragraf özet yaz."
         ],
-        "tags": ["fintech", "analytics", "data"]
+        "tags": [
+          "fintech",
+          "analytics",
+          "data"
+        ],
+        "dayInLife": {
+          "morning": "Sabah regülasyon veya iç politika güncellemelerine bakar, risk raporundaki sayıları doğrularsın; Excel veya BI’da bir senaryo tablosunu tazeler sin.",
+          "afternoon": "Öğleden sonra denetim veya finans ile toplantıda stres testi varsayımlarını açıklar, olasılıksal sorulara tabloyla yanıt verirsin.",
+          "evening": "Akşam rapor taslağını revize eder, kaynak linklerini ve açıklayıcı notları tamamlarsın."
+        }
       },
       {
         "roleId": "data-storytelling",
@@ -61,7 +88,16 @@
           "Gerçek veya hayali bir KPI seti için tek sayfalık yönetici özeti yaz.",
           "Veri görselleştirme etiği (ölçek, eksen, renk) üzerine kısa not çıkar."
         ],
-        "tags": ["data", "marketing-analytics", "research"]
+        "tags": [
+          "data",
+          "marketing-analytics",
+          "research"
+        ],
+        "dayInLife": {
+          "morning": "Sabah yöneticiler için hazırlayacağın özet grafikleri seçer, veri kaynağının güncelliğini kontrol edersin.",
+          "afternoon": "Öğleden sonra sunum taslağını paydaşlarla gözden geçirir, “tek sayfa hikâye” akışını netleştirirsin.",
+          "evening": "Akşam görsel dil ve eksen etiketlerini düzeltir, yarın paylaşılacak PDF veya dashboard linkini hazırlarsın."
+        }
       }
     ]
   },
@@ -82,7 +118,16 @@
           "Bulgularını üç başlıkta özetle: ihtiyaç, acı noktası, öneri.",
           "Figma’da basit bir kullanıcı yolculuğu çizimi için ücretsiz eğitime göz at."
         ],
-        "tags": ["ux", "research", "hrtech"]
+        "tags": [
+          "ux",
+          "research",
+          "hrtech"
+        ],
+        "dayInLife": {
+          "morning": "Sabah dünkü kullanıcı görüşmesi notlarını temalar halinde kodlar, kısa bulgu listesini paylaşırsın.",
+          "afternoon": "Öğleden sonra tasarım ekibiyle wireframe veya prototip üzerinde bulguları tartışır, bir sonraki test için soru setini güncellersin.",
+          "evening": "Akşam özet raporu ve alıntıları düzenler, paydaşlara “ne öğrendik?” mailini gönderirsin."
+        }
       },
       {
         "roleId": "ai-ethics",
@@ -97,7 +142,16 @@
           "Basit bir sınıflandırma örneğinde hangi grupların az temsil edildiğini listeleyen mini çalışma yap.",
           "Women Techmakers veya benzeri topluluklarda etik oturumlarına katıl."
         ],
-        "tags": ["ai-ethics", "ux", "research"]
+        "tags": [
+          "ai-ethics",
+          "ux",
+          "research"
+        ],
+        "dayInLife": {
+          "morning": "Sabah yeni bir model veya veri seti talebini etik çerçevede okur, risk maddelerini listelersin.",
+          "afternoon": "Öğleden sonra ürün ve hukuk ile toplantıda önerilen ölçümün adalet etkisini tartışır, alternatifler sunarsın.",
+          "evening": "Akşam kısa bir iç politika veya FAQ taslağını günceller, açık soruları takip listesine alırsın."
+        }
       },
       {
         "roleId": "people-analytics",
@@ -112,7 +166,16 @@
           "Sonuçları hayali olarak yorumlayıp yöneticiye 3 öneri yaz.",
           "People analytics terimleri için mini bir kelime listesi oluştur."
         ],
-        "tags": ["hrtech", "analytics", "research"]
+        "tags": [
+          "hrtech",
+          "analytics",
+          "research"
+        ],
+        "dayInLife": {
+          "morning": "Sabah anket veya HRIS verisinin günlük kontrolünü yapar, temel turnover ve katılım grafiklerine bakarsın.",
+          "afternoon": "Öğleden sonra yöneticilerle küçük grupla sonuçları yorumlar, gizlilik sınırları içinde öneri çıkarırsın.",
+          "evening": "Akşam slayt veya özet metni son haline getirir, anonimleştirme notlarını gözden geçirirsin."
+        }
       },
       {
         "roleId": "content-strategist",
@@ -127,7 +190,16 @@
           "Tek paragraf “ürün değer önerisi” ve üç başlıklı landing metni yaz.",
           "Basit bir içerik takvimi şablonu doldur (haftalık 3 gönderi)."
         ],
-        "tags": ["marketing-analytics", "ux", "edtech"]
+        "tags": [
+          "marketing-analytics",
+          "ux",
+          "edtech"
+        ],
+        "dayInLife": {
+          "morning": "Sabah içerik takvimine ve performans metriklerine bakar, hangi kanalda neyin işe yaradığını not edersin.",
+          "afternoon": "Öğleden sonra pazarlama veya ürünle ton ve mesaj netliği için metin revizyonu yaparsın.",
+          "evening": "Akşam yarının gönderileri için taslakları düzeltir, SEO ve erişilebilirlik kontrol listesinden geçirirsin."
+        }
       }
     ]
   },
@@ -148,7 +220,16 @@
           "Python veya R ile basit bir veri tablosunda tanımlayıcı istatistik uygula.",
           "Açık bir genomik veri setine giriş yapan ücretsiz bir kursa kaydol."
         ],
-        "tags": ["biotech", "data", "research"]
+        "tags": [
+          "biotech",
+          "data",
+          "research"
+        ],
+        "dayInLife": {
+          "morning": "Sabah pipeline çıktılarını ve kalite kontrol metriklerini kontrol edersin; literatürden bir yöntem notu okursun.",
+          "afternoon": "Öğleden sonra biyolog veya klinisyen ekip arkadaşınla sonuçları yorumlar, görselleştirme için küçük bir script düzenlersin.",
+          "evening": "Akşam kod ve veri sürümlerini kayıt altına alır, yeniden üretilebilirlik için README satırları eklersin."
+        }
       },
       {
         "roleId": "health-product",
@@ -163,7 +244,16 @@
           "Basit bir kullanıcı hikâyesi (user story) yaz: “Hasta randevu hatırlatması”.",
           "Türkiye’deki bir dijital sağlık girişimini araştırıp sunumunu 5 slaytta özetle."
         ],
-        "tags": ["biotech", "pm", "ux"]
+        "tags": [
+          "biotech",
+          "pm",
+          "ux"
+        ],
+        "dayInLife": {
+          "morning": "Sabah kullanıcı hikâyelerini ve açık hataları incelersin; KVKK ve hasta güvenliği notlarını gözden geçirirsin.",
+          "afternoon": "Öğleden sonra tasarım veya geliştirme ile randevu akışı veya bildirim senaryosunu netleştirirsin.",
+          "evening": "Akşam kabul kriterlerini günceller, paydaşlara kısa durum özeti yazarsın."
+        }
       },
       {
         "roleId": "sustainability-tech",
@@ -178,7 +268,16 @@
           "Bir şehrin açık çevre verisi varsa küçük bir görselleştirme dene.",
           "Sürdürülebilirlik raporu okuyup üç metrik seç ve anlamını yaz."
         ],
-        "tags": ["sustainability", "data", "research"]
+        "tags": [
+          "sustainability",
+          "data",
+          "research"
+        ],
+        "dayInLife": {
+          "morning": "Sabah enerji veya atık verisi akışlarını kontrol eder, sensör veya açık veri kaynaklarını doğrularsın.",
+          "afternoon": "Öğleden sonra tedarik veya operasyon ekibiyle sürdürülebilirlik KPI’larını konuşur, grafik taslağı hazırlarsın.",
+          "evening": "Akşam rapor paragraflarını ve metod notunu tamamlar, yarın sunulacak özet slaydını bırakırsın."
+        }
       }
     ]
   },
@@ -199,7 +298,16 @@
           "Basit bir yol haritası şablonunu doldur: şimdi / sonra / sonra.",
           "Kullanıcı geri bildirimlerinden üç tema çıkar ve bir özellik önerisi yaz."
         ],
-        "tags": ["pm", "marketing-analytics", "fintech"]
+        "tags": [
+          "pm",
+          "marketing-analytics",
+          "fintech"
+        ],
+        "dayInLife": {
+          "morning": "Sabah backlog ve metrik panosuna bakar, öncelik sırasını güncellersin; kullanıcı geri bildirimlerinden iki madde seçersin.",
+          "afternoon": "Öğleden sonra tasarım ve mühendislikle sprint içi kararları netleştirir, kapsam ve tarih için kısa not alırsın.",
+          "evening": "Akşam paydaşlara günlük özet ve riskleri yazarsın, yarının deneme planını kontrol edersin."
+        }
       },
       {
         "roleId": "business-analyst",
@@ -214,7 +322,16 @@
           "Örnek bir satış tablosunda pivot tablo ve temel KPI’ları hesapla.",
           "Power BI veya Looker Studio ile 10 dakikalık bir tanıtım videosu izle."
         ],
-        "tags": ["analytics", "data", "pm"]
+        "tags": [
+          "analytics",
+          "data",
+          "pm"
+        ],
+        "dayInLife": {
+          "morning": "Sabah talep dokümanını ve süreç akışını gözden geçirir, veri ihtiyaçlarını netleştirirsin.",
+          "afternoon": "Öğleden sonra IT veya operasyonla entegrasyon veya rapor gereksinimlerini konuşur, pivot tabloda senaryo denersin.",
+          "evening": "Akşam kullanıcı kabul testi maddelerini ve açık soruları listelersin."
+        }
       },
       {
         "roleId": "growth-marketing",
@@ -229,7 +346,16 @@
           "Meta veya Google Ads yardım merkezinden temel kavramları oku.",
           "Küçük bir sosyal medya hesabında haftalık içerik planı tasarla."
         ],
-        "tags": ["marketing-analytics", "pm", "ux"]
+        "tags": [
+          "marketing-analytics",
+          "pm",
+          "ux"
+        ],
+        "dayInLife": {
+          "morning": "Sabah kampanya panolarına ve dönüşüm hunisine bakar, dünkü denemelerin sonuçlarını not edersin.",
+          "afternoon": "Öğleden sonra yaratıcı ekip veya ajansla kısa brief yapar, A/B varyasyonları için metin veya görsel geri bildirimi verirsin.",
+          "evening": "Akşam bütçe ve hedefleri günceller, ertesi günün deney listesini yazarsın."
+        }
       },
       {
         "roleId": "ops-automation",
@@ -244,7 +370,16 @@
           "Make, Zapier veya benzeri bir araçta ücretsiz şablona göz at.",
           "Basit bir Google Form + Sheet ile mini otomasyon kurgula."
         ],
-        "tags": ["pm", "analytics", "hrtech"]
+        "tags": [
+          "pm",
+          "analytics",
+          "hrtech"
+        ],
+        "dayInLife": {
+          "morning": "Sabah tetiklenen otomasyonların loglarına bakar, hata veren akışı not edersin.",
+          "afternoon": "Öğleden sonra departmanlarla süreç adımlarını yeniden çizersin; no-code veya form entegrasyonunu test edersin.",
+          "evening": "Akşam dokümantasyonu ve erişim izinlerini günceller, küçük bir iyileştirme için yarın denenecek taslağı bırakırsın."
+        }
       }
     ]
   },
@@ -265,7 +400,16 @@
           "Bir eğitim videosunun senaryosunu zaman damgalarıyla planla.",
           "Türkiye’deki bir çevrimiçi eğitim platformunu inceleyip güçlü/zayıf yanlarını listele."
         ],
-        "tags": ["edtech", "ux", "research"]
+        "tags": [
+          "edtech",
+          "ux",
+          "research"
+        ],
+        "dayInLife": {
+          "morning": "Sabah öğrenme hedeflerini ve modül sırasını gözden geçirir, erişilebilirlik kontrol listesinden geçersin.",
+          "afternoon": "Öğleden sonra içerik veya video ekibiyle senaryo ve süre uyumunu tartışır, geri bildirim notlarını işlersin.",
+          "evening": "Akşam değerlendirme sorusu veya mikro quiz taslağını tamamlar, LMS’e yükleme için checklist hazırlarsın."
+        }
       },
       {
         "roleId": "ui-design",
@@ -280,7 +424,16 @@
           "Figma topluluk dosyalarından bir bileşen kütüphanesini incele.",
           "Erişilebilirlik için kontrast ve font boyutu kontrolü yapan küçük bir kontrol listesi uygula."
         ],
-        "tags": ["ux", "gamedev", "edtech"]
+        "tags": [
+          "ux",
+          "gamedev",
+          "edtech"
+        ],
+        "dayInLife": {
+          "morning": "Sabah tasarım sistemindeki bileşenleri ve ekran varyantlarını gözden geçirirsin.",
+          "afternoon": "Öğleden sonra ürün ve geliştirme ile handoff ve etkileşim detaylarını netleştirirsin; Figma’da küçük düzeltmeler yaparsın.",
+          "evening": "Akşam kontrast ve tipografi notlarını toparlar, yarın revize edilecek ekran listesini yazarsın."
+        }
       },
       {
         "roleId": "game-community",
@@ -295,7 +448,16 @@
           "Godot veya Unity için “ilk 30 dakika” eğitimine başla.",
           "Discord veya benzeri bir toplulukta bir etkinlik fikri öner ve gönüllü rol üstlen."
         ],
-        "tags": ["gamedev", "edtech", "ux"]
+        "tags": [
+          "gamedev",
+          "edtech",
+          "ux"
+        ],
+        "dayInLife": {
+          "morning": "Sabah topluluk mesajlarını ve etkinlik takvimini kontrol eder, kurallara aykırı içerikleri not edersin.",
+          "afternoon": "Öğleden sonra canlı yayın veya jam duyurusu hazırlar, Discord veya sosyal kanallarda kısa etkileşim yaparsın.",
+          "evening": "Akşam yarının programını ve moderasyon görev dağılımını paylaşırsın."
+        }
       },
       {
         "roleId": "creative-tech",
@@ -310,7 +472,16 @@
           "Sevdiğin bir sanal sergiyi veya etkileşimli projeyi üç cümleyle analiz et.",
           "itch.io’da küçük oyun jam duyurularına göz at."
         ],
-        "tags": ["gamedev", "ux", "edtech"]
+        "tags": [
+          "gamedev",
+          "ux",
+          "edtech"
+        ],
+        "dayInLife": {
+          "morning": "Sabah dünkü prototip veya sketch’i açar, referans ve ses/görsel moodboard’a bakarsın.",
+          "afternoon": "Öğleden sonra ekip arkadaşınla etkileşim veya animasyon akışını dener, küçük bir build alırsın.",
+          "evening": "Akşam iterasyon notlarını yazıp paylaşırsın, yarın denenecek tek riskli fikri işaretlersin."
+        }
       }
     ]
   }

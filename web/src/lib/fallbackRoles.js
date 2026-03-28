@@ -32,5 +32,14 @@ export function rolesFromMatrix(disciplineRow) {
     ],
     tags: [...rm.tags],
     employersTurkey: employersForTags(rm.tags).slice(0, 5),
+    ...(rm.dayInLife?.morning && rm.dayInLife?.afternoon && rm.dayInLife?.evening
+      ? {
+          dayInLife: {
+            morning: String(rm.dayInLife.morning).trim(),
+            afternoon: String(rm.dayInLife.afternoon).trim(),
+            evening: String(rm.dayInLife.evening).trim(),
+          },
+        }
+      : {}),
   }));
 }

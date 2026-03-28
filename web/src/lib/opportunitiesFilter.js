@@ -58,3 +58,30 @@ export function opportunitiesForRole(role, allOpportunities, minCount = 3, userC
 export function hasProgramOrCommunity(opportunities) {
   return opportunities.some((o) => o.type === 'program' || o.type === 'community');
 }
+
+function roleDisplayTitle(role) {
+  if (typeof role?.roleName === 'string' && role.roleName.trim()) return role.roleName.trim();
+  if (typeof role?.title === 'string' && role.title.trim()) return role.title.trim();
+  return '';
+}
+
+/**
+ * Ekranda rol başına gösterilen fırsatlarla aynı mantık; webhook / e-posta payload’ı için düz nesneler.
+ * Her satır: name, url, description (forWho), forRole (rol başlığı).
+ */
+export function buildWebhookOpportunities(roles, allOpportunities, minCount = 3, userCityId = 'all') {
+  const out = [];
+  for (const role of roles ?? []) {
+    const forRole = roleDisplayTitle(role);
+    const opps = opportunitiesForRole(role, allOpportunities, minCount, userCityId);
+    for (const o of opps) {
+      out.push({
+        name: o.name,
+        url: o.url,
+        description: typeof o.forWho === 'string' ? o.forWho : '',
+        forRole,
+      });
+    }
+  }
+  return out;
+}

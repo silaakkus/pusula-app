@@ -1,14 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, ExternalLink, RefreshCw, Sparkles } from 'lucide-react';
+import { ArrowRight, ChevronDown, ExternalLink, Loader2, RefreshCw, Sparkles } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
-import { opportunitiesForRole } from '../lib/opportunitiesFilter.js';
+import { Input } from '../components/ui/Input';
+import { opportunitiesForRole, buildWebhookOpportunities } from '../lib/opportunitiesFilter.js';
 import { logEvent } from '../lib/analytics.js';
+import {
+  DEFAULT_DAY_IN_LIFE,
+  findDayInLifeInMatrix,
+  validateDayInLife,
+} from '../lib/dataLoader.js';
+
+function getRoleTitlesForWebhook(roles) {
+  return (roles ?? [])
+    .map((r) => {
+      if (typeof r?.roleName === 'string' && r.roleName.trim()) return r.roleName.trim();
+      if (typeof r?.title === 'string' && r.title.trim()) return r.title.trim();
+      return '';
+    })
+    .filter(Boolean);
+}
+
+function isValidEmail(value) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value).trim());
+}
+
+function resolveDayInLife(matrix, profile, role) {
+  if (validateDayInLife(role?.dayInLife)) {
+    return {
+      morning: role.dayInLife.morning.trim(),
+      afternoon: role.dayInLife.afternoon.trim(),
+      evening: role.dayInLife.evening.trim(),
+    };
+  }
+  const fromMatrix = findDayInLifeInMatrix(matrix, profile?.disciplineId, role);
+  if (fromMatrix) return fromMatrix;
+  return DEFAULT_DAY_IN_LIFE;
+}
 
 export function ResultsPage({
   profile,
+  matrix,
   roles,
   opportunities,
   analysisSource,
@@ -16,6 +50,57 @@ export function ResultsPage({
   onRetryAnalysis,
   onContinue,
 }) {
+  const [email, setEmail] = useState('');
+  const [emailSending, setEmailSending] = useState(false);
+  const [emailSuccess, setEmailSuccess] = useState(false);
+  const [emailError, setEmailError] = useState('');
+  const [dayMainOpen, setDayMainOpen] = useState({});
+  const [dayPeriodOpen, setDayPeriodOpen] = useState({});
+
+  const handleEmailSubmit = async (e) => {
+    e.preventDefault();
+    setEmailError('');
+    const trimmed = email.trim();
+    if (!isValidEmail(trimmed)) {
+      setEmailError('Geçerli bir e-posta adresi gir.');
+      return;
+    }
+    const webhookUrl = import.meta.env.VITE_N8N_WEBHOOK_URL;
+    if (!webhookUrl || !String(webhookUrl).trim()) {
+      setEmailError('Webhook adresi tanımlı değil (.env içinde VITE_N8N_WEBHOOK_URL).');
+      return;
+    }
+
+    const cityId = profile?.cityId ?? 'all';
+    const payload = {
+      email: trimmed,
+      roles: getRoleTitlesForWebhook(roles),
+      city: profile?.cityLabel ?? profile?.cityId ?? '',
+      opportunities: buildWebhookOpportunities(roles, opportunities, 3, cityId),
+      timestamp: new Date().toISOString(),
+    };
+
+    setEmailSending(true);
+    try {
+      const res = await fetch(String(webhookUrl).trim(), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
+      }
+      setEmailSuccess(true);
+      logEvent('results_email_webhook', { ok: true });
+    } catch (err) {
+      setEmailSuccess(false);
+      setEmailError('Gönderilemedi. Bağlantını kontrol et veya bir süre sonra tekrar dene.');
+      logEvent('results_email_webhook', { ok: false, error: err?.message ?? String(err) });
+    } finally {
+      setEmailSending(false);
+    }
+  };
+
   return (
     <main className="relative mx-auto flex max-w-4xl flex-col items-stretch gap-8 px-6 pb-16 pt-10 text-left sm:px-8">
       <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
@@ -57,6 +142,9 @@ export function ResultsPage({
       <div className="grid gap-6">
         {roles.map((role, idx) => {
           const opps = opportunitiesForRole(role, opportunities, 3, profile?.cityId ?? 'all');
+          const dil = resolveDayInLife(matrix, profile, role);
+          const mainOpen = !!dayMainOpen[idx];
+          const periodKey = dayPeriodOpen[idx] ?? null;
           return (
             <motion.div
               key={`${role.roleName}-${idx}`}
@@ -105,6 +193,65 @@ export function ResultsPage({
                       <li key={i}>{line}</li>
                     ))}
                   </ul>
+                </div>
+
+                <div className="mt-6 rounded-2xl border border-slate-200/80 bg-slate-50/70 p-1">
+                  <button
+                    type="button"
+                    className="flex w-full items-center justify-between gap-2 rounded-xl px-3 py-3 text-left text-sm font-bold text-slate-800 transition hover:bg-white/90"
+                    aria-expanded={mainOpen}
+                    onClick={() => {
+                      setDayMainOpen((p) => ({ ...p, [idx]: !p[idx] }));
+                    }}
+                  >
+                    <span>Bir günün nasıl geçer? 👀</span>
+                    <ChevronDown
+                      className={`h-5 w-5 shrink-0 text-slate-500 transition-transform ${mainOpen ? 'rotate-180' : ''}`}
+                      aria-hidden
+                    />
+                  </button>
+                  {mainOpen && (
+                    <div className="space-y-1 border-t border-slate-200/70 p-2 pb-3">
+                      {[
+                        { key: 'morning', label: 'Sabah', emoji: '☀️', text: dil.morning },
+                        { key: 'afternoon', label: 'Öğleden Sonra', emoji: '🌤️', text: dil.afternoon },
+                        { key: 'evening', label: 'Akşam', emoji: '🌙', text: dil.evening },
+                      ].map(({ key, label, emoji, text }) => {
+                        const open = periodKey === key;
+                        return (
+                          <div
+                            key={key}
+                            className="overflow-hidden rounded-xl border border-white/50 bg-white/75 shadow-sm"
+                          >
+                            <button
+                              type="button"
+                              className="flex w-full items-center justify-between gap-2 px-3 py-2.5 text-left text-sm font-semibold text-slate-800 transition hover:bg-white"
+                              aria-expanded={open}
+                              onClick={() =>
+                                setDayPeriodOpen((p) => ({
+                                  ...p,
+                                  [idx]: p[idx] === key ? null : key,
+                                }))
+                              }
+                            >
+                              <span>
+                                {emoji} {label}
+                              </span>
+                              <ChevronDown
+                                className={`h-4 w-4 shrink-0 text-slate-500 transition-transform ${open ? 'rotate-180' : ''}`}
+                                aria-hidden
+                              />
+                            </button>
+                            {open && (
+                              <p className="border-t border-slate-100 px-3 pb-3 pt-2 text-sm leading-relaxed text-slate-600">
+                                {text}
+                              </p>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
 
                 {role.employersTurkey?.length > 0 && (
@@ -166,6 +313,56 @@ export function ResultsPage({
           );
         })}
       </div>
+
+      <Card className="border-indigo-100 bg-white/90">
+        <h3 className="text-lg font-extrabold text-indigo-900">Sonuçlarını e-postayla al</h3>
+        <p className="mt-2 text-sm text-slate-600">
+          Önerilen rol başlıkları ve şehir bilgin güvenli webhook’a iletilir; n8n veya benzeri bir akışa
+          bağlayabilirsin.
+        </p>
+        {emailSuccess ? (
+          <p className="mt-4 text-sm font-semibold text-emerald-700" role="status">
+            E-posta gönderildi!
+          </p>
+        ) : (
+          <form className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end" onSubmit={handleEmailSubmit} noValidate>
+            <div className="min-w-0 flex-1">
+              <label htmlFor="pusula-results-email" className="mb-1 block text-xs font-semibold text-slate-700">
+                E-posta
+              </label>
+              <Input
+                id="pusula-results-email"
+                type="email"
+                name="email"
+                autoComplete="email"
+                placeholder="ornek@eposta.com"
+                value={email}
+                onChange={(ev) => {
+                  setEmail(ev.target.value);
+                  if (emailSuccess) setEmailSuccess(false);
+                }}
+                disabled={emailSending}
+                className="w-full"
+              />
+            </div>
+            <Button type="submit" disabled={emailSending} className="shrink-0 sm:min-w-[120px]">
+              {emailSending ? (
+                <>
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                  Gönderiliyor…
+                </>
+              ) : (
+                'Gönder'
+              )}
+            </Button>
+          </form>
+        )}
+        {emailError && (
+          <p className="mt-3 text-sm text-red-600" role="alert">
+            {emailError}
+          </p>
+        )}
+      </Card>
 
       <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-between">
         {analysisSource === 'fallback' && typeof onRetryAnalysis === 'function' && (
