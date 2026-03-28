@@ -39,7 +39,7 @@
           },
           {
             "name": "Hepsiburada",
-            "url": "https://kurumsal.hepsiburada.com/kariyer"
+            "url": "https://kurumsal.hepsiburada.com/tr/hakkimizda/kariyer"
           },
           {
             "name": "Getir",
@@ -47,11 +47,11 @@
           },
           {
             "name": "İş Bankası",
-            "url": "https://www.iskurumsal.com/kariyer"
+            "url": "https://www.isbank.com.tr/kariyer"
           },
           {
             "name": "Turkcell",
-            "url": "https://www.turkcell.com.tr/kurumsal/kariyer"
+            "url": "https://kariyerim.turkcell.com.tr/"
           },
           {
             "name": "Insider",
@@ -63,7 +63,7 @@
           },
           {
             "name": "Migros",
-            "url": "https://www.migroskariyer.com/"
+            "url": "https://www.migroskurumsal.com/kariyer/migroslu-yasam"
           }
         ],
         "internshipPrograms": [
@@ -75,7 +75,7 @@
           },
           {
             "name": "Hepsiburada kariyer / staj ilanları",
-            "url": "https://kurumsal.hepsiburada.com/kariyer",
+            "url": "https://kurumsal.hepsiburada.com/tr/hakkimizda/kariyer",
             "summary": "Kurumsal kariyer sayfasında dönemsel açılan veri, analitik ve operasyon staj pozisyonları yayınlanır.",
             "eligibility": "Üniversite öğrencisi veya yeni mezun; pozisyona göre bölüm ve süre şartları değişir."
           },
@@ -87,13 +87,13 @@
           },
           {
             "name": "İş Bankası kariyer (staj / genç yetenek)",
-            "url": "https://www.iskurumsal.com/kariyer",
+            "url": "https://www.isbank.com.tr/kariyer",
             "summary": "Bankacılık ve destek birimlerinde yıl içinde açılan staj ve yetenek programları tek kariyer portalında toplanır.",
             "eligibility": "Genelde lisans 3–4. sınıf; hukuk/uyum ve pozisyona özel ek koşullar ilanda yazar."
           },
           {
             "name": "Turkcell kariyer",
-            "url": "https://www.turkcell.com.tr/kurumsal/kariyer",
+            "url": "https://kariyerim.turkcell.com.tr/",
             "summary": "Telekom ve dijital ürün ekiplerinde staj ve yeni mezun programları dönemsel olarak açılır.",
             "eligibility": "Öğrenci veya yeni mezun; teknik pozisyonlarda ilgili bölüm ve GPA beklentisi olabilir."
           }
@@ -131,7 +131,7 @@
         "employersTurkey": [
           {
             "name": "Dream Games",
-            "url": "https://careers.dreamgames.com/"
+            "url": "https://www.dreamgames.com/careers"
           },
           {
             "name": "Trendyol",
@@ -183,13 +183,13 @@
           },
           {
             "name": "Dream Games kariyer",
-            "url": "https://careers.dreamgames.com/",
+            "url": "https://www.dreamgames.com/careers",
             "summary": "Oyun ve ML yakın ekiplerde açılan staj ve junior roller duyurulur.",
             "eligibility": "Genelde yazılım, oyun veya ilgili mühendislik bölümleri; portföy ve proje deneyimi artı puan."
           },
           {
             "name": "TÜBİTAK — insan kaynakları / proje personeli",
-            "url": "https://www.tubitak.gov.tr/tr/kurumsal/insan-kaynaklari",
+            "url": "https://tubitak.gov.tr/tr/insan-kaynaklari",
             "summary": "Kamu ARGE kurumlarında dönemsel proje personeli ve bursiyer ilanları; BİLGEM ve merkez duyuruları burada özetlenir.",
             "eligibility": "Program bazında lisans/yüksek lisans; çoğu ilan tam zamanlı veya bursiyer statüsündedir."
           }
@@ -231,11 +231,11 @@
           },
           {
             "name": "İş Bankası",
-            "url": "https://www.iskurumsal.com/kariyer"
+            "url": "https://www.isbank.com.tr/kariyer"
           },
           {
             "name": "Allianz Türkiye",
-            "url": "https://www.allianz.com.tr/kariyer.html"
+            "url": "https://careers.allianz.com/?locale=tr_TR"
           },
           {
             "name": "Aksigorta",
@@ -243,7 +243,7 @@
           },
           {
             "name": "BKM",
-            "url": "https://www.bkm.com.tr/insan-kaynaklari"
+            "url": "https://www.bkm.com.tr/"
           },
           {
             "name": "QNB Finansbank",
@@ -255,7 +255,7 @@
           },
           {
             "name": "Deloitte Türkiye",
-            "url": "https://www2.deloitte.com/tr/tr/pages/careers.html"
+            "url": "https://www.deloitte.com/tr/tr/careers.html"
           }
         ],
         "internshipPrograms": [
@@ -273,19 +273,19 @@
           },
           {
             "name": "Deloitte Türkiye — careers",
-            "url": "https://www2.deloitte.com/tr/tr/pages/careers.html",
+            "url": "https://www.deloitte.com/tr/tr/careers.html",
             "summary": "Risk, analitik ve danışmanlık hatlarında staj ve analist programları.",
             "eligibility": "Lisans/yüksek lisans; ofis ve program bazında farklı son başvuru tarihleri."
           },
           {
             "name": "Allianz Türkiye kariyer",
-            "url": "https://www.allianz.com.tr/kariyer.html",
+            "url": "https://careers.allianz.com/?locale=tr_TR",
             "summary": "Sigorta ve risk fonksiyonlarında yıl içinde açılan staj ve yönetici adayı programları.",
             "eligibility": "Öğrenci veya yeni mezun; pozisyona göre sayısal okuryazarlık ve dil şartı."
           },
           {
             "name": "İş Bankası kariyer",
-            "url": "https://www.iskurumsal.com/kariyer",
+            "url": "https://www.isbank.com.tr/kariyer",
             "summary": "Finans ve operasyon stajları ile risk analitiğine yakın rotalar için ilan takvimi kariyer sitesinde.",
             "eligibility": "Lisans ileri sınıflar çoğunlukla öncelikli; güncel ilan metnine bakın."
           }
@@ -533,11 +533,11 @@
           },
           {
             "name": "Turkcell",
-            "url": "https://www.turkcell.com.tr/kurumsal/kariyer"
+            "url": "https://kariyerim.turkcell.com.tr/"
           },
           {
             "name": "İş Bankası",
-            "url": "https://www.iskurumsal.com/kariyer"
+            "url": "https://www.isbank.com.tr/kariyer"
           },
           {
             "name": "KoçSistem",
@@ -579,7 +579,7 @@
           },
           {
             "name": "TÜBİTAK insan kaynakları",
-            "url": "https://www.tubitak.gov.tr/tr/kurumsal/insan-kaynaklari",
+            "url": "https://tubitak.gov.tr/tr/insan-kaynaklari",
             "summary": "Kamu ARGE ortamında etik ve politika yakın araştırma rolleri proje duyurularıyla açılır.",
             "eligibility": "Program duyurusuna göre; çoğu tam zamanlı veya bursiyer kapsamındadır."
           }
@@ -625,7 +625,7 @@
           },
           {
             "name": "Turkcell",
-            "url": "https://www.turkcell.com.tr/kurumsal/kariyer"
+            "url": "https://kariyerim.turkcell.com.tr/"
           },
           {
             "name": "Ford Otosan",
@@ -633,7 +633,7 @@
           },
           {
             "name": "Mercedes-Benz Türk",
-            "url": "https://www.mercedes-benz-truck.com/tr/career"
+            "url": "https://group.mercedes-benz.com/careers/"
           },
           {
             "name": "Ülker",
@@ -641,7 +641,7 @@
           },
           {
             "name": "İş Bankası",
-            "url": "https://www.iskurumsal.com/kariyer"
+            "url": "https://www.isbank.com.tr/kariyer"
           },
           {
             "name": "Eczacıbaşı Holding",
@@ -669,7 +669,7 @@
           },
           {
             "name": "Turkcell kariyer",
-            "url": "https://www.turkcell.com.tr/kurumsal/kariyer",
+            "url": "https://kariyerim.turkcell.com.tr/",
             "summary": "İK teknolojileri ve operasyonel İK rollerine yakın staj fırsatları.",
             "eligibility": "Öğrenci statüsü; pozisyon detayında bölüm tercihi belirtilir."
           },
@@ -721,7 +721,7 @@
           },
           {
             "name": "Hepsiburada",
-            "url": "https://kurumsal.hepsiburada.com/kariyer"
+            "url": "https://kurumsal.hepsiburada.com/tr/hakkimizda/kariyer"
           },
           {
             "name": "Yemeksepeti (Delivery Hero)",
@@ -759,7 +759,7 @@
           },
           {
             "name": "Hepsiburada kariyer",
-            "url": "https://kurumsal.hepsiburada.com/kariyer",
+            "url": "https://kurumsal.hepsiburada.com/tr/hakkimizda/kariyer",
             "summary": "Pazarlama ve içerik üretimi stajları dönemsel olarak yayınlanır.",
             "eligibility": "Üniversite öğrencisi; medya ve e-ticaret ilgisi önemlidir."
           },
@@ -843,7 +843,7 @@
           },
           {
             "name": "TÜBİTAK BİLGEM",
-            "url": "https://www.tubitak.gov.tr/tr/kurumsal/insan-kaynaklari"
+            "url": "https://tubitak.gov.tr/tr/insan-kaynaklari"
           }
         ],
         "internshipPrograms": [
@@ -873,7 +873,7 @@
           },
           {
             "name": "TÜBİTAK insan kaynakları",
-            "url": "https://www.tubitak.gov.tr/tr/kurumsal/insan-kaynaklari",
+            "url": "https://tubitak.gov.tr/tr/insan-kaynaklari",
             "summary": "Biyoveri ve hesaplama yakın ARGE projelerinde personel/stajyer duyuruları.",
             "eligibility": "Proje bazlı; tam zamanlı veya bursiyer statüsü duyuruda belirtilir."
           }
@@ -931,7 +931,7 @@
           },
           {
             "name": "Philips Türkiye",
-            "url": "https://www.careers.philips.com/global/en"
+            "url": "https://careers.philips.com/global/en"
           },
           {
             "name": "Boehringer Ingelheim TR",
@@ -957,7 +957,7 @@
           },
           {
             "name": "Philips careers",
-            "url": "https://www.careers.philips.com/global/en",
+            "url": "https://careers.philips.com/global/en",
             "summary": "Sağlık teknolojisi stajları ve yeni mezun programları global sitede.",
             "eligibility": "Mühendislik veya sağlık teknolojileri; lokasyon filtresi kullanın."
           },
@@ -1125,7 +1125,7 @@
           },
           {
             "name": "Dream Games",
-            "url": "https://careers.dreamgames.com/"
+            "url": "https://www.dreamgames.com/careers"
           },
           {
             "name": "Trendyol",
@@ -1205,7 +1205,7 @@
         "employersTurkey": [
           {
             "name": "Deloitte Türkiye",
-            "url": "https://www2.deloitte.com/tr/tr/pages/careers.html"
+            "url": "https://www.deloitte.com/tr/tr/careers.html"
           },
           {
             "name": "EY Türkiye",
@@ -1217,7 +1217,7 @@
           },
           {
             "name": "KPMG Türkiye",
-            "url": "https://kpmg.com/tr/tr/home/careers.html"
+            "url": "https://jobs.kpmg.com/"
           },
           {
             "name": "Accenture Türkiye",
@@ -1225,7 +1225,7 @@
           },
           {
             "name": "İş Bankası",
-            "url": "https://www.iskurumsal.com/kariyer"
+            "url": "https://www.isbank.com.tr/kariyer"
           },
           {
             "name": "Garanti BBVA",
@@ -1245,7 +1245,7 @@
           },
           {
             "name": "KPMG Türkiye careers",
-            "url": "https://kpmg.com/tr/tr/home/careers.html",
+            "url": "https://jobs.kpmg.com/",
             "summary": "İş analitiği ve risk danışmanlığına yakın staj programları.",
             "eligibility": "Lisans/yüksek lisans; dönemsel başvuru pencereleri."
           },
@@ -1263,7 +1263,7 @@
           },
           {
             "name": "İş Bankası kariyer",
-            "url": "https://www.iskurumsal.com/kariyer",
+            "url": "https://www.isbank.com.tr/kariyer",
             "summary": "Bankacılık süreç ve raporlama stajları.",
             "eligibility": "Lisans ileri sınıflar öncelikli; resmi ilan metni esas."
           }
@@ -1305,7 +1305,7 @@
           },
           {
             "name": "Hepsiburada",
-            "url": "https://kurumsal.hepsiburada.com/kariyer"
+            "url": "https://kurumsal.hepsiburada.com/tr/hakkimizda/kariyer"
           },
           {
             "name": "Yemeksepeti (Delivery Hero)",
@@ -1405,7 +1405,7 @@
           },
           {
             "name": "Turkcell",
-            "url": "https://www.turkcell.com.tr/kurumsal/kariyer"
+            "url": "https://kariyerim.turkcell.com.tr/"
           },
           {
             "name": "Vodafone Türkiye",
@@ -1421,7 +1421,7 @@
           },
           {
             "name": "İş Bankası",
-            "url": "https://www.iskurumsal.com/kariyer"
+            "url": "https://www.isbank.com.tr/kariyer"
           },
           {
             "name": "SAP Türkiye",
@@ -1455,7 +1455,7 @@
           },
           {
             "name": "Turkcell kariyer",
-            "url": "https://www.turkcell.com.tr/kurumsal/kariyer",
+            "url": "https://kariyerim.turkcell.com.tr/",
             "summary": "Operasyon ve IT otomasyon rollerine yakın staj programları.",
             "eligibility": "Lisans; teknik mülakat olabilir."
           }
@@ -1511,7 +1511,7 @@
           },
           {
             "name": "Turkcell",
-            "url": "https://www.turkcell.com.tr/kurumsal/kariyer"
+            "url": "https://kariyerim.turkcell.com.tr/"
           },
           {
             "name": "MEB / EBA",
@@ -1519,7 +1519,7 @@
           },
           {
             "name": "TÜBİTAK",
-            "url": "https://www.tubitak.gov.tr/tr/kurumsal/insan-kaynaklari"
+            "url": "https://tubitak.gov.tr/tr/insan-kaynaklari"
           },
           {
             "name": "Halkbank",
@@ -1545,13 +1545,13 @@
           },
           {
             "name": "Turkcell kariyer",
-            "url": "https://www.turkcell.com.tr/kurumsal/kariyer",
+            "url": "https://kariyerim.turkcell.com.tr/",
             "summary": "Dijital eğitim ve içerik ortaklıklarına yakın staj fırsatları.",
             "eligibility": "Üniversite öğrencisi; ilgili bölüm tercihi ilanda."
           },
           {
             "name": "TÜBİTAK insan kaynakları",
-            "url": "https://www.tubitak.gov.tr/tr/kurumsal/insan-kaynaklari",
+            "url": "https://tubitak.gov.tr/tr/insan-kaynaklari",
             "summary": "Eğitim teknolojisi ve STEM yayınlarına yakın proje personeli ilanları.",
             "eligibility": "Program şartnamesine göre; çoğu tam zamanlı veya bursiyer."
           },
@@ -1691,7 +1691,7 @@
         "employersTurkey": [
           {
             "name": "Dream Games",
-            "url": "https://careers.dreamgames.com/"
+            "url": "https://www.dreamgames.com/careers"
           },
           {
             "name": "Peak (Zynga)",
@@ -1725,7 +1725,7 @@
         "internshipPrograms": [
           {
             "name": "Dream Games careers",
-            "url": "https://careers.dreamgames.com/",
+            "url": "https://www.dreamgames.com/careers",
             "summary": "Mobil oyun stüdyosunda oyun ve topluluk rolleri stajları.",
             "eligibility": "Oyun geliştirme veya iletişim bölümleri; portföy ve tutku önemli."
           },
@@ -1787,7 +1787,7 @@
         "employersTurkey": [
           {
             "name": "Dream Games",
-            "url": "https://careers.dreamgames.com/"
+            "url": "https://www.dreamgames.com/careers"
           },
           {
             "name": "Insider",
@@ -1833,7 +1833,7 @@
           },
           {
             "name": "Dream Games careers",
-            "url": "https://careers.dreamgames.com/",
+            "url": "https://www.dreamgames.com/careers",
             "summary": "Oyun içi deneyim ve yaratıcı prototipleme stajları.",
             "eligibility": "Oyun veya görsel tasarım odaklı portföy."
           },

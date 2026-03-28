@@ -26,9 +26,9 @@ export function PusulaBadgesStrip({ className = '' }) {
         className,
       ].join(' ')}
     >
-      <div className="flex flex-wrap items-center justify-center gap-2 sm:justify-end">
-        <span className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-wide text-slate-500">
-          <Award className="h-3.5 w-3.5 shrink-0" aria-hidden />
+      <div className="flex flex-wrap items-center justify-center gap-2.5 sm:justify-end sm:gap-3">
+        <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-slate-500 sm:text-sm">
+          <Award className="h-4 w-4 shrink-0 sm:h-5 sm:w-5" aria-hidden />
           Rozetler
         </span>
         {BADGE_META.map((b) => {
@@ -42,7 +42,7 @@ export function PusulaBadgesStrip({ className = '' }) {
               aria-expanded={expanded}
               aria-controls={expanded ? panelId : undefined}
               className={[
-                'cursor-pointer rounded-full border px-2.5 py-1 text-[10px] font-semibold transition',
+                'cursor-pointer rounded-full border px-3 py-1.5 text-xs font-semibold transition sm:px-3.5 sm:py-2 sm:text-sm',
                 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50',
                 on
                   ? 'border-indigo-200 bg-indigo-100 text-indigo-800 hover:bg-indigo-200/90'
@@ -60,11 +60,11 @@ export function PusulaBadgesStrip({ className = '' }) {
           id={panelId}
           role="region"
           aria-live="polite"
-          className="max-w-sm rounded-2xl border border-indigo-100 bg-white/95 px-3 py-2 text-left text-xs text-slate-700 shadow-md sm:ml-auto"
+          className="max-w-md rounded-2xl border border-indigo-100 bg-white/95 px-4 py-3 text-left text-sm text-slate-700 shadow-md sm:ml-auto"
         >
-          <span className="font-bold text-indigo-900">{openMeta.label}</span>
-          <p className="mt-1 leading-relaxed">{openMeta.desc}</p>
-          <p className="mt-1 text-[10px] text-slate-500">
+          <span className="text-base font-bold text-indigo-900">{openMeta.label}</span>
+          <p className="mt-1.5 leading-relaxed">{openMeta.desc}</p>
+          <p className="mt-2 text-xs text-slate-500">
             {unlocked.has(openMeta.id) ? 'Bu rozeti kazandın.' : 'Akışta ilgili adımı tamamlayınca açılır.'}
           </p>
         </div>

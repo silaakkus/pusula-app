@@ -3,18 +3,32 @@ import { getDisciplineById, validateDayInLife, validateSalaryRange } from './dat
 import { normalizeEmployersList } from './employersNormalize.js';
 import { normalizeInternshipPrograms } from './internshipsNormalize.js';
 import { loadPusulaSession } from './pusulaSession.js';
+import { getLlmProvider } from './llmConfig.js';
+import { groqGenerateText } from './groqClient.js';
 
 /**
- * Ücretsiz kotada `gemini-2.0-flash` sıkça 429 / kota 0 verir; varsayılan 1.5 flash-latest.
- * .env ile `VITE_GEMINI_MODEL` geçersen önce o, sonra yedekler denenir.
+ * Ücretsiz planda `gemini-2.0-flash` birçok projede kota limiti 0; yedek zincire alınmıyor.
+ * .env ile `VITE_GEMINI_MODEL` geçersen önce o, sonra 1.5 ailesi yedekleri denenir.
  */
 const DEFAULT_MODEL = 'gemini-1.5-flash-latest';
 
+/** v1beta generateContent ile artık kullanılamayan model adları (.env’de yazsa bile atlanır) */
+const DEPRECATED_MODEL_IDS = new Set(['gemini-pro', 'gemini-pro-vision']);
+
+/** `gemini-1.5-flash` (suffixsiz) v1beta’da 404; yalnızca -latest veya tam model adı kullan */
+function normalizeEnvGeminiModelId(raw) {
+  const id = raw?.trim();
+  if (!id) return '';
+  if (id === 'gemini-1.5-flash') return 'gemini-1.5-flash-latest';
+  return id;
+}
+
 function getModelAttemptChain() {
-  const env = import.meta.env.VITE_GEMINI_MODEL?.trim();
+  const env = normalizeEnvGeminiModelId(import.meta.env.VITE_GEMINI_MODEL);
   const primary = env || DEFAULT_MODEL;
-  const chain = [primary, DEFAULT_MODEL, 'gemini-1.5-pro-latest', 'gemini-pro'];
-  return [...new Set(chain)];
+  // gemini-pro v1beta’da 404; gemini-2.0-flash ücretsiz kotada sık limit:0; gemini-1.5-flash suffixsiz 404.
+  const chain = [primary, DEFAULT_MODEL, 'gemini-1.5-pro-latest'];
+  return [...new Set(chain)].filter((id) => !DEPRECATED_MODEL_IDS.has(id));
 }
 
 function sleep(ms) {
@@ -26,9 +40,24 @@ function isQuotaOrRateError(e) {
   return /429|Resource exhausted|quota|Too Many Requests/i.test(msg);
 }
 
+/** API “limit: 0” döndüğünde beklemek işe yaramaz; hemen sıradaki modele geçilir */
+function isQuotaDisabledForModelError(e) {
+  const msg = e?.message ?? String(e);
+  return isQuotaOrRateError(e) && /limit:\s*0\b/i.test(msg);
+}
+
 function isModelNotFoundError(e) {
   const msg = e?.message ?? String(e);
   return /404|is not found|not supported for generateContent/i.test(msg);
+}
+
+/** SDK timeout veya fetch iptali — sıradaki model denenir */
+function isTimeoutOrAbortError(e) {
+  if (!e) return false;
+  const msg = String(e.message ?? e);
+  return (
+    e.name === 'AbortError' || /Request aborted|aborted when fetching|aborted when reading/i.test(msg)
+  );
 }
 
 function parseRetryDelayMs(e) {
@@ -56,12 +85,16 @@ async function generateTextMultiModel(apiKey, modelParamsBase, prompt) {
         return text;
       } catch (e) {
         lastError = e;
-        if (isQuotaOrRateError(e) && attempt === 0) {
-          await sleep(parseRetryDelayMs(e));
-          continue;
+        if (isTimeoutOrAbortError(e)) break;
+        if (isQuotaOrRateError(e)) {
+          if (isQuotaDisabledForModelError(e)) break;
+          if (attempt === 0) {
+            await sleep(parseRetryDelayMs(e));
+            continue;
+          }
+          break;
         }
         if (isModelNotFoundError(e)) break;
-        if (isQuotaOrRateError(e)) break;
         throw e;
       }
     }
@@ -73,7 +106,11 @@ async function generateTextMultiModel(apiKey, modelParamsBase, prompt) {
 function geminiRequestOptions() {
   const raw = import.meta.env.VITE_GEMINI_API_VERSION;
   const apiVersion = raw && String(raw).trim() ? String(raw).trim() : 'v1beta';
-  return { apiVersion };
+  const timeoutRaw = import.meta.env.VITE_GEMINI_TIMEOUT_MS;
+  const parsed =
+    timeoutRaw != null && String(timeoutRaw).trim() !== '' ? Number(timeoutRaw) : NaN;
+  const timeout = Number.isFinite(parsed) && parsed >= 15_000 ? Math.floor(parsed) : 90_000;
+  return { apiVersion, timeout };
 }
 
 function createModel(apiKey, modelParams) {
@@ -303,7 +340,14 @@ function buildSuggestedRolesContext() {
 }
 
 export async function runCareerAnalysis({ apiKey, profile, matrix }) {
-  if (!apiKey || !String(apiKey).trim()) throw new Error('API anahtarı eksik');
+  const key = apiKey != null ? String(apiKey).trim() : '';
+  if (!key) {
+    throw new Error(
+      getLlmProvider() === 'groq'
+        ? 'Groq API anahtarı eksik — .env içinde VITE_GROQ_API_KEY'
+        : 'Gemini API anahtarı eksik — .env içinde VITE_GEMINI_API_KEY',
+    );
+  }
 
   const userPayload = {
     profile: {
@@ -321,12 +365,28 @@ export async function runCareerAnalysis({ apiKey, profile, matrix }) {
 
   const prompt = `Aşağıdaki profil ve matris özetini kullanarak yalnızca JSON üret.\n\n${JSON.stringify(userPayload, null, 2)}`;
 
-  const text = await generateTextMultiModel(apiKey, { systemInstruction: CAREER_SYSTEM }, prompt);
+  if (getLlmProvider() === 'groq') {
+    const text = await groqGenerateText({
+      apiKey: key,
+      systemInstruction: CAREER_SYSTEM,
+      userPrompt: prompt,
+    });
+    return parseAndValidateCareerJson(text);
+  }
+
+  const text = await generateTextMultiModel(key, { systemInstruction: CAREER_SYSTEM }, prompt);
   return parseAndValidateCareerJson(text);
 }
 
 export async function runBarrierReframe({ apiKey, barrierText, profileSummary }) {
-  if (!apiKey || !String(apiKey).trim()) throw new Error('API anahtarı eksik');
+  const key = apiKey != null ? String(apiKey).trim() : '';
+  if (!key) {
+    throw new Error(
+      getLlmProvider() === 'groq'
+        ? 'Groq API anahtarı eksik — .env içinde VITE_GROQ_API_KEY'
+        : 'Gemini API anahtarı eksik — .env içinde VITE_GEMINI_API_KEY',
+    );
+  }
   const rolesBlock = buildSuggestedRolesContext();
   const prompt = `Profil özeti: ${profileSummary}
 
@@ -334,6 +394,16 @@ export async function runBarrierReframe({ apiKey, barrierText, profileSummary })
 ${rolesBlock}
 
 Kullanıcının engeli: ${barrierText}`;
-  const text = await generateTextMultiModel(apiKey, { systemInstruction: BARRIER_SYSTEM }, prompt);
+
+  if (getLlmProvider() === 'groq') {
+    const text = await groqGenerateText({
+      apiKey: key,
+      systemInstruction: BARRIER_SYSTEM,
+      userPrompt: prompt,
+    });
+    return parseBarrierResponse(text);
+  }
+
+  const text = await generateTextMultiModel(key, { systemInstruction: BARRIER_SYSTEM }, prompt);
   return parseBarrierResponse(text);
 }

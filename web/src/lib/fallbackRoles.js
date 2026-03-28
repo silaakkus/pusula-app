@@ -5,10 +5,10 @@ import { normalizeInternshipPrograms, validateInternshipPrograms } from './inter
 const FALLBACK_EMPLOYERS = {
   data: [
     { name: 'Trendyol', url: 'https://careers.trendyol.com/' },
-    { name: 'Hepsiburada', url: 'https://kurumsal.hepsiburada.com/kariyer' },
+    { name: 'Hepsiburada', url: 'https://kurumsal.hepsiburada.com/tr/hakkimizda/kariyer' },
     { name: 'Getir', url: 'https://careers.getir.com/' },
-    { name: 'İş Bankası', url: 'https://www.iskurumsal.com/kariyer' },
-    { name: 'Turkcell', url: 'https://www.turkcell.com.tr/kurumsal/kariyer' },
+    { name: 'İş Bankası', url: 'https://www.isbank.com.tr/kariyer' },
+    { name: 'Turkcell', url: 'https://kariyerim.turkcell.com.tr/' },
     { name: 'Insider', url: 'https://useinsider.com/careers/' },
     { name: 'Garanti BBVA Teknoloji', url: 'https://www.garantibbvatech.com.tr/kariyer' },
     { name: 'Amazon Türkiye (ilanlar)', url: 'https://www.amazon.jobs/en/search?loc_query=Turkey' },
@@ -26,7 +26,7 @@ const FALLBACK_EMPLOYERS = {
   pm: [
     { name: 'Garanti BBVA Teknoloji', url: 'https://www.garantibbvatech.com.tr/kariyer' },
     { name: 'PayTR', url: 'https://www.paytr.com/' },
-    { name: 'Dream Games', url: 'https://careers.dreamgames.com/' },
+    { name: 'Dream Games', url: 'https://www.dreamgames.com/careers' },
     { name: 'Insider', url: 'https://useinsider.com/careers/' },
     { name: 'Trendyol', url: 'https://careers.trendyol.com/' },
     { name: 'Getir', url: 'https://careers.getir.com/' },
@@ -41,16 +41,16 @@ const FALLBACK_EMPLOYERS = {
     { name: 'Siemens Healthineers', url: 'https://jobs.siemens-healthineers.com/' },
     { name: 'Acıbadem Sağlık Grubu', url: 'https://www.acibadem.com.tr/acibadem-kariyer' },
     { name: 'Medipol', url: 'https://www.medipol.com.tr/kariyer' },
-    { name: 'TÜBİTAK', url: 'https://www.tubitak.gov.tr/tr/kurumsal/insan-kaynaklari' },
+    { name: 'TÜBİTAK', url: 'https://tubitak.gov.tr/tr/insan-kaynaklari' },
   ],
   default: [
-    { name: 'Turkcell', url: 'https://www.turkcell.com.tr/kurumsal/kariyer' },
+    { name: 'Turkcell', url: 'https://kariyerim.turkcell.com.tr/' },
     { name: 'KoçSistem', url: 'https://www.kocsistem.com.tr/kariyer' },
     { name: 'Logo Yazılım', url: 'https://www.logo.com.tr/LogoKariyer' },
     { name: 'Halkbank', url: 'https://www.halkbank.com.tr/kariyer' },
     { name: 'Emlak Katılım', url: 'https://www.emlakkatilim.com.tr/kariyer' },
     { name: 'Vakıf Katılım', url: 'https://www.vakifkatilim.com.tr/kariyer' },
-    { name: 'İş Bankası', url: 'https://www.iskurumsal.com/kariyer' },
+    { name: 'İş Bankası', url: 'https://www.isbank.com.tr/kariyer' },
     { name: 'Türk Telekom', url: 'https://www.turktelekom.com.tr/kariyer' },
   ],
 };
@@ -87,13 +87,13 @@ const FALLBACK_INTERNSHIPS = [
   },
   {
     name: 'İş Bankası kariyer',
-    url: 'https://www.iskurumsal.com/kariyer',
+    url: 'https://www.isbank.com.tr/kariyer',
     summary: 'Bankacılık ve destek birimlerinde yıl içinde açılan staj duyuruları.',
     eligibility: 'Üniversite öğrencisi; sınıf ve bölüm koşulları ilan metninde yazar.',
   },
   {
     name: 'TÜBİTAK — insan kaynakları',
-    url: 'https://www.tubitak.gov.tr/tr/kurumsal/insan-kaynaklari',
+    url: 'https://tubitak.gov.tr/tr/insan-kaynaklari',
     summary: 'Kamu ARGE kurumlarında proje personeli ve bursiyer ilanları.',
     eligibility: 'Program duyurusuna göre lisans/yüksek lisans; çoğu tam zamanlı veya bursiyer kapsamındadır.',
   },

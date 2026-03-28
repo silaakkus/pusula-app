@@ -12,6 +12,7 @@ import { FinalCardPage } from './pages/FinalCardPage';
 import { PusulaBadgesStrip } from './components/PusulaBadgesStrip.jsx';
 import { loadPusulaData, getDisciplineById } from './lib/dataLoader.js';
 import { runCareerAnalysis } from './lib/gemini.js';
+import { getLlmApiKey, getLlmProvider } from './lib/llmConfig.js';
 import { savePusulaSession } from './lib/pusulaSession.js';
 import { rolesFromMatrix } from './lib/fallbackRoles.js';
 import { BARRIER_STATIC_FALLBACK } from './lib/barrierFallback.js';
@@ -94,7 +95,7 @@ const App = () => {
     setRoles([]);
     setBarrierResult(null);
     setGeminiError('');
-    setAnalysisSource('gemini');
+    setAnalysisSource(getLlmProvider() === 'groq' ? 'groq' : 'gemini');
     setBaselineBefore(3);
     setBaselineAfter(3);
     logEvent('flow_start', {});
@@ -126,7 +127,9 @@ const App = () => {
     setBaselineBefore(typeof s.baselineBefore === 'number' ? s.baselineBefore : 3);
     setBaselineAfter(typeof s.baselineAfter === 'number' ? s.baselineAfter : 3);
     setRoles(Array.isArray(s.roles) ? s.roles : []);
-    setAnalysisSource(s.analysisSource === 'fallback' ? 'fallback' : 'gemini');
+    setAnalysisSource(
+      s.analysisSource === 'fallback' ? 'fallback' : s.analysisSource === 'groq' ? 'groq' : 'gemini',
+    );
     setGeminiError(typeof s.geminiError === 'string' ? s.geminiError : '');
     setBarrierResult(s.barrierResult ?? null);
 
@@ -155,15 +158,16 @@ const App = () => {
     setStep('analyzing');
     setGeminiError('');
     try {
-      const key = import.meta.env.VITE_GEMINI_API_KEY;
+      const key = getLlmApiKey();
       const out = await runCareerAnalysis({ apiKey: key, profile, matrix });
       setRoles(out.roles);
       savePusulaSession({
         answers: { profile, baselineConfidenceBefore: baselineBefore },
         roles: out.roles,
       });
-      setAnalysisSource('gemini');
-      logEvent('analysis_done', { source: 'gemini' });
+      const src = getLlmProvider() === 'groq' ? 'groq' : 'gemini';
+      setAnalysisSource(src);
+      logEvent('analysis_done', { source: src });
       setStep('results');
     } catch (e) {
       const row = getDisciplineById(matrix, profile.disciplineId);
@@ -180,6 +184,11 @@ const App = () => {
     }
   }, [profile, matrix, baselineBefore]);
 
+  const goHome = useCallback(() => {
+    setStep('home');
+    logEvent('nav_home_logo', {});
+  }, []);
+
   const resetFlow = () => {
     clearFlowSnapshot();
     setStep('home');
@@ -187,7 +196,7 @@ const App = () => {
     setBaselineBefore(3);
     setBaselineAfter(3);
     setRoles([]);
-    setAnalysisSource('gemini');
+    setAnalysisSource(getLlmProvider() === 'groq' ? 'groq' : 'gemini');
     setGeminiError('');
     setBarrierResult(null);
   };
@@ -198,7 +207,7 @@ const App = () => {
     logEvent('barrier_complete', {});
   };
 
-  const apiKey = import.meta.env.VITE_GEMINI_API_KEY ?? '';
+  const apiKey = getLlmApiKey();
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-gradient-to-br from-indigo-50 via-white to-orange-50 font-sans text-slate-900">
@@ -206,14 +215,19 @@ const App = () => {
       <div className="pointer-events-none absolute bottom-[-10%] right-[-10%] h-[40%] w-[40%] rounded-full bg-pusula-coral/15 blur-3xl" />
 
       <nav className="relative z-20 flex w-full max-w-full flex-col gap-3 px-4 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-6">
-        <div className="group flex items-center gap-2">
-          <div className="rounded-lg bg-indigo-600 p-2 transition-transform duration-300 group-hover:rotate-12">
-            <Compass className="h-6 w-6 text-white" />
+        <button
+          type="button"
+          onClick={goHome}
+          className="group flex cursor-pointer items-center gap-2.5 rounded-xl border-0 bg-transparent p-0 text-left transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 focus-visible:ring-offset-2 sm:gap-3"
+          aria-label="Ana sayfaya dön"
+        >
+          <div className="rounded-xl bg-indigo-600 p-2.5 transition-transform duration-300 group-hover:rotate-12 sm:p-3">
+            <Compass className="h-7 w-7 text-white sm:h-8 sm:w-8" aria-hidden />
           </div>
-          <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-2xl font-bold tracking-tight text-transparent">
+          <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-3xl font-bold leading-none tracking-tight text-transparent sm:text-[2rem]">
             Pusula
           </span>
-        </div>
+        </button>
 
         <div className="flex flex-col items-stretch gap-2 sm:items-end">
           <PusulaBadgesStrip />

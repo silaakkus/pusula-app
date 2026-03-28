@@ -19,6 +19,7 @@ import {
 } from '../lib/dataLoader.js';
 import { normalizeEmployersList } from '../lib/employersNormalize.js';
 import { normalizeInternshipPrograms } from '../lib/internshipsNormalize.js';
+import { getLlmBrandLabel } from '../lib/llmConfig.js';
 
 function getRoleTitlesForWebhook(roles) {
   return (roles ?? [])
@@ -77,6 +78,139 @@ function resolveInternships(matrix, profile, role) {
   return [];
 }
 
+/** n8n / e-posta webhook’u: uygulamadaki sonuç kartlarıyla uyumlu zengin gövde */
+function buildRichWebhookPayload({
+  email,
+  profile,
+  matrix,
+  roles,
+  opportunities,
+  cityId,
+  analysisSource,
+}) {
+  const rolesDetail = (roles ?? []).map((role) => {
+    const dil = resolveDayInLife(matrix, profile, role);
+    const sr = resolveSalaryRange(matrix, profile, role);
+    const employers = resolveEmployers(matrix, profile, role)
+      .slice(0, 8)
+      .map(({ name, url }) => ({ name, url: url || '' }));
+    const internships = resolveInternships(matrix, profile, role).slice(0, 5).map((p) => ({
+      name: p.name,
+      url: p.url,
+      summary: typeof p.summary === 'string' ? p.summary.slice(0, 400) : '',
+    }));
+    return {
+      roleName: typeof role?.roleName === 'string' ? role.roleName : '',
+      tags: Array.isArray(role?.tags) ? role.tags : [],
+      whyFits: Array.isArray(role?.whyFits) ? role.whyFits : [],
+      firstSteps: Array.isArray(role?.firstSteps) ? role.firstSteps : [],
+      starterResources: Array.isArray(role?.starterResources) ? role.starterResources : [],
+      dayInLife: dil,
+      salaryRange: {
+        junior: sr.junior,
+        mid: sr.mid,
+        senior: sr.senior,
+        source: sr.source,
+      },
+      employers,
+      internships,
+    };
+  });
+
+  return {
+    email,
+    timestamp: new Date().toISOString(),
+    city: profile?.cityLabel ?? profile?.cityId ?? '',
+    cityId,
+    analysisSource,
+    aiProviderLabel: analysisSource === 'fallback' ? 'Matris yedeği' : getLlmBrandLabel(),
+    profile: {
+      disciplineLabel: profile?.disciplineLabel ?? '',
+      disciplineId: profile?.disciplineId ?? '',
+      interests: profile?.interests ?? [],
+      strengths: profile?.strengths ?? [],
+      learningStyle: profile?.learningStyle ?? '',
+      goal: profile?.goal ?? '',
+    },
+    roles: getRoleTitlesForWebhook(roles),
+    rolesDetail,
+    opportunities: buildWebhookOpportunities(roles, opportunities, 3, cityId),
+  };
+}
+
+/** Sonuç kartında etiket: yapay zeka mı, matris mi (fallback’te rol nesnesi matristen dolduğu için ayrı kural). */
+function narrativeSourceLabel(analysisSource) {
+  if (analysisSource === 'fallback') return 'Matris rehberi';
+  return `${getLlmBrandLabel()} önerisi`;
+}
+
+function structuredSourceType(matrix, profile, role, analysisSource, kind) {
+  if (analysisSource === 'fallback') {
+    if (kind === 'day') {
+      if (validateDayInLife(role?.dayInLife) || findDayInLifeInMatrix(matrix, profile?.disciplineId, role))
+        return 'matrix';
+      return 'default';
+    }
+    if (kind === 'salary') {
+      if (validateSalaryRange(role?.salaryRange) || findSalaryRangeInMatrix(matrix, profile?.disciplineId, role))
+        return 'matrix';
+      return 'default';
+    }
+    if (kind === 'employers') return 'matrix';
+    if (kind === 'internships') return 'matrix';
+  }
+  if (kind === 'day') {
+    if (validateDayInLife(role?.dayInLife)) return 'llm';
+    if (findDayInLifeInMatrix(matrix, profile?.disciplineId, role)) return 'matrix';
+    return 'default';
+  }
+  if (kind === 'salary') {
+    if (validateSalaryRange(role?.salaryRange)) return 'llm';
+    if (findSalaryRangeInMatrix(matrix, profile?.disciplineId, role)) return 'matrix';
+    return 'default';
+  }
+  if (kind === 'employers') {
+    if (normalizeEmployersList(role?.employersTurkey, 8).length) return 'llm';
+    if (findEmployersInMatrix(matrix, profile?.disciplineId, role)?.length) return 'matrix';
+    return 'default';
+  }
+  if (kind === 'internships') {
+    if (normalizeInternshipPrograms(role?.internshipPrograms, 6).length) return 'llm';
+    if (findInternshipProgramsInMatrix(matrix, profile?.disciplineId, role)?.length) return 'matrix';
+    return 'default';
+  }
+  return 'default';
+}
+
+function structuredSourceLabel(sourceType, analysisSource) {
+  if (sourceType === 'matrix') return 'Matris rehberi';
+  if (sourceType === 'default') return 'Genel şablon';
+  if (analysisSource === 'fallback') return 'Matris rehberi';
+  return `${getLlmBrandLabel()} önerisi`;
+}
+
+function ResultSectionSourceTag({ label }) {
+  const isMatrix = label.startsWith('Matris');
+  const isTemplate = label.includes('Genel şablon');
+  const isProgramData = label.includes('Program verisi');
+  const isLlm = !isMatrix && !isTemplate && !isProgramData;
+  return (
+    <span
+      className={[
+        'shrink-0 rounded-full px-2 py-0.5 text-[11px] font-semibold leading-none',
+        isMatrix && 'bg-emerald-100 text-emerald-900 ring-1 ring-emerald-200/80',
+        isTemplate && 'bg-slate-100 text-slate-600 ring-1 ring-slate-200/80',
+        isProgramData && 'bg-sky-100 text-sky-900 ring-1 ring-sky-200/80',
+        isLlm && 'bg-violet-100 text-violet-900 ring-1 ring-violet-200/80',
+      ]
+        .filter(Boolean)
+        .join(' ')}
+    >
+      {label}
+    </span>
+  );
+}
+
 export function ResultsPage({
   profile,
   matrix,
@@ -111,13 +245,15 @@ export function ResultsPage({
     }
 
     const cityId = profile?.cityId ?? 'all';
-    const payload = {
+    const payload = buildRichWebhookPayload({
       email: trimmed,
-      roles: getRoleTitlesForWebhook(roles),
-      city: profile?.cityLabel ?? profile?.cityId ?? '',
-      opportunities: buildWebhookOpportunities(roles, opportunities, 3, cityId),
-      timestamp: new Date().toISOString(),
-    };
+      profile,
+      matrix,
+      roles,
+      opportunities,
+      cityId,
+      analysisSource,
+    });
 
     setEmailSending(true);
     try {
@@ -185,6 +321,10 @@ export function ResultsPage({
           const sr = resolveSalaryRange(matrix, profile, role);
           const employers = resolveEmployers(matrix, profile, role);
           const internships = resolveInternships(matrix, profile, role);
+          const daySrc = structuredSourceType(matrix, profile, role, analysisSource, 'day');
+          const salarySrc = structuredSourceType(matrix, profile, role, analysisSource, 'salary');
+          const empSrc = structuredSourceType(matrix, profile, role, analysisSource, 'employers');
+          const intSrc = structuredSourceType(matrix, profile, role, analysisSource, 'internships');
           const internOpen = !!internMainOpen[idx];
           const mainOpen = !!dayMainOpen[idx];
           const periodKey = dayPeriodOpen[idx] ?? null;
@@ -213,7 +353,10 @@ export function ResultsPage({
                 </div>
 
                 <div className="mt-6">
-                  <h4 className="text-sm font-bold text-slate-800">Neden uygun?</h4>
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <h4 className="text-sm font-bold text-slate-800">Neden uygun?</h4>
+                    <ResultSectionSourceTag label={narrativeSourceLabel(analysisSource)} />
+                  </div>
                   <ul className="mt-2 list-inside list-disc space-y-1 text-sm text-slate-600">
                     {(role.whyFits ?? []).map((line, i) => (
                       <li key={i}>{line}</li>
@@ -222,7 +365,10 @@ export function ResultsPage({
                 </div>
 
                 <div className="mt-6">
-                  <h4 className="text-sm font-bold text-slate-800">İlk 3 adım</h4>
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <h4 className="text-sm font-bold text-slate-800">İlk 3 adım</h4>
+                    <ResultSectionSourceTag label={narrativeSourceLabel(analysisSource)} />
+                  </div>
                   <ol className="mt-2 list-inside list-decimal space-y-1 text-sm text-slate-600">
                     {(role.firstSteps ?? []).map((line, i) => (
                       <li key={i}>{line}</li>
@@ -231,7 +377,10 @@ export function ResultsPage({
                 </div>
 
                 <div className="mt-6">
-                  <h4 className="text-sm font-bold text-slate-800">Başlangıç kaynakları</h4>
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <h4 className="text-sm font-bold text-slate-800">Başlangıç kaynakları</h4>
+                    <ResultSectionSourceTag label={narrativeSourceLabel(analysisSource)} />
+                  </div>
                   <ul className="mt-2 space-y-1 text-sm text-slate-600">
                     {(role.starterResources ?? []).map((line, i) => (
                       <li key={i}>{line}</li>
@@ -248,11 +397,14 @@ export function ResultsPage({
                       setDayMainOpen((p) => ({ ...p, [idx]: !p[idx] }));
                     }}
                   >
-                    <span>Bir günün nasıl geçer? 👀</span>
-                    <ChevronDown
-                      className={`h-5 w-5 shrink-0 text-slate-500 transition-transform ${mainOpen ? 'rotate-180' : ''}`}
-                      aria-hidden
-                    />
+                    <span className="min-w-0 pr-2">Bir günün nasıl geçer? 👀</span>
+                    <span className="flex shrink-0 items-center gap-2">
+                      <ResultSectionSourceTag label={structuredSourceLabel(daySrc, analysisSource)} />
+                      <ChevronDown
+                        className={`h-5 w-5 text-slate-500 transition-transform ${mainOpen ? 'rotate-180' : ''}`}
+                        aria-hidden
+                      />
+                    </span>
                   </button>
                   {mainOpen && (
                     <div className="space-y-1 border-t border-slate-200/70 p-2 pb-3">
@@ -307,11 +459,14 @@ export function ResultsPage({
                       setSalaryMainOpen((p) => ({ ...p, [idx]: !p[idx] }));
                     }}
                   >
-                    <span>Maaş Aralığı 💰</span>
-                    <ChevronDown
-                      className={`h-5 w-5 shrink-0 text-slate-500 transition-transform ${salaryOpen ? 'rotate-180' : ''}`}
-                      aria-hidden
-                    />
+                    <span className="min-w-0 pr-2">Maaş aralığı 💰</span>
+                    <span className="flex shrink-0 items-center gap-2">
+                      <ResultSectionSourceTag label={structuredSourceLabel(salarySrc, analysisSource)} />
+                      <ChevronDown
+                        className={`h-5 w-5 text-slate-500 transition-transform ${salaryOpen ? 'rotate-180' : ''}`}
+                        aria-hidden
+                      />
+                    </span>
                   </button>
                   {salaryOpen && (
                     <div className="border-t border-slate-200/70 px-3 pb-3 pt-1">
@@ -341,11 +496,14 @@ export function ResultsPage({
                       aria-expanded={internOpen}
                       onClick={() => setInternMainOpen((p) => ({ ...p, [idx]: !p[idx] }))}
                     >
-                      <span>Staj programları 🎓</span>
-                      <ChevronDown
-                        className={`h-5 w-5 shrink-0 text-slate-500 transition-transform ${internOpen ? 'rotate-180' : ''}`}
-                        aria-hidden
-                      />
+                      <span className="min-w-0 pr-2">Staj programları 🎓</span>
+                      <span className="flex shrink-0 items-center gap-2">
+                        <ResultSectionSourceTag label={structuredSourceLabel(intSrc, analysisSource)} />
+                        <ChevronDown
+                          className={`h-5 w-5 text-slate-500 transition-transform ${internOpen ? 'rotate-180' : ''}`}
+                          aria-hidden
+                        />
+                      </span>
                     </button>
                     {internOpen && (
                       <div className="space-y-3 border-t border-slate-200/70 p-3 pb-3">
@@ -386,7 +544,10 @@ export function ResultsPage({
 
                 {employers.length > 0 && (
                   <div className="mt-6 rounded-2xl bg-slate-50/80 p-4">
-                    <h4 className="text-sm font-bold text-slate-800">Türkiye’de örnek işverenler</h4>
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <h4 className="text-sm font-bold text-slate-800">Türkiye’de örnek işverenler</h4>
+                      <ResultSectionSourceTag label={structuredSourceLabel(empSrc, analysisSource)} />
+                    </div>
                     <p className="mt-1 text-xs text-slate-500">
                       Kesin iş garantisi değildir; kariyer sayfalarını inceleyerek ilan ve staj fırsatlarına
                       bakabilirsin.
@@ -420,7 +581,10 @@ export function ResultsPage({
                 )}
 
                 <div className="mt-6 border-t border-slate-200/80 pt-6">
-                  <h4 className="text-sm font-bold text-slate-800">Yerel fırsat radarı (bu rol için)</h4>
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <h4 className="text-sm font-bold text-slate-800">Yerel fırsat radarı (bu rol için)</h4>
+                    <ResultSectionSourceTag label="Program verisi" />
+                  </div>
                   <ul className="mt-3 space-y-3">
                     {opps.map((o) => (
                       <li
@@ -514,7 +678,7 @@ export function ResultsPage({
         {analysisSource === 'fallback' && typeof onRetryAnalysis === 'function' && (
           <Button variant="ghost" className="sm:mr-auto" onClick={onRetryAnalysis}>
             <RefreshCw className="h-5 w-5" />
-            Gemini ile tekrar dene
+            {getLlmBrandLabel()} ile tekrar dene
           </Button>
         )}
         <Button size="lg" className="sm:ml-auto" onClick={onContinue}>
