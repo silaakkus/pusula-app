@@ -1,3 +1,5 @@
+import { normalizeLlmApplicationPrograms } from './internshipsNormalize.js';
+
 /**
  * Şehir seçimine göre fırsat uyumu (all / uzaktan = herkese açık).
  */
@@ -55,6 +57,33 @@ export function opportunitiesForRole(role, allOpportunities, minCount = 3, userC
   return picked.slice(0, Math.max(minCount, picked.length));
 }
 
+/**
+ * LLM’den gelen başvuru programlarını opportunities.json satırı şekline çevirir (UI + webhook).
+ */
+export function llmApplicationProgramsToOpportunityRows(role, roleIndex = 0) {
+  const programs = normalizeLlmApplicationPrograms(role?.llmApplicationPrograms ?? [], 5);
+  return programs.map((p, i) => {
+    const forWho =
+      p.summary && p.summary !== p.forWho ? `${p.forWho} · ${p.summary}` : p.forWho;
+    return {
+      opportunityId: `llm-app-r${roleIndex}-${i}`,
+      name: p.name,
+      url: p.url,
+      type: 'program',
+      forWho,
+      fromLlm: true,
+    };
+  });
+}
+
+/** Yerel JSON fırsatları + LLM linkleri (URL tekrarında LLM satırı düşer). */
+export function opportunitiesForRoleWithLlm(role, allOpportunities, minCount = 3, userCityId = 'all', roleIndex = 0) {
+  const local = opportunitiesForRole(role, allOpportunities, minCount, userCityId);
+  const llmRows = llmApplicationProgramsToOpportunityRows(role, roleIndex);
+  const seen = new Set(local.map((o) => o.url));
+  return [...local, ...llmRows.filter((o) => !seen.has(o.url))];
+}
+
 export function hasProgramOrCommunity(opportunities) {
   return opportunities.some((o) => o.type === 'program' || o.type === 'community');
 }
@@ -71,7 +100,7 @@ function roleDisplayTitle(role) {
  */
 export function buildWebhookOpportunities(roles, allOpportunities, minCount = 3, userCityId = 'all') {
   const out = [];
-  for (const role of roles ?? []) {
+  (roles ?? []).forEach((role, roleIndex) => {
     const forRole = roleDisplayTitle(role);
     const opps = opportunitiesForRole(role, allOpportunities, minCount, userCityId);
     for (const o of opps) {
@@ -80,8 +109,22 @@ export function buildWebhookOpportunities(roles, allOpportunities, minCount = 3,
         url: o.url,
         description: typeof o.forWho === 'string' ? o.forWho : '',
         forRole,
+        source: 'dataset',
       });
     }
-  }
+    const llmRows = llmApplicationProgramsToOpportunityRows(role, roleIndex);
+    const seen = new Set(opps.map((o) => o.url));
+    for (const o of llmRows) {
+      if (seen.has(o.url)) continue;
+      seen.add(o.url);
+      out.push({
+        name: o.name,
+        url: o.url,
+        description: typeof o.forWho === 'string' ? o.forWho : '',
+        forRole,
+        source: 'llm',
+      });
+    }
+  });
   return out;
 }

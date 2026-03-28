@@ -34,3 +34,28 @@ export function normalizeInternshipPrograms(arr, max = 6) {
   }
   return out;
 }
+
+/**
+ * LLM’den gelen başvurulabilir program / bootcamp / burs sayfaları (staj alanından ayrı).
+ * forWho veya summary’den en az biri dolu olmalı.
+ */
+export function normalizeLlmApplicationPrograms(arr, max = 5) {
+  if (!Array.isArray(arr)) return [];
+  const out = [];
+  for (const p of arr) {
+    if (!p || typeof p !== 'object') continue;
+    if (!isNonEmptyString(p.name) || !isHttpsUrl(p.url)) continue;
+    const forWhoRaw = isNonEmptyString(p.forWho) ? p.forWho.trim() : '';
+    const summaryRaw = isNonEmptyString(p.summary) ? p.summary.trim() : '';
+    const forWho = forWhoRaw || summaryRaw;
+    if (!forWho) continue;
+    out.push({
+      name: p.name.trim(),
+      url: String(p.url).trim(),
+      forWho,
+      summary: summaryRaw && summaryRaw !== forWho ? summaryRaw : '',
+    });
+    if (out.length >= max) break;
+  }
+  return out;
+}

@@ -1,10 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Star } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Star } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
+import { flowPreviousStepButtonClass } from '../lib/flowPreviousStepButton.js';
 
-export function PostSurveyPage({ baselineBefore, value, onChange, onNext }) {
+export function PostSurveyPage({ baselineBefore, value, onChange, onPreviousStep, onNext }) {
   return (
     <main className="relative mx-auto flex max-w-3xl flex-col items-stretch px-6 pb-16 pt-10 sm:px-8">
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
@@ -46,7 +47,13 @@ export function PostSurveyPage({ baselineBefore, value, onChange, onNext }) {
             Seçimin: <span className="text-indigo-700">{value}/5</span>
           </div>
 
-          <div className="mt-10 flex justify-end">
+          <div className="mt-10 flex flex-wrap items-center justify-end gap-3">
+            {typeof onPreviousStep === 'function' && (
+              <Button type="button" variant="ghost" onClick={onPreviousStep} className={flowPreviousStepButtonClass}>
+                <ArrowLeft className="h-5 w-5" aria-hidden />
+                Önceki adım
+              </Button>
+            )}
             <Button onClick={onNext}>
               Kariyer kartına geç
               <ArrowRight className="h-5 w-5" />

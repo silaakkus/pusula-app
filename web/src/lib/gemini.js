@@ -1,7 +1,7 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { getDisciplineById, validateDayInLife, validateSalaryRange } from './dataLoader.js';
 import { normalizeEmployersList } from './employersNormalize.js';
-import { normalizeInternshipPrograms } from './internshipsNormalize.js';
+import { normalizeInternshipPrograms, normalizeLlmApplicationPrograms } from './internshipsNormalize.js';
 import { loadPusulaSession } from './pusulaSession.js';
 import { getLlmProvider } from './llmConfig.js';
 import { groqGenerateText } from './groqClient.js';
@@ -202,6 +202,11 @@ function normalizeRole(r, index) {
     6,
   );
 
+  const llmApplicationPrograms = normalizeLlmApplicationPrograms(
+    Array.isArray(r?.applicationPrograms) ? r.applicationPrograms : [],
+    5,
+  );
+
   const roleId = isNonEmptyString(r?.roleId) ? r.roleId.trim() : undefined;
 
   let dayInLife;
@@ -237,6 +242,7 @@ function normalizeRole(r, index) {
   if (dayInLife) out.dayInLife = dayInLife;
   if (salaryRange) out.salaryRange = salaryRange;
   if (internshipPrograms.length) out.internshipPrograms = internshipPrograms;
+  if (llmApplicationPrograms.length) out.llmApplicationPrograms = llmApplicationPrograms;
   return out;
 }
 
@@ -316,6 +322,38 @@ Ek teknik kurallar:
 - resources: en az 3 kısa kaynak başlığı veya adı içeren dizi.
 - Aşağıdaki profil ve disiplin matrisi özetine uy; metni kopyalama, kişiselleştir.`;
 
+/** Groq: roller + başvurulabilir staj/program URL’leri (arayüzde yerel fırsatlarla birlikte gösterilir). */
+const GROQ_CAREER_SYSTEM = `Sen Pusula'nın AI kariyer rehberisin. Türkiye'deki üniversite öğrencisi kadınlara teknoloji kariyeri öneriyorsun.
+Yanıtların Türkçe, samimi ve yargılamayan bir tonda olmalı.
+Her zaman TEK bir JSON nesnesi döndür; başka metin veya markdown yok.
+
+Şema:
+{ "roles": [ { "title", "why", "tags", "resources", "salaryRange", "internshipPrograms", "applicationPrograms" } ] }
+
+Genel:
+- Tam olarak 3 rol.
+- why: string veya string dizisi (en az iki gerekçe).
+- tags: kısa etiket dizisi (örn. data, ux, pm).
+- resources: en az 3 kısa kaynak adı veya başlık (metin linki değil).
+
+salaryRange (her rol için zorunlu):
+- Nesne: { "junior", "mid", "senior", "source" }.
+- junior / mid / senior: Türkiye teknoloji (veya önerilen role uygun) piyasası için güncel **brüt aylık maaş aralığı** kısa metin (örn. "42.000 - 62.000 ₺"); juniör ≈ 0–3 yıl, orta ≈ 3–7 yıl, kıdemli ≈ 7+ yıl.
+- source: tek satır — hangi dönem/tahmin olduğunu belirt (örn. "Tahmini piyasa bandı, Türkiye 2025–2026, brüt ₺/ay; şehir ve şirkete göre değişir").
+- Kesin ücret vaadi değil; yönlendirici aralık ver.
+
+internshipPrograms (her rol için 2–4 öğe, mümkünse profil ve şehre uygun):
+- Yalnızca gerçek ve doğrulanabilir https:// ile başlayan resmi başvuru veya kariyer/staj ilan sayfaları.
+- Her öğe: { "name", "url", "summary" (1 cümle), "eligibility" (kimler başvurur, 1 cümle) }.
+- Uydurma alan adı veya var olmayan URL üretme; emin değilsen daha az öğe ver.
+
+applicationPrograms (her rol için 2–4 öğe; staj dışı başvurulabilir programlar):
+- Bootcamp, academy, trainee programı, burs veya açık cohort başvuru sayfası gibi doğrudan başvuru URL’leri.
+- Her öğe: { "name", "url" (https), "forWho" (hedef kitle, 1 cümle), "summary" (isteğe bağlı, ek cümle) }.
+- Yine yalnızca gerçek kurum siteleri; bilgi yoksa alanı boş bırakma yerine o öğeyi hiç ekleme.
+
+Profil ve matris özetini kişiselleştirmede kullan; metni aynen kopyalama.`;
+
 const BARRIER_SYSTEM = `Sen empati kuran bir kariyer koçusun. Kullanıcının yazdığı engeli kariyer dışlayıcı olarak değil,
 yeniden çerçeveleyerek ele al. Yanıtın Türkçe olsun ve 2 somut aksiyon adımı içersin.
 JSON formatında yanıt ver: {reframe, actions: [action1, action2]}
@@ -368,7 +406,7 @@ export async function runCareerAnalysis({ apiKey, profile, matrix }) {
   if (getLlmProvider() === 'groq') {
     const text = await groqGenerateText({
       apiKey: key,
-      systemInstruction: CAREER_SYSTEM,
+      systemInstruction: GROQ_CAREER_SYSTEM,
       userPrompt: prompt,
     });
     return parseAndValidateCareerJson(text);

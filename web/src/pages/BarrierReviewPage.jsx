@@ -1,10 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
+import { flowPreviousStepButtonClass } from '../lib/flowPreviousStepButton.js';
 
-export function BarrierReviewPage({ result, onNext }) {
+export function BarrierReviewPage({ result, onPreviousStep, onNext }) {
   return (
     <main className="relative mx-auto flex max-w-3xl flex-col items-stretch px-6 pb-16 pt-10 text-left sm:px-8">
       <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
@@ -20,7 +21,13 @@ export function BarrierReviewPage({ result, onNext }) {
               ))}
             </ul>
           </div>
-          <div className="mt-10 flex justify-end">
+          <div className="mt-10 flex flex-wrap items-center justify-end gap-3">
+            {typeof onPreviousStep === 'function' && (
+              <Button type="button" variant="ghost" onClick={onPreviousStep} className={flowPreviousStepButtonClass}>
+                <ArrowLeft className="h-5 w-5" aria-hidden />
+                Önceki adım
+              </Button>
+            )}
             <Button onClick={onNext}>
               Son ölçüme geç
               <ArrowRight className="h-5 w-5" />

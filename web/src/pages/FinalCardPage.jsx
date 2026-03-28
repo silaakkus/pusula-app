@@ -1,13 +1,22 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Download, Home, Loader2 } from 'lucide-react';
+import { ArrowLeft, Download, Home, Loader2 } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
 import { CareerCardCapture } from '../components/CareerCardCapture.jsx';
 import { downloadCareerCardPng } from '../lib/downloadCareerCard.js';
 import { logEvent } from '../lib/analytics.js';
+import { flowPreviousStepButtonClass } from '../lib/flowPreviousStepButton.js';
 
-export function FinalCardPage({ profile, roles, baselineBefore, baselineAfter, onHome, onCardDownloaded }) {
+export function FinalCardPage({
+  profile,
+  roles,
+  baselineBefore,
+  baselineAfter,
+  onPreviousStep,
+  onHome,
+  onCardDownloaded,
+}) {
   const cardRef = useRef(null);
   const [busy, setBusy] = useState(false);
   const delta = baselineAfter - baselineBefore;
@@ -60,7 +69,13 @@ export function FinalCardPage({ profile, roles, baselineBefore, baselineAfter, o
           </div>
         </div>
 
-        <div className="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:justify-center">
+        <div className="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:justify-center">
+          {typeof onPreviousStep === 'function' && (
+            <Button type="button" variant="ghost" onClick={onPreviousStep} className={flowPreviousStepButtonClass}>
+              <ArrowLeft className="h-5 w-5" aria-hidden />
+              Önceki adım
+            </Button>
+          )}
           <Button size="lg" onClick={handleDownload} disabled={busy}>
             {busy ? (
               <>

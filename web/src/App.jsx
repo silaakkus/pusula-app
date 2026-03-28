@@ -50,6 +50,30 @@ function resumeTargetStep(s) {
   return s.step;
 }
 
+/** Analiz yüklenirken geri yok (async yarışı önlemek için). */
+function getPreviousStep(current) {
+  switch (current) {
+    case 'profile':
+      return 'home';
+    case 'baseline':
+      return 'profile';
+    case 'analyzing':
+      return null;
+    case 'results':
+      return 'baseline';
+    case 'barrier':
+      return 'results';
+    case 'barrierReview':
+      return 'barrier';
+    case 'postsurvey':
+      return 'barrierReview';
+    case 'card':
+      return 'postsurvey';
+    default:
+      return null;
+  }
+}
+
 const App = () => {
   const [step, setStep] = useState('home');
   const [matrix, setMatrix] = useState(null);
@@ -189,6 +213,13 @@ const App = () => {
     logEvent('nav_home_logo', {});
   }, []);
 
+  const goToPreviousStep = useCallback(() => {
+    const prev = getPreviousStep(step);
+    if (!prev) return;
+    logEvent('flow_previous_step', { from: step, to: prev });
+    setStep(prev);
+  }, [step]);
+
   const resetFlow = () => {
     clearFlowSnapshot();
     setStep('home');
@@ -214,20 +245,23 @@ const App = () => {
       <div className="pointer-events-none absolute left-[-10%] top-[-10%] h-[40%] w-[40%] rounded-full bg-pusula-purple/20 blur-3xl" />
       <div className="pointer-events-none absolute bottom-[-10%] right-[-10%] h-[40%] w-[40%] rounded-full bg-pusula-coral/15 blur-3xl" />
 
-      <nav className="relative z-20 flex w-full max-w-full flex-col gap-3 px-4 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-6">
-        <button
-          type="button"
-          onClick={goHome}
-          className="group flex cursor-pointer items-center gap-2.5 rounded-xl border-0 bg-transparent p-0 text-left transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 focus-visible:ring-offset-2 sm:gap-3"
-          aria-label="Ana sayfaya dön"
-        >
-          <div className="rounded-xl bg-indigo-600 p-2.5 transition-transform duration-300 group-hover:rotate-12 sm:p-3">
-            <Compass className="h-7 w-7 text-white sm:h-8 sm:w-8" aria-hidden />
+      <nav className="relative z-20 flex w-full max-w-full flex-col gap-3 px-4 py-6 sm:px-6">
+        <div className="flex w-full flex-wrap items-center gap-3 sm:justify-between">
+          <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2 sm:gap-3">
+            <button
+              type="button"
+              onClick={goHome}
+              className="group flex cursor-pointer items-center gap-2.5 rounded-xl border-0 bg-transparent p-0 text-left transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 focus-visible:ring-offset-2 sm:gap-3"
+              aria-label="Ana sayfaya dön"
+            >
+              <div className="rounded-xl bg-indigo-600 p-2.5 transition-transform duration-300 group-hover:rotate-12 sm:p-3">
+                <Compass className="h-7 w-7 text-white sm:h-8 sm:w-8" aria-hidden />
+              </div>
+              <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-3xl font-bold leading-none tracking-tight text-transparent sm:text-[2rem]">
+                Pusula
+              </span>
+            </button>
           </div>
-          <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-3xl font-bold leading-none tracking-tight text-transparent sm:text-[2rem]">
-            Pusula
-          </span>
-        </button>
 
         <div className="flex flex-col items-stretch gap-2 sm:items-end">
           <PusulaBadgesStrip />
@@ -236,6 +270,7 @@ const App = () => {
               {navLabel}
             </div>
           )}
+        </div>
         </div>
       </nav>
 
@@ -264,7 +299,7 @@ const App = () => {
           {!dataLoading && !dataError && matrix && (
             <ProfilePage
               matrix={matrix}
-              onBack={() => setStep('home')}
+              onPreviousStep={goToPreviousStep}
               onSubmit={(p) => {
                 unlockPusulaBadge(BADGE_IDS.PROFILE);
                 setProfile(p);
@@ -280,7 +315,7 @@ const App = () => {
         <BaselinePage
           value={baselineBefore}
           onChange={setBaselineBefore}
-          onBack={() => setStep('profile')}
+          onPreviousStep={goToPreviousStep}
           onNext={runAnalysis}
         />
       )}
@@ -300,6 +335,7 @@ const App = () => {
             runAnalysis();
           }}
           onContinue={() => setStep('barrier')}
+          onPreviousStep={goToPreviousStep}
         />
       )}
 
@@ -315,11 +351,16 @@ const App = () => {
             logEvent('barrier_skip', {});
             finishBarrier(BARRIER_STATIC_FALLBACK);
           }}
+          onPreviousStep={goToPreviousStep}
         />
       )}
 
       {step === 'barrierReview' && barrierResult && (
-        <BarrierReviewPage result={barrierResult} onNext={() => setStep('postsurvey')} />
+        <BarrierReviewPage
+          result={barrierResult}
+          onPreviousStep={goToPreviousStep}
+          onNext={() => setStep('postsurvey')}
+        />
       )}
 
       {step === 'postsurvey' && (
@@ -327,6 +368,7 @@ const App = () => {
           baselineBefore={baselineBefore}
           value={baselineAfter}
           onChange={setBaselineAfter}
+          onPreviousStep={goToPreviousStep}
           onNext={() => setStep('card')}
         />
       )}
@@ -337,6 +379,7 @@ const App = () => {
           roles={roles}
           baselineBefore={baselineBefore}
           baselineAfter={baselineAfter}
+          onPreviousStep={goToPreviousStep}
           onHome={resetFlow}
           onCardDownloaded={() => unlockPusulaBadge(BADGE_IDS.CARD)}
         />

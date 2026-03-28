@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Loader2 } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Loader2 } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
 import { runBarrierReframe } from '../lib/gemini.js';
 import { logEvent } from '../lib/analytics.js';
 import { BARRIER_STATIC_FALLBACK } from '../lib/barrierFallback.js';
+import { flowPreviousStepButtonClass } from '../lib/flowPreviousStepButton.js';
 
-export function BarrierPage({ apiKey, profileSummary, onResult, onSkip }) {
+export function BarrierPage({ apiKey, profileSummary, onResult, onSkip, onPreviousStep }) {
   const [text, setText] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -54,23 +55,37 @@ export function BarrierPage({ apiKey, profileSummary, onResult, onSkip }) {
           />
           {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-end">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-end sm:gap-3">
             <Button variant="ghost" type="button" onClick={onSkip} disabled={loading}>
               Atla (sabit öneriyle devam)
             </Button>
-            <Button type="button" onClick={handleSubmit} disabled={loading}>
-              {loading ? (
-                <>
-                  <Loader2 className="h-5 w-5 animate-spin" />
-                  Gönderiliyor…
-                </>
-              ) : (
-                <>
-                  Yeniden çerçevele
-                  <ArrowRight className="h-5 w-5" />
-                </>
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-3">
+              {typeof onPreviousStep === 'function' && (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  onClick={onPreviousStep}
+                  disabled={loading}
+                  className={flowPreviousStepButtonClass}
+                >
+                  <ArrowLeft className="h-5 w-5" aria-hidden />
+                  Önceki adım
+                </Button>
               )}
-            </Button>
+              <Button type="button" onClick={handleSubmit} disabled={loading}>
+                {loading ? (
+                  <>
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                    Gönderiliyor…
+                  </>
+                ) : (
+                  <>
+                    Yeniden çerçevele
+                    <ArrowRight className="h-5 w-5" />
+                  </>
+                )}
+              </Button>
+            </div>
           </div>
         </Card>
       </motion.div>

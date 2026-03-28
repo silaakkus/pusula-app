@@ -1,11 +1,19 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, ChevronDown, ExternalLink, Loader2, RefreshCw, Sparkles } from 'lucide-react';
+import {
+  ArrowLeft,
+  ArrowRight,
+  ChevronDown,
+  ExternalLink,
+  Loader2,
+  RefreshCw,
+  Sparkles,
+} from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
 import { Input } from '../components/ui/Input';
-import { opportunitiesForRole, buildWebhookOpportunities } from '../lib/opportunitiesFilter.js';
+import { opportunitiesForRoleWithLlm, buildWebhookOpportunities } from '../lib/opportunitiesFilter.js';
 import { logEvent } from '../lib/analytics.js';
 import {
   DEFAULT_DAY_IN_LIFE,
@@ -20,6 +28,7 @@ import {
 import { normalizeEmployersList } from '../lib/employersNormalize.js';
 import { normalizeInternshipPrograms } from '../lib/internshipsNormalize.js';
 import { getLlmBrandLabel } from '../lib/llmConfig.js';
+import { flowPreviousStepButtonClass } from '../lib/flowPreviousStepButton.js';
 
 function getRoleTitlesForWebhook(roles) {
   return (roles ?? [])
@@ -48,18 +57,45 @@ function resolveDayInLife(matrix, profile, role) {
   return DEFAULT_DAY_IN_LIFE;
 }
 
-function resolveSalaryRange(matrix, profile, role) {
+/** LLM (Groq/Gemini) maaş tahmini önce, ardından matris; ikisi de varsa UI’da yan yana. */
+function resolveSalaryBlocks(matrix, profile, role) {
+  const blocks = [];
   if (validateSalaryRange(role?.salaryRange)) {
-    return {
+    blocks.push({
       junior: role.salaryRange.junior.trim(),
       mid: role.salaryRange.mid.trim(),
       senior: role.salaryRange.senior.trim(),
       source: role.salaryRange.source.trim(),
-    };
+      _from: 'llm',
+    });
   }
   const fromMatrix = findSalaryRangeInMatrix(matrix, profile?.disciplineId, role);
-  if (fromMatrix) return fromMatrix;
-  return DEFAULT_SALARY_RANGE;
+  if (fromMatrix && validateSalaryRange(fromMatrix)) {
+    blocks.push({
+      junior: fromMatrix.junior.trim(),
+      mid: fromMatrix.mid.trim(),
+      senior: fromMatrix.senior.trim(),
+      source: fromMatrix.source.trim(),
+      _from: 'matrix',
+    });
+  }
+  if (blocks.length === 0) {
+    blocks.push({
+      junior: DEFAULT_SALARY_RANGE.junior,
+      mid: DEFAULT_SALARY_RANGE.mid,
+      senior: DEFAULT_SALARY_RANGE.senior,
+      source: DEFAULT_SALARY_RANGE.source,
+      _from: 'default',
+    });
+  }
+  return blocks;
+}
+
+function salaryBlockTagLabel(from, analysisSource) {
+  if (from === 'matrix') return 'Matris rehberi';
+  if (from === 'default') return 'Genel şablon';
+  if (analysisSource === 'fallback') return 'Matris rehberi';
+  return `${getLlmBrandLabel()} tahmini`;
 }
 
 function resolveEmployers(matrix, profile, role) {
@@ -70,12 +106,30 @@ function resolveEmployers(matrix, profile, role) {
   return [];
 }
 
+/** LLM staj linkleri ile matris stajlarını birleştirir; `_source`: `llm` | `matrix`. */
 function resolveInternships(matrix, profile, role) {
-  const fromRole = normalizeInternshipPrograms(role?.internshipPrograms, 6);
-  if (fromRole.length) return fromRole;
-  const fromMatrix = findInternshipProgramsInMatrix(matrix, profile?.disciplineId, role);
-  if (fromMatrix?.length) return normalizeInternshipPrograms(fromMatrix, 6);
-  return [];
+  const fromLlm = normalizeInternshipPrograms(role?.internshipPrograms, 6).map((p) => ({
+    ...p,
+    _source: 'llm',
+  }));
+  const fromMatrix = normalizeInternshipPrograms(
+    findInternshipProgramsInMatrix(matrix, profile?.disciplineId, role) ?? [],
+    6,
+  ).map((p) => ({ ...p, _source: 'matrix' }));
+  const seen = new Set();
+  const out = [];
+  for (const p of fromLlm) {
+    if (seen.has(p.url)) continue;
+    seen.add(p.url);
+    out.push(p);
+  }
+  for (const p of fromMatrix) {
+    if (seen.has(p.url)) continue;
+    seen.add(p.url);
+    out.push(p);
+    if (out.length >= 10) break;
+  }
+  return out;
 }
 
 /** n8n / e-posta webhook’u: uygulamadaki sonuç kartlarıyla uyumlu zengin gövde */
@@ -90,7 +144,11 @@ function buildRichWebhookPayload({
 }) {
   const rolesDetail = (roles ?? []).map((role) => {
     const dil = resolveDayInLife(matrix, profile, role);
-    const sr = resolveSalaryRange(matrix, profile, role);
+    const salaryBlocks = resolveSalaryBlocks(matrix, profile, role);
+    const pickSalary = (from) => salaryBlocks.find((b) => b._from === from);
+    const salaryChunk = (b) =>
+      b ? { junior: b.junior, mid: b.mid, senior: b.senior, source: b.source } : null;
+    const primarySalary = salaryBlocks[0];
     const employers = resolveEmployers(matrix, profile, role)
       .slice(0, 8)
       .map(({ name, url }) => ({ name, url: url || '' }));
@@ -98,7 +156,15 @@ function buildRichWebhookPayload({
       name: p.name,
       url: p.url,
       summary: typeof p.summary === 'string' ? p.summary.slice(0, 400) : '',
+      source: p._source === 'llm' ? 'llm' : 'matrix',
     }));
+    const llmApplicationPrograms = Array.isArray(role?.llmApplicationPrograms)
+      ? role.llmApplicationPrograms.map((p) => ({
+          name: p.name,
+          url: p.url,
+          forWho: p.forWho ?? '',
+        }))
+      : [];
     return {
       roleName: typeof role?.roleName === 'string' ? role.roleName : '',
       tags: Array.isArray(role?.tags) ? role.tags : [],
@@ -107,13 +173,17 @@ function buildRichWebhookPayload({
       starterResources: Array.isArray(role?.starterResources) ? role.starterResources : [],
       dayInLife: dil,
       salaryRange: {
-        junior: sr.junior,
-        mid: sr.mid,
-        senior: sr.senior,
-        source: sr.source,
+        ...salaryChunk(primarySalary),
+        primaryOrigin: primarySalary._from,
+      },
+      salaryRangesByOrigin: {
+        llm: salaryChunk(pickSalary('llm')),
+        matrix: salaryChunk(pickSalary('matrix')),
+        default: salaryChunk(pickSalary('default')),
       },
       employers,
       internships,
+      llmApplicationPrograms,
     };
   });
 
@@ -152,8 +222,11 @@ function structuredSourceType(matrix, profile, role, analysisSource, kind) {
       return 'default';
     }
     if (kind === 'salary') {
-      if (validateSalaryRange(role?.salaryRange) || findSalaryRangeInMatrix(matrix, profile?.disciplineId, role))
-        return 'matrix';
+      const llm = validateSalaryRange(role?.salaryRange);
+      const mat = !!findSalaryRangeInMatrix(matrix, profile?.disciplineId, role);
+      if (llm && mat) return 'mixed-salary';
+      if (llm) return 'matrix';
+      if (mat) return 'matrix';
       return 'default';
     }
     if (kind === 'employers') return 'matrix';
@@ -165,8 +238,11 @@ function structuredSourceType(matrix, profile, role, analysisSource, kind) {
     return 'default';
   }
   if (kind === 'salary') {
-    if (validateSalaryRange(role?.salaryRange)) return 'llm';
-    if (findSalaryRangeInMatrix(matrix, profile?.disciplineId, role)) return 'matrix';
+    const llm = validateSalaryRange(role?.salaryRange);
+    const mat = !!findSalaryRangeInMatrix(matrix, profile?.disciplineId, role);
+    if (llm && mat) return 'mixed-salary';
+    if (llm) return 'llm';
+    if (mat) return 'matrix';
     return 'default';
   }
   if (kind === 'employers') {
@@ -175,8 +251,12 @@ function structuredSourceType(matrix, profile, role, analysisSource, kind) {
     return 'default';
   }
   if (kind === 'internships') {
-    if (normalizeInternshipPrograms(role?.internshipPrograms, 6).length) return 'llm';
-    if (findInternshipProgramsInMatrix(matrix, profile?.disciplineId, role)?.length) return 'matrix';
+    const llmN = normalizeInternshipPrograms(role?.internshipPrograms, 6).length;
+    const matRaw = findInternshipProgramsInMatrix(matrix, profile?.disciplineId, role);
+    const matN = Array.isArray(matRaw) ? matRaw.length : 0;
+    if (llmN && matN) return 'mixed-internships';
+    if (llmN) return 'llm';
+    if (matN) return 'matrix';
     return 'default';
   }
   return 'default';
@@ -184,6 +264,8 @@ function structuredSourceType(matrix, profile, role, analysisSource, kind) {
 
 function structuredSourceLabel(sourceType, analysisSource) {
   if (sourceType === 'matrix') return 'Matris rehberi';
+  if (sourceType === 'mixed-salary') return `Matris + ${getLlmBrandLabel()}`;
+  if (sourceType === 'mixed-internships') return 'Matris + Groq';
   if (sourceType === 'default') return 'Genel şablon';
   if (analysisSource === 'fallback') return 'Matris rehberi';
   return `${getLlmBrandLabel()} önerisi`;
@@ -220,6 +302,7 @@ export function ResultsPage({
   geminiErrorMessage,
   onRetryAnalysis,
   onContinue,
+  onPreviousStep,
 }) {
   const [email, setEmail] = useState('');
   const [emailSending, setEmailSending] = useState(false);
@@ -316,13 +399,16 @@ export function ResultsPage({
 
       <div className="grid gap-6">
         {roles.map((role, idx) => {
-          const opps = opportunitiesForRole(role, opportunities, 3, profile?.cityId ?? 'all');
+          const opps = opportunitiesForRoleWithLlm(role, opportunities, 3, profile?.cityId ?? 'all', idx);
           const dil = resolveDayInLife(matrix, profile, role);
-          const sr = resolveSalaryRange(matrix, profile, role);
+          const salaryBlocks = resolveSalaryBlocks(matrix, profile, role);
+          const salaryMixed =
+            salaryBlocks.some((b) => b._from === 'llm') && salaryBlocks.some((b) => b._from === 'matrix');
           const employers = resolveEmployers(matrix, profile, role);
           const internships = resolveInternships(matrix, profile, role);
+          const internMixed =
+            internships.some((p) => p._source === 'llm') && internships.some((p) => p._source === 'matrix');
           const daySrc = structuredSourceType(matrix, profile, role, analysisSource, 'day');
-          const salarySrc = structuredSourceType(matrix, profile, role, analysisSource, 'salary');
           const empSrc = structuredSourceType(matrix, profile, role, analysisSource, 'employers');
           const intSrc = structuredSourceType(matrix, profile, role, analysisSource, 'internships');
           const internOpen = !!internMainOpen[idx];
@@ -460,8 +546,16 @@ export function ResultsPage({
                     }}
                   >
                     <span className="min-w-0 pr-2">Maaş aralığı 💰</span>
-                    <span className="flex shrink-0 items-center gap-2">
-                      <ResultSectionSourceTag label={structuredSourceLabel(salarySrc, analysisSource)} />
+                    <span className="flex shrink-0 flex-wrap items-center justify-end gap-1">
+                      {salaryBlocks.some((b) => b._from === 'llm') && (
+                        <ResultSectionSourceTag label={salaryBlockTagLabel('llm', analysisSource)} />
+                      )}
+                      {salaryBlocks.some((b) => b._from === 'matrix') && (
+                        <ResultSectionSourceTag label="Matris rehberi" />
+                      )}
+                      {salaryBlocks.some((b) => b._from === 'default') && (
+                        <ResultSectionSourceTag label="Genel şablon" />
+                      )}
                       <ChevronDown
                         className={`h-5 w-5 text-slate-500 transition-transform ${salaryOpen ? 'rotate-180' : ''}`}
                         aria-hidden
@@ -469,19 +563,35 @@ export function ResultsPage({
                     </span>
                   </button>
                   {salaryOpen && (
-                    <div className="border-t border-slate-200/70 px-3 pb-3 pt-1">
-                      {[
-                        { key: 'junior', label: 'Juniör', range: sr.junior },
-                        { key: 'mid', label: 'Orta seviye', range: sr.mid },
-                        { key: 'senior', label: 'Kıdemli', range: sr.senior },
-                      ].map((row, rowIdx) => (
+                    <div className="border-t border-slate-200/70 px-3 pb-3 pt-2">
+                      {salaryMixed && (
+                        <p className="mb-3 text-xs leading-relaxed text-slate-600">
+                          Aşağıda yapay zekânın güncel piyasa tahmini ile matris rehberi yan yana; gerçek ücret şirket,
+                          şehir ve deneyime göre değişir.
+                        </p>
+                      )}
+                      {salaryBlocks.map((block, bi) => (
                         <div
-                          key={row.key}
-                          className={`flex flex-col gap-1 py-3 ${rowIdx < 2 ? 'border-b border-slate-200/60' : ''}`}
+                          key={`${block._from}-${bi}`}
+                          className={bi > 0 ? 'mt-4 border-t border-slate-200/60 pt-4' : ''}
                         >
-                          <span className="text-sm font-bold text-slate-800">{row.label}</span>
-                          <span className="text-sm font-semibold tabular-nums text-indigo-900">{row.range}</span>
-                          <span className="text-xs leading-snug text-slate-500">{sr.source}</span>
+                          <div className="mb-2 flex flex-wrap items-center gap-2">
+                            <ResultSectionSourceTag label={salaryBlockTagLabel(block._from, analysisSource)} />
+                          </div>
+                          {[
+                            { key: 'junior', label: 'Juniör', range: block.junior },
+                            { key: 'mid', label: 'Orta seviye', range: block.mid },
+                            { key: 'senior', label: 'Kıdemli', range: block.senior },
+                          ].map((row, rowIdx) => (
+                            <div
+                              key={row.key}
+                              className={`flex flex-col gap-1 py-3 ${rowIdx < 2 ? 'border-b border-slate-200/60' : ''}`}
+                            >
+                              <span className="text-sm font-bold text-slate-800">{row.label}</span>
+                              <span className="text-sm font-semibold tabular-nums text-indigo-900">{row.range}</span>
+                            </div>
+                          ))}
+                          <p className="text-xs leading-snug text-slate-500">{block.source}</p>
                         </div>
                       ))}
                     </div>
@@ -517,18 +627,30 @@ export function ResultsPage({
                               key={`${prog.name}-${pi}`}
                               className="rounded-xl border border-white/50 bg-white/80 p-3 text-left shadow-sm"
                             >
-                              <a
-                                href={prog.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                onClick={() =>
-                                  logEvent('internship_click', { name: prog.name, role: role.roleName })
-                                }
-                                className="inline-flex items-center gap-1 text-sm font-bold text-indigo-700 hover:text-indigo-900"
-                              >
-                                {prog.name}
-                                <ExternalLink className="h-4 w-4 shrink-0 opacity-70" aria-hidden />
-                              </a>
+                              <div className="flex flex-wrap items-center gap-2">
+                                <a
+                                  href={prog.url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  onClick={() =>
+                                    logEvent('internship_click', {
+                                      name: prog.name,
+                                      role: role.roleName,
+                                      source: prog._source,
+                                    })
+                                  }
+                                  className="inline-flex items-center gap-1 text-sm font-bold text-indigo-700 hover:text-indigo-900"
+                                >
+                                  {prog.name}
+                                  <ExternalLink className="h-4 w-4 shrink-0 opacity-70" aria-hidden />
+                                </a>
+                                {internMixed && prog._source === 'llm' && (
+                                  <ResultSectionSourceTag label={`${getLlmBrandLabel()} önerisi`} />
+                                )}
+                                {internMixed && prog._source === 'matrix' && (
+                                  <ResultSectionSourceTag label="Matris rehberi" />
+                                )}
+                              </div>
                               <p className="mt-2 text-sm leading-relaxed text-slate-600">{prog.summary}</p>
                               <p className="mt-2 text-xs font-semibold text-slate-700">
                                 Kimler başvurabilir?{' '}
@@ -582,23 +704,45 @@ export function ResultsPage({
 
                 <div className="mt-6 border-t border-slate-200/80 pt-6">
                   <div className="flex flex-wrap items-center justify-between gap-2">
-                    <h4 className="text-sm font-bold text-slate-800">Yerel fırsat radarı (bu rol için)</h4>
-                    <ResultSectionSourceTag label="Program verisi" />
+                    <h4 className="text-sm font-bold text-slate-800">Fırsat radarı (bu rol için)</h4>
+                    <div className="flex flex-wrap gap-1">
+                      {opps.some((o) => !o.fromLlm) && <ResultSectionSourceTag label="Program verisi" />}
+                      {opps.some((o) => o.fromLlm) && (
+                        <ResultSectionSourceTag label={`${getLlmBrandLabel()} link önerisi`} />
+                      )}
+                    </div>
                   </div>
+                  <p className="mt-1 text-xs text-slate-500">
+                    Yerel veri setindeki programlar ve yapay zekânın önerdiği başvuru sayfaları aynı listede; satır
+                    etiketinden kaynağı ayırt edebilirsin.
+                  </p>
                   <ul className="mt-3 space-y-3">
                     {opps.map((o) => (
                       <li
                         key={o.opportunityId}
-                        className="flex flex-col gap-1 rounded-2xl border border-white/40 bg-white/50 p-3 sm:flex-row sm:items-center sm:justify-between"
+                        className="flex flex-col gap-2 rounded-2xl border border-white/40 bg-white/50 p-3 sm:flex-row sm:items-center sm:justify-between"
                       >
-                        <div>
-                          <div className="font-semibold text-slate-900">{o.name}</div>
-                          <div className="text-xs text-slate-500">
-                            {o.type === 'program' && 'Program'}
-                            {o.type === 'community' && 'Topluluk'}
-                            {o.type === 'course' && 'Kurs / içerik'}
-                            {o.type === 'scholarship' && 'Burs / destek'}
-                            {' · '}
+                        <div className="min-w-0">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <div className="font-semibold text-slate-900">{o.name}</div>
+                            {o.fromLlm ? (
+                              <ResultSectionSourceTag label={`${getLlmBrandLabel()} link önerisi`} />
+                            ) : (
+                              <ResultSectionSourceTag label="Program verisi" />
+                            )}
+                          </div>
+                          <div className="mt-1 text-xs text-slate-500">
+                            {o.fromLlm
+                              ? 'Başvuru / program sayfası · '
+                              : [
+                                  o.type === 'program' && 'Program',
+                                  o.type === 'community' && 'Topluluk',
+                                  o.type === 'course' && 'Kurs / içerik',
+                                  o.type === 'scholarship' && 'Burs / destek',
+                                ]
+                                  .filter(Boolean)
+                                  .join('') || 'Program'}
+                            {!o.fromLlm && ' · '}
                             {o.forWho}
                           </div>
                         </div>
@@ -607,9 +751,13 @@ export function ResultsPage({
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={() =>
-                            logEvent('opportunity_click', { opportunityId: o.opportunityId, role: role.roleName })
+                            logEvent('opportunity_click', {
+                              opportunityId: o.opportunityId,
+                              role: role.roleName,
+                              fromLlm: !!o.fromLlm,
+                            })
                           }
-                          className="inline-flex items-center gap-1 text-sm font-bold text-indigo-600 hover:text-indigo-800"
+                          className="inline-flex shrink-0 items-center gap-1 text-sm font-bold text-indigo-600 hover:text-indigo-800"
                         >
                           Siteye git
                           <ExternalLink className="h-4 w-4" />
@@ -681,10 +829,18 @@ export function ResultsPage({
             {getLlmBrandLabel()} ile tekrar dene
           </Button>
         )}
-        <Button size="lg" className="sm:ml-auto" onClick={onContinue}>
-          Engel kırıcıya geç
-          <ArrowRight className="h-5 w-5" />
-        </Button>
+        <div className="flex flex-wrap items-center justify-end gap-3 sm:ml-auto">
+          {typeof onPreviousStep === 'function' && (
+            <Button type="button" variant="ghost" onClick={onPreviousStep} className={flowPreviousStepButtonClass}>
+              <ArrowLeft className="h-5 w-5" aria-hidden />
+              Önceki adım
+            </Button>
+          )}
+          <Button size="lg" onClick={onContinue}>
+            Engel kırıcıya geç
+            <ArrowRight className="h-5 w-5" />
+          </Button>
+        </div>
       </div>
     </main>
   );
