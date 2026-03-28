@@ -25,7 +25,47 @@
           "morning": "Sabah günlük KPI tablolarını ve dünkü kampanya metriklerini kontrol edersin; SQL ile küçük bir veri çekmesi veya mevcut dashboard’u güncellersin.",
           "afternoon": "Öğleden sonra ürün veya pazarlama ekibiyle kısa bir senkron yapar, A/B testi sonuçlarını slaytta özetlersin; soru gelirse tek grafikle cevap üretirsin.",
           "evening": "Akşam notlarını ve veri kaynaklarını dokümante eder, ertesi gün için analiz backlog’una iki madde eklersin."
-        }
+        },
+        "salaryRange": {
+          "junior": "28.000 - 48.000 ₺",
+          "mid": "45.000 - 72.000 ₺",
+          "senior": "68.000 - 105.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Trendyol",
+            "url": "https://careers.trendyol.com/"
+          },
+          {
+            "name": "Hepsiburada",
+            "url": "https://kurumsal.hepsiburada.com/kariyer"
+          },
+          {
+            "name": "Getir",
+            "url": "https://careers.getir.com/"
+          },
+          {
+            "name": "İş Bankası",
+            "url": "https://www.iskurumsal.com/kariyer"
+          },
+          {
+            "name": "Turkcell",
+            "url": "https://www.turkcell.com.tr/kurumsal/kariyer"
+          },
+          {
+            "name": "Insider",
+            "url": "https://useinsider.com/careers/"
+          },
+          {
+            "name": "LC Waikiki",
+            "url": "https://kurumsal.lcwaikiki.com/kariyer"
+          },
+          {
+            "name": "Migros",
+            "url": "https://www.migroskariyer.com/"
+          }
+        ]
       },
       {
         "roleId": "ml-associate",
@@ -49,7 +89,47 @@
           "morning": "Sabah dün eğittiğin modelin metriklerini ve logları incelersin; notebook’ta küçük bir hiperparametre denemesi veya veri temizliği yaparsın.",
           "afternoon": "Öğleden sonra mühendislik ekibiyle model çıktısının ürüne nasıl bağlanacağını konuşur, önyargı veya kalite kontrolü için kısa bir checklist üzerinden geçersin.",
           "evening": "Akşam deney sonuçlarını özetleyip paylaşılan dokümana işlersin, yarın denenecek bir hipotez notu bırakırsın."
-        }
+        },
+        "salaryRange": {
+          "junior": "42.000 - 65.000 ₺",
+          "mid": "65.000 - 98.000 ₺",
+          "senior": "95.000 - 145.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Dream Games",
+            "url": "https://careers.dreamgames.com/"
+          },
+          {
+            "name": "Trendyol",
+            "url": "https://careers.trendyol.com/"
+          },
+          {
+            "name": "Getir",
+            "url": "https://careers.getir.com/"
+          },
+          {
+            "name": "Insider",
+            "url": "https://useinsider.com/careers/"
+          },
+          {
+            "name": "Garanti BBVA Teknoloji",
+            "url": "https://www.garantibbvatech.com.tr/kariyer"
+          },
+          {
+            "name": "Huawei Türkiye",
+            "url": "https://career.huawei.com/"
+          },
+          {
+            "name": "Amazon Türkiye (ilanlar)",
+            "url": "https://www.amazon.jobs/en/search?loc_query=Turkey"
+          },
+          {
+            "name": "Microsoft Türkiye",
+            "url": "https://careers.microsoft.com/professional/tr-tr"
+          }
+        ]
       },
       {
         "roleId": "risk-analytics",
@@ -73,7 +153,47 @@
           "morning": "Sabah regülasyon veya iç politika güncellemelerine bakar, risk raporundaki sayıları doğrularsın; Excel veya BI’da bir senaryo tablosunu tazeler sin.",
           "afternoon": "Öğleden sonra denetim veya finans ile toplantıda stres testi varsayımlarını açıklar, olasılıksal sorulara tabloyla yanıt verirsin.",
           "evening": "Akşam rapor taslağını revize eder, kaynak linklerini ve açıklayıcı notları tamamlarsın."
-        }
+        },
+        "salaryRange": {
+          "junior": "38.000 - 55.000 ₺",
+          "mid": "55.000 - 82.000 ₺",
+          "senior": "80.000 - 118.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Garanti BBVA",
+            "url": "https://www.garantibbva.com.tr/kariyer"
+          },
+          {
+            "name": "İş Bankası",
+            "url": "https://www.iskurumsal.com/kariyer"
+          },
+          {
+            "name": "Allianz Türkiye",
+            "url": "https://www.allianz.com.tr/kariyer.html"
+          },
+          {
+            "name": "Aksigorta",
+            "url": "https://www.aksigorta.com.tr/kariyer"
+          },
+          {
+            "name": "BKM",
+            "url": "https://www.bkm.com.tr/insan-kaynaklari"
+          },
+          {
+            "name": "QNB Finansbank",
+            "url": "https://www.qnbfinansbank.com/kariyer"
+          },
+          {
+            "name": "EY Türkiye",
+            "url": "https://www.ey.com/tr_tr/careers"
+          },
+          {
+            "name": "Deloitte Türkiye",
+            "url": "https://www2.deloitte.com/tr/tr/pages/careers.html"
+          }
+        ]
       },
       {
         "roleId": "data-storytelling",
@@ -97,7 +217,47 @@
           "morning": "Sabah yöneticiler için hazırlayacağın özet grafikleri seçer, veri kaynağının güncelliğini kontrol edersin.",
           "afternoon": "Öğleden sonra sunum taslağını paydaşlarla gözden geçirir, “tek sayfa hikâye” akışını netleştirirsin.",
           "evening": "Akşam görsel dil ve eksen etiketlerini düzeltir, yarın paylaşılacak PDF veya dashboard linkini hazırlarsın."
-        }
+        },
+        "salaryRange": {
+          "junior": "32.000 - 48.000 ₺",
+          "mid": "48.000 - 72.000 ₺",
+          "senior": "70.000 - 102.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Unilever Türkiye",
+            "url": "https://www.unilever.com.tr/kariyer/"
+          },
+          {
+            "name": "Procter & Gamble Türkiye",
+            "url": "https://www.pgcareers.com/global/en"
+          },
+          {
+            "name": "Eczacıbaşı Holding",
+            "url": "https://www.eczacibasi.com.tr/tr/kariyer"
+          },
+          {
+            "name": "Trendyol",
+            "url": "https://careers.trendyol.com/"
+          },
+          {
+            "name": "Yemeksepeti (Delivery Hero)",
+            "url": "https://careers.deliveryhero.com/"
+          },
+          {
+            "name": "ING Türkiye",
+            "url": "https://www.ing.com.tr/tr/kariyer"
+          },
+          {
+            "name": "Publicis Groupe TR",
+            "url": "https://www.publicisgroupe.com/en/careers"
+          },
+          {
+            "name": "Mediacom / GroupM TR",
+            "url": "https://www.wpp.com/careers"
+          }
+        ]
       }
     ]
   },
@@ -127,7 +287,47 @@
           "morning": "Sabah dünkü kullanıcı görüşmesi notlarını temalar halinde kodlar, kısa bulgu listesini paylaşırsın.",
           "afternoon": "Öğleden sonra tasarım ekibiyle wireframe veya prototip üzerinde bulguları tartışır, bir sonraki test için soru setini güncellersin.",
           "evening": "Akşam özet raporu ve alıntıları düzenler, paydaşlara “ne öğrendik?” mailini gönderirsin."
-        }
+        },
+        "salaryRange": {
+          "junior": "36.000 - 54.000 ₺",
+          "mid": "52.000 - 78.000 ₺",
+          "senior": "75.000 - 112.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Yemeksepeti (Delivery Hero)",
+            "url": "https://careers.deliveryhero.com/"
+          },
+          {
+            "name": "Getir",
+            "url": "https://careers.getir.com/"
+          },
+          {
+            "name": "Trendyol",
+            "url": "https://careers.trendyol.com/"
+          },
+          {
+            "name": "Defacto",
+            "url": "https://kurumsal.defacto.com.tr/kariyer"
+          },
+          {
+            "name": "ING Türkiye",
+            "url": "https://www.ing.com.tr/tr/kariyer"
+          },
+          {
+            "name": "Vakıf Katılım",
+            "url": "https://www.vakifkatilim.com.tr/kariyer"
+          },
+          {
+            "name": "Huawei Türkiye",
+            "url": "https://career.huawei.com/"
+          },
+          {
+            "name": "Booking.com",
+            "url": "https://careers.booking.com/"
+          }
+        ]
       },
       {
         "roleId": "ai-ethics",
@@ -151,7 +351,47 @@
           "morning": "Sabah yeni bir model veya veri seti talebini etik çerçevede okur, risk maddelerini listelersin.",
           "afternoon": "Öğleden sonra ürün ve hukuk ile toplantıda önerilen ölçümün adalet etkisini tartışır, alternatifler sunarsın.",
           "evening": "Akşam kısa bir iç politika veya FAQ taslağını günceller, açık soruları takip listesine alırsın."
-        }
+        },
+        "salaryRange": {
+          "junior": "35.000 - 50.000 ₺",
+          "mid": "50.000 - 75.000 ₺",
+          "senior": "72.000 - 108.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Microsoft Türkiye",
+            "url": "https://careers.microsoft.com/professional/tr-tr"
+          },
+          {
+            "name": "Google Kariyer",
+            "url": "https://careers.google.com/"
+          },
+          {
+            "name": "Türk Telekom",
+            "url": "https://www.turktelekom.com.tr/kariyer"
+          },
+          {
+            "name": "Turkcell",
+            "url": "https://www.turkcell.com.tr/kurumsal/kariyer"
+          },
+          {
+            "name": "İş Bankası",
+            "url": "https://www.iskurumsal.com/kariyer"
+          },
+          {
+            "name": "KoçSistem",
+            "url": "https://www.kocsistem.com.tr/kariyer"
+          },
+          {
+            "name": "IBM Türkiye",
+            "url": "https://www.ibm.com/careers"
+          },
+          {
+            "name": "SAP Türkiye",
+            "url": "https://jobs.sap.com/"
+          }
+        ]
       },
       {
         "roleId": "people-analytics",
@@ -175,7 +415,47 @@
           "morning": "Sabah anket veya HRIS verisinin günlük kontrolünü yapar, temel turnover ve katılım grafiklerine bakarsın.",
           "afternoon": "Öğleden sonra yöneticilerle küçük grupla sonuçları yorumlar, gizlilik sınırları içinde öneri çıkarırsın.",
           "evening": "Akşam slayt veya özet metni son haline getirir, anonimleştirme notlarını gözden geçirirsin."
-        }
+        },
+        "salaryRange": {
+          "junior": "30.000 - 45.000 ₺",
+          "mid": "45.000 - 65.000 ₺",
+          "senior": "62.000 - 92.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Arçelik",
+            "url": "https://www.arcelik.com.tr/kariyer"
+          },
+          {
+            "name": "Koç Holding",
+            "url": "https://www.koc.com.tr/en/careers"
+          },
+          {
+            "name": "Turkcell",
+            "url": "https://www.turkcell.com.tr/kurumsal/kariyer"
+          },
+          {
+            "name": "Ford Otosan",
+            "url": "https://www.fordotosan.com.tr/tr/kariyer"
+          },
+          {
+            "name": "Mercedes-Benz Türk",
+            "url": "https://www.mercedes-benz-truck.com/tr/career"
+          },
+          {
+            "name": "Ülker",
+            "url": "https://www.ulker.com.tr/kariyer"
+          },
+          {
+            "name": "İş Bankası",
+            "url": "https://www.iskurumsal.com/kariyer"
+          },
+          {
+            "name": "Eczacıbaşı Holding",
+            "url": "https://www.eczacibasi.com.tr/tr/kariyer"
+          }
+        ]
       },
       {
         "roleId": "content-strategist",
@@ -199,7 +479,47 @@
           "morning": "Sabah içerik takvimine ve performans metriklerine bakar, hangi kanalda neyin işe yaradığını not edersin.",
           "afternoon": "Öğleden sonra pazarlama veya ürünle ton ve mesaj netliği için metin revizyonu yaparsın.",
           "evening": "Akşam yarının gönderileri için taslakları düzeltir, SEO ve erişilebilirlik kontrol listesinden geçirirsin."
-        }
+        },
+        "salaryRange": {
+          "junior": "28.000 - 42.000 ₺",
+          "mid": "42.000 - 62.000 ₺",
+          "senior": "58.000 - 88.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Insider",
+            "url": "https://useinsider.com/careers/"
+          },
+          {
+            "name": "Trendyol",
+            "url": "https://careers.trendyol.com/"
+          },
+          {
+            "name": "Hepsiburada",
+            "url": "https://kurumsal.hepsiburada.com/kariyer"
+          },
+          {
+            "name": "Yemeksepeti (Delivery Hero)",
+            "url": "https://careers.deliveryhero.com/"
+          },
+          {
+            "name": "Publicis Groupe TR",
+            "url": "https://www.publicisgroupe.com/en/careers"
+          },
+          {
+            "name": "Doğuş Grubu",
+            "url": "https://www.dogusgrubu.com.tr/kariyer"
+          },
+          {
+            "name": "Demirören Medya",
+            "url": "https://www.demirorenmedya.com/kariyer"
+          },
+          {
+            "name": "Netflix Jobs",
+            "url": "https://jobs.netflix.com/"
+          }
+        ]
       }
     ]
   },
@@ -229,7 +549,47 @@
           "morning": "Sabah pipeline çıktılarını ve kalite kontrol metriklerini kontrol edersin; literatürden bir yöntem notu okursun.",
           "afternoon": "Öğleden sonra biyolog veya klinisyen ekip arkadaşınla sonuçları yorumlar, görselleştirme için küçük bir script düzenlersin.",
           "evening": "Akşam kod ve veri sürümlerini kayıt altına alır, yeniden üretilebilirlik için README satırları eklersin."
-        }
+        },
+        "salaryRange": {
+          "junior": "42.000 - 62.000 ₺",
+          "mid": "62.000 - 92.000 ₺",
+          "senior": "90.000 - 132.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Pfizer Türkiye",
+            "url": "https://www.pfizer.com.tr/kariyer"
+          },
+          {
+            "name": "Novartis Türkiye",
+            "url": "https://www.novartis.com/tr-tr/kariyer"
+          },
+          {
+            "name": "Roche Türkiye",
+            "url": "https://www.roche.com.tr/kariyer"
+          },
+          {
+            "name": "GE Healthcare Türkiye",
+            "url": "https://jobs.gecareers.com/global/en"
+          },
+          {
+            "name": "Siemens Healthineers",
+            "url": "https://jobs.siemens-healthineers.com/"
+          },
+          {
+            "name": "Acıbadem Sağlık Grubu",
+            "url": "https://www.acibadem.com.tr/acibadem-kariyer"
+          },
+          {
+            "name": "Medipol Sağlık Grubu",
+            "url": "https://www.medipol.com.tr/kariyer"
+          },
+          {
+            "name": "TÜBİTAK BİLGEM",
+            "url": "https://www.tubitak.gov.tr/tr/kurumsal/insan-kaynaklari"
+          }
+        ]
       },
       {
         "roleId": "health-product",
@@ -253,7 +613,47 @@
           "morning": "Sabah kullanıcı hikâyelerini ve açık hataları incelersin; KVKK ve hasta güvenliği notlarını gözden geçirirsin.",
           "afternoon": "Öğleden sonra tasarım veya geliştirme ile randevu akışı veya bildirim senaryosunu netleştirirsin.",
           "evening": "Akşam kabul kriterlerini günceller, paydaşlara kısa durum özeti yazarsın."
-        }
+        },
+        "salaryRange": {
+          "junior": "45.000 - 65.000 ₺",
+          "mid": "65.000 - 95.000 ₺",
+          "senior": "92.000 - 140.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Acıbadem Sağlık Grubu",
+            "url": "https://www.acibadem.com.tr/acibadem-kariyer"
+          },
+          {
+            "name": "Medipol Sağlık Grubu",
+            "url": "https://www.medipol.com.tr/kariyer"
+          },
+          {
+            "name": "e-Nabız / Sağlık Bakanlığı",
+            "url": "https://www.saglik.gov.tr/"
+          },
+          {
+            "name": "Getir",
+            "url": "https://careers.getir.com/"
+          },
+          {
+            "name": "Trendyol",
+            "url": "https://careers.trendyol.com/"
+          },
+          {
+            "name": "Philips Türkiye",
+            "url": "https://www.careers.philips.com/global/en"
+          },
+          {
+            "name": "Boehringer Ingelheim TR",
+            "url": "https://www.boehringer-ingelheim.com/careers"
+          },
+          {
+            "name": "Sanofi Türkiye",
+            "url": "https://www.sanofi.com/en/careers"
+          }
+        ]
       },
       {
         "roleId": "sustainability-tech",
@@ -277,7 +677,47 @@
           "morning": "Sabah enerji veya atık verisi akışlarını kontrol eder, sensör veya açık veri kaynaklarını doğrularsın.",
           "afternoon": "Öğleden sonra tedarik veya operasyon ekibiyle sürdürülebilirlik KPI’larını konuşur, grafik taslağı hazırlarsın.",
           "evening": "Akşam rapor paragraflarını ve metod notunu tamamlar, yarın sunulacak özet slaydını bırakırsın."
-        }
+        },
+        "salaryRange": {
+          "junior": "34.000 - 48.000 ₺",
+          "mid": "48.000 - 72.000 ₺",
+          "senior": "68.000 - 100.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Enerjisa",
+            "url": "https://www.enerjisa.com.tr/kariyer"
+          },
+          {
+            "name": "Şişecam",
+            "url": "https://www.sisecam.com.tr/tr/kariyer"
+          },
+          {
+            "name": "Türk Telekom",
+            "url": "https://www.turktelekom.com.tr/kariyer"
+          },
+          {
+            "name": "Arçelik",
+            "url": "https://www.arcelik.com.tr/kariyer"
+          },
+          {
+            "name": "Ford Otosan",
+            "url": "https://www.fordotosan.com.tr/tr/kariyer"
+          },
+          {
+            "name": "VESTEL",
+            "url": "https://www.vestel.com.tr/kariyer"
+          },
+          {
+            "name": "İTÜ ARI Teknokent",
+            "url": "https://www.ariteknokent.com.tr/"
+          },
+          {
+            "name": "TSKB",
+            "url": "https://www.tskb.com.tr/kariyer"
+          }
+        ]
       }
     ]
   },
@@ -307,7 +747,47 @@
           "morning": "Sabah backlog ve metrik panosuna bakar, öncelik sırasını güncellersin; kullanıcı geri bildirimlerinden iki madde seçersin.",
           "afternoon": "Öğleden sonra tasarım ve mühendislikle sprint içi kararları netleştirir, kapsam ve tarih için kısa not alırsın.",
           "evening": "Akşam paydaşlara günlük özet ve riskleri yazarsın, yarının deneme planını kontrol edersin."
-        }
+        },
+        "salaryRange": {
+          "junior": "48.000 - 70.000 ₺",
+          "mid": "70.000 - 105.000 ₺",
+          "senior": "100.000 - 165.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Garanti BBVA Teknoloji",
+            "url": "https://www.garantibbvatech.com.tr/kariyer"
+          },
+          {
+            "name": "PayTR",
+            "url": "https://www.paytr.com/"
+          },
+          {
+            "name": "Amazon Türkiye (ilanlar)",
+            "url": "https://www.amazon.jobs/en/search?loc_query=Turkey"
+          },
+          {
+            "name": "Insider",
+            "url": "https://useinsider.com/careers/"
+          },
+          {
+            "name": "Dream Games",
+            "url": "https://careers.dreamgames.com/"
+          },
+          {
+            "name": "Trendyol",
+            "url": "https://careers.trendyol.com/"
+          },
+          {
+            "name": "Getir",
+            "url": "https://careers.getir.com/"
+          },
+          {
+            "name": "N11",
+            "url": "https://www.n11.com/kurumsal/kariyer"
+          }
+        ]
       },
       {
         "roleId": "business-analyst",
@@ -331,7 +811,47 @@
           "morning": "Sabah talep dokümanını ve süreç akışını gözden geçirir, veri ihtiyaçlarını netleştirirsin.",
           "afternoon": "Öğleden sonra IT veya operasyonla entegrasyon veya rapor gereksinimlerini konuşur, pivot tabloda senaryo denersin.",
           "evening": "Akşam kullanıcı kabul testi maddelerini ve açık soruları listelersin."
-        }
+        },
+        "salaryRange": {
+          "junior": "33.000 - 48.000 ₺",
+          "mid": "48.000 - 74.000 ₺",
+          "senior": "72.000 - 108.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Deloitte Türkiye",
+            "url": "https://www2.deloitte.com/tr/tr/pages/careers.html"
+          },
+          {
+            "name": "EY Türkiye",
+            "url": "https://www.ey.com/tr_tr/careers"
+          },
+          {
+            "name": "PwC Türkiye",
+            "url": "https://www.pwc.com.tr/tr/careers.html"
+          },
+          {
+            "name": "KPMG Türkiye",
+            "url": "https://kpmg.com/tr/tr/home/careers.html"
+          },
+          {
+            "name": "Accenture Türkiye",
+            "url": "https://www.accenture.com/tr-en/careers"
+          },
+          {
+            "name": "İş Bankası",
+            "url": "https://www.iskurumsal.com/kariyer"
+          },
+          {
+            "name": "Garanti BBVA",
+            "url": "https://www.garantibbva.com.tr/kariyer"
+          },
+          {
+            "name": "KoçSistem",
+            "url": "https://www.kocsistem.com.tr/kariyer"
+          }
+        ]
       },
       {
         "roleId": "growth-marketing",
@@ -355,7 +875,47 @@
           "morning": "Sabah kampanya panolarına ve dönüşüm hunisine bakar, dünkü denemelerin sonuçlarını not edersin.",
           "afternoon": "Öğleden sonra yaratıcı ekip veya ajansla kısa brief yapar, A/B varyasyonları için metin veya görsel geri bildirimi verirsin.",
           "evening": "Akşam bütçe ve hedefleri günceller, ertesi günün deney listesini yazarsın."
-        }
+        },
+        "salaryRange": {
+          "junior": "30.000 - 44.000 ₺",
+          "mid": "44.000 - 68.000 ₺",
+          "senior": "65.000 - 98.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Trendyol",
+            "url": "https://careers.trendyol.com/"
+          },
+          {
+            "name": "Hepsiburada",
+            "url": "https://kurumsal.hepsiburada.com/kariyer"
+          },
+          {
+            "name": "Yemeksepeti (Delivery Hero)",
+            "url": "https://careers.deliveryhero.com/"
+          },
+          {
+            "name": "Getir",
+            "url": "https://careers.getir.com/"
+          },
+          {
+            "name": "Insider",
+            "url": "https://useinsider.com/careers/"
+          },
+          {
+            "name": "Meta Careers",
+            "url": "https://www.metacareers.com/"
+          },
+          {
+            "name": "Google Kariyer",
+            "url": "https://careers.google.com/"
+          },
+          {
+            "name": "TikTok Careers",
+            "url": "https://careers.tiktok.com/"
+          }
+        ]
       },
       {
         "roleId": "ops-automation",
@@ -379,7 +939,47 @@
           "morning": "Sabah tetiklenen otomasyonların loglarına bakar, hata veren akışı not edersin.",
           "afternoon": "Öğleden sonra departmanlarla süreç adımlarını yeniden çizersin; no-code veya form entegrasyonunu test edersin.",
           "evening": "Akşam dokümantasyonu ve erişim izinlerini günceller, küçük bir iyileştirme için yarın denenecek taslağı bırakırsın."
-        }
+        },
+        "salaryRange": {
+          "junior": "32.000 - 46.000 ₺",
+          "mid": "46.000 - 70.000 ₺",
+          "senior": "68.000 - 100.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Logo Yazılım",
+            "url": "https://www.logo.com.tr/LogoKariyer"
+          },
+          {
+            "name": "KoçSistem",
+            "url": "https://www.kocsistem.com.tr/kariyer"
+          },
+          {
+            "name": "Turkcell",
+            "url": "https://www.turkcell.com.tr/kurumsal/kariyer"
+          },
+          {
+            "name": "Vodafone Türkiye",
+            "url": "https://www.vodafone.com.tr/vodafone-kariyer.php"
+          },
+          {
+            "name": "Türk Telekom",
+            "url": "https://www.turktelekom.com.tr/kariyer"
+          },
+          {
+            "name": "Arçelik",
+            "url": "https://www.arcelik.com.tr/kariyer"
+          },
+          {
+            "name": "İş Bankası",
+            "url": "https://www.iskurumsal.com/kariyer"
+          },
+          {
+            "name": "SAP Türkiye",
+            "url": "https://jobs.sap.com/"
+          }
+        ]
       }
     ]
   },
@@ -409,7 +1009,47 @@
           "morning": "Sabah öğrenme hedeflerini ve modül sırasını gözden geçirir, erişilebilirlik kontrol listesinden geçersin.",
           "afternoon": "Öğleden sonra içerik veya video ekibiyle senaryo ve süre uyumunu tartışır, geri bildirim notlarını işlersin.",
           "evening": "Akşam değerlendirme sorusu veya mikro quiz taslağını tamamlar, LMS’e yükleme için checklist hazırlarsın."
-        }
+        },
+        "salaryRange": {
+          "junior": "28.000 - 40.000 ₺",
+          "mid": "40.000 - 58.000 ₺",
+          "senior": "55.000 - 82.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Udemy",
+            "url": "https://about.udemy.com/careers/"
+          },
+          {
+            "name": "Pearson",
+            "url": "https://pearson.jobs/"
+          },
+          {
+            "name": "Trendyol",
+            "url": "https://careers.trendyol.com/"
+          },
+          {
+            "name": "Turkcell",
+            "url": "https://www.turkcell.com.tr/kurumsal/kariyer"
+          },
+          {
+            "name": "MEB / EBA",
+            "url": "https://www.meb.gov.tr/"
+          },
+          {
+            "name": "TÜBİTAK",
+            "url": "https://www.tubitak.gov.tr/tr/kurumsal/insan-kaynaklari"
+          },
+          {
+            "name": "Halkbank",
+            "url": "https://www.halkbank.com.tr/kariyer"
+          },
+          {
+            "name": "İstanbul Kodluyor (İBB)",
+            "url": "https://www.ibb.istanbul/"
+          }
+        ]
       },
       {
         "roleId": "ui-design",
@@ -433,7 +1073,47 @@
           "morning": "Sabah tasarım sistemindeki bileşenleri ve ekran varyantlarını gözden geçirirsin.",
           "afternoon": "Öğleden sonra ürün ve geliştirme ile handoff ve etkileşim detaylarını netleştirirsin; Figma’da küçük düzeltmeler yaparsın.",
           "evening": "Akşam kontrast ve tipografi notlarını toparlar, yarın revize edilecek ekran listesini yazarsın."
-        }
+        },
+        "salaryRange": {
+          "junior": "34.000 - 52.000 ₺",
+          "mid": "50.000 - 76.000 ₺",
+          "senior": "74.000 - 112.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Yemeksepeti (Delivery Hero)",
+            "url": "https://careers.deliveryhero.com/"
+          },
+          {
+            "name": "Getir",
+            "url": "https://careers.getir.com/"
+          },
+          {
+            "name": "Trendyol",
+            "url": "https://careers.trendyol.com/"
+          },
+          {
+            "name": "Defacto",
+            "url": "https://kurumsal.defacto.com.tr/kariyer"
+          },
+          {
+            "name": "ING Türkiye",
+            "url": "https://www.ing.com.tr/tr/kariyer"
+          },
+          {
+            "name": "Huawei Türkiye",
+            "url": "https://career.huawei.com/"
+          },
+          {
+            "name": "Booking.com",
+            "url": "https://careers.booking.com/"
+          },
+          {
+            "name": "Spotify Jobs",
+            "url": "https://www.lifeatspotify.com/jobs"
+          }
+        ]
       },
       {
         "roleId": "game-community",
@@ -457,7 +1137,47 @@
           "morning": "Sabah topluluk mesajlarını ve etkinlik takvimini kontrol eder, kurallara aykırı içerikleri not edersin.",
           "afternoon": "Öğleden sonra canlı yayın veya jam duyurusu hazırlar, Discord veya sosyal kanallarda kısa etkileşim yaparsın.",
           "evening": "Akşam yarının programını ve moderasyon görev dağılımını paylaşırsın."
-        }
+        },
+        "salaryRange": {
+          "junior": "26.000 - 38.000 ₺",
+          "mid": "38.000 - 54.000 ₺",
+          "senior": "52.000 - 75.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Dream Games",
+            "url": "https://careers.dreamgames.com/"
+          },
+          {
+            "name": "Peak (Zynga)",
+            "url": "https://www.peak.com/careers"
+          },
+          {
+            "name": "Rovio",
+            "url": "https://www.rovio.com/careers/"
+          },
+          {
+            "name": "Ubisoft",
+            "url": "https://jobs.ubisoft.com/"
+          },
+          {
+            "name": "Twitch Careers",
+            "url": "https://www.twitch.tv/jobs"
+          },
+          {
+            "name": "Discord Jobs",
+            "url": "https://discord.com/careers"
+          },
+          {
+            "name": "Steam / Valve",
+            "url": "https://www.valvesoftware.com/en/jobs"
+          },
+          {
+            "name": "Trendyol (gaming içerik)",
+            "url": "https://careers.trendyol.com/"
+          }
+        ]
       },
       {
         "roleId": "creative-tech",
@@ -481,7 +1201,47 @@
           "morning": "Sabah dünkü prototip veya sketch’i açar, referans ve ses/görsel moodboard’a bakarsın.",
           "afternoon": "Öğleden sonra ekip arkadaşınla etkileşim veya animasyon akışını dener, küçük bir build alırsın.",
           "evening": "Akşam iterasyon notlarını yazıp paylaşırsın, yarın denenecek tek riskli fikri işaretlersin."
-        }
+        },
+        "salaryRange": {
+          "junior": "32.000 - 48.000 ₺",
+          "mid": "48.000 - 72.000 ₺",
+          "senior": "70.000 - 105.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Dream Games",
+            "url": "https://careers.dreamgames.com/"
+          },
+          {
+            "name": "Insider",
+            "url": "https://useinsider.com/careers/"
+          },
+          {
+            "name": "Publicis Groupe TR",
+            "url": "https://www.publicisgroupe.com/en/careers"
+          },
+          {
+            "name": "WPP / GroupM",
+            "url": "https://www.wpp.com/careers"
+          },
+          {
+            "name": "Adobe Careers",
+            "url": "https://careers.adobe.com/"
+          },
+          {
+            "name": "Autodesk",
+            "url": "https://careers.autodesk.com/"
+          },
+          {
+            "name": "Getir",
+            "url": "https://careers.getir.com/"
+          },
+          {
+            "name": "Trendyol",
+            "url": "https://careers.trendyol.com/"
+          }
+        ]
       }
     ]
   }

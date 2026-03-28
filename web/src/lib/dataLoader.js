@@ -1,3 +1,5 @@
+import { validateEmployersTurkey } from './employersNormalize.js';
+
 const MATRIX_URL = '/data/discipline_matrix.json';
 const OPPS_URL = '/data/opportunities.json';
 
@@ -25,6 +27,24 @@ export const DEFAULT_DAY_IN_LIFE = {
   evening: 'Akşam günü toparlar, notları ve ertesi günün küçük hedeflerini yazarsın.',
 };
 
+export function validateSalaryRange(sr) {
+  if (!sr || typeof sr !== 'object') return false;
+  return (
+    isNonEmptyString(sr.junior) &&
+    isNonEmptyString(sr.mid) &&
+    isNonEmptyString(sr.senior) &&
+    isNonEmptyString(sr.source)
+  );
+}
+
+/** Matriste eşleşme yoksa Results’ta kullanılır (brüt ₺/ay, büyük şehir yöneltici) */
+export const DEFAULT_SALARY_RANGE = {
+  junior: '32.000 - 50.000 ₺',
+  mid: '50.000 - 78.000 ₺',
+  senior: '78.000 - 120.000 ₺',
+  source: 'LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)',
+};
+
 function validateStringArray(arr, minLen = 0) {
   if (!Array.isArray(arr)) return false;
   if (arr.length < minLen) return false;
@@ -46,6 +66,8 @@ export function validateDisciplineMatrix(raw) {
       if (!validateStringArray(rm.firstSteps, 1)) return { ok: false, error: 'firstSteps geçersiz' };
       if (!validateStringArray(rm.tags, 1)) return { ok: false, error: 'tags geçersiz' };
       if (!validateDayInLife(rm.dayInLife)) return { ok: false, error: 'dayInLife geçersiz' };
+      if (!validateSalaryRange(rm.salaryRange)) return { ok: false, error: 'salaryRange geçersiz' };
+      if (!validateEmployersTurkey(rm.employersTurkey)) return { ok: false, error: 'employersTurkey geçersiz' };
     }
   }
   return { ok: true, data: raw };
@@ -118,6 +140,54 @@ export function findDayInLifeInMatrix(matrix, disciplineId, role) {
     if (rm?.dayInLife && validateDayInLife(rm.dayInLife)) {
       return { morning: rm.dayInLife.morning.trim(), afternoon: rm.dayInLife.afternoon.trim(), evening: rm.dayInLife.evening.trim() };
     }
+  }
+  return null;
+}
+
+export function findSalaryRangeInMatrix(matrix, disciplineId, role) {
+  if (!Array.isArray(matrix) || !disciplineId || !role) return null;
+  const row = getDisciplineById(matrix, disciplineId);
+  if (!row?.roleMatches?.length) return null;
+  const id = typeof role.roleId === 'string' ? role.roleId.trim() : '';
+  if (id) {
+    const rm = row.roleMatches.find((x) => x.roleId === id);
+    if (rm?.salaryRange && validateSalaryRange(rm.salaryRange)) {
+      return {
+        junior: rm.salaryRange.junior.trim(),
+        mid: rm.salaryRange.mid.trim(),
+        senior: rm.salaryRange.senior.trim(),
+        source: rm.salaryRange.source.trim(),
+      };
+    }
+  }
+  const name = typeof role.roleName === 'string' ? role.roleName.trim().toLowerCase() : '';
+  if (name) {
+    const rm = row.roleMatches.find((x) => (x.roleName ?? '').trim().toLowerCase() === name);
+    if (rm?.salaryRange && validateSalaryRange(rm.salaryRange)) {
+      return {
+        junior: rm.salaryRange.junior.trim(),
+        mid: rm.salaryRange.mid.trim(),
+        senior: rm.salaryRange.senior.trim(),
+        source: rm.salaryRange.source.trim(),
+      };
+    }
+  }
+  return null;
+}
+
+export function findEmployersInMatrix(matrix, disciplineId, role) {
+  if (!Array.isArray(matrix) || !disciplineId || !role) return null;
+  const row = getDisciplineById(matrix, disciplineId);
+  if (!row?.roleMatches?.length) return null;
+  const id = typeof role.roleId === 'string' ? role.roleId.trim() : '';
+  if (id) {
+    const rm = row.roleMatches.find((x) => x.roleId === id);
+    if (rm?.employersTurkey && validateEmployersTurkey(rm.employersTurkey)) return rm.employersTurkey;
+  }
+  const name = typeof role.roleName === 'string' ? role.roleName.trim().toLowerCase() : '';
+  if (name) {
+    const rm = row.roleMatches.find((x) => (x.roleName ?? '').trim().toLowerCase() === name);
+    if (rm?.employersTurkey && validateEmployersTurkey(rm.employersTurkey)) return rm.employersTurkey;
   }
   return null;
 }

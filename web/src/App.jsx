@@ -205,7 +205,7 @@ const App = () => {
       <div className="pointer-events-none absolute left-[-10%] top-[-10%] h-[40%] w-[40%] rounded-full bg-pusula-purple/20 blur-3xl" />
       <div className="pointer-events-none absolute bottom-[-10%] right-[-10%] h-[40%] w-[40%] rounded-full bg-pusula-coral/15 blur-3xl" />
 
-      <nav className="relative z-20 mx-auto flex max-w-7xl flex-col gap-3 px-8 py-6 sm:flex-row sm:items-center sm:justify-between">
+      <nav className="relative z-20 flex w-full max-w-full flex-col gap-3 px-4 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <div className="group flex items-center gap-2">
           <div className="rounded-lg bg-indigo-600 p-2 transition-transform duration-300 group-hover:rotate-12">
             <Compass className="h-6 w-6 text-white" />

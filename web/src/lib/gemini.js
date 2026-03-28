@@ -1,5 +1,6 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { getDisciplineById, validateDayInLife } from './dataLoader.js';
+import { getDisciplineById, validateDayInLife, validateSalaryRange } from './dataLoader.js';
+import { normalizeEmployersList } from './employersNormalize.js';
 import { loadPusulaSession } from './pusulaSession.js';
 
 /**
@@ -156,9 +157,7 @@ function normalizeRole(r, index) {
     tags = r.tags.filter(isNonEmptyString).map((s) => s.trim().toLowerCase());
   }
 
-  const employersTurkey = Array.isArray(r?.employersTurkey)
-    ? r.employersTurkey.filter(isNonEmptyString).map((s) => s.trim()).slice(0, 5)
-    : [];
+  const employersTurkey = normalizeEmployersList(Array.isArray(r?.employersTurkey) ? r.employersTurkey : [], 8);
 
   const roleId = isNonEmptyString(r?.roleId) ? r.roleId.trim() : undefined;
 
@@ -168,6 +167,16 @@ function normalizeRole(r, index) {
       morning: r.dayInLife.morning.trim(),
       afternoon: r.dayInLife.afternoon.trim(),
       evening: r.dayInLife.evening.trim(),
+    };
+  }
+
+  let salaryRange;
+  if (validateSalaryRange(r?.salaryRange)) {
+    salaryRange = {
+      junior: r.salaryRange.junior.trim(),
+      mid: r.salaryRange.mid.trim(),
+      senior: r.salaryRange.senior.trim(),
+      source: r.salaryRange.source.trim(),
     };
   }
 
@@ -183,6 +192,7 @@ function normalizeRole(r, index) {
   const out = { roleName, whyFits, firstSteps, starterResources, tags, employersTurkey };
   if (roleId) out.roleId = roleId;
   if (dayInLife) out.dayInLife = dayInLife;
+  if (salaryRange) out.salaryRange = salaryRange;
   return out;
 }
 

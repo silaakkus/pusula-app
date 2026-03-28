@@ -79,7 +79,7 @@ export function LandingPage({ onStart, onResume, resumeAvailable, resumeSummary 
   if (detailId && FEATURE_DETAIL_COPY[detailId]) {
     const detail = FEATURE_DETAIL_COPY[detailId];
     return (
-      <main className="relative mx-auto min-h-[70vh] max-w-3xl px-6 pb-20 pt-10 text-left sm:px-8">
+      <main className="relative w-full max-w-full min-h-[70vh] px-0 pb-20 pt-10 text-left">
         <Button
           variant="ghost"
           className="mb-8 rounded-xl px-3 py-2 text-sm"
@@ -113,7 +113,7 @@ export function LandingPage({ onStart, onResume, resumeAvailable, resumeSummary 
   }
 
   return (
-    <main className="relative mx-auto flex max-w-7xl flex-col items-center px-8 pb-12 pt-16 text-center lg:pt-24">
+    <main className="relative flex w-full max-w-full flex-col items-center px-0 pb-12 pt-16 text-center lg:pt-24">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -184,7 +184,7 @@ export function LandingPage({ onStart, onResume, resumeAvailable, resumeSummary 
 
       {/* Özet kartlar: backdrop-blur kaldırıldı (ilk boyamada kaybolma); opacity animasyonu yok */}
       <div
-        className="relative z-[5] mt-24 grid w-full max-w-5xl grid-cols-1 gap-6 md:grid-cols-3"
+        className="relative z-[5] mt-24 grid w-full max-w-full grid-cols-1 gap-6 md:grid-cols-3"
         style={{ isolation: 'isolate' }}
       >
         {FEATURE_BLOCKS.map((item) => {

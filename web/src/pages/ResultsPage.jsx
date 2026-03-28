@@ -9,9 +9,14 @@ import { opportunitiesForRole, buildWebhookOpportunities } from '../lib/opportun
 import { logEvent } from '../lib/analytics.js';
 import {
   DEFAULT_DAY_IN_LIFE,
+  DEFAULT_SALARY_RANGE,
   findDayInLifeInMatrix,
+  findEmployersInMatrix,
+  findSalaryRangeInMatrix,
   validateDayInLife,
+  validateSalaryRange,
 } from '../lib/dataLoader.js';
+import { normalizeEmployersList } from '../lib/employersNormalize.js';
 
 function getRoleTitlesForWebhook(roles) {
   return (roles ?? [])
@@ -40,6 +45,28 @@ function resolveDayInLife(matrix, profile, role) {
   return DEFAULT_DAY_IN_LIFE;
 }
 
+function resolveSalaryRange(matrix, profile, role) {
+  if (validateSalaryRange(role?.salaryRange)) {
+    return {
+      junior: role.salaryRange.junior.trim(),
+      mid: role.salaryRange.mid.trim(),
+      senior: role.salaryRange.senior.trim(),
+      source: role.salaryRange.source.trim(),
+    };
+  }
+  const fromMatrix = findSalaryRangeInMatrix(matrix, profile?.disciplineId, role);
+  if (fromMatrix) return fromMatrix;
+  return DEFAULT_SALARY_RANGE;
+}
+
+function resolveEmployers(matrix, profile, role) {
+  const fromRole = normalizeEmployersList(role?.employersTurkey, 8);
+  if (fromRole.length) return fromRole;
+  const fromMatrix = findEmployersInMatrix(matrix, profile?.disciplineId, role);
+  if (fromMatrix?.length) return normalizeEmployersList(fromMatrix, 8);
+  return [];
+}
+
 export function ResultsPage({
   profile,
   matrix,
@@ -56,6 +83,7 @@ export function ResultsPage({
   const [emailError, setEmailError] = useState('');
   const [dayMainOpen, setDayMainOpen] = useState({});
   const [dayPeriodOpen, setDayPeriodOpen] = useState({});
+  const [salaryMainOpen, setSalaryMainOpen] = useState({});
 
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
@@ -143,8 +171,11 @@ export function ResultsPage({
         {roles.map((role, idx) => {
           const opps = opportunitiesForRole(role, opportunities, 3, profile?.cityId ?? 'all');
           const dil = resolveDayInLife(matrix, profile, role);
+          const sr = resolveSalaryRange(matrix, profile, role);
+          const employers = resolveEmployers(matrix, profile, role);
           const mainOpen = !!dayMainOpen[idx];
           const periodKey = dayPeriodOpen[idx] ?? null;
+          const salaryOpen = !!salaryMainOpen[idx];
           return (
             <motion.div
               key={`${role.roleName}-${idx}`}
@@ -254,19 +285,70 @@ export function ResultsPage({
                   )}
                 </div>
 
-                {role.employersTurkey?.length > 0 && (
+                <div className="mt-6 rounded-2xl border border-slate-200/80 bg-slate-50/70 p-1">
+                  <button
+                    type="button"
+                    className="flex w-full items-center justify-between gap-2 rounded-xl px-3 py-3 text-left text-sm font-bold text-slate-800 transition hover:bg-white/90"
+                    aria-expanded={salaryOpen}
+                    onClick={() => {
+                      setSalaryMainOpen((p) => ({ ...p, [idx]: !p[idx] }));
+                    }}
+                  >
+                    <span>Maaş Aralığı 💰</span>
+                    <ChevronDown
+                      className={`h-5 w-5 shrink-0 text-slate-500 transition-transform ${salaryOpen ? 'rotate-180' : ''}`}
+                      aria-hidden
+                    />
+                  </button>
+                  {salaryOpen && (
+                    <div className="border-t border-slate-200/70 px-3 pb-3 pt-1">
+                      {[
+                        { key: 'junior', label: 'Juniör', range: sr.junior },
+                        { key: 'mid', label: 'Orta seviye', range: sr.mid },
+                        { key: 'senior', label: 'Kıdemli', range: sr.senior },
+                      ].map((row, rowIdx) => (
+                        <div
+                          key={row.key}
+                          className={`flex flex-col gap-1 py-3 ${rowIdx < 2 ? 'border-b border-slate-200/60' : ''}`}
+                        >
+                          <span className="text-sm font-bold text-slate-800">{row.label}</span>
+                          <span className="text-sm font-semibold tabular-nums text-indigo-900">{row.range}</span>
+                          <span className="text-xs leading-snug text-slate-500">{sr.source}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {employers.length > 0 && (
                   <div className="mt-6 rounded-2xl bg-slate-50/80 p-4">
                     <h4 className="text-sm font-bold text-slate-800">Türkiye’de örnek işverenler</h4>
                     <p className="mt-1 text-xs text-slate-500">
-                      Kesin iş garantisi değildir; sektörde bu rollere yakın ekipleri hatırlatmak içindir.
+                      Kesin iş garantisi değildir; kariyer sayfalarını inceleyerek ilan ve staj fırsatlarına
+                      bakabilirsin.
                     </p>
-                    <ul className="mt-2 flex flex-wrap gap-2">
-                      {role.employersTurkey.map((name) => (
+                    <ul className="mt-2 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+                      {employers.map((entry, ei) => (
                         <li
-                          key={name}
-                          className="rounded-lg border border-slate-200 bg-white px-2 py-1 text-xs font-medium text-slate-700"
+                          key={`${entry.name}-${ei}`}
+                          className="rounded-lg border border-slate-200 bg-white text-xs font-medium text-slate-700"
                         >
-                          {name}
+                          {entry.url ? (
+                            <a
+                              href={entry.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={() =>
+                                logEvent('employer_career_click', { name: entry.name, role: role.roleName })
+                              }
+                              className="inline-flex items-center gap-1 px-2 py-1.5 font-semibold text-indigo-700 hover:text-indigo-900"
+                            >
+                              {entry.name}
+                              <ExternalLink className="h-3.5 w-3.5 shrink-0 opacity-70" aria-hidden />
+                            </a>
+                          ) : (
+                            <span className="block px-2 py-1.5">{entry.name}</span>
+                          )}
                         </li>
                       ))}
                     </ul>

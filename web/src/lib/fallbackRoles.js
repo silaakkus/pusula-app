@@ -1,18 +1,66 @@
-const DEFAULT_EMPLOYERS = {
-  data: ['Trendyol', 'Hepsiburada', 'Getir', 'İş Bankası', 'Allianz Türkiye'],
-  ux: ['Huawei Türkiye', 'Vakıf Katılım', 'Yemeksepeti', 'Defacto', 'ING Türkiye'],
-  pm: ['Garanti BBVA', 'Amazon Türkiye', 'PayTR', 'Insider', 'Dream Games'],
-  biotech: ['Acıbadem Labmed', 'GE Healthcare Türkiye', 'Siemens Healthineers', 'Roche', 'Pfizer'],
-  default: ['Turkcell', 'KoçSistem', 'Logo Yazılım', 'Halkbank', 'Emlak Katılım'],
+import { normalizeEmployersList, validateEmployersTurkey } from './employersNormalize.js';
+
+/** Etiket havuzu yedekleri (matriste employersTurkey yoksa); her biri { name, url } */
+const FALLBACK_EMPLOYERS = {
+  data: [
+    { name: 'Trendyol', url: 'https://careers.trendyol.com/' },
+    { name: 'Hepsiburada', url: 'https://kurumsal.hepsiburada.com/kariyer' },
+    { name: 'Getir', url: 'https://careers.getir.com/' },
+    { name: 'İş Bankası', url: 'https://www.iskurumsal.com/kariyer' },
+    { name: 'Turkcell', url: 'https://www.turkcell.com.tr/kurumsal/kariyer' },
+    { name: 'Insider', url: 'https://useinsider.com/careers/' },
+    { name: 'Garanti BBVA Teknoloji', url: 'https://www.garantibbvatech.com.tr/kariyer' },
+    { name: 'Amazon Türkiye (ilanlar)', url: 'https://www.amazon.jobs/en/search?loc_query=Turkey' },
+  ],
+  ux: [
+    { name: 'Yemeksepeti (Delivery Hero)', url: 'https://careers.deliveryhero.com/' },
+    { name: 'Getir', url: 'https://careers.getir.com/' },
+    { name: 'Trendyol', url: 'https://careers.trendyol.com/' },
+    { name: 'Defacto', url: 'https://kurumsal.defacto.com.tr/kariyer' },
+    { name: 'ING Türkiye', url: 'https://www.ing.com.tr/tr/kariyer' },
+    { name: 'Huawei Türkiye', url: 'https://career.huawei.com/' },
+    { name: 'Booking.com', url: 'https://careers.booking.com/' },
+    { name: 'Microsoft Türkiye', url: 'https://careers.microsoft.com/professional/tr-tr' },
+  ],
+  pm: [
+    { name: 'Garanti BBVA Teknoloji', url: 'https://www.garantibbvatech.com.tr/kariyer' },
+    { name: 'PayTR', url: 'https://www.paytr.com/' },
+    { name: 'Dream Games', url: 'https://careers.dreamgames.com/' },
+    { name: 'Insider', url: 'https://useinsider.com/careers/' },
+    { name: 'Trendyol', url: 'https://careers.trendyol.com/' },
+    { name: 'Getir', url: 'https://careers.getir.com/' },
+    { name: 'Amazon Türkiye (ilanlar)', url: 'https://www.amazon.jobs/en/search?loc_query=Turkey' },
+    { name: 'N11', url: 'https://www.n11.com/kurumsal/kariyer' },
+  ],
+  biotech: [
+    { name: 'Pfizer Türkiye', url: 'https://www.pfizer.com.tr/kariyer' },
+    { name: 'Novartis Türkiye', url: 'https://www.novartis.com/tr-tr/kariyer' },
+    { name: 'Roche Türkiye', url: 'https://www.roche.com.tr/kariyer' },
+    { name: 'GE Healthcare', url: 'https://jobs.gecareers.com/global/en' },
+    { name: 'Siemens Healthineers', url: 'https://jobs.siemens-healthineers.com/' },
+    { name: 'Acıbadem Sağlık Grubu', url: 'https://www.acibadem.com.tr/acibadem-kariyer' },
+    { name: 'Medipol', url: 'https://www.medipol.com.tr/kariyer' },
+    { name: 'TÜBİTAK', url: 'https://www.tubitak.gov.tr/tr/kurumsal/insan-kaynaklari' },
+  ],
+  default: [
+    { name: 'Turkcell', url: 'https://www.turkcell.com.tr/kurumsal/kariyer' },
+    { name: 'KoçSistem', url: 'https://www.kocsistem.com.tr/kariyer' },
+    { name: 'Logo Yazılım', url: 'https://www.logo.com.tr/LogoKariyer' },
+    { name: 'Halkbank', url: 'https://www.halkbank.com.tr/kariyer' },
+    { name: 'Emlak Katılım', url: 'https://www.emlakkatilim.com.tr/kariyer' },
+    { name: 'Vakıf Katılım', url: 'https://www.vakifkatilim.com.tr/kariyer' },
+    { name: 'İş Bankası', url: 'https://www.iskurumsal.com/kariyer' },
+    { name: 'Türk Telekom', url: 'https://www.turktelekom.com.tr/kariyer' },
+  ],
 };
 
 function employersForTags(tags) {
   const t = (tags ?? []).map((x) => String(x).toLowerCase());
-  if (t.some((x) => x.includes('data') || x.includes('analytics'))) return DEFAULT_EMPLOYERS.data;
-  if (t.some((x) => x.includes('ux'))) return DEFAULT_EMPLOYERS.ux;
-  if (t.some((x) => x === 'pm')) return DEFAULT_EMPLOYERS.pm;
-  if (t.some((x) => x.includes('bio'))) return DEFAULT_EMPLOYERS.biotech;
-  return DEFAULT_EMPLOYERS.default;
+  if (t.some((x) => x.includes('data') || x.includes('analytics'))) return FALLBACK_EMPLOYERS.data;
+  if (t.some((x) => x.includes('ux'))) return FALLBACK_EMPLOYERS.ux;
+  if (t.some((x) => x === 'pm')) return FALLBACK_EMPLOYERS.pm;
+  if (t.some((x) => x.includes('bio'))) return FALLBACK_EMPLOYERS.biotech;
+  return FALLBACK_EMPLOYERS.default;
 }
 
 /**
@@ -20,26 +68,42 @@ function employersForTags(tags) {
  */
 export function rolesFromMatrix(disciplineRow) {
   if (!disciplineRow?.roleMatches?.length) return [];
-  return disciplineRow.roleMatches.slice(0, 3).map((rm) => ({
-    roleId: rm.roleId,
-    roleName: rm.roleName,
-    whyFits: [...rm.whyFits],
-    firstSteps: [...rm.firstSteps].slice(0, 3),
-    starterResources: [
-      'Patika.dev — ilgili öğrenme yolu',
-      'Kodluyoruz veya SistersLab topluluk sayfaları',
-      'UP School program duyuruları',
-    ],
-    tags: [...rm.tags],
-    employersTurkey: employersForTags(rm.tags).slice(0, 5),
-    ...(rm.dayInLife?.morning && rm.dayInLife?.afternoon && rm.dayInLife?.evening
-      ? {
-          dayInLife: {
-            morning: String(rm.dayInLife.morning).trim(),
-            afternoon: String(rm.dayInLife.afternoon).trim(),
-            evening: String(rm.dayInLife.evening).trim(),
-          },
-        }
-      : {}),
-  }));
+  return disciplineRow.roleMatches.slice(0, 3).map((rm) => {
+    const rawEmployers =
+      Array.isArray(rm.employersTurkey) && validateEmployersTurkey(rm.employersTurkey)
+        ? rm.employersTurkey
+        : employersForTags(rm.tags);
+    return {
+      roleId: rm.roleId,
+      roleName: rm.roleName,
+      whyFits: [...rm.whyFits],
+      firstSteps: [...rm.firstSteps].slice(0, 3),
+      starterResources: [
+        'Patika.dev — ilgili öğrenme yolu',
+        'Kodluyoruz veya SistersLab topluluk sayfaları',
+        'UP School program duyuruları',
+      ],
+      tags: [...rm.tags],
+      employersTurkey: normalizeEmployersList(rawEmployers, 8),
+      ...(rm.dayInLife?.morning && rm.dayInLife?.afternoon && rm.dayInLife?.evening
+        ? {
+            dayInLife: {
+              morning: String(rm.dayInLife.morning).trim(),
+              afternoon: String(rm.dayInLife.afternoon).trim(),
+              evening: String(rm.dayInLife.evening).trim(),
+            },
+          }
+        : {}),
+      ...(rm.salaryRange?.junior && rm.salaryRange?.mid && rm.salaryRange?.senior && rm.salaryRange?.source
+        ? {
+            salaryRange: {
+              junior: String(rm.salaryRange.junior).trim(),
+              mid: String(rm.salaryRange.mid).trim(),
+              senior: String(rm.salaryRange.senior).trim(),
+              source: String(rm.salaryRange.source).trim(),
+            },
+          }
+        : {}),
+    };
+  });
 }
