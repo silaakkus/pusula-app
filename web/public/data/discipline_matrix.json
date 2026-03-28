@@ -1,0 +1,257 @@
+[
+  {
+    "disciplineId": "quant-analytics",
+    "disciplineName": "Sayısal ve Analitik (İstatistik, Matematik, Aktüerya, Fizik)",
+    "roleMatches": [
+      {
+        "roleId": "data-analyst",
+        "roleName": "Veri Analisti",
+        "whyFits": [
+          "İstatistik ve olasılık dersleri doğrudan veri yorumlama ve A/B testleriyle örtüşür.",
+          "Modelleme alışkanlığın karmaşık iş sorularını ölçülebilir hale getirmene yardım eder.",
+          "SQL ve görselleştirme öğrenmek için güçlü bir matematiksel temelin var."
+        ],
+        "firstSteps": [
+          "Google Sheets veya Excel ile küçük bir veri setinde özet istatistik ve grafik çıkar.",
+          "SQL temelleri için Patika.dev veya Kodluyoruz ücretsiz modüllerinden birini seç.",
+          "Kaggle’da basit bir notebook ile pandas girişi yap."
+        ],
+        "tags": ["data", "analytics", "fintech"]
+      },
+      {
+        "roleId": "ml-associate",
+        "roleName": "Makine Öğrenmesi / AI Destek Uzmanı",
+        "whyFits": [
+          "Lineer cebir ve optimizasyon, model eğitiminin arkasındaki dili anlamanı sağlar.",
+          "Deneysel düşünme ve hata analizi, ML projelerinde tekrarlanabilir deney tasarımına döner.",
+          "Üniversitedeki araştırma metodolojin, veri temizliği ve özellik mühendisliğinde güven verir."
+        ],
+        "firstSteps": [
+          "Python ile temel kütüphaneleri (pandas, scikit-learn) kur ve küçük bir sınıflandırma örneği çalıştır.",
+          "Bir açık veri setinde basit bir regresyon problemi seç ve sonuçları yorumla.",
+          "AI güvenliği ve önyargı konularında kısa bir makale oku; etik farkındalık işe alımda artı puan."
+        ],
+        "tags": ["data", "ai-ethics", "research"]
+      },
+      {
+        "roleId": "risk-analytics",
+        "roleName": "Risk ve Finansal Analitik Uzmanı",
+        "whyFits": [
+          "Olasılık ve stokastik süreçler bilgisi sigorta, bankacılık ve fintech risk ekiplerinde aranır.",
+          "Sayısal okuryazarlığın, düzenleyici raporlama ve stres testi senaryolarında doğrudan kullanılır.",
+          "Detay odaklı çalışman, model validasyonu ve kontrol süreçlerinde fark yaratır."
+        ],
+        "firstSteps": [
+          "Basit bir nakit akışı veya kredi riski örneğini tabloda modelle.",
+          "Finansal terimler için Türkçe/İngilizce bir sözlük çıkar ve haftada 3 terim öğren.",
+          "Açık kaynak bir risk vaka çalışmasını okuyup iki paragraf özet yaz."
+        ],
+        "tags": ["fintech", "analytics", "data"]
+      }
+    ]
+  },
+  {
+    "disciplineId": "human-social",
+    "disciplineName": "İnsan ve Toplum Bilimleri (Psikoloji, Sosyoloji, Felsefe)",
+    "roleMatches": [
+      {
+        "roleId": "ux-researcher",
+        "roleName": "UX Araştırmacısı",
+        "whyFits": [
+          "Görüşme, gözlem ve anket tasarlama becerilerin kullanıcı görüşmeleriyle birebir örtüşür.",
+          "İnsan davranışına dair merakın, ürün kararlarını kanıta dayalı hale getirir.",
+          "Nitel veri analizi ve tema çıkarma, sosyal bilimlerde öğrendiğin yöntemlerle aynı aileden."
+        ],
+        "firstSteps": [
+          "Günlük kullandığın bir uygulama için 3 kişiyle 15’er dakikalık yapılandırılmış görüşme yap.",
+          "Bulgularını üç başlıkta özetle: ihtiyaç, acı noktası, öneri.",
+          "Figma’da basit bir kullanıcı yolculuğu çizimi için ücretsiz eğitime göz at."
+        ],
+        "tags": ["ux", "research", "hrtech"]
+      },
+      {
+        "roleId": "ai-ethics",
+        "roleName": "AI Güvenilirlik ve Etik Odaklı Ürün Rolü",
+        "whyFits": [
+          "Etik ve epistemoloji dersleri, algoritmik adalet tartışmalarında güçlü bir çerçeve sunar.",
+          "Önyargı ve insan haklarına duyarlılığın, model ve veri seti incelemelerinde kritik.",
+          "Yazılım ekiplerine “neden böyle ölçüyoruz?” sorusunu taşıyabilirsin."
+        ],
+        "firstSteps": [
+          "Türkiye’deki bir yapay zeka haberini etik açıdan iki paragraf yorumla.",
+          "Basit bir sınıflandırma örneğinde hangi grupların az temsil edildiğini listeleyen mini çalışma yap.",
+          "Women Techmakers veya benzeri topluluklarda etik oturumlarına katıl."
+        ],
+        "tags": ["ai-ethics", "ux", "research"]
+      },
+      {
+        "roleId": "people-analytics",
+        "roleName": "İK Teknolojileri / People Analytics Yönünde Uzmanlık",
+        "whyFits": [
+          "Ölçek ve anket güvenirliği bilgin, çalışan anketlerinin yorumlanmasında işe yarar.",
+          "Örgütsel davranış dersleri, turnover ve bağlılık metrikleriyle doğal bağ kurar.",
+          "Empati ve iletişim becerilerin, paydaşlarla veriyi anlaşılır anlatmanda fark yaratır."
+        ],
+        "firstSteps": [
+          "Küçük bir hayali şirket için çalışan memnuniyeti anketi tasarla (5 soru).",
+          "Sonuçları hayali olarak yorumlayıp yöneticiye 3 öneri yaz.",
+          "People analytics terimleri için mini bir kelime listesi oluştur."
+        ],
+        "tags": ["hrtech", "analytics", "research"]
+      }
+    ]
+  },
+  {
+    "disciplineId": "life-sciences",
+    "disciplineName": "Doğa ve Yaşam Bilimleri (Biyoloji, Kimya, Genetik)",
+    "roleMatches": [
+      {
+        "roleId": "bioinformatics",
+        "roleName": "Biyoinformatik / Hesaplamalı Biyoloji",
+        "whyFits": [
+          "Laboratuvar disiplinin, veri üretimi ve tekrarlanabilirlik kültürüyle teknoloji ekiplerine benzer.",
+          "Genetik ve moleküler biyoloji bilgisi, omik veri setlerini anlamlandırmanda temel oluşturur.",
+          "İstatistiksel düşünme, klinik veya çevresel veri analizlerinde doğrudan kullanılır."
+        ],
+        "firstSteps": [
+          "PubMed veya benzeri kaynaktan küçük bir çalışmayı okuyup yöntem bölümünü özetle.",
+          "Python veya R ile basit bir veri tablosunda tanımlayıcı istatistik uygula.",
+          "Açık bir genomik veri setine giriş yapan ücretsiz bir kursa kaydol."
+        ],
+        "tags": ["biotech", "data", "research"]
+      },
+      {
+        "roleId": "health-product",
+        "roleName": "Sağlık Teknolojileri Ürün / Proje Rolü",
+        "whyFits": [
+          "Hasta güvenliği ve regülasyon farkındalığın, Sağlık Bakanlığı ve KVKK bağlamında değerlidir.",
+          "Bilimsel okuryazarlığın, klinik ekiplerle ortak dil kurmana yardım eder.",
+          "Sürdürülebilirlik ve sağlık inequity konularına duyarlılığın ürün yol haritasına yansır."
+        ],
+        "firstSteps": [
+          "Kullandığın bir sağlık uygulamasının gizlilik politikasını okuyup üç madde çıkar.",
+          "Basit bir kullanıcı hikâyesi (user story) yaz: “Hasta randevu hatırlatması”.",
+          "Türkiye’deki bir dijital sağlık girişimini araştırıp sunumunu 5 slaytta özetle."
+        ],
+        "tags": ["biotech", "pm", "ux"]
+      },
+      {
+        "roleId": "sustainability-tech",
+        "roleName": "Sürdürülebilirlik ve Çevre Verisi Uzmanlığı",
+        "whyFits": [
+          "Çevre kimyası ve ekoloji bilgin, karbon ayak izi ve atık verisi yorumlarında güç verir.",
+          "Deneysel titizliğin, sensör ve IoT verilerinin kalite kontrolünde işe yarar.",
+          "Sistem düşüncen, tedarik zinciri ve döngüsel ekonomi projelerinde fark yaratır."
+        ],
+        "firstSteps": [
+          "Günlük karbon ayak izini kabaca hesaplayan basit bir tablo oluştur.",
+          "Bir şehrin açık çevre verisi varsa küçük bir görselleştirme dene.",
+          "Sürdürülebilirlik raporu okuyup üç metrik seç ve anlamını yaz."
+        ],
+        "tags": ["sustainability", "data", "research"]
+      }
+    ]
+  },
+  {
+    "disciplineId": "business-econ",
+    "disciplineName": "İdari ve İktisadi Bilimler (İşletme, Ekonomi, Maliye)",
+    "roleMatches": [
+      {
+        "roleId": "product-manager",
+        "roleName": "Ürün Yöneticisi (PM) Yolunda Uzmanlaşma",
+        "whyFits": [
+          "Pazar analizi ve strateji dersleri, ürün keşfi ve önceliklendirme ile örtüşür.",
+          "Finansal okuryazarlığın, iş modeli ve birim ekonomisi tartışmalarında güven verir.",
+          "Paydaş yönetimi ve sunum becerilerin çapraz fonksiyonel ekiplerde kritik."
+        ],
+        "firstSteps": [
+          "Sevdiğin bir uygulama için problem, hedef kullanıcı ve başarı metriği yaz.",
+          "Basit bir yol haritası şablonunu doldur: şimdi / sonra / sonra.",
+          "Kullanıcı geri bildirimlerinden üç tema çıkar ve bir özellik önerisi yaz."
+        ],
+        "tags": ["pm", "marketing-analytics", "fintech"]
+      },
+      {
+        "roleId": "business-analyst",
+        "roleName": "İş Analisti / İş Zekâsı",
+        "whyFits": [
+          "Mikro ve makro ekonomi bilgin, talep tahmini ve senaryo analizlerinde kullanılır.",
+          "Excel ve raporlama alışkanlığın BI araçlarına geçişi kolaylaştırır.",
+          "Süreç iyileştirme düşüncen, operasyon ekipleriyle ortak dil kurar."
+        ],
+        "firstSteps": [
+          "Küçük bir iş sürecini (ör. staj başvurusu) akış şeması olarak çiz.",
+          "Örnek bir satış tablosunda pivot tablo ve temel KPI’ları hesapla.",
+          "Power BI veya Looker Studio ile 10 dakikalık bir tanıtım videosu izle."
+        ],
+        "tags": ["analytics", "data", "pm"]
+      },
+      {
+        "roleId": "growth-marketing",
+        "roleName": "Büyüme ve Dijital Pazarlama Analitiği",
+        "whyFits": [
+          "Tüketici davranışı ve pazarlama dersleri, funnel ve dönüşüm optimizasyonuyla bağlantılı.",
+          "Sayısal hedef takibi, kampanya performansını yorumlamanda avantaj sağlar.",
+          "İçerik ve marka hikâyesi anlatımın, organik büyüme kanallarında öne çıkar."
+        ],
+        "firstSteps": [
+          "Hayali bir kampanya için bütçe, hedef KPI ve iki varyasyon (A/B) tanımla.",
+          "Meta veya Google Ads yardım merkezinden temel kavramları oku.",
+          "Küçük bir sosyal medya hesabında haftalık içerik planı tasarla."
+        ],
+        "tags": ["marketing-analytics", "pm", "ux"]
+      }
+    ]
+  },
+  {
+    "disciplineId": "education-arts",
+    "disciplineName": "Eğitim ve Sanat (Öğretmenlikler, Tasarım, Konservatuvar)",
+    "roleMatches": [
+      {
+        "roleId": "edtech",
+        "roleName": "EdTech İçerik ve Öğrenme Tasarımcısı",
+        "whyFits": [
+          "Ders planlama ve öğrenme hedefleri yazma becerin, müfredat ve mikro öğrenme modüllerine döner.",
+          "Sınıf yönetimi deneyimin, kullanıcı onboarding ve topluluk moderasyonunda işe yarar.",
+          "Erişilebilirlik ve kapsayıcılık duyarlılığın ürün kalitesini yükseltir."
+        ],
+        "firstSteps": [
+          "5 dakikalık bir konuyu üç seviyede (başlangıç/orta/ileri) anlatan mini müfredat yaz.",
+          "Bir eğitim videosunun senaryosunu zaman damgalarıyla planla.",
+          "Türkiye’deki bir çevrimiçi eğitim platformunu inceleyip güçlü/zayıf yanlarını listele."
+        ],
+        "tags": ["edtech", "ux", "research"]
+      },
+      {
+        "roleId": "ui-design",
+        "roleName": "UI / Görsel Tasarım ve Tasarım Sistemleri",
+        "whyFits": [
+          "Kompozisyon, tipografi ve renk teorisi bilgin arayüz tasarımına doğrudan taşınır.",
+          "Hikâye anlatımı ve estetik zevkin, marka tutarlılığı ve mikro etkileşimlerde öne çıkar.",
+          "Kullanıcı geri bildirimine açık olman iteratif tasarım döngüsüne uyum sağlar."
+        ],
+        "firstSteps": [
+          "Bir mobil ekranı yeniden tasarla: tipografi hiyerarşisi ve boşlukları iyileştir.",
+          "Figma topluluk dosyalarından bir bileşen kütüphanesini incele.",
+          "Erişilebilirlik için kontrast ve font boyutu kontrolü yapan küçük bir kontrol listesi uygula."
+        ],
+        "tags": ["ux", "gamedev", "edtech"]
+      },
+      {
+        "roleId": "game-community",
+        "roleName": "Oyun Geliştirme veya Topluluk Yönetimi",
+        "whyFits": [
+          "Disiplinli pratik alışkanlığin, oyun mekaniği ve seviye tasarımı sürekliliğine benzer.",
+          "Performans ve iş birliği deneyimin, canlı etkinlik ve topluluk programlarında kullanılır.",
+          "Yaratıcı problem çözme, indie oyun veya eğitsel oyun projelerinde fark yaratır."
+        ],
+        "firstSteps": [
+          "Basit bir oyun fikrini tek paragraf pitch olarak yaz.",
+          "Godot veya Unity için “ilk 30 dakika” eğitimine başla.",
+          "Discord veya benzeri bir toplulukta bir etkinlik fikri öner ve gönüllü rol üstlen."
+        ],
+        "tags": ["gamedev", "edtech", "ux"]
+      }
+    ]
+  }
+]
