@@ -1,5 +1,6 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { getDisciplineById } from './dataLoader.js';
+import { loadPusulaSession } from './pusulaSession.js';
 
 /** Bare `gemini-1.5-flash` çoğu anahtarda v1beta ile 404 veriyor; `-latest` soneki güncel takma adı kullanır. */
 const MODEL_ID = import.meta.env.VITE_GEMINI_MODEL || 'gemini-2.0-flash';
@@ -31,22 +32,85 @@ function isNonEmptyString(v) {
   return typeof v === 'string' && v.trim().length > 0;
 }
 
+function splitLooseList(s) {
+  return s
+    .split(/\n|•|;|,(?=\s)/)
+    .map((x) => x.trim())
+    .filter(Boolean);
+}
+
+/**
+ * API yanıtı: yeni şema { title, why, tags, resources } veya eski { roleName, whyFits, ... }
+ */
 function normalizeRole(r, index) {
-  const roleName = isNonEmptyString(r?.roleName) ? r.roleName.trim() : `Rol ${index + 1}`;
-  const whyFits = Array.isArray(r?.whyFits) ? r.whyFits.filter(isNonEmptyString).map((s) => s.trim()) : [];
-  const firstSteps = Array.isArray(r?.firstSteps) ? r.firstSteps.filter(isNonEmptyString).map((s) => s.trim()) : [];
-  const starterResources = Array.isArray(r?.starterResources)
-    ? r.starterResources.filter(isNonEmptyString).map((s) => s.trim())
-    : [];
-  const tags = Array.isArray(r?.tags) ? r.tags.filter(isNonEmptyString).map((s) => s.trim().toLowerCase()) : [];
+  const usesCompact =
+    r &&
+    (Object.prototype.hasOwnProperty.call(r, 'title') ||
+      Object.prototype.hasOwnProperty.call(r, 'why') ||
+      Object.prototype.hasOwnProperty.call(r, 'resources'));
+
+  let roleName = `Rol ${index + 1}`;
+  if (usesCompact) {
+    if (isNonEmptyString(r.title)) roleName = r.title.trim();
+    else if (isNonEmptyString(r.roleName)) roleName = r.roleName.trim();
+  } else if (isNonEmptyString(r?.roleName)) {
+    roleName = r.roleName.trim();
+  }
+
+  let whyFits = [];
+  if (usesCompact && r.why != null) {
+    if (Array.isArray(r.why)) {
+      whyFits = r.why.filter(isNonEmptyString).map((s) => s.trim());
+    } else if (isNonEmptyString(r.why)) {
+      const parts = splitLooseList(r.why);
+      whyFits = parts.length ? parts : [r.why.trim()];
+    }
+  }
+  if (!whyFits.length && Array.isArray(r?.whyFits)) {
+    whyFits = r.whyFits.filter(isNonEmptyString).map((s) => s.trim());
+  }
+
+  let starterResources = [];
+  if (usesCompact && r.resources != null) {
+    if (Array.isArray(r.resources)) {
+      starterResources = r.resources.filter(isNonEmptyString).map((s) => s.trim());
+    } else if (isNonEmptyString(r.resources)) {
+      const parts = r.resources.split(/[,;]\s*|\n/).map((x) => x.trim()).filter(Boolean);
+      starterResources = parts.length ? parts : [r.resources.trim()];
+    }
+  }
+  if (!starterResources.length && Array.isArray(r?.starterResources)) {
+    starterResources = r.starterResources.filter(isNonEmptyString).map((s) => s.trim());
+  }
+
+  let firstSteps = Array.isArray(r?.firstSteps) ? r.firstSteps.filter(isNonEmptyString).map((s) => s.trim()) : [];
+
+  let tags = [];
+  if (usesCompact && Array.isArray(r.tags)) {
+    tags = r.tags.filter(isNonEmptyString).map((s) => s.trim().toLowerCase());
+  }
+  if (!tags.length && Array.isArray(r?.tags)) {
+    tags = r.tags.filter(isNonEmptyString).map((s) => s.trim().toLowerCase());
+  }
+
   const employersTurkey = Array.isArray(r?.employersTurkey)
     ? r.employersTurkey.filter(isNonEmptyString).map((s) => s.trim()).slice(0, 5)
     : [];
+
+  if (!firstSteps.length) {
+    const r0 = starterResources[0] ?? 'Patika.dev veya Kodluyoruz giriş modülü';
+    firstSteps = [
+      `${r0} için 30 dakikalık bir blok ayır.`,
+      'Bu hafta tamamlayacağın tek küçük çıktıyı (ör. özet, mini proje) yaz.',
+      'SistersLab, UP School veya WTM duyurularından bir etkinliği takvimine ekle.',
+    ];
+  }
+
   return { roleName, whyFits, firstSteps, starterResources, tags, employersTurkey };
 }
 
 /**
- * Tam 3 rol ve PRD alanlarını doğrular; eksikleri güvenli şekilde doldurur.
+ * Tam 3 rol; UI için whyFits / firstSteps / starterResources tamamlanır.
  */
 export function parseAndValidateCareerJson(rawText) {
   const obj = parseJsonLoose(rawText);
@@ -58,12 +122,10 @@ export function parseAndValidateCareerJson(rawText) {
     roles.push(
       normalizeRole(
         {
-          roleName: `Önerilen rol ${roles.length + 1}`,
-          whyFits: ['Profil ve disiplin matrisi sinyalleriyle uyumlu bir rol.'],
-          firstSteps: ['Patika.dev veya Kodluyoruz üzerinden bir giriş modülü seç.', 'Haftada 3 saat öğrenme takvimi oluştur.', 'Bir mentorluk veya topluluk etkinliğine kaydol.'],
-          starterResources: ['UP School', 'SistersLab', 'Women Techmakers etkinlikleri'],
+          title: `Önerilen rol ${roles.length + 1}`,
+          why: ['Profil ve disiplin matrisi sinyalleriyle uyumlu bir rol.'],
+          resources: ['UP School', 'SistersLab', 'Women Techmakers etkinlikleri'],
           tags: ['data'],
-          employersTurkey: [],
         },
         roles.length,
       ),
@@ -94,7 +156,9 @@ export function parseBarrierResponse(rawText) {
   const reframe = isNonEmptyString(obj?.reframe) ? obj.reframe.trim() : '';
   let actions = Array.isArray(obj?.actions) ? obj.actions.filter(isNonEmptyString).map((s) => s.trim()) : [];
   if (!reframe) throw new Error('reframe alanı eksik');
-  if (actions.length < 1) actions = ['Bu hafta 30 dakikalık tek bir öğrenme bloğu ayır.'];
+  while (actions.length < 2) {
+    actions.push('Bu hafta 20 dakika ayırıp önerilen rollerden biriyle ilgili tek bir kaynağı incele.');
+  }
   if (actions.length > 2) actions = actions.slice(0, 2);
   return { reframe, actions };
 }
@@ -109,12 +173,40 @@ function buildMatrixExcerpt(matrix, disciplineId) {
   return `Disiplin: ${d.disciplineName}\nMatris özeti (rehber):\n${lines.join('\n')}`;
 }
 
-const CAREER_SYSTEM = `Sen "Multidisipliner Kariyer Mentörü"sün. Türkiye'deki üniversite eğitimi alan kadın öğrencilere teknoloji sektörüne geçişte yardımcı oluyorsun.
-Kurallar:
-- Dil: Türkçe. Yargılayıcı, aşağılayıcı veya "sen yapamazsın" tonu kullanma.
-- Çıktıyı YALNIZCA geçerli bir JSON nesnesi olarak ver; markdown veya açıklama metni ekleme.
-- Tam olarak 3 rol öner. Her rol için alanlar: roleName (string), whyFits (string array, en az 2 madde), firstSteps (string array, tam 3 madde), starterResources (string array, tam 3 kısa kaynak adı veya başlık), tags (string array, küçük harf kısa etiketler: data, ux, pm, biotech, hrtech, edtech, gamedev, ai-ethics, fintech, sustainability, research, marketing-analytics gibi), employersTurkey (Türkiye'de bu role yakın işveren veya ekip örnekleri, 3–5 şirket adı, string array).
-- Öneriler kullanıcının profili ve aşağıdaki disiplin matrisi özetiyle tutarlı olsun; matrisi kopyalama, kişiselleştir.`;
+const CAREER_SYSTEM = `Sen Pusula'nın AI kariyer rehberisin. Türkiye'deki üniversite öğrencisi kadınlara teknoloji kariyeri öneriyorsun.
+Yanıtların Türkçe, samimi ve yargılamayan bir tonda olmalı.
+Her zaman JSON formatında yanıt ver: {roles: [{title, why, tags, resources}]}
+Başka metin veya markdown kullanma; yalnızca tek bir JSON nesnesi.
+
+Ek teknik kurallar:
+- Tam olarak 3 rol üret.
+- why: string veya string dizisi (en az iki net gerekçe).
+- tags: kısa etiket dizisi (örn. data, ux, pm).
+- resources: en az 3 kısa kaynak başlığı veya adı içeren dizi.
+- Aşağıdaki profil ve disiplin matrisi özetine uy; metni kopyalama, kişiselleştir.`;
+
+const BARRIER_SYSTEM = `Sen empati kuran bir kariyer koçusun. Kullanıcının yazdığı engeli kariyer dışlayıcı olarak değil,
+yeniden çerçeveleyerek ele al. Yanıtın Türkçe olsun ve 2 somut aksiyon adımı içersin.
+JSON formatında yanıt ver: {reframe, actions: [action1, action2]}
+Başka metin veya markdown ekleme; yalnızca tek bir JSON nesnesi.
+"İmkansız", "yapamazsın" gibi dışlayıcı dil kullanma.`;
+
+function buildSuggestedRolesContext() {
+  const session = loadPusulaSession();
+  const list = session?.roles;
+  if (!Array.isArray(list) || list.length === 0) {
+    return '(Henüz bu oturumda kayıtlı rol önerisi yok.)';
+  }
+  return JSON.stringify(
+    list.map((role) => ({
+      title: role.roleName ?? role.title,
+      tags: role.tags,
+      resources: role.starterResources ?? role.resources,
+    })),
+    null,
+    2,
+  );
+}
 
 export async function runCareerAnalysis({ apiKey, profile, matrix }) {
   if (!apiKey || !String(apiKey).trim()) throw new Error('API anahtarı eksik');
@@ -136,7 +228,7 @@ export async function runCareerAnalysis({ apiKey, profile, matrix }) {
     matrixExcerpt: buildMatrixExcerpt(matrix, profile.disciplineId),
   };
 
-  const prompt = `Aşağıdaki profil ve matris özetini kullanarak JSON üret.\n\n${JSON.stringify(userPayload, null, 2)}\n\nŞema: {"roles":[{...},{...},{...}]}`;
+  const prompt = `Aşağıdaki profil ve matris özetini kullanarak yalnızca JSON üret.\n\n${JSON.stringify(userPayload, null, 2)}`;
 
   const result = await model.generateContent(prompt);
   const text = result?.response?.text?.();
@@ -144,17 +236,19 @@ export async function runCareerAnalysis({ apiKey, profile, matrix }) {
   return parseAndValidateCareerJson(text);
 }
 
-const BARRIER_SYSTEM = `Sen destekleyici bir kariyer koçusun. Kullanıcının yazdığı engeli yeniden çerçevele (olumlu, gerçekçi, yargısız) ve 1–2 somut küçük aksiyon öner.
-Kurallar: Türkçe. "İmkansız", "yapamazsın", aşağılama yok.
-Çıktı yalnızca JSON: {"reframe":"...","actions":["...","..."]} — actions en fazla 2 madde.`;
-
 export async function runBarrierReframe({ apiKey, barrierText, profileSummary }) {
   if (!apiKey || !String(apiKey).trim()) throw new Error('API anahtarı eksik');
   const model = createModel(apiKey, {
     model: MODEL_ID,
     systemInstruction: BARRIER_SYSTEM,
   });
-  const prompt = `Profil özeti: ${profileSummary}\n\nKullanıcının engeli: ${barrierText}`;
+  const rolesBlock = buildSuggestedRolesContext();
+  const prompt = `Profil özeti: ${profileSummary}
+
+Önceki analizde önerilen roller (localStorage oturumundan bağlam — kullanıcıya uygun yanıt verirken bunları dikkate al):
+${rolesBlock}
+
+Kullanıcının engeli: ${barrierText}`;
   const result = await model.generateContent(prompt);
   const text = result?.response?.text?.();
   if (!text) throw new Error('Boş yanıt');

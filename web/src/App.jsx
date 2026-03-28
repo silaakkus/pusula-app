@@ -11,6 +11,7 @@ import { PostSurveyPage } from './pages/PostSurveyPage';
 import { FinalCardPage } from './pages/FinalCardPage';
 import { loadPusulaData, getDisciplineById } from './lib/dataLoader.js';
 import { runCareerAnalysis } from './lib/gemini.js';
+import { savePusulaSession } from './lib/pusulaSession.js';
 import { rolesFromMatrix } from './lib/fallbackRoles.js';
 import { BARRIER_STATIC_FALLBACK } from './lib/barrierFallback.js';
 import { logEvent } from './lib/analytics.js';
@@ -75,6 +76,10 @@ const App = () => {
       const key = import.meta.env.VITE_GEMINI_API_KEY;
       const out = await runCareerAnalysis({ apiKey: key, profile, matrix });
       setRoles(out.roles);
+      savePusulaSession({
+        answers: { profile, baselineConfidenceBefore: baselineBefore },
+        roles: out.roles,
+      });
       setAnalysisSource('gemini');
       logEvent('analysis_done', { source: 'gemini' });
       setStep('results');
@@ -82,12 +87,16 @@ const App = () => {
       const row = getDisciplineById(matrix, profile.disciplineId);
       const r = rolesFromMatrix(row);
       setRoles(r);
+      savePusulaSession({
+        answers: { profile, baselineConfidenceBefore: baselineBefore },
+        roles: r,
+      });
       setAnalysisSource('fallback');
       setGeminiError(e?.message ?? String(e));
       logEvent('analysis_done', { source: 'fallback', error: e?.message ?? String(e) });
       setStep('results');
     }
-  }, [profile, matrix]);
+  }, [profile, matrix, baselineBefore]);
 
   const resetFlow = () => {
     setStep('home');
