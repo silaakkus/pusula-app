@@ -12,11 +12,13 @@ import {
   DEFAULT_SALARY_RANGE,
   findDayInLifeInMatrix,
   findEmployersInMatrix,
+  findInternshipProgramsInMatrix,
   findSalaryRangeInMatrix,
   validateDayInLife,
   validateSalaryRange,
 } from '../lib/dataLoader.js';
 import { normalizeEmployersList } from '../lib/employersNormalize.js';
+import { normalizeInternshipPrograms } from '../lib/internshipsNormalize.js';
 
 function getRoleTitlesForWebhook(roles) {
   return (roles ?? [])
@@ -67,6 +69,14 @@ function resolveEmployers(matrix, profile, role) {
   return [];
 }
 
+function resolveInternships(matrix, profile, role) {
+  const fromRole = normalizeInternshipPrograms(role?.internshipPrograms, 6);
+  if (fromRole.length) return fromRole;
+  const fromMatrix = findInternshipProgramsInMatrix(matrix, profile?.disciplineId, role);
+  if (fromMatrix?.length) return normalizeInternshipPrograms(fromMatrix, 6);
+  return [];
+}
+
 export function ResultsPage({
   profile,
   matrix,
@@ -84,6 +94,7 @@ export function ResultsPage({
   const [dayMainOpen, setDayMainOpen] = useState({});
   const [dayPeriodOpen, setDayPeriodOpen] = useState({});
   const [salaryMainOpen, setSalaryMainOpen] = useState({});
+  const [internMainOpen, setInternMainOpen] = useState({});
 
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
@@ -173,6 +184,8 @@ export function ResultsPage({
           const dil = resolveDayInLife(matrix, profile, role);
           const sr = resolveSalaryRange(matrix, profile, role);
           const employers = resolveEmployers(matrix, profile, role);
+          const internships = resolveInternships(matrix, profile, role);
+          const internOpen = !!internMainOpen[idx];
           const mainOpen = !!dayMainOpen[idx];
           const periodKey = dayPeriodOpen[idx] ?? null;
           const salaryOpen = !!salaryMainOpen[idx];
@@ -319,6 +332,57 @@ export function ResultsPage({
                     </div>
                   )}
                 </div>
+
+                {internships.length > 0 && (
+                  <div className="mt-6 rounded-2xl border border-slate-200/80 bg-slate-50/70 p-1">
+                    <button
+                      type="button"
+                      className="flex w-full items-center justify-between gap-2 rounded-xl px-3 py-3 text-left text-sm font-bold text-slate-800 transition hover:bg-white/90"
+                      aria-expanded={internOpen}
+                      onClick={() => setInternMainOpen((p) => ({ ...p, [idx]: !p[idx] }))}
+                    >
+                      <span>Staj programları 🎓</span>
+                      <ChevronDown
+                        className={`h-5 w-5 shrink-0 text-slate-500 transition-transform ${internOpen ? 'rotate-180' : ''}`}
+                        aria-hidden
+                      />
+                    </button>
+                    {internOpen && (
+                      <div className="space-y-3 border-t border-slate-200/70 p-3 pb-3">
+                        <p className="text-xs leading-relaxed text-amber-800/90">
+                          Başvuru pencereleri yıla ve şirkete göre değişir; linkler yönlendirici olup ilan kapanmış veya
+                          yenilenmiş olabilir — mutlaka resmi sayfadaki güncel metni kontrol et.
+                        </p>
+                        <ul className="space-y-3">
+                          {internships.map((prog, pi) => (
+                            <li
+                              key={`${prog.name}-${pi}`}
+                              className="rounded-xl border border-white/50 bg-white/80 p-3 text-left shadow-sm"
+                            >
+                              <a
+                                href={prog.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={() =>
+                                  logEvent('internship_click', { name: prog.name, role: role.roleName })
+                                }
+                                className="inline-flex items-center gap-1 text-sm font-bold text-indigo-700 hover:text-indigo-900"
+                              >
+                                {prog.name}
+                                <ExternalLink className="h-4 w-4 shrink-0 opacity-70" aria-hidden />
+                              </a>
+                              <p className="mt-2 text-sm leading-relaxed text-slate-600">{prog.summary}</p>
+                              <p className="mt-2 text-xs font-semibold text-slate-700">
+                                Kimler başvurabilir?{' '}
+                                <span className="font-normal text-slate-600">{prog.eligibility}</span>
+                              </p>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                )}
 
                 {employers.length > 0 && (
                   <div className="mt-6 rounded-2xl bg-slate-50/80 p-4">

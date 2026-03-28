@@ -1,4 +1,5 @@
 import { validateEmployersTurkey } from './employersNormalize.js';
+import { validateInternshipPrograms } from './internshipsNormalize.js';
 
 const MATRIX_URL = '/data/discipline_matrix.json';
 const OPPS_URL = '/data/opportunities.json';
@@ -68,6 +69,7 @@ export function validateDisciplineMatrix(raw) {
       if (!validateDayInLife(rm.dayInLife)) return { ok: false, error: 'dayInLife geçersiz' };
       if (!validateSalaryRange(rm.salaryRange)) return { ok: false, error: 'salaryRange geçersiz' };
       if (!validateEmployersTurkey(rm.employersTurkey)) return { ok: false, error: 'employersTurkey geçersiz' };
+      if (!validateInternshipPrograms(rm.internshipPrograms)) return { ok: false, error: 'internshipPrograms geçersiz' };
     }
   }
   return { ok: true, data: raw };
@@ -188,6 +190,23 @@ export function findEmployersInMatrix(matrix, disciplineId, role) {
   if (name) {
     const rm = row.roleMatches.find((x) => (x.roleName ?? '').trim().toLowerCase() === name);
     if (rm?.employersTurkey && validateEmployersTurkey(rm.employersTurkey)) return rm.employersTurkey;
+  }
+  return null;
+}
+
+export function findInternshipProgramsInMatrix(matrix, disciplineId, role) {
+  if (!Array.isArray(matrix) || !disciplineId || !role) return null;
+  const row = getDisciplineById(matrix, disciplineId);
+  if (!row?.roleMatches?.length) return null;
+  const id = typeof role.roleId === 'string' ? role.roleId.trim() : '';
+  if (id) {
+    const rm = row.roleMatches.find((x) => x.roleId === id);
+    if (rm?.internshipPrograms && validateInternshipPrograms(rm.internshipPrograms)) return rm.internshipPrograms;
+  }
+  const name = typeof role.roleName === 'string' ? role.roleName.trim().toLowerCase() : '';
+  if (name) {
+    const rm = row.roleMatches.find((x) => (x.roleName ?? '').trim().toLowerCase() === name);
+    if (rm?.internshipPrograms && validateInternshipPrograms(rm.internshipPrograms)) return rm.internshipPrograms;
   }
   return null;
 }

@@ -1,6 +1,7 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { getDisciplineById, validateDayInLife, validateSalaryRange } from './dataLoader.js';
 import { normalizeEmployersList } from './employersNormalize.js';
+import { normalizeInternshipPrograms } from './internshipsNormalize.js';
 import { loadPusulaSession } from './pusulaSession.js';
 
 /**
@@ -159,6 +160,11 @@ function normalizeRole(r, index) {
 
   const employersTurkey = normalizeEmployersList(Array.isArray(r?.employersTurkey) ? r.employersTurkey : [], 8);
 
+  const internshipPrograms = normalizeInternshipPrograms(
+    Array.isArray(r?.internshipPrograms) ? r.internshipPrograms : [],
+    6,
+  );
+
   const roleId = isNonEmptyString(r?.roleId) ? r.roleId.trim() : undefined;
 
   let dayInLife;
@@ -193,6 +199,7 @@ function normalizeRole(r, index) {
   if (roleId) out.roleId = roleId;
   if (dayInLife) out.dayInLife = dayInLife;
   if (salaryRange) out.salaryRange = salaryRange;
+  if (internshipPrograms.length) out.internshipPrograms = internshipPrograms;
   return out;
 }
 

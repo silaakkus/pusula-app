@@ -65,6 +65,38 @@
             "name": "Migros",
             "url": "https://www.migroskariyer.com/"
           }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Trendyol Talent Program",
+            "url": "https://careers.trendyol.com/talent-program",
+            "summary": "E-ticaret ve teknoloji ekiplerinde dönemsel, proje odaklı staj/rotasyon; mentorluk ve değerlendirme aşamalı başvuru.",
+            "eligibility": "Genelde lisans 3–4. sınıf veya yeni mezun adaylar; takım ve İngilizce seviyesi ilan metninde netleşir."
+          },
+          {
+            "name": "Hepsiburada kariyer / staj ilanları",
+            "url": "https://kurumsal.hepsiburada.com/kariyer",
+            "summary": "Kurumsal kariyer sayfasında dönemsel açılan veri, analitik ve operasyon staj pozisyonları yayınlanır.",
+            "eligibility": "Üniversite öğrencisi veya yeni mezun; pozisyona göre bölüm ve süre şartları değişir."
+          },
+          {
+            "name": "Getir kariyer (Early careers)",
+            "url": "https://careers.getir.com/",
+            "summary": "Operasyon ve ürün odaklı ekiplerde staj veya junior program ilanları site üzerinden duyurulur.",
+            "eligibility": "Çoğunlukla lisans öğrencisi; tam zamanlı/part-time ilan açıklamasına bakın."
+          },
+          {
+            "name": "İş Bankası kariyer (staj / genç yetenek)",
+            "url": "https://www.iskurumsal.com/kariyer",
+            "summary": "Bankacılık ve destek birimlerinde yıl içinde açılan staj ve yetenek programları tek kariyer portalında toplanır.",
+            "eligibility": "Genelde lisans 3–4. sınıf; hukuk/uyum ve pozisyona özel ek koşullar ilanda yazar."
+          },
+          {
+            "name": "Turkcell kariyer",
+            "url": "https://www.turkcell.com.tr/kurumsal/kariyer",
+            "summary": "Telekom ve dijital ürün ekiplerinde staj ve yeni mezun programları dönemsel olarak açılır.",
+            "eligibility": "Öğrenci veya yeni mezun; teknik pozisyonlarda ilgili bölüm ve GPA beklentisi olabilir."
+          }
         ]
       },
       {
@@ -128,6 +160,38 @@
           {
             "name": "Microsoft Türkiye",
             "url": "https://careers.microsoft.com/professional/tr-tr"
+          }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Amazon Student Programs",
+            "url": "https://www.amazon.jobs/en/business_categories/student-programs",
+            "summary": "Yaz stajı ve yeni mezun rolleri için global başvuru merkezi; Türkiye lokasyonlu ilanlar filtrelenebilir.",
+            "eligibility": "Lisans/yüksek lisans öğrencisi veya yeni mezun; pozisyona göre yazılım veya araştırma arka planı."
+          },
+          {
+            "name": "Microsoft — öğrenci ve mezun programları",
+            "url": "https://careers.microsoft.com/students/tr-tr",
+            "summary": "Staj, mühendislik ve araştırma odaklı öğrenci programları için resmi Türkçe/EN kariyer girişi.",
+            "eligibility": "Üniversite kaydı veya yakın mezuniyet; teknik mülakat ve İngilizce sık aranır."
+          },
+          {
+            "name": "Google — Students",
+            "url": "https://careers.google.com/students/",
+            "summary": "Staj ve yeni mezun rolleri (ürün, yazılım, araştırma) için merkezi başvuru; lokasyon ve dönem ilana göre değişir.",
+            "eligibility": "Öğrenci veya yeni mezun; çoğu rolde güçlü algoritma ve iletişim becerisi beklenir."
+          },
+          {
+            "name": "Dream Games kariyer",
+            "url": "https://careers.dreamgames.com/",
+            "summary": "Oyun ve ML yakın ekiplerde açılan staj ve junior roller duyurulur.",
+            "eligibility": "Genelde yazılım, oyun veya ilgili mühendislik bölümleri; portföy ve proje deneyimi artı puan."
+          },
+          {
+            "name": "TÜBİTAK — insan kaynakları / proje personeli",
+            "url": "https://www.tubitak.gov.tr/tr/kurumsal/insan-kaynaklari",
+            "summary": "Kamu ARGE kurumlarında dönemsel proje personeli ve bursiyer ilanları; BİLGEM ve merkez duyuruları burada özetlenir.",
+            "eligibility": "Program bazında lisans/yüksek lisans; çoğu ilan tam zamanlı veya bursiyer statüsündedir."
           }
         ]
       },
@@ -193,6 +257,38 @@
             "name": "Deloitte Türkiye",
             "url": "https://www2.deloitte.com/tr/tr/pages/careers.html"
           }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Garanti BBVA — kariyer ve staj",
+            "url": "https://www.garantibbva.com.tr/kariyer",
+            "summary": "Bankacılık, risk ve analitik birimlerinde dönemsel staj ve yetenek programı ilanları.",
+            "eligibility": "Çoğunlukla lisans 3–4. sınıf ekonomi, işletme, mühendislik; detay ilanda."
+          },
+          {
+            "name": "EY Türkiye — careers",
+            "url": "https://www.ey.com/tr_tr/careers",
+            "summary": "Denetim ve danışmanlıkta staj / graduate program başvuruları yıllık dönemlerde açılır.",
+            "eligibility": "İlgili bölüm + İngilizce; staj dönemleri genelde yaz veya dönemsel blok."
+          },
+          {
+            "name": "Deloitte Türkiye — careers",
+            "url": "https://www2.deloitte.com/tr/tr/pages/careers.html",
+            "summary": "Risk, analitik ve danışmanlık hatlarında staj ve analist programları.",
+            "eligibility": "Lisans/yüksek lisans; ofis ve program bazında farklı son başvuru tarihleri."
+          },
+          {
+            "name": "Allianz Türkiye kariyer",
+            "url": "https://www.allianz.com.tr/kariyer.html",
+            "summary": "Sigorta ve risk fonksiyonlarında yıl içinde açılan staj ve yönetici adayı programları.",
+            "eligibility": "Öğrenci veya yeni mezun; pozisyona göre sayısal okuryazarlık ve dil şartı."
+          },
+          {
+            "name": "İş Bankası kariyer",
+            "url": "https://www.iskurumsal.com/kariyer",
+            "summary": "Finans ve operasyon stajları ile risk analitiğine yakın rotalar için ilan takvimi kariyer sitesinde.",
+            "eligibility": "Lisans ileri sınıflar çoğunlukla öncelikli; güncel ilan metnine bakın."
+          }
         ]
       },
       {
@@ -256,6 +352,38 @@
           {
             "name": "Mediacom / GroupM TR",
             "url": "https://www.wpp.com/careers"
+          }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Unilever Türkiye — kariyer",
+            "url": "https://www.unilever.com.tr/kariyer/",
+            "summary": "FMCG markalarında pazarlama ve veri odaklı staj / management trainee benzeri programlar.",
+            "eligibility": "Lisans/yüksek lisans; genelde İngilizce ve takım çalışması vurgulanır."
+          },
+          {
+            "name": "P&G Careers",
+            "url": "https://www.pgcareers.com/global/en",
+            "summary": "Küresel staj ve yeni mezun programları; Türkiye ofisi ilanları site filtresiyle bulunur.",
+            "eligibility": "Öğrenci veya yeni mezun; analitik ve iletişim yetkinliği öne çıkar."
+          },
+          {
+            "name": "Trendyol Talent Program",
+            "url": "https://careers.trendyol.com/talent-program",
+            "summary": "Growth ve kategori ekiplerinde veri ile hikâye anlatımı yakın roller için başvuru yolu.",
+            "eligibility": "Lisans 3–4 / yeni mezun; program yılı ve kontenjan her dönem güncellenir."
+          },
+          {
+            "name": "ING Türkiye kariyer",
+            "url": "https://www.ing.com.tr/tr/kariyer",
+            "summary": "Bankacılık ve dijital kanallarda dönemsel staj ve internship duyuruları.",
+            "eligibility": "Üniversite öğrencisi; hukuk ve uyum koşulları ilana göre."
+          },
+          {
+            "name": "Publicis Groupe — careers",
+            "url": "https://www.publicisgroupe.com/en/careers",
+            "summary": "Ajans ağında içerik, medya ve veri stratejisi stajları merkezi portaldan yönetilir.",
+            "eligibility": "İletişim, tasarım veya analitik geçmişi faydalı; lokasyon ve dil ilana göre."
           }
         ]
       }
@@ -327,6 +455,38 @@
             "name": "Booking.com",
             "url": "https://careers.booking.com/"
           }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Delivery Hero — careers (Yemeksepeti ağı)",
+            "url": "https://careers.deliveryhero.com/",
+            "summary": "Ürün ve tasarım ekiplerinde UX araştırma ve tasarım stajları grup çapında ilan edilir.",
+            "eligibility": "Öğrenci veya yeni mezun; portföy ve kullanıcı araştırması örnekleri istenebilir."
+          },
+          {
+            "name": "Getir kariyer",
+            "url": "https://careers.getir.com/",
+            "summary": "Mobil ürün ekiplerinde kullanıcı deneyimi ve araştırma rolleri dönemsel açılır.",
+            "eligibility": "Lisans; kullanıcı testi veya görüşme deneyimi artı sağlar."
+          },
+          {
+            "name": "Trendyol Early Careers",
+            "url": "https://careers.trendyol.com/early-careers",
+            "summary": "Ürün ve tasarım alanına yakın staj ve başlangıç seviyesi program özet sayfası.",
+            "eligibility": "Üniversite öğrencisi veya kısa süreli mezun; güncel başvuru penceresi sitede."
+          },
+          {
+            "name": "Booking.com Careers",
+            "url": "https://careers.booking.com/",
+            "summary": "Global ürün ve UX ekiplerinde staj ve graduate roller; uzaktan/hibrit seçenekler olabilir.",
+            "eligibility": "İngilizce ve güçlü portföy; bazı roller Hollanda veya diğer ofislerde."
+          },
+          {
+            "name": "Microsoft öğrenci programları",
+            "url": "https://careers.microsoft.com/students/tr-tr",
+            "summary": "Araştırma ve ürün odaklı stajlar için Microsoft başvuru girişi.",
+            "eligibility": "Kayıtlı öğrenci veya yakın mezun; teknik mülakat süreçleri standarttır."
+          }
         ]
       },
       {
@@ -390,6 +550,38 @@
           {
             "name": "SAP Türkiye",
             "url": "https://jobs.sap.com/"
+          }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Microsoft Responsible AI / students",
+            "url": "https://careers.microsoft.com/students/tr-tr",
+            "summary": "Kurumsal güven ve yapay zeka ilkeleri yakın ekiplerde staj fırsatları ara sıra açılır.",
+            "eligibility": "Bilgisayar, hukuk veya sosyal bilim çapraz geçmiş faydalı; ilan bazında netleşir."
+          },
+          {
+            "name": "Google Careers — Students",
+            "url": "https://careers.google.com/students/",
+            "summary": "Güvenlik, politika ve ürün güvenilirliği temalı stajlar dahil geniş öğrenci portföyü.",
+            "eligibility": "Öğrenci veya yeni mezun; rekabetçi başvuru ve çok aşamalı süreç."
+          },
+          {
+            "name": "IBM Careers",
+            "url": "https://www.ibm.com/careers",
+            "summary": "Kurumsal AI ve danışmanlık hatlarında staj ve yeni mezun rolleri.",
+            "eligibility": "Teknik veya iş analitiği geçmişi; global ilan filtresi ile Türkiye kontrol edin."
+          },
+          {
+            "name": "SAP Jobs",
+            "url": "https://jobs.sap.com/",
+            "summary": "Kurumsal yazılım ve veri ürünlerinde staj; lokasyon ve dil ilana göre.",
+            "eligibility": "İşletme veya mühendislik bölümleri sık görülür; İngilizce şart olabilir."
+          },
+          {
+            "name": "TÜBİTAK insan kaynakları",
+            "url": "https://www.tubitak.gov.tr/tr/kurumsal/insan-kaynaklari",
+            "summary": "Kamu ARGE ortamında etik ve politika yakın araştırma rolleri proje duyurularıyla açılır.",
+            "eligibility": "Program duyurusuna göre; çoğu tam zamanlı veya bursiyer kapsamındadır."
           }
         ]
       },
@@ -455,6 +647,38 @@
             "name": "Eczacıbaşı Holding",
             "url": "https://www.eczacibasi.com.tr/tr/kariyer"
           }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Arçelik kariyer",
+            "url": "https://www.arcelik.com.tr/kariyer",
+            "summary": "Üretim ve kurumsal fonksiyonlarda İK ve insan analitiği yakın staj programları.",
+            "eligibility": "Endüstri mühendisliği, işletme, psikoloji gibi bölümler; dönemsel ilanlar."
+          },
+          {
+            "name": "Koç Holding — careers",
+            "url": "https://www.koc.com.tr/en/careers",
+            "summary": "Grup şirketlerinde yönetici adayı ve staj programları merkezi duyurulur.",
+            "eligibility": "Lisans/yüksek lisans; İngilizce ve genel yetkinlik testleri uygulanabilir."
+          },
+          {
+            "name": "Ford Otosan kariyer",
+            "url": "https://www.fordotosan.com.tr/tr/kariyer",
+            "summary": "Otomotiv endüstrisinde İK, üretim ve mühendislik stajları.",
+            "eligibility": "Üniversite öğrencisi; teknik ve idari pozisyonlar ayrı ilanlanır."
+          },
+          {
+            "name": "Turkcell kariyer",
+            "url": "https://www.turkcell.com.tr/kurumsal/kariyer",
+            "summary": "İK teknolojileri ve operasyonel İK rollerine yakın staj fırsatları.",
+            "eligibility": "Öğrenci statüsü; pozisyon detayında bölüm tercihi belirtilir."
+          },
+          {
+            "name": "Ülker kariyer",
+            "url": "https://www.ulker.com.tr/kariyer",
+            "summary": "Gıda sektöründe kurumsal staj ve yetenek programları.",
+            "eligibility": "İşletme ve mühendislik çizgileri yaygın; yıllık başvuru takvimine bakın."
+          }
         ]
       },
       {
@@ -518,6 +742,38 @@
           {
             "name": "Netflix Jobs",
             "url": "https://jobs.netflix.com/"
+          }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Insider careers",
+            "url": "https://useinsider.com/careers/",
+            "summary": "Growth ve içerik pazarlaması odaklı global staj ve junior roller.",
+            "eligibility": "İletişim, pazarlama veya veri geçmişi; İngilizce çalışma dili olabilir."
+          },
+          {
+            "name": "Trendyol Talent Program",
+            "url": "https://careers.trendyol.com/talent-program",
+            "summary": "Growth ve kategori iletişiminde içerik ve kampanya stajları.",
+            "eligibility": "Lisans ileri sınıf veya yeni mezun; program kontenjanı yıllık değişir."
+          },
+          {
+            "name": "Hepsiburada kariyer",
+            "url": "https://kurumsal.hepsiburada.com/kariyer",
+            "summary": "Pazarlama ve içerik üretimi stajları dönemsel olarak yayınlanır.",
+            "eligibility": "Üniversite öğrencisi; medya ve e-ticaret ilgisi önemlidir."
+          },
+          {
+            "name": "Doğuş Grubu kariyer",
+            "url": "https://www.dogusgrubu.com.tr/kariyer",
+            "summary": "Medya ve dijital markalarda staj / yetenek programı duyuruları.",
+            "eligibility": "İlgili bölüm ve öğrenci belgesi; grup şirketine göre farklılık gösterir."
+          },
+          {
+            "name": "WPP careers",
+            "url": "https://www.wpp.com/careers",
+            "summary": "Ajans ağında içerik ve strateji stajları için merkezi giriş.",
+            "eligibility": "Portföy ve iletişim becerisi; lokasyon global ofislere göre."
           }
         ]
       }
@@ -589,6 +845,38 @@
             "name": "TÜBİTAK BİLGEM",
             "url": "https://www.tubitak.gov.tr/tr/kurumsal/insan-kaynaklari"
           }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Pfizer Türkiye kariyer",
+            "url": "https://www.pfizer.com.tr/kariyer",
+            "summary": "İlaç ARGE ve sağlık hizmetleri çevresinde dönemsel staj ve yeni mezun programları.",
+            "eligibility": "Eczacılık, biyoloji, mühendislik; etik ve gizlilik eğitimleri zorunlu olabilir."
+          },
+          {
+            "name": "Novartis Türkiye",
+            "url": "https://www.novartis.com/tr-tr/kariyer",
+            "summary": "Global ilaç şirketinde araştırma ve sağlık çözümleri stajları.",
+            "eligibility": "İlgili lisans/yüksek lisans; çoğu program İngilizce gerektirir."
+          },
+          {
+            "name": "Roche Türkiye kariyer",
+            "url": "https://www.roche.com.tr/kariyer",
+            "summary": "Tanı ve ilaç alanında staj ve graduate pozisyonları yıllık açılır.",
+            "eligibility": "Sağlık bilimleri veya mühendislik; detay ilanda."
+          },
+          {
+            "name": "GE Healthcare jobs",
+            "url": "https://jobs.gecareers.com/global/en",
+            "summary": "Tıbbi görüntüleme ve sağlık teknolojileri stajları global portaldan.",
+            "eligibility": "STEM bölümleri; bazı roller yalnızca belirli ülkelerde."
+          },
+          {
+            "name": "TÜBİTAK insan kaynakları",
+            "url": "https://www.tubitak.gov.tr/tr/kurumsal/insan-kaynaklari",
+            "summary": "Biyoveri ve hesaplama yakın ARGE projelerinde personel/stajyer duyuruları.",
+            "eligibility": "Proje bazlı; tam zamanlı veya bursiyer statüsü duyuruda belirtilir."
+          }
         ]
       },
       {
@@ -653,6 +941,38 @@
             "name": "Sanofi Türkiye",
             "url": "https://www.sanofi.com/en/careers"
           }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Acıbadem Sağlık Grubu kariyer",
+            "url": "https://www.acibadem.com.tr/acibadem-kariyer",
+            "summary": "Hastane ve dijital sağlık ürünlerine yakın staj ve yönetici adayı programları.",
+            "eligibility": "Sağlık, mühendislik veya işletme; klinik alanlarda ek sertifika gerekebilir."
+          },
+          {
+            "name": "Medipol kariyer",
+            "url": "https://www.medipol.com.tr/kariyer",
+            "summary": "Sağlık hizmetleri ve destek birimlerinde dönemsel staj ilanları.",
+            "eligibility": "İlgili fakülte öğrencisi; hastane politikalarına uyum zorunludur."
+          },
+          {
+            "name": "Philips careers",
+            "url": "https://www.careers.philips.com/global/en",
+            "summary": "Sağlık teknolojisi stajları ve yeni mezun programları global sitede.",
+            "eligibility": "Mühendislik veya sağlık teknolojileri; lokasyon filtresi kullanın."
+          },
+          {
+            "name": "Sanofi careers",
+            "url": "https://www.sanofi.com/en/careers",
+            "summary": "İlaç ve aşı alanında staj ve graduate roller.",
+            "eligibility": "Yaşam bilimleri veya iş fonksiyonları; ülke bazlı ilanlar."
+          },
+          {
+            "name": "Getir kariyer (ürün/operasyon)",
+            "url": "https://careers.getir.com/",
+            "summary": "Mobil sağlık veya lojistik ürün ekiplerine yakın staj ilanları olabilir.",
+            "eligibility": "Öğrenci; güncel açık pozisyonları siteden kontrol edin."
+          }
         ]
       },
       {
@@ -716,6 +1036,38 @@
           {
             "name": "TSKB",
             "url": "https://www.tskb.com.tr/kariyer"
+          }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Enerjisa kariyer",
+            "url": "https://www.enerjisa.com.tr/kariyer",
+            "summary": "Enerji üretim ve dağıtımında sürdürülebilirlik ve mühendislik stajları.",
+            "eligibility": "Mühendislik ve işletme öğrencileri; saha stajları için sağlık şartları."
+          },
+          {
+            "name": "Şişecam kariyer",
+            "url": "https://www.sisecam.com.tr/tr/kariyer",
+            "summary": "Endüstride enerji verimliliği ve çevre projelerine yakın staj programları.",
+            "eligibility": "Kimya, malzeme, makine mühendisliği sık aranır."
+          },
+          {
+            "name": "Arçelik kariyer",
+            "url": "https://www.arcelik.com.tr/kariyer",
+            "summary": "Sürdürülebilir ürün ve üretim süreçleri stajları.",
+            "eligibility": "Lisans öğrencisi; yıllık kontenjan duyuruları."
+          },
+          {
+            "name": "VESTEL kariyer",
+            "url": "https://www.vestel.com.tr/kariyer",
+            "summary": "Elektronik ve enerji yönetimi projelerinde mühendislik stajları.",
+            "eligibility": "İlgili mühendislik bölümleri; fabrika ve ofis seçenekleri."
+          },
+          {
+            "name": "Ford Otosan kariyer",
+            "url": "https://www.fordotosan.com.tr/tr/kariyer",
+            "summary": "Otomotivde karbon ayak izi ve verimlilik projelerine yakın stajlar.",
+            "eligibility": "Üniversite öğrencisi; teknik ve idari ayrım ilanda."
           }
         ]
       }
@@ -787,6 +1139,38 @@
             "name": "N11",
             "url": "https://www.n11.com/kurumsal/kariyer"
           }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Garanti BBVA Teknoloji kariyer",
+            "url": "https://www.garantibbvatech.com.tr/kariyer",
+            "summary": "Dijital bankacılık ürün ekiplerinde staj ve yeni mezun programları.",
+            "eligibility": "Bilgisayar veya ilgili mühendislik / işletme; teknik mülakat."
+          },
+          {
+            "name": "PayTR",
+            "url": "https://www.paytr.com/",
+            "summary": "Ödeme teknolojileri şirketinde dönemsel staj duyuruları site veya Kariyer.net üzerinden olabilir.",
+            "eligibility": "Öğrenci veya yeni mezun; güncel ilan için ana siteyi ve iş ilanı sitelerini takip edin."
+          },
+          {
+            "name": "Amazon Student Programs",
+            "url": "https://www.amazon.jobs/en/business_categories/student-programs",
+            "summary": "Ürün ve program yönetimine yakın staj rolleri global başvuru ile.",
+            "eligibility": "Öğrenci; İngilizce ve önceki proje deneyimi önemlidir."
+          },
+          {
+            "name": "Insider careers",
+            "url": "https://useinsider.com/careers/",
+            "summary": "SaaS ürün ekiplerinde staj ve başlangıç seviyesi roller.",
+            "eligibility": "Teknik veya iş analitiği geçmişi faydalı; İngilizce çalışma dili."
+          },
+          {
+            "name": "Trendyol Talent Program",
+            "url": "https://careers.trendyol.com/talent-program",
+            "summary": "Ürün ve büyüme ekiplerinde çapraz fonksiyonel staj deneyimi.",
+            "eligibility": "Lisans 3–4 / yeni mezun; program şartları yıllık güncellenir."
+          }
         ]
       },
       {
@@ -850,6 +1234,38 @@
           {
             "name": "KoçSistem",
             "url": "https://www.kocsistem.com.tr/kariyer"
+          }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "PwC Türkiye careers",
+            "url": "https://www.pwc.com.tr/tr/careers.html",
+            "summary": "Danışmanlık ve denetimde staj / graduate programları.",
+            "eligibility": "İşletme, mühendislik, iktisat; İngilizce ve vaka mülakatı."
+          },
+          {
+            "name": "KPMG Türkiye careers",
+            "url": "https://kpmg.com/tr/tr/home/careers.html",
+            "summary": "İş analitiği ve risk danışmanlığına yakın staj programları.",
+            "eligibility": "Lisans/yüksek lisans; dönemsel başvuru pencereleri."
+          },
+          {
+            "name": "Accenture Türkiye careers",
+            "url": "https://www.accenture.com/tr-en/careers",
+            "summary": "Teknoloji ve strateji danışmanlığında staj ve analist rolleri.",
+            "eligibility": "Öğrenci veya yeni mezun; teknik ve iş birimi ilanları ayrıdır."
+          },
+          {
+            "name": "EY Türkiye careers",
+            "url": "https://www.ey.com/tr_tr/careers",
+            "summary": "İş analizi ve süreç danışmanlığı stajları.",
+            "eligibility": "İlgili bölüm + İngilizce; yoğun dönem dışı başvurular kapanabilir."
+          },
+          {
+            "name": "İş Bankası kariyer",
+            "url": "https://www.iskurumsal.com/kariyer",
+            "summary": "Bankacılık süreç ve raporlama stajları.",
+            "eligibility": "Lisans ileri sınıflar öncelikli; resmi ilan metni esas."
           }
         ]
       },
@@ -915,6 +1331,38 @@
             "name": "TikTok Careers",
             "url": "https://careers.tiktok.com/"
           }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Meta Careers",
+            "url": "https://www.metacareers.com/",
+            "summary": "Pazarlama ve ürün büyümesi stajları; global ilanlar ve uzaktan seçenekler.",
+            "eligibility": "Öğrenci veya yeni mezun; çoğu rol İngilizce ve portföy ister."
+          },
+          {
+            "name": "Google Students",
+            "url": "https://careers.google.com/students/",
+            "summary": "Pazarlama ve kullanıcı edinimi yakın öğrenci programları.",
+            "eligibility": "Rekabetçi süreç; analitik ve yaratıcılık birlikte değerlendirilir."
+          },
+          {
+            "name": "TikTok Careers",
+            "url": "https://careers.tiktok.com/",
+            "summary": "İçerik ve büyüme ekiplerinde global staj ve junior roller.",
+            "eligibility": "Dijital içerik deneyimi ve dil yeterliliği; lokasyon ilana göre."
+          },
+          {
+            "name": "Trendyol Talent Program",
+            "url": "https://careers.trendyol.com/talent-program",
+            "summary": "Growth ve pazarlama takımlarında yoğun staj/rotasyon.",
+            "eligibility": "Lisans 3–4 / yeni mezun; güncel başvuru tarihleri sitede."
+          },
+          {
+            "name": "Insider careers",
+            "url": "https://useinsider.com/careers/",
+            "summary": "B2B SaaS büyüme ve pazarlama stajları.",
+            "eligibility": "İngilizce ve veri okuryazarlığı; öğrenci veya yeni mezun."
+          }
         ]
       },
       {
@@ -978,6 +1426,38 @@
           {
             "name": "SAP Türkiye",
             "url": "https://jobs.sap.com/"
+          }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Logo Yazılım kariyer",
+            "url": "https://www.logo.com.tr/LogoKariyer",
+            "summary": "ERP ve otomasyon ürünlerinde yazılım ve danışmanlık stajları.",
+            "eligibility": "Bilgisayar veya endüstri mühendisliği; yıllık staj kotası."
+          },
+          {
+            "name": "KoçSistem kariyer",
+            "url": "https://www.kocsistem.com.tr/kariyer",
+            "summary": "Kurumsal IT ve süreç otomasyonu projelerinde staj.",
+            "eligibility": "Mühendislik veya yönetim bilişim sistemleri öğrencisi."
+          },
+          {
+            "name": "SAP Jobs",
+            "url": "https://jobs.sap.com/",
+            "summary": "Kurumsal süreç ve entegrasyon stajları global portaldan.",
+            "eligibility": "İş veya mühendislik geçmişi; Türkiye lokasyonu filtresi."
+          },
+          {
+            "name": "Vodafone Türkiye kariyer",
+            "url": "https://www.vodafone.com.tr/vodafone-kariyer.php",
+            "summary": "Telekom operasyon ve dijital süreç stajları.",
+            "eligibility": "Öğrenci belgesi; dönemsel ilanlar."
+          },
+          {
+            "name": "Turkcell kariyer",
+            "url": "https://www.turkcell.com.tr/kurumsal/kariyer",
+            "summary": "Operasyon ve IT otomasyon rollerine yakın staj programları.",
+            "eligibility": "Lisans; teknik mülakat olabilir."
           }
         ]
       }
@@ -1049,6 +1529,38 @@
             "name": "İstanbul Kodluyor (İBB)",
             "url": "https://www.ibb.istanbul/"
           }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Udemy careers",
+            "url": "https://about.udemy.com/careers/",
+            "summary": "EdTech ürün ve içerik ekiplerinde global staj ve junior roller.",
+            "eligibility": "Öğrenci veya yeni mezun; çoğu rol İngilizce ve ABD/Avrupa lokasyonlu olabilir."
+          },
+          {
+            "name": "Pearson jobs",
+            "url": "https://pearson.jobs/",
+            "summary": "Yayıncılık ve dijital öğrenme stajları.",
+            "eligibility": "Eğitim veya teknoloji geçmişi; lokasyon ilana göre."
+          },
+          {
+            "name": "Turkcell kariyer",
+            "url": "https://www.turkcell.com.tr/kurumsal/kariyer",
+            "summary": "Dijital eğitim ve içerik ortaklıklarına yakın staj fırsatları.",
+            "eligibility": "Üniversite öğrencisi; ilgili bölüm tercihi ilanda."
+          },
+          {
+            "name": "TÜBİTAK insan kaynakları",
+            "url": "https://www.tubitak.gov.tr/tr/kurumsal/insan-kaynaklari",
+            "summary": "Eğitim teknolojisi ve STEM yayınlarına yakın proje personeli ilanları.",
+            "eligibility": "Program şartnamesine göre; çoğu tam zamanlı veya bursiyer."
+          },
+          {
+            "name": "MEB (resmi duyurular)",
+            "url": "https://www.meb.gov.tr/",
+            "summary": "Kamu eğitim projelerinde dönemsel staj ve gönüllülük duyuruları resmi sitede yayımlanır.",
+            "eligibility": "Öğretmen adayı veya ilgili fakülte; başvuru tarihleri duyuruya göre kısıtlıdır."
+          }
         ]
       },
       {
@@ -1112,6 +1624,38 @@
           {
             "name": "Spotify Jobs",
             "url": "https://www.lifeatspotify.com/jobs"
+          }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Spotify jobs",
+            "url": "https://www.lifeatspotify.com/jobs",
+            "summary": "Ürün tasarımı ve deneyim stajları global ölçekte.",
+            "eligibility": "Güçlü portföy ve İngilizce; bazı roller Avrupa/Amerika ofislerinde."
+          },
+          {
+            "name": "Booking.com Careers",
+            "url": "https://careers.booking.com/",
+            "summary": "Arayüz ve görsel tasarım stajları.",
+            "eligibility": "Tasarım portföyü zorunlu; uzaktan/hibrit seçenekler değişken."
+          },
+          {
+            "name": "Trendyol Early Careers",
+            "url": "https://careers.trendyol.com/early-careers",
+            "summary": "Ürün tasarımı ve marka görünürlüğü stajları için giriş noktası.",
+            "eligibility": "Öğrenci veya yeni mezun; güncel kontenjan sitede."
+          },
+          {
+            "name": "Getir kariyer",
+            "url": "https://careers.getir.com/",
+            "summary": "Mobil arayüz ve tasarım sistemleri stajları.",
+            "eligibility": "Grafik veya etkileşim tasarımı portföyü."
+          },
+          {
+            "name": "Defacto kariyer",
+            "url": "https://kurumsal.defacto.com.tr/kariyer",
+            "summary": "Perakende dijital kanallarında görsel tasarım stajları.",
+            "eligibility": "İlgili bölüm öğrencisi; moda veya UI ilgisi faydalı."
           }
         ]
       },
@@ -1177,6 +1721,38 @@
             "name": "Trendyol (gaming içerik)",
             "url": "https://careers.trendyol.com/"
           }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Dream Games careers",
+            "url": "https://careers.dreamgames.com/",
+            "summary": "Mobil oyun stüdyosunda oyun ve topluluk rolleri stajları.",
+            "eligibility": "Oyun geliştirme veya iletişim bölümleri; portföy ve tutku önemli."
+          },
+          {
+            "name": "Peak (Zynga) careers",
+            "url": "https://www.peak.com/careers",
+            "summary": "Casual oyun geliştirme ve canlı operasyon stajları.",
+            "eligibility": "Yazılım, tasarım veya oyun üretimi geçmişi."
+          },
+          {
+            "name": "Ubisoft jobs",
+            "url": "https://jobs.ubisoft.com/",
+            "summary": "Global oyun stüdyolarında staj ve junior roller (çoğu yurtdışı ofis).",
+            "eligibility": "İngilizce ve portföy; Türkiye dışı lokasyon sık görülür."
+          },
+          {
+            "name": "Rovio careers",
+            "url": "https://www.rovio.com/careers/",
+            "summary": "Mobil oyun ve topluluk yönetimi stajları.",
+            "eligibility": "Öğrenci programları dönemsel; Avrupa ofisleri ağırlıklı."
+          },
+          {
+            "name": "Discord careers",
+            "url": "https://discord.com/careers",
+            "summary": "Topluluk güvenliği ve ürün rolleri için global staj ilanları.",
+            "eligibility": "Uzaktan veya yurtdışı; İngilizce ve önceki topluluk deneyimi."
+          }
         ]
       },
       {
@@ -1240,6 +1816,38 @@
           {
             "name": "Trendyol",
             "url": "https://careers.trendyol.com/"
+          }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Adobe careers",
+            "url": "https://careers.adobe.com/",
+            "summary": "Yaratıcı yazılım ve etkileşimli medya stajları.",
+            "eligibility": "Tasarım veya mühendislik portföyü; global başvuru."
+          },
+          {
+            "name": "Autodesk careers",
+            "url": "https://careers.autodesk.com/",
+            "summary": "3B tasarım ve mühendislik yazılımları stajları.",
+            "eligibility": "STEM veya tasarım geçmişi; lokasyon ilana göre."
+          },
+          {
+            "name": "Dream Games careers",
+            "url": "https://careers.dreamgames.com/",
+            "summary": "Oyun içi deneyim ve yaratıcı prototipleme stajları.",
+            "eligibility": "Oyun veya görsel tasarım odaklı portföy."
+          },
+          {
+            "name": "WPP careers",
+            "url": "https://www.wpp.com/careers",
+            "summary": "Yaratıcı ajanslarda dijital prodüksiyon ve etkileşim stajları.",
+            "eligibility": "Portföy ve iletişim; çok dilli çalışma ortamı."
+          },
+          {
+            "name": "Insider careers",
+            "url": "https://useinsider.com/careers/",
+            "summary": "Ürün içi yaratıcı ve growth deneyimleri stajları.",
+            "eligibility": "Teknik veya pazarlama hibrit geçmiş faydalıdır."
           }
         ]
       }

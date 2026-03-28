@@ -1,4 +1,5 @@
 import { normalizeEmployersList, validateEmployersTurkey } from './employersNormalize.js';
+import { normalizeInternshipPrograms, validateInternshipPrograms } from './internshipsNormalize.js';
 
 /** Etiket havuzu yedekleri (matriste employersTurkey yoksa); her biri { name, url } */
 const FALLBACK_EMPLOYERS = {
@@ -63,6 +64,41 @@ function employersForTags(tags) {
   return FALLBACK_EMPLOYERS.default;
 }
 
+/** Matriste internshipPrograms bozuksa yedek (rol bazlı veri tercih edilir) */
+const FALLBACK_INTERNSHIPS = [
+  {
+    name: 'Trendyol Talent Program',
+    url: 'https://careers.trendyol.com/talent-program',
+    summary:
+      'E-ticaret ve teknoloji ekiplerinde dönemsel staj/rotasyon; başvuru tarihleri her yıl sitede güncellenir.',
+    eligibility: 'Genelde lisans 3–4. sınıf veya yeni mezun; güncel şartlar için resmi ilanı oku.',
+  },
+  {
+    name: 'Microsoft — öğrenci programları',
+    url: 'https://careers.microsoft.com/students/tr-tr',
+    summary: 'Staj ve yeni mezun rolleri için Microsoft başvuru girişi.',
+    eligibility: 'Kayıtlı öğrenci veya yakın mezuniyet; teknik mülakat ve İngilizce sık istenir.',
+  },
+  {
+    name: 'Amazon Student Programs',
+    url: 'https://www.amazon.jobs/en/business_categories/student-programs',
+    summary: 'Öğrenci ve yeni mezun programları; Türkiye lokasyonlu ilanlar filtrelenebilir.',
+    eligibility: 'Lisans/yüksek lisans öğrencisi veya yeni mezun; pozisyona göre teknik şartlar değişir.',
+  },
+  {
+    name: 'İş Bankası kariyer',
+    url: 'https://www.iskurumsal.com/kariyer',
+    summary: 'Bankacılık ve destek birimlerinde yıl içinde açılan staj duyuruları.',
+    eligibility: 'Üniversite öğrencisi; sınıf ve bölüm koşulları ilan metninde yazar.',
+  },
+  {
+    name: 'TÜBİTAK — insan kaynakları',
+    url: 'https://www.tubitak.gov.tr/tr/kurumsal/insan-kaynaklari',
+    summary: 'Kamu ARGE kurumlarında proje personeli ve bursiyer ilanları.',
+    eligibility: 'Program duyurusuna göre lisans/yüksek lisans; çoğu tam zamanlı veya bursiyer kapsamındadır.',
+  },
+];
+
 /**
  * API başarısız olduğunda disiplin matrisinden tam 3 rol üretir (PRD şemasına uyumlu).
  */
@@ -73,6 +109,10 @@ export function rolesFromMatrix(disciplineRow) {
       Array.isArray(rm.employersTurkey) && validateEmployersTurkey(rm.employersTurkey)
         ? rm.employersTurkey
         : employersForTags(rm.tags);
+    const rawInternships =
+      Array.isArray(rm.internshipPrograms) && validateInternshipPrograms(rm.internshipPrograms)
+        ? rm.internshipPrograms
+        : FALLBACK_INTERNSHIPS;
     return {
       roleId: rm.roleId,
       roleName: rm.roleName,
@@ -85,6 +125,7 @@ export function rolesFromMatrix(disciplineRow) {
       ],
       tags: [...rm.tags],
       employersTurkey: normalizeEmployersList(rawEmployers, 8),
+      internshipPrograms: normalizeInternshipPrograms(rawInternships, 6),
       ...(rm.dayInLife?.morning && rm.dayInLife?.afternoon && rm.dayInLife?.evening
         ? {
             dayInLife: {
