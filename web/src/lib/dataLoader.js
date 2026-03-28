@@ -43,6 +43,11 @@ export function validateOpportunities(raw) {
     if (!isNonEmptyString(o?.forWho) || !isNonEmptyString(o?.url)) {
       return { ok: false, error: 'forWho veya url eksik' };
     }
+    if (o.cities != null) {
+      if (!Array.isArray(o.cities) || !validateStringArray(o.cities, 1)) {
+        return { ok: false, error: 'cities geçersiz' };
+      }
+    }
   }
   return { ok: true, data: raw };
 }

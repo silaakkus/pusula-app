@@ -39,6 +39,15 @@ export function ResultsPage({
             </>
           )}
           Profiline göre teknoloji ekosisteminde öne çıkan yollar.
+          {profile?.cityId && profile.cityId !== 'all' && (
+            <span className="mt-1 block text-xs text-slate-500">
+              Fırsat filtresi:{' '}
+              <span className="whitespace-nowrap font-medium text-slate-700">
+                {profile.cityLabel ?? profile.cityId}
+              </span>{' '}
+              — şehre uygun kaynaklar öne alınır; yine de çevrim içi ve Türkiye geneli programlar gösterilir.
+            </span>
+          )}
         </p>
         {geminiErrorMessage && analysisSource === 'fallback' && (
           <p className="mt-2 text-xs text-slate-500">Teknik not: {geminiErrorMessage}</p>
@@ -47,7 +56,7 @@ export function ResultsPage({
 
       <div className="grid gap-6">
         {roles.map((role, idx) => {
-          const opps = opportunitiesForRole(role, opportunities, 3);
+          const opps = opportunitiesForRole(role, opportunities, 3, profile?.cityId ?? 'all');
           return (
             <motion.div
               key={`${role.roleName}-${idx}`}

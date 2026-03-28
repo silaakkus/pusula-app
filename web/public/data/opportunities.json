@@ -4,22 +4,25 @@
     "name": "UP School — Veri ve Yapay Zeka Okuryazarlığı Programı",
     "type": "program",
     "targetTags": ["data", "ai-ethics", "analytics", "research", "pm"],
+    "cities": ["all", "remote", "istanbul", "ankara"],
     "forWho": "Üniversite öğrencisi veya yeni mezun kadın adaylar; veri ve AI alanına giriş ve mentörlük arayanlar.",
     "url": "https://upschool.io/"
   },
   {
     "opportunityId": "sisterslab",
-    "name": "SistersLab — Kadınlar İçin Teknoloji ve Yazılım Eğitimleri",
+    "name": "SistersLab — Bilim ve Teknolojide Kadın Derneği",
     "type": "program",
     "targetTags": ["data", "ux", "pm", "edtech", "gamedev", "hrtech", "marketing-analytics"],
-    "forWho": "Kodlama ve dijital becerilerini güçlendirmek isteyen kadın öğrenciler ve profesyoneller.",
-    "url": "https://sisterslab.com/"
+    "cities": ["all", "remote", "istanbul", "ankara", "izmir"],
+    "forWho": "STEAM ve dijital beceriler için ücretsiz atölye ve programlar; Türkiye geneli ve çevrim içi içerik.",
+    "url": "https://sisterslab.org/"
   },
   {
     "opportunityId": "kodluyoruz",
     "name": "Kodluyoruz — Bootcamp ve Topluluk Programları",
     "type": "course",
     "targetTags": ["data", "ux", "pm", "gamedev", "biotech", "marketing-analytics"],
+    "cities": ["all", "remote", "istanbul", "ankara", "izmir"],
     "forWho": "Yoğun bootcamp veya hibrit eğitimle sektöre hazırlanmak isteyen adaylar.",
     "url": "https://www.kodluyoruz.org/"
   },
@@ -28,6 +31,7 @@
     "name": "Patika.dev — Ücretsiz Yazılım ve Veri Yolları",
     "type": "course",
     "targetTags": ["data", "gamedev", "pm", "analytics", "fintech", "biotech"],
+    "cities": ["all", "remote"],
     "forWho": "Kendi hızında ilerlemek isteyen öğrenciler; SQL, Python ve web yolları için uygun.",
     "url": "https://www.patika.dev/"
   },
@@ -36,6 +40,7 @@
     "name": "Women Techmakers (WTM) — Google Destekli Topluluk Etkinlikleri",
     "type": "community",
     "targetTags": ["ux", "ai-ethics", "data", "pm", "edtech", "research"],
+    "cities": ["all", "remote", "istanbul", "ankara", "izmir"],
     "forWho": "Teknoloji sektöründe rol model ve ağ kurmak isteyen kadın öğrenciler.",
     "url": "https://www.womentechmakers.com/"
   },
@@ -44,6 +49,7 @@
     "name": "YGA — Young Guru Academy ve Dijital Liderlik Programları",
     "type": "program",
     "targetTags": ["pm", "edtech", "sustainability", "marketing-analytics", "research"],
+    "cities": ["all", "istanbul", "remote"],
     "forWho": "Sosyal etki ve liderlik odaklı teknoloji projelerine ilgi duyan gençler.",
     "url": "https://www.yga.org.tr/"
   },
@@ -52,6 +58,7 @@
     "name": "Üniversite Kulüpleri ve Hackathonlar (ör. IEEE, GDSC)",
     "type": "community",
     "targetTags": ["data", "gamedev", "biotech", "ux", "pm"],
+    "cities": ["all", "remote"],
     "forWho": "Takım çalışması ve proje portföyü oluşturmak isteyen öğrenciler; kampüs kulüplerini araştır.",
     "url": "https://developers.google.com/community/gdsc"
   },
@@ -60,6 +67,7 @@
     "name": "Geleceği Yazan Kadınlar — Mentörlük ve Eğitim",
     "type": "scholarship",
     "targetTags": ["data", "ux", "pm", "hrtech", "marketing-analytics"],
+    "cities": ["all", "remote"],
     "forWho": "STEM ve teknoloji alanında kariyer hedefleyen kadın öğrenciler için burs/mentorluk fırsatları.",
     "url": "https://www.gelecegiyazankadinlar.com/"
   },
@@ -68,6 +76,7 @@
     "name": "Kadın Yazılımcı ve Benzeri Online Topluluklar",
     "type": "community",
     "targetTags": ["data", "ux", "gamedev", "edtech", "ai-ethics"],
+    "cities": ["all", "remote"],
     "forWho": "Soru sorma, iş ilanı ve destek ağı arayan başlangıç seviyesi adaylar.",
     "url": "https://kadin-yazilci.com/"
   },
@@ -76,6 +85,7 @@
     "name": "Açık Kaynak Türkiye ve Good First Issue Projeleri",
     "type": "course",
     "targetTags": ["data", "pm", "gamedev", "ux"],
+    "cities": ["all", "remote"],
     "forWho": "GitHub üzerinde ilk katkısını yapmak isteyen öğrenciler; portföy için uygun.",
     "url": "https://github.com/acikkaynak"
   }

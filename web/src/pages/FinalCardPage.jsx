@@ -7,7 +7,7 @@ import { CareerCardCapture } from '../components/CareerCardCapture.jsx';
 import { downloadCareerCardPng } from '../lib/downloadCareerCard.js';
 import { logEvent } from '../lib/analytics.js';
 
-export function FinalCardPage({ profile, roles, baselineBefore, baselineAfter, onHome }) {
+export function FinalCardPage({ profile, roles, baselineBefore, baselineAfter, onHome, onCardDownloaded }) {
   const cardRef = useRef(null);
   const [busy, setBusy] = useState(false);
   const delta = baselineAfter - baselineBefore;
@@ -21,13 +21,14 @@ export function FinalCardPage({ profile, roles, baselineBefore, baselineAfter, o
     setBusy(true);
     try {
       await downloadCareerCardPng(cardRef.current, 'pusula-kariyer-rota-karti.png');
+      onCardDownloaded?.();
     } catch (e) {
       alert('PNG oluşturulamadı. Sayfayı yenileyip tekrar dene.');
       console.error(e);
     } finally {
       setBusy(false);
     }
-  }, []);
+  }, [onCardDownloaded]);
 
   React.useEffect(() => {
     logEvent('delta_value', { before: baselineBefore, after: baselineAfter, delta });

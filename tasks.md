@@ -103,7 +103,7 @@ Bu liste `prd.md` içeriğini adım adım koda dökmek için hazırlanmıştır.
 
 ## Zaman Kalırsa (Nice-to-have)
 
-- [ ] Rozet sistemi (tamamlama/engeli yazma/kart indirme)
-- [ ] `localStorage` ile ilerleme/sonuç hafızası
-- [ ] Şehir bazlı filtre (V2 fikri)
-- [ ] Daha zengin disiplin matrisi (daha fazla rol + daha fazla örnek)
+- [x] Rozet sistemi (tamamlama/engeli yazma/kart indirme) — `pusulaBadges.js`, `PusulaBadgesStrip.jsx`
+- [x] `localStorage` ile ilerleme/sonuç hafızası — `pusulaFlow.js` (`pusula_flow`), karşılama “Kaldığın yerden devam et”
+- [x] Şehir bazlı filtre (V2 fikri) — profilde şehir + `opportunities.json` `cities` + `opportunitiesFilter.js`
+- [x] Daha zengin disiplin matrisi (daha fazla rol + daha fazla örnek) — 4. rol satırları eklendi (çoklu disiplin)

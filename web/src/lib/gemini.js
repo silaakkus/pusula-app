@@ -2,8 +2,71 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { getDisciplineById } from './dataLoader.js';
 import { loadPusulaSession } from './pusulaSession.js';
 
-/** Bare `gemini-1.5-flash` çoğu anahtarda v1beta ile 404 veriyor; `-latest` soneki güncel takma adı kullanır. */
-const MODEL_ID = import.meta.env.VITE_GEMINI_MODEL || 'gemini-2.0-flash';
+/**
+ * Ücretsiz kotada `gemini-2.0-flash` sıkça 429 / kota 0 verir; varsayılan 1.5 flash-latest.
+ * .env ile `VITE_GEMINI_MODEL` geçersen önce o, sonra yedekler denenir.
+ */
+const DEFAULT_MODEL = 'gemini-1.5-flash-latest';
+
+function getModelAttemptChain() {
+  const env = import.meta.env.VITE_GEMINI_MODEL?.trim();
+  const primary = env || DEFAULT_MODEL;
+  const chain = [primary, DEFAULT_MODEL, 'gemini-1.5-pro-latest', 'gemini-pro'];
+  return [...new Set(chain)];
+}
+
+function sleep(ms) {
+  return new Promise((r) => setTimeout(r, ms));
+}
+
+function isQuotaOrRateError(e) {
+  const msg = e?.message ?? String(e);
+  return /429|Resource exhausted|quota|Too Many Requests/i.test(msg);
+}
+
+function isModelNotFoundError(e) {
+  const msg = e?.message ?? String(e);
+  return /404|is not found|not supported for generateContent/i.test(msg);
+}
+
+function parseRetryDelayMs(e) {
+  const msg = e?.message ?? String(e);
+  const m = msg.match(/retry in ([\d.]+)\s*s/i);
+  if (m) return Math.min(90_000, Math.ceil(parseFloat(m[1]) * 1000) + 800);
+  return 16_000;
+}
+
+/**
+ * 429’da bir kez bekleyip tekrarlar; kota/model bulunamadıysa sıradaki model adını dener.
+ */
+async function generateTextMultiModel(apiKey, modelParamsBase, prompt) {
+  const models = getModelAttemptChain();
+  let lastError;
+
+  for (const modelName of models) {
+    const model = createModel(apiKey, { ...modelParamsBase, model: modelName });
+
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        const result = await model.generateContent(prompt);
+        const text = result?.response?.text?.();
+        if (!text) throw new Error('Boş yanıt');
+        return text;
+      } catch (e) {
+        lastError = e;
+        if (isQuotaOrRateError(e) && attempt === 0) {
+          await sleep(parseRetryDelayMs(e));
+          continue;
+        }
+        if (isModelNotFoundError(e)) break;
+        if (isQuotaOrRateError(e)) break;
+        throw e;
+      }
+    }
+  }
+
+  throw lastError ?? new Error('Gemini çağrısı başarısız');
+}
 
 function geminiRequestOptions() {
   const raw = import.meta.env.VITE_GEMINI_API_VERSION;
@@ -211,11 +274,6 @@ function buildSuggestedRolesContext() {
 export async function runCareerAnalysis({ apiKey, profile, matrix }) {
   if (!apiKey || !String(apiKey).trim()) throw new Error('API anahtarı eksik');
 
-  const model = createModel(apiKey, {
-    model: MODEL_ID,
-    systemInstruction: CAREER_SYSTEM,
-  });
-
   const userPayload = {
     profile: {
       disciplineId: profile.disciplineId,
@@ -224,24 +282,20 @@ export async function runCareerAnalysis({ apiKey, profile, matrix }) {
       strengths: profile.strengths,
       learningStyle: profile.learningStyle,
       goal: profile.goal,
+      cityId: profile.cityId,
+      cityLabel: profile.cityLabel,
     },
     matrixExcerpt: buildMatrixExcerpt(matrix, profile.disciplineId),
   };
 
   const prompt = `Aşağıdaki profil ve matris özetini kullanarak yalnızca JSON üret.\n\n${JSON.stringify(userPayload, null, 2)}`;
 
-  const result = await model.generateContent(prompt);
-  const text = result?.response?.text?.();
-  if (!text) throw new Error('Boş yanıt');
+  const text = await generateTextMultiModel(apiKey, { systemInstruction: CAREER_SYSTEM }, prompt);
   return parseAndValidateCareerJson(text);
 }
 
 export async function runBarrierReframe({ apiKey, barrierText, profileSummary }) {
   if (!apiKey || !String(apiKey).trim()) throw new Error('API anahtarı eksik');
-  const model = createModel(apiKey, {
-    model: MODEL_ID,
-    systemInstruction: BARRIER_SYSTEM,
-  });
   const rolesBlock = buildSuggestedRolesContext();
   const prompt = `Profil özeti: ${profileSummary}
 
@@ -249,8 +303,6 @@ export async function runBarrierReframe({ apiKey, barrierText, profileSummary })
 ${rolesBlock}
 
 Kullanıcının engeli: ${barrierText}`;
-  const result = await model.generateContent(prompt);
-  const text = result?.response?.text?.();
-  if (!text) throw new Error('Boş yanıt');
+  const text = await generateTextMultiModel(apiKey, { systemInstruction: BARRIER_SYSTEM }, prompt);
   return parseBarrierResponse(text);
 }

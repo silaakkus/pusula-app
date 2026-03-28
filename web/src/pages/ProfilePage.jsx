@@ -36,6 +36,14 @@ const GOAL_OPTIONS = [
   { id: 'explore', label: 'Henüz keşfetme aşamasındayım' },
 ];
 
+const CITY_OPTIONS = [
+  { id: 'all', label: 'Tüm Türkiye / belirtmek istemiyorum' },
+  { id: 'istanbul', label: 'İstanbul' },
+  { id: 'ankara', label: 'Ankara' },
+  { id: 'izmir', label: 'İzmir' },
+  { id: 'other', label: 'Diğer şehir' },
+];
+
 const PREFER_NOT = 'Belirtmek istemiyorum';
 
 function toggleInList(list, item) {
@@ -54,6 +62,7 @@ export function ProfilePage({ matrix, onBack, onSubmit }) {
   const [learningStyle, setLearningStyle] = useState('mixed');
   const [goalId, setGoalId] = useState('explore');
   const [goalDetail, setGoalDetail] = useState('');
+  const [cityId, setCityId] = useState('all');
   const [errors, setErrors] = useState({});
 
   const handleInterestSkip = (checked) => {
@@ -92,6 +101,8 @@ export function ProfilePage({ matrix, onBack, onSubmit }) {
     const effStrengths = strengthSkip ? [PREFER_NOT] : strengths;
     const goalLabel = GOAL_OPTIONS.find((g) => g.id === goalId)?.label ?? goalId;
 
+    const cityLabel = CITY_OPTIONS.find((c) => c.id === cityId)?.label ?? cityId;
+
     onSubmit({
       disciplineId,
       disciplineLabel: row?.disciplineName ?? '',
@@ -99,6 +110,8 @@ export function ProfilePage({ matrix, onBack, onSubmit }) {
       strengths: effStrengths,
       learningStyle: LEARNING_OPTIONS.find((l) => l.id === learningStyle)?.label ?? learningStyle,
       goal: goalDetail.trim() ? `${goalLabel}: ${goalDetail.trim()}` : goalLabel,
+      cityId,
+      cityLabel,
     });
   };
 
@@ -116,8 +129,8 @@ export function ProfilePage({ matrix, onBack, onSubmit }) {
             Seni tanıyalım
           </h2>
           <p className="mb-8 text-sm leading-relaxed text-slate-600">
-            Cevapların Gemini analizi ve yerel fırsat önerileri için kullanılır. İstemediğin alanlarda
-            “Belirtmek istemiyorum” seçeneğini kullanabilirsin.
+            Cevapların Gemini analizi ve yerel fırsat önerileri için kullanılır (şehir seçimi fırsat
+            listesini öne çıkarır). İstemediğin alanlarda “Belirtmek istemiyorum” seçeneğini kullanabilirsin.
           </p>
 
           <div className="space-y-8">
@@ -234,6 +247,25 @@ export function ProfilePage({ matrix, onBack, onSubmit }) {
                 placeholder="Örn. yaz stajı, veri görselleştirme, ürün stajyerliği…"
                 className="w-full rounded-2xl bg-white/80 px-4 py-3 text-base text-slate-900 ring-1 ring-black/5 placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/40"
               />
+            </div>
+
+            <div>
+              <label className="mb-2 block text-sm font-semibold text-slate-800">6. Şehir (fırsat filtresi)</label>
+              <p className="mb-3 text-xs text-slate-500">
+                Yerel etkinlik ağırlıklı önerileri öne çıkarmak için; çevrim içi ve Türkiye geneli kaynaklar yine
+                listelenir.
+              </p>
+              <select
+                value={cityId}
+                onChange={(e) => setCityId(e.target.value)}
+                className="w-full rounded-2xl bg-white/80 px-4 py-3 text-base text-slate-900 ring-1 ring-black/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/40"
+              >
+                {CITY_OPTIONS.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.label}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
 

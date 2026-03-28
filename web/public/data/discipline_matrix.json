@@ -47,6 +47,21 @@
           "Açık kaynak bir risk vaka çalışmasını okuyup iki paragraf özet yaz."
         ],
         "tags": ["fintech", "analytics", "data"]
+      },
+      {
+        "roleId": "data-storytelling",
+        "roleName": "Veri Hikâyesi ve İşletme İletişimi",
+        "whyFits": [
+          "Grafik ve özet istatistik okuryazarlığın, yönetim sunumlarında güven oluşturur.",
+          "Sayıları bağlama ve yorumlama becerin, ürün ve pazarlama ekiplerinde aranan bir yetkinlik.",
+          "Araştırma raporu yazımı deneyimin, veri ürünü dokümantasyonuna aktarılabilir."
+        ],
+        "firstSteps": [
+          "Tableau Public veya Metabase benzeri bir araçta örnek bir dashboard tasarla.",
+          "Gerçek veya hayali bir KPI seti için tek sayfalık yönetici özeti yaz.",
+          "Veri görselleştirme etiği (ölçek, eksen, renk) üzerine kısa not çıkar."
+        ],
+        "tags": ["data", "marketing-analytics", "research"]
       }
     ]
   },
@@ -98,6 +113,21 @@
           "People analytics terimleri için mini bir kelime listesi oluştur."
         ],
         "tags": ["hrtech", "analytics", "research"]
+      },
+      {
+        "roleId": "content-strategist",
+        "roleName": "İçerik Stratejisi ve Dijital Anlatı",
+        "whyFits": [
+          "Metin okuma ve üretme pratiğin, ürün içeriği ve mikro metinlerde doğrudan kullanılır.",
+          "Kültürel duyarlılığın, çok kitleli dijital ürünlerde ton ve erişilebilirlik için kritik.",
+          "Araştırma ve kaynakça alışkanlığın, SEO ve güvenilir içerik üretiminde fark yaratır."
+        ],
+        "firstSteps": [
+          "Sevdiğin bir markanın üç kanalda (web, sosyal, e-posta) tonunu karşılaştır.",
+          "Tek paragraf “ürün değer önerisi” ve üç başlıklı landing metni yaz.",
+          "Basit bir içerik takvimi şablonu doldur (haftalık 3 gönderi)."
+        ],
+        "tags": ["marketing-analytics", "ux", "edtech"]
       }
     ]
   },
@@ -200,6 +230,21 @@
           "Küçük bir sosyal medya hesabında haftalık içerik planı tasarla."
         ],
         "tags": ["marketing-analytics", "pm", "ux"]
+      },
+      {
+        "roleId": "ops-automation",
+        "roleName": "Operasyon ve Süreç Otomasyonu (düşük kod / araç yığını)",
+        "whyFits": [
+          "Tablo ve süreç haritası disiplinin, CRM ve otomasyon akışlarına kolayca taşınır.",
+          "Mikro düzeyde verimlilik arayışın, no-code araçlarla hızlı prototiplemeye uyar.",
+          "Paydaş koordinasyonu deneyimin, çapraz fonksiyonel operasyon rollarında değerlidir."
+        ],
+        "firstSteps": [
+          "Günlük hayattan tekrarlayan bir görevi 5 adımlık süreç olarak yaz.",
+          "Make, Zapier veya benzeri bir araçta ücretsiz şablona göz at.",
+          "Basit bir Google Form + Sheet ile mini otomasyon kurgula."
+        ],
+        "tags": ["pm", "analytics", "hrtech"]
       }
     ]
   },
@@ -251,6 +296,21 @@
           "Discord veya benzeri bir toplulukta bir etkinlik fikri öner ve gönüllü rol üstlen."
         ],
         "tags": ["gamedev", "edtech", "ux"]
+      },
+      {
+        "roleId": "creative-tech",
+        "roleName": "Yaratıcı Kod / Etkileşimli Medya",
+        "whyFits": [
+          "Estetik ve ritim duyarlılığın, hareket grafikleri ve prototiplerde güç verir.",
+          "Disiplinli prova alışkanlığin, iteratif yazılım geliştirme döngüsüne benzer.",
+          "Hikâye anlatımı becerin, kullanıcı akışı ve deneyim tasarımıyla birleşir."
+        ],
+        "firstSteps": [
+          "p5.js veya benzeri ile 50 satırlık görsel bir sketch dene.",
+          "Sevdiğin bir sanal sergiyi veya etkileşimli projeyi üç cümleyle analiz et.",
+          "itch.io’da küçük oyun jam duyurularına göz at."
+        ],
+        "tags": ["gamedev", "ux", "edtech"]
       }
     ]
   }
