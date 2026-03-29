@@ -4,19 +4,22 @@ import { Button } from './ui/Button';
 import { Card } from './ui/Card';
 import { logEvent } from '../lib/analytics.js';
 
+const DEFAULT_SHARE_SITE_URL = 'https://pusula-fdnbtix3-silaakkus-projects.vercel.app';
+
 /**
- * Paylaşılan link: tarayıcıda varsayılan olarak **şu an açık olan adres** (origin).
- * Böylece yanlış .env (başka Vercel/Netlify projesi) veya preview URL karışması azalır.
- * Tüm paylaşımların tek sabit domaine gitmesi için üretimde VITE_APP_SHARE_CANONICAL_URL kullan.
+ * Paylaşılan link sırası:
+ * 1) VITE_APP_SHARE_CANONICAL_URL (manuel sabit domain)
+ * 2) DEFAULT_SHARE_SITE_URL (projenin kalıcı production adresi)
+ * 3) window.location.origin
+ * 4) legacy VITE_APP_URL
  */
 function getShareSiteUrl() {
   const canonical = import.meta.env.VITE_APP_SHARE_CANONICAL_URL?.trim();
-  if (typeof window !== 'undefined' && window.location?.origin) {
-    const origin = window.location.origin.replace(/\/+$/, '');
-    if (canonical) return canonical.replace(/\/+$/, '');
-    return origin;
-  }
   if (canonical) return canonical.replace(/\/+$/, '');
+  if (DEFAULT_SHARE_SITE_URL) return DEFAULT_SHARE_SITE_URL.replace(/\/+$/, '');
+  if (typeof window !== 'undefined' && window.location?.origin) {
+    return window.location.origin.replace(/\/+$/, '');
+  }
   const legacy = import.meta.env.VITE_APP_URL?.trim();
   if (legacy) return legacy.replace(/\/+$/, '');
   return '';
