@@ -7,7 +7,7 @@ import { flowPreviousStepButtonClass } from '../lib/flowPreviousStepButton.js';
 
 export function PostSurveyPage({ baselineBefore, value, onChange, onPreviousStep, onNext }) {
   return (
-    <main className="relative mx-auto flex w-full max-w-none flex-col items-stretch px-2 pb-16 pt-10 sm:px-4 lg:px-5">
+    <main className="relative mx-auto flex w-full max-w-none flex-col items-stretch px-1 pb-16 pt-10 sm:px-2 lg:px-3">
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
         <Card>
           <div className="mb-3 text-sm font-semibold text-indigo-700">Son ölçüm (Özgüven Deltası)</div>

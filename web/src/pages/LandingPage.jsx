@@ -1,19 +1,29 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Compass, Rocket, RotateCcw, Sparkles } from 'lucide-react';
+import { ArrowRight, ChevronDown, Compass, Rocket, RotateCcw, Shield, Sparkles } from 'lucide-react';
 import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
 import { getLlmBrandLabel } from '../lib/llmConfig.js';
+import { getLandingAccordionSections } from '../lib/landingFeatureContent.js';
+
+const SECTION_ICONS = {
+  privacy: Shield,
+  'feature-hizli-analiz': Rocket,
+  'feature-yerel-firsatlar': Compass,
+  'feature-ai-mentor': Sparkles,
+};
 
 export function LandingPage({ onStart, onResume, onOpenInfo, resumeAvailable, resumeSummary }) {
   const brand = getLlmBrandLabel();
+  const sections = useMemo(() => getLandingAccordionSections(brand), [brand]);
+  const [openId, setOpenId] = useState(null);
 
-  const openInfo = (sectionId) => {
-    if (onOpenInfo) onOpenInfo(sectionId);
+  const toggle = (id) => {
+    setOpenId((prev) => (prev === id ? null : id));
   };
 
   return (
-    <main className="relative mx-auto flex w-full max-w-none flex-col items-center px-2 pb-16 pt-16 text-center sm:px-3 lg:px-4 lg:pt-24">
+    <main className="relative mx-auto flex w-full max-w-none flex-col items-center px-1 pb-16 pt-14 text-center sm:px-2 lg:px-3 lg:pt-20">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -22,9 +32,7 @@ export function LandingPage({ onStart, onResume, onOpenInfo, resumeAvailable, re
       >
         <Badge>
           <Sparkles size={16} />
-          <span>
-            {brand} destekli · Üniversiteli kadınlar için teknoloji rehberi
-          </span>
+          <span>{brand} destekli · Üniversiteli kadınlar için teknoloji rehberi</span>
         </Badge>
       </motion.div>
 
@@ -44,20 +52,19 @@ export function LandingPage({ onStart, onResume, onOpenInfo, resumeAvailable, re
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.4 }}
-        className="mb-10 w-full max-w-none text-lg leading-relaxed text-slate-600"
+        className="mb-8 w-full max-w-none text-lg leading-relaxed text-slate-600"
       >
-        <p>
-          Akademik arka planını teknoloji fırsatlarıyla birleştir; birkaç dakikada rota ve yerel fırsatlara
-          göz at.
-        </p>
-        <button
-          type="button"
-          onClick={() => openInfo(null)}
-          className="mt-3 inline-flex items-center gap-1 text-base font-semibold text-indigo-700 underline decoration-indigo-300 underline-offset-4 transition hover:text-indigo-900 hover:decoration-indigo-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 rounded-sm"
-        >
-          Detaylı bilgi ve veri gizliliği
-          <ArrowRight className="h-4 w-4" aria-hidden />
-        </button>
+        <p>Kısa sorularla rota çıkar; detayları aşağıdan başlığa tıklayarak okuyabilirsin.</p>
+        {onOpenInfo && (
+          <button
+            type="button"
+            onClick={() => onOpenInfo(null)}
+            className="mt-3 inline-flex items-center gap-1 text-base font-semibold text-indigo-700 underline decoration-indigo-300 underline-offset-4 transition hover:text-indigo-900 hover:decoration-indigo-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 rounded-sm"
+          >
+            Tüm metni ayrı sayfada aç (gizlilik dahil)
+            <ArrowRight className="h-4 w-4" aria-hidden />
+          </button>
+        )}
       </motion.div>
 
       <motion.div
@@ -94,45 +101,47 @@ export function LandingPage({ onStart, onResume, onOpenInfo, resumeAvailable, re
         </motion.p>
       )}
 
-      <div className="mt-20 grid w-full max-w-none grid-cols-1 gap-6 md:grid-cols-3">
-        {[
-          {
-            icon: <Rocket className="text-orange-500" />,
-            title: 'Hızlı Analiz',
-            desc: '5 dakikada kariyer rotanı belirle.',
-            targetId: 'feature-hizli-analiz',
-          },
-          {
-            icon: <Compass className="text-purple-500" />,
-            title: 'Yerel Fırsatlar',
-            desc: "Türkiye'deki burs ve eğitim radarı.",
-            targetId: 'feature-yerel-firsatlar',
-          },
-          {
-            icon: <Sparkles className="text-indigo-500" />,
-            title: 'AI Mentor',
-            desc: `${brand} ile sana özel öneriler.`,
-            targetId: 'feature-ai-mentor',
-          },
-        ].map((item, idx) => (
-          <motion.div
-            key={idx}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.85 + idx * 0.08 }}
-            role="button"
-            tabIndex={0}
-            onClick={() => openInfo(item.targetId)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') openInfo(item.targetId);
-            }}
-            className="cursor-pointer rounded-2xl border border-white/20 bg-white/50 p-6 text-left backdrop-blur-sm transition-all hover:-translate-y-1 hover:shadow-lg"
-          >
-            <div className="mb-4">{item.icon}</div>
-            <h3 className="mb-2 font-bold">{item.title}</h3>
-            <p className="text-sm leading-relaxed text-slate-500">{item.desc}</p>
-          </motion.div>
-        ))}
+      <div className="mt-12 w-full max-w-none space-y-2 text-left" role="region" aria-label="Konular">
+        <p className="mb-3 text-center text-sm font-semibold text-slate-600">Konu seç — açıklama aşağıda açılır</p>
+        {sections.map((s, idx) => {
+          const Icon = SECTION_ICONS[s.id] ?? Sparkles;
+          const open = openId === s.id;
+          return (
+            <motion.div
+              key={s.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.08 * idx }}
+              className="overflow-hidden rounded-2xl border border-white/35 bg-white/45 shadow-sm backdrop-blur-sm"
+            >
+              <button
+                type="button"
+                onClick={() => toggle(s.id)}
+                aria-expanded={open}
+                className="flex w-full items-start gap-3 p-4 text-left transition hover:bg-white/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/50"
+              >
+                <span className="mt-0.5 shrink-0 text-indigo-600" aria-hidden>
+                  <Icon className="h-6 w-6" />
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block font-bold text-indigo-950">{s.title}</span>
+                  <span className="mt-0.5 block text-sm text-slate-600">{s.shortDesc}</span>
+                </span>
+                <ChevronDown
+                  className={['h-5 w-5 shrink-0 text-slate-500 transition-transform', open ? 'rotate-180' : ''].join(
+                    ' ',
+                  )}
+                  aria-hidden
+                />
+              </button>
+              {open && (
+                <div className="border-t border-white/25 bg-white/35 px-4 py-3 text-sm leading-relaxed text-slate-700">
+                  {s.detail}
+                </div>
+              )}
+            </motion.div>
+          );
+        })}
       </div>
     </main>
   );

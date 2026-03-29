@@ -250,7 +250,7 @@ const App = () => {
       <div className="pointer-events-none absolute left-[-10%] top-[-10%] h-[40%] w-[40%] rounded-full bg-pusula-purple/20 blur-3xl" />
       <div className="pointer-events-none absolute bottom-[-10%] right-[-10%] h-[40%] w-[40%] rounded-full bg-pusula-coral/15 blur-3xl" />
 
-      <nav className="relative z-20 flex w-full max-w-full flex-col gap-3 px-2 py-5 sm:px-3 lg:px-4">
+      <nav className="relative z-20 flex w-full max-w-full flex-col gap-3 px-1 py-5 sm:px-2 lg:px-3">
         <div className="flex w-full flex-wrap items-center gap-3 sm:justify-between">
           <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2 sm:gap-3">
             <button
@@ -306,10 +306,12 @@ const App = () => {
       {step === 'profile' && (
         <>
           {dataLoading && (
-            <main className="mx-auto max-w-3xl px-6 py-16 text-center text-slate-600">Veriler yükleniyor…</main>
+            <main className="mx-auto w-full max-w-none px-1 py-16 text-center text-slate-600 sm:px-2 lg:px-3">
+              Veriler yükleniyor…
+            </main>
           )}
           {!dataLoading && dataError && (
-            <main className="mx-auto w-full max-w-none px-3 py-16 text-center sm:px-4 lg:px-5">
+            <main className="mx-auto w-full max-w-none px-1 py-16 text-center sm:px-2 lg:px-3">
               <p className="text-red-600">{dataError}</p>
               <Button className="mt-4" onClick={() => setStep('home')}>
                 Ana sayfaya dön

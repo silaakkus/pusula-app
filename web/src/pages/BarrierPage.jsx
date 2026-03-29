@@ -39,7 +39,7 @@ export function BarrierPage({ apiKey, profile, matrix, profileSummary, onResult,
   };
 
   return (
-    <main className="relative mx-auto flex w-full max-w-none flex-col items-stretch px-2 pb-16 pt-10 text-left sm:px-4 lg:px-5">
+    <main className="relative mx-auto flex w-full max-w-none flex-col items-stretch px-1 pb-16 pt-10 text-left sm:px-2 lg:px-3">
       <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
         <Card>
           <div className="mb-3 text-sm font-semibold text-indigo-700">Engel kırıcı</div>

@@ -9,7 +9,7 @@ export const CareerCardCapture = forwardRef(function CareerCardCapture(
   return (
     <div
       ref={ref}
-      className="box-border w-full max-w-[360px] rounded-3xl border-2 border-indigo-200 bg-white p-8 text-left shadow-xl"
+      className="box-border w-full max-w-[min(100%,36rem)] rounded-3xl border-2 border-indigo-200 bg-white p-6 text-left shadow-xl sm:p-8"
       style={{ fontFamily: 'system-ui, Segoe UI, sans-serif' }}
     >
       <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-indigo-600">Pusula</div>

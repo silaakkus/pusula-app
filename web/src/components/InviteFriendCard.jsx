@@ -98,7 +98,7 @@ export function InviteFriendCard() {
   }, [shareText]);
 
   return (
-    <Card className="mt-10 border border-indigo-200/80 bg-gradient-to-br from-indigo-50/90 via-white to-violet-50/60 text-left shadow-md shadow-indigo-900/5">
+    <Card className="mt-10 w-full max-w-none border border-indigo-200/80 bg-gradient-to-br from-indigo-50/90 via-white to-violet-50/60 text-left shadow-md shadow-indigo-900/5">
       <h3 className="text-lg font-extrabold text-indigo-950">Arkadaşını davet et</h3>
       <p className="mt-2 text-sm leading-relaxed text-slate-600">
         Rotanı tamamladın — paylaşım metni aşağıdaki gibidir; tek tıkla gönderebilirsin.

@@ -45,9 +45,9 @@ export function FinalCardPage({
   }, [baselineBefore, baselineAfter, delta]);
 
   return (
-    <main className="relative mx-auto flex w-full max-w-none flex-col items-center px-2 pb-16 pt-10 text-center sm:px-4 lg:px-5">
+    <main className="relative mx-auto flex w-full max-w-none flex-col items-stretch px-1 pb-16 pt-10 text-center sm:px-2 lg:px-3">
       <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="w-full">
-        <Card className="text-center">
+        <Card className="w-full max-w-none text-center">
           <h2 className="text-2xl font-extrabold text-indigo-900">Özgüven deltası (Δ)</h2>
           <p className="mt-2 text-sm text-slate-600">
             İlk skor: <span className="font-semibold">{baselineBefore}/5</span> · Son skor:{' '}
@@ -59,7 +59,7 @@ export function FinalCardPage({
 
         <div className="mt-10 w-full">
           <p className="mb-4 text-sm font-semibold text-slate-700">Kariyer Rota Kartı — önizleme</p>
-          <div className="flex justify-center overflow-x-auto pb-4">
+          <div className="flex w-full justify-center overflow-x-auto pb-4">
             <CareerCardCapture
               ref={cardRef}
               profileLabel={profile?.disciplineLabel}
