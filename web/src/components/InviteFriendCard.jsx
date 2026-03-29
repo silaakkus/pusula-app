@@ -160,8 +160,8 @@ export function InviteFriendCard() {
         />
       </label>
       <p className="mt-1 text-[11px] leading-snug text-slate-500">
-        Doldurursan linkin sonuna e-postanı taşıyan bir parametre eklenir (URL içinde görünür). Arkadaşın önerileri yüklendiğinde bu adrese kısa bir bilgi maili gider — n8n akışında{' '}
-        <code className="rounded bg-slate-100 px-0.5 text-[10px]">davet_tamamlandi</code> olayını kullan.
+        Doldurursan linkin sonuna e-posta adresini taşıyan bir parametre eklenir (bağlantıda görünebilir). Arkadaşın uygulamada öneri ekranına ulaştığında, sistem bu adrese kısa bir
+        bilgilendirme göndermeyi deneyebilir — her zaman garanti edilmez; istemezsen alanı boş bırak.
       </p>
       <blockquote className="mt-3 rounded-xl border border-slate-200/80 bg-white/80 px-3 py-2.5 text-sm text-slate-700">
         {shareText}

@@ -153,16 +153,17 @@ export function RoadmapTrackPage({ trackId, onBack }) {
                       {Array.isArray(s.links) && s.links.length > 0 && (
                         <>
                           <p className="mt-3 text-xs leading-relaxed text-slate-600">
-                            Bu adımda aşağıdaki bağlantıdan ilgili sitedeki eğitim veya öğretici içeriğe geçebilirsin.
-                            Çoğu kaynak ücretsizdir; önce giriş bölümleriyle başlaman, sonra derinleşmen yeterli — hepsini
+                            Her bağlantının altında, o sitede hangi tür içeriklere / modüllere denk geleceğini kısaca yazdık.
+                            Çoğu kaynak ücretsizdir; giriş bölümleriyle başlayıp kendi hızında derinleşmen yeterli — hepsini
                             bir seferde bitirmek zorunda değilsin.
                           </p>
-                          <ul className="mt-2 flex flex-wrap gap-2">
+                          <ul className="mt-3 list-none space-y-3 p-0">
                             {s.links.map((l, j) => {
                               const host = linkHostname(l.url);
                               const label = l.label || 'Bağlantı';
+                              const about = typeof l.about === 'string' ? l.about.trim() : '';
                               return l?.url ? (
-                                <li key={j}>
+                                <li key={j} className="rounded-xl border border-slate-100 bg-slate-50/60 px-3 py-2.5">
                                   <a
                                     href={l.url}
                                     target="_blank"
@@ -182,6 +183,9 @@ export function RoadmapTrackPage({ trackId, onBack }) {
                                     ) : null}
                                     <ExternalLink className="h-3 w-3 shrink-0" aria-hidden />
                                   </a>
+                                  {about ? (
+                                    <p className="mt-2 text-xs leading-relaxed text-slate-600">{about}</p>
+                                  ) : null}
                                 </li>
                               ) : null;
                             })}
