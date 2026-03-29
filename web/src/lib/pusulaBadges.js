@@ -3,6 +3,8 @@ const KEY = 'pusula_badges';
 export const BADGE_IDS = {
   PROFILE: 'rozet_profil',
   ROLES: 'rozet_roller',
+  ORIENTATION: 'rozet_yonelim',
+  ROADMAP: 'rozet_harita',
   BARRIER: 'rozet_engel',
   CARD: 'rozet_kart',
 };
@@ -10,6 +12,8 @@ export const BADGE_IDS = {
 export const BADGE_META = [
   { id: BADGE_IDS.PROFILE, label: 'Profil', desc: 'Profilini tamamladın' },
   { id: BADGE_IDS.ROLES, label: 'Rota', desc: 'Rol önerilerini gördün' },
+  { id: BADGE_IDS.ORIENTATION, label: 'Yönelim', desc: '“Hangi alana yakınsın?” testini tamamladın' },
+  { id: BADGE_IDS.ROADMAP, label: 'Harita', desc: 'Öğrenme yollarında en az bir adımı işaretledin' },
   { id: BADGE_IDS.BARRIER, label: 'Engel', desc: 'Engel kırıcıyı kullandın' },
   { id: BADGE_IDS.CARD, label: 'Kart', desc: 'Kariyer kartını indirdin' },
 ];

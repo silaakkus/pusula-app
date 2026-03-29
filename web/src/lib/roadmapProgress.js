@@ -1,3 +1,5 @@
+import { unlockPusulaBadge, BADGE_IDS } from './pusulaBadges.js';
+
 const STORAGE_KEY = 'pusula_roadmap_progress_v1';
 
 function readAll() {
@@ -37,6 +39,8 @@ export function toggleStepDone(trackId, stepId) {
   else cur.add(stepId);
   all[trackId] = [...cur];
   writeAll(all);
+  const anyDone = Object.values(all).some((arr) => Array.isArray(arr) && arr.length > 0);
+  if (anyDone) unlockPusulaBadge(BADGE_IDS.ROADMAP);
   try {
     window.dispatchEvent(new CustomEvent('pusula-roadmap-progress'));
   } catch {
@@ -48,4 +52,15 @@ export function toggleStepDone(trackId, stepId) {
 export function progressFraction(trackId, totalSteps) {
   if (!totalSteps) return 0;
   return Math.min(1, getCompletedStepIds(trackId).length / totalSteps);
+}
+
+/** Daha önce işaretlenmiş adımlar varsa rozeti aç (tek seferlik senkron) */
+export function ensureRoadmapBadgeIfProgressExists() {
+  try {
+    const all = readAll();
+    const anyDone = Object.values(all).some((arr) => Array.isArray(arr) && arr.length > 0);
+    if (anyDone) unlockPusulaBadge(BADGE_IDS.ROADMAP);
+  } catch {
+    /* ignore */
+  }
 }

@@ -5,6 +5,13 @@ import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
 import { OrientationCardCapture } from '../components/OrientationCardCapture.jsx';
 import { downloadOrientationCardPng } from '../lib/downloadOrientationCard.js';
+import { sanitizeOrientationBody } from '../lib/orientationQuiz.js';
+
+function splitOrientationStepLine(s) {
+  const m = s.match(/^(.+?)\s+[—–-]\s+(.+)$/);
+  if (!m) return { lead: s, detail: null };
+  return { lead: m[1].trim(), detail: m[2].trim() };
+}
 
 const ARCHETYPE_LABELS = {
   frontend: 'Web arayüzü',
@@ -25,6 +32,7 @@ export function OrientationResultPage({ result, onBack, onHome }) {
   }).format(new Date());
 
   const archetypeLabel = result?.archetype ? ARCHETYPE_LABELS[result.archetype] ?? result.archetype : '';
+  const bodySafe = sanitizeOrientationBody(result?.body ?? '');
 
   const handlePng = useCallback(async () => {
     setBusy(true);
@@ -53,24 +61,47 @@ export function OrientationResultPage({ result, onBack, onHome }) {
           )}
         </div>
 
-        <Card className="border-violet-200/80 bg-gradient-to-br from-violet-50/90 via-white to-indigo-50/40">
+        <Card className="mx-auto w-full max-w-xl border-violet-200/80 bg-gradient-to-br from-violet-50/90 via-white to-indigo-50/40 sm:max-w-2xl">
           <div className="flex flex-wrap items-center gap-2">
-            <Sparkles className="h-6 w-6 text-violet-600" aria-hidden />
+            <Sparkles className="h-6 w-6 shrink-0 text-violet-600" aria-hidden />
             <span className="rounded-full bg-violet-100 px-2 py-0.5 text-[10px] font-bold uppercase text-violet-800">
               {result.source === 'remote' ? 'Güncellenmiş özet' : 'Yönelim özeti'}
             </span>
           </div>
-          <h1 className="mt-3 text-2xl font-extrabold text-indigo-950 sm:text-3xl">{result.headline}</h1>
-          {result.subline && <p className="mt-2 text-base font-semibold text-slate-700">{result.subline}</p>}
-          {result.body && <p className="mt-4 text-sm leading-relaxed text-slate-700">{result.body}</p>}
+          <h1 className="mt-3 text-xl font-extrabold leading-snug text-indigo-950 sm:text-3xl">{result.headline}</h1>
+          {result.subline && (
+            <p className="mt-2 text-sm font-semibold leading-relaxed text-slate-700 sm:text-base">{result.subline}</p>
+          )}
+          {bodySafe && (
+            <div className="mt-4 space-y-3 text-sm leading-relaxed text-slate-700 sm:text-[15px]">
+              {bodySafe.split(/\n\n+/).map((para, i) => (
+                <p key={i}>{para.trim()}</p>
+              ))}
+            </div>
+          )}
 
           {Array.isArray(result.nextSteps) && result.nextSteps.length > 0 && (
-            <div className="mt-6 rounded-xl border border-white/50 bg-white/70 px-4 py-3">
-              <h2 className="text-xs font-bold uppercase tracking-wide text-slate-500">Önerilen sıradaki adımlar</h2>
-              <ol className="mt-2 list-decimal space-y-1 pl-5 text-sm text-slate-800">
-                {result.nextSteps.map((s, i) => (
-                  <li key={i}>{s}</li>
-                ))}
+            <div className="mt-6 rounded-xl border border-white/50 bg-white/80 px-3 py-3 sm:px-4">
+              <h2 className="text-xs font-bold uppercase tracking-wide text-slate-500">
+                Önerilen sıradaki adımlar
+              </h2>
+              <p className="mt-1 text-xs leading-relaxed text-slate-600">
+                Her madde kısa bir başlık ve acemi diliyle açıklama içerir; istediğin sırayla ilerleyebilirsin.
+              </p>
+              <ol className="mt-3 list-decimal space-y-3 pl-5 text-sm text-slate-800 marker:font-bold">
+                {result.nextSteps.map((s, i) => {
+                  const { lead, detail } = splitOrientationStepLine(String(s));
+                  return (
+                    <li key={i} className="pl-1">
+                      <span className="font-semibold text-slate-900">{lead}</span>
+                      {detail ? (
+                        <span className="mt-0.5 block text-sm font-normal leading-relaxed text-slate-600">
+                          {detail}
+                        </span>
+                      ) : null}
+                    </li>
+                  );
+                })}
               </ol>
             </div>
           )}
@@ -90,7 +121,7 @@ export function OrientationResultPage({ result, onBack, onHome }) {
           </div>
         </div>
 
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-center">
+        <div className="mt-8 flex max-w-xl flex-col gap-3 sm:mx-auto sm:max-w-2xl sm:flex-row sm:flex-wrap sm:justify-center">
           <Button size="lg" onClick={handlePng} disabled={busy}>
             {busy ? (
               <>

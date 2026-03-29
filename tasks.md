@@ -117,3 +117,6 @@ Bu liste `prd.md` içeriğini adım adım koda dökmek için hazırlanmıştır.
 - [x] Yönelim testi metinleri yeni başlayan diliyle sadeleştirildi; seçenek altı açıklamalar eklendi; kullanıcıya görünen n8n ipuçları kaldırıldı
 - [x] Öğrenme yolu içerikleri yeni başlayan seviyesine göre güncellendi (`web/public/data/roadmaps.json`)
 - [x] Davet akışı iyileştirildi: kısa link kopyalama/paylaşma ve davetli girişinde öneri görünce bilgilendirme gönderimi (`InviteFriendCard.jsx`, `inviteReferral.js`)
+- [x] Yönelim sonucu: daha uzun sade metin, emoji’li başlıklar, adım satırlarında “başlık — açıklama”; uzak yanıtta kalan n8n kalıntıları `sanitizeOrientationBody` ile temizleniyor (`orientationQuiz.js`, `OrientationResultPage.jsx`)
+- [x] Rozetler: “Yönelim” ve “Harita” rozetleri eklendi; harita adımı işaretlenince otomatik açılıyor; uygulama açılışında mevcut harita ilerlemesi rozete yansıyor (`pusulaBadges.js`, `App.jsx`, `roadmapProgress.js`)
+- [x] Rozet şeridi mobilde sola hizalı satır kırılımı (`PusulaBadgesStrip.jsx` — `flex-wrap` + `justify-start` / `content-start`)

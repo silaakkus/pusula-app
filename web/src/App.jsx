@@ -41,6 +41,7 @@ import {
   postInviterCompletionOnce,
 } from './lib/inviteReferral.js';
 import { unlockPusulaBadge, BADGE_IDS } from './lib/pusulaBadges.js';
+import { ensureRoadmapBadgeIfProgressExists } from './lib/roadmapProgress.js';
 import { Button } from './components/ui/Button';
 
 function stepLabel(step) {
@@ -158,6 +159,10 @@ const App = () => {
       unlockPusulaBadge(BADGE_IDS.ROLES);
     }
   }, [step, roles]);
+
+  useEffect(() => {
+    ensureRoadmapBadgeIfProgressExists();
+  }, []);
 
   const handleFlowStart = useCallback(async () => {
     clearCompletionNotifyFlag();
@@ -441,6 +446,7 @@ const App = () => {
         <OrientationQuizPage
           onBack={goHome}
           onComplete={(r) => {
+            unlockPusulaBadge(BADGE_IDS.ORIENTATION);
             setOrientationResult(r);
             setStep('orientationResult');
           }}
