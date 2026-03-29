@@ -74,7 +74,14 @@ export function RoadmapTrackPage({ trackId, onBack }) {
         {track && (
           <>
             <Card className="mb-8 border-indigo-200/80">
-              <h1 className="text-2xl font-extrabold text-indigo-950 sm:text-3xl">{track.title}</h1>
+              <h1 className="text-2xl font-extrabold text-indigo-950 sm:text-3xl">
+                {track.emoji ? (
+                  <span className="mr-1.5" aria-hidden>
+                    {track.emoji}
+                  </span>
+                ) : null}
+                {track.title}
+              </h1>
               <p className="mt-2 text-sm text-slate-600">{track.summary}</p>
               <p className="mt-2 text-xs leading-relaxed text-slate-500">
                 Terimleri ilk kez görüyorsan sorun değil; her adımda ne demek istediğini sade dille anlatmaya çalıştık. İstediğin

@@ -51,11 +51,14 @@ export function RoadmapHubPage({ onBack, onSelectTrack }) {
         <Card className="border-indigo-200/80 bg-gradient-to-br from-indigo-50/90 via-white to-violet-50/50">
           <div className="flex flex-wrap items-center gap-2 text-indigo-800">
             <Map className="h-7 w-7 shrink-0" aria-hidden />
-            <h1 className="text-2xl font-extrabold tracking-tight text-indigo-950 sm:text-3xl">Öğrenme yolları</h1>
+            <h1 className="text-2xl font-extrabold tracking-tight text-indigo-950 sm:text-3xl">
+              <span aria-hidden>📚 </span>Öğrenme yolları
+            </h1>
           </div>
           <p className="mt-3 max-w-none text-sm leading-relaxed text-slate-600">
-            İlgin çeken başlığa dokun. Her kutuda sana yol gösterecek kısa açıklamalar var; bitti sandığın adımı
-            işaretleyebilirsin. İlerlemen sadece bu tarayıcıda saklanır.
+            Kartlardaki emoji’ler yolu hızlıca ayırt etmen için; başlıklar teknoloji alanlarını hatırlatır (yönelim
+            testindeki yönlerle uyumlu). İlgin çeken kutuya dokun; içeride adım adım ne yapabileceğini sade dille anlattık.
+            Bitti sandığın adımı işaretleyebilirsin — ilerlemen sadece bu tarayıcıda saklanır.
           </p>
         </Card>
 
@@ -88,8 +91,15 @@ export function RoadmapHubPage({ onBack, onSelectTrack }) {
                     }}
                     className="flex w-full flex-col rounded-2xl border border-slate-200/90 bg-white/90 p-4 text-left shadow-sm ring-1 ring-black/[0.04] transition hover:border-indigo-200 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400"
                   >
-                    <span className="text-lg font-extrabold text-indigo-950">{t.title}</span>
-                    <span className="mt-1 text-sm text-slate-600">{t.summary}</span>
+                    <span className="text-lg font-extrabold text-indigo-950">
+                      {t.emoji ? (
+                        <span className="mr-1.5 inline-block" aria-hidden>
+                          {t.emoji}
+                        </span>
+                      ) : null}
+                      {t.title}
+                    </span>
+                    <span className="mt-1 text-sm leading-relaxed text-slate-600">{t.summary}</span>
                     <span className="mt-3 text-xs font-semibold text-indigo-700">
                       {done}/{n} adım · %{pct}
                     </span>

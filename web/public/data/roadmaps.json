@@ -2,8 +2,9 @@
   "tracks": [
     {
       "id": "frontend",
+      "emoji": "🖥️",
       "title": "Web sitesinin görünen yüzü",
-      "summary": "Butonların, menülerin ve sayfa düzeninin nasıl yapıldığını adım adım öğrenmek için — önce çok basit, sonra biraz daha ileri.",
+      "summary": "Ekranda gördüğün sayfalar, menüler ve formlar bu yolun işi. Önce “bu öğe nereye yakışır?” diye düşünmek bile öğrenmenin parçası. Adımlar önce basit sayfa düzeni ve renkler, sonra tıklanınca değişen küçük parçalar; en sonda da gerçek projelerde kullanılan araçlara doğru ilerler — acemiysen ilk iki adım seni rahat hissettirir.",
       "steps": [
         {
           "id": "fe-1",
@@ -39,8 +40,9 @@
     },
     {
       "id": "backend",
+      "emoji": "⚙️",
       "title": "Görünmeyen taraf: sunucu ve veri",
-      "summary": "Uygulamanın “beyni”: kayıtların saklanması, giriş yapma, diğer sistemlerle konuşma. Ekrandan bağımsız çalışan kısım.",
+      "summary": "Telefonundaki uygulama bir istek gönderir, cevap gelir; bu cevabı üreten ve bilgileri saklayan taraf burasıdır. Hesap oluşturma, sipariş kaydetme veya başka bir servisle konuşma gibi işler ekranın arkasında olur. Bu yol, “küçük bir kayıt tutan program” fikrinden başlar; zamanla güvenlik ve güvenilirlik konularına da açılır.",
       "steps": [
         {
           "id": "be-1",
@@ -76,8 +78,9 @@
     },
     {
       "id": "veri-bilimi",
+      "emoji": "📊",
       "title": "Sayılar ve tablolarla hikâye çıkarmak",
-      "summary": "Excel gibi düşün ama daha büyük veri ve grafiklerle: ne olduğunu anlamak ve anlatmak.",
+      "summary": "Tablolar, grafikler ve “bu rakamlar ne anlatıyor?” sorusu bu alanın özü. Excel’e benzetebilirsin; fark genelde daha çok satır, daha net görselleştirme ve yöneticiye veya ekibe kısa bir özet sunmak. İleri istatistik şart değil; önce veriyi düzenleyip bir grafik çizmek ve tek paragrafla yorum yazmak güçlü bir başlangıçtır.",
       "steps": [
         {
           "id": "ds-1",
@@ -113,8 +116,9 @@
     },
     {
       "id": "yapay-zeka",
+      "emoji": "🤖",
       "title": "Yapay zeka ve akıllı sistemler",
-      "summary": "Metin üreten araçlardan sayı tahminine: modellerin nasıl eğitildiğini ve güvenle nasıl kullanılacağını öğrenmeye dair yol.",
+      "summary": "Metin üreten araçlardan “şu resimde ne var?” gibi sorulara kadar birçok ürün bu fikrin üstüne kurulu. Önce bilgisayara örnekler göstererek tahmin öğretme düşüncesini kurarsın; sonra hazır servisleri güvenli ve etik kullanmayı öğrenirsin. Matematik merakın olmasa da görsel anlatımlı dersler ve küçük denemelerle ilerleyebilirsin.",
       "steps": [
         {
           "id": "ai-1",
@@ -150,8 +154,9 @@
     },
     {
       "id": "devops",
+      "emoji": "🚀",
       "title": "Kodun çalışır halde kalması",
-      "summary": "Yazılımı paketlemek, sunucuya almak ve bir şey bozulunca haberin olması — tek başına kod yazmaktan farklı ama çok değerli bir alan.",
+      "summary": "“Kod yazıldı” demek yetmez; kullanıcıların gerçekten sorunsuz deneyimlemesi gerekir. Bu yol paketleme, sunucuya veya buluta alma, güncelleme ve bir şey bozulduğunda ne olduğunu anlamayı kapsar. Geliştirici olmaktan farklı bir uzmanlık ama takımlarda çok aranır; komut satırına alışmak iyi bir ilk adımdır.",
       "steps": [
         {
           "id": "do-1",
@@ -187,8 +192,9 @@
     },
     {
       "id": "urun-ux",
+      "emoji": "🧭",
       "title": "Kullanıcı için doğru şeyi yapmak",
-      "summary": "Ekran çizmekten önce: kimin derdi çözülüyor, sıra ne, önce hangi küçük parça? Ürün ve deneyim düşüncesi.",
+      "summary": "Güzel bir ekran çizmek tek başına işi bitirmez. Önce “kimin sorunu çözülüyor?”, “şu an en acil küçük parça ne?” sorularına cevap bulunur. Bu yol; kısa görüşmeler, basit taslaklar ve “önce bunu mu yapalım?” önceliğiyle ilerler; yani ürün ve kullanıcı deneyimi düşüncesinin özü.",
       "steps": [
         {
           "id": "pu-1",

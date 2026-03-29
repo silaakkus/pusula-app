@@ -61,14 +61,27 @@ export function OrientationQuizPage({ onBack, onComplete }) {
         </div>
 
         <Card>
-          <h1 className="text-xl font-extrabold text-indigo-950 sm:text-2xl">Hangi alana daha çok yakınsın?</h1>
-          <p className="mt-2 text-sm text-slate-600">
-            Altı kısa soru. Doğru veya yanlış yok; sadece sana yakın gibi görünen yönü görmek için.
+          <h1 className="text-xl font-extrabold text-indigo-950 sm:text-2xl">
+            <span aria-hidden>✨ </span>Hangi alana daha çok yakınsın?
+          </h1>
+          <p className="mt-2 text-sm leading-relaxed text-slate-600">
+            Altı kısa soru: teknoloji dünyasında farklı “roller” ve yönler var (ekranı yapmak, arka planı kurmak, veriyle uğraşmak gibi).
+            Bu testte <strong className="font-semibold text-slate-700">doğru veya yanlış cevap yok</strong> — içgüdüyle seç.
+            Her seçeneğin altındaki açıklama tamamen şunu anlatır: “bu ne demek?” Cevapların yalnızca sana özet bir yön önerisi üretir.
           </p>
 
           {q && (
             <div className="mt-8">
-              <p className="text-base font-bold text-slate-900">{q.text}</p>
+              <p className="text-base font-bold leading-snug text-slate-900">
+                {q.emoji ? (
+                  <>
+                    <span className="mr-1.5" aria-hidden>
+                      {q.emoji}
+                    </span>
+                  </>
+                ) : null}
+                {q.text}
+              </p>
               <ul className="mt-4 flex flex-col gap-2">
                 {q.options.map((o) => (
                   <li key={o.id}>
@@ -76,14 +89,21 @@ export function OrientationQuizPage({ onBack, onComplete }) {
                       type="button"
                       disabled={busy}
                       onClick={() => pick(o.id)}
-                      className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-left text-sm font-semibold text-slate-800 ring-1 ring-black/[0.04] transition hover:border-indigo-300 hover:bg-indigo-50/50 disabled:opacity-60"
+                      className="flex w-full items-start gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-left text-sm font-semibold text-slate-800 ring-1 ring-black/[0.04] transition hover:border-indigo-300 hover:bg-indigo-50/50 disabled:opacity-60"
                     >
-                      <span className="block">{o.text}</span>
+                      {o.emoji ? (
+                        <span className="mt-0.5 shrink-0 text-lg leading-none" aria-hidden>
+                          {o.emoji}
+                        </span>
+                      ) : null}
+                      <span className="min-w-0 flex-1">
+                        <span className="block">{o.text}</span>
                       {o.help ? (
                         <span className="mt-1.5 block text-xs font-normal leading-snug text-slate-600">
                           {o.help}
                         </span>
                       ) : null}
+                      </span>
                     </button>
                   </li>
                 ))}

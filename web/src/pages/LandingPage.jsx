@@ -113,7 +113,7 @@ export function LandingPage({
               onClick={onOpenRoadmaps}
             >
               <Map className="h-5 w-5 shrink-0 text-indigo-600" aria-hidden />
-              Öğrenme yolları
+              <span aria-hidden>📚 </span>Öğrenme yolları
             </Button>
           )}
           {onOpenOrientation && (
@@ -124,7 +124,7 @@ export function LandingPage({
               onClick={onOpenOrientation}
             >
               <Sparkles className="h-5 w-5 shrink-0 text-violet-600" aria-hidden />
-              Hangi alana yakınsın?
+              <span aria-hidden>✨ </span>Hangi alana yakınsın?
             </Button>
           )}
         </motion.div>
