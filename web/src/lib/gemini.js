@@ -455,6 +455,11 @@ Tıklanabilir bağlantı politikası (kullanıcı bu URL’lere güvenecek):
    - Getir açık pozisyonlar (career.getir.com sık kapalı/503; LinkedIn iş ilanları): https://www.linkedin.com/company/getir/jobs/
    - LC Waikiki İK: https://corporate.lcwaikiki.com/lc-waikikide-kariyer
    - Aksigorta İK: https://www.aksigorta.com.tr/hakkimizda/insan-kaynaklari/aksigortada-insan-kaynaklari
+   - Garanti BBVA kariyer portalı (ana site /kariyer yerine): https://kariyer.garantibbva.com.tr/
+   - Garanti BBVA Teknoloji (garantibbvatech.com.tr kullanma): https://www.garantibbvateknoloji.com.tr/bizde-kariyer
+   - QNB Finansbank kariyer: https://qnbkariyer.com/ (eski /kariyer yolu 404 verebilir)
+   - TÜBİTAK iş başvuruları: https://kariyer.tubitak.gov.tr/
+   - DeFacto işe alım: https://kurumsal.defacto.com/ise-alim-ve-staj/
 3) Büyük teknoloji şirketleri için yalnızca o şirketin **resmi kariyer** alanının güncel tam URL’sini kullan; Microsoft’ta tr-tr path’leri artık geçerli değil — kök https://careers.microsoft.com/ kullan.
 4) "name" ile sitedeki kurum/marka tutarlı olsun.
 
