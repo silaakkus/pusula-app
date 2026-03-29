@@ -50,6 +50,8 @@ Webhook gövdesi kökte gelir; bazı proxy’ler `{ "body": { ... } }` sararsa C
 
 ## Yönelim testi (`yonerge_testi`)
 
+**Workflow:** Webhook (Respond = *Using Respond to Webhook Node*) → **Code** (`orientation-webhook-code.js` dosyasının tamamını yapıştır) → **Respond to Webhook** (*Respond With:* **First Incoming Item**).
+
 Pusula ana sayfadaki **“Hangi alana yakınsın?”** akışı son soruda `VITE_N8N_ORIENTATION_WEBHOOK_URL` tanımlıysa POST atar:
 
 ```json
