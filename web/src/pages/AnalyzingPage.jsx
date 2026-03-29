@@ -13,7 +13,7 @@ export function AnalyzingPage({ message = 'Profilin analiz ediliyor…' }) {
   }, []);
 
   return (
-    <main className="relative mx-auto flex max-w-3xl flex-col items-stretch px-6 pb-16 pt-10 sm:px-8">
+    <main className="relative mx-auto flex w-full max-w-none flex-col items-stretch px-4 pb-16 pt-10 sm:px-6 lg:px-10">
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         <Card className="text-center">
           <Loader2 className="mx-auto h-12 w-12 animate-spin text-indigo-600" aria-hidden />

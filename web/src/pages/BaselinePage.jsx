@@ -11,7 +11,7 @@ export function BaselinePage({
   onNext,
 }) {
   return (
-    <main className="relative mx-auto flex max-w-3xl flex-col items-stretch px-6 pb-16 pt-10 sm:px-8">
+    <main className="relative mx-auto flex w-full max-w-none flex-col items-stretch px-4 pb-16 pt-10 sm:px-6 lg:px-10">
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}

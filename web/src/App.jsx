@@ -20,7 +20,7 @@ const App = () => {
       <div className="pointer-events-none absolute bottom-[-10%] right-[-10%] h-[40%] w-[40%] rounded-full bg-pusula-coral/15 blur-3xl" />
 
       {/* Navigasyon */}
-      <nav className="relative mx-auto flex max-w-7xl items-center justify-between px-8 py-6">
+      <nav className="relative mx-auto flex w-full max-w-none items-center justify-between px-4 py-6 sm:px-6 lg:px-10">
         <div className="group flex items-center gap-2">
           <div className="rounded-lg bg-indigo-600 p-2 transition-transform duration-300 group-hover:rotate-12">
             <Compass className="h-6 w-6 text-white" />
@@ -47,7 +47,7 @@ const App = () => {
       )}
 
       {route === 'result' && (
-        <main className="relative mx-auto flex max-w-3xl flex-col items-stretch px-6 pb-16 pt-10 sm:px-8">
+        <main className="relative mx-auto flex w-full max-w-none flex-col items-stretch px-4 pb-16 pt-10 sm:px-6 lg:px-10">
           <div className="rounded-3xl border border-white/30 bg-white/60 p-8 shadow-xl shadow-indigo-100 backdrop-blur-sm">
             <div className="text-sm font-semibold text-indigo-700">Result (placeholder)</div>
             <h2 className="mt-2 text-2xl font-extrabold tracking-tight text-indigo-900">

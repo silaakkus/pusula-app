@@ -385,7 +385,7 @@ export function ResultsPage({
   };
 
   return (
-    <main className="relative mx-auto flex max-w-4xl flex-col items-stretch gap-8 px-6 pb-16 pt-10 text-left sm:px-8">
+    <main className="relative mx-auto flex w-full max-w-none flex-col items-stretch gap-8 px-4 pb-16 pt-10 text-left sm:px-6 lg:px-10">
       <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
         <div className="mb-2 flex flex-wrap items-center gap-2">
           <Badge>
@@ -399,7 +399,7 @@ export function ResultsPage({
           )}
         </div>
         <h2 className="text-3xl font-extrabold tracking-tight text-indigo-900">Önerilen 3 rol</h2>
-        <p className="mt-2 max-w-2xl text-sm text-slate-600">
+        <p className="mt-2 max-w-none text-sm text-slate-600">
           {profile?.disciplineLabel && (
             <>
               <span className="font-semibold text-slate-800">{profile.disciplineLabel}</span>

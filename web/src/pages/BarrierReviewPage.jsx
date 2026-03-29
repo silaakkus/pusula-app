@@ -7,7 +7,7 @@ import { flowPreviousStepButtonClass } from '../lib/flowPreviousStepButton.js';
 
 export function BarrierReviewPage({ result, onPreviousStep, onNext }) {
   return (
-    <main className="relative mx-auto flex max-w-3xl flex-col items-stretch px-6 pb-16 pt-10 text-left sm:px-8">
+    <main className="relative mx-auto flex w-full max-w-none flex-col items-stretch px-4 pb-16 pt-10 text-left sm:px-6 lg:px-10">
       <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
         <Card>
           <div className="mb-3 text-sm font-semibold text-indigo-700">Yeniden çerçeveleme</div>

@@ -6,7 +6,7 @@ import { Button } from '../components/ui/Button';
 
 export function LandingPage({ onStart }) {
   return (
-    <main className="relative mx-auto flex max-w-7xl flex-col items-center px-8 pb-12 pt-16 text-center lg:pt-24">
+    <main className="relative mx-auto flex w-full max-w-none flex-col items-center px-4 pb-12 pt-16 text-center sm:px-6 lg:px-10 lg:pt-24">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -35,7 +35,7 @@ export function LandingPage({ onStart }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.4 }}
-        className="mb-12 max-w-2xl text-lg leading-relaxed text-slate-600"
+        className="mb-12 w-full max-w-none text-lg leading-relaxed text-slate-600"
       >
         Akademik arka planını teknoloji dünyasının fırsatlarıyla birleştir. Gemini AI
         destekli analizimizle sana en uygun kariyer rotasını ve Türkiye'deki fırsatları
@@ -55,7 +55,7 @@ export function LandingPage({ onStart }) {
         </Button>
       </motion.div>
 
-      <div className="mt-24 grid w-full max-w-5xl grid-cols-1 gap-6 md:grid-cols-3">
+      <div className="mt-24 grid w-full max-w-none grid-cols-1 gap-6 md:grid-cols-3">
         {[
           {
             icon: <Rocket className="text-orange-500" />,
