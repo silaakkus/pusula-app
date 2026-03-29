@@ -1,0 +1,1856 @@
+[
+  {
+    "disciplineId": "quant-analytics",
+    "disciplineName": "Sayısal ve Analitik (İstatistik, Matematik, Aktüerya, Fizik)",
+    "roleMatches": [
+      {
+        "roleId": "data-analyst",
+        "roleName": "Veri Analisti",
+        "whyFits": [
+          "İstatistik ve olasılık dersleri doğrudan veri yorumlama ve A/B testleriyle örtüşür.",
+          "Modelleme alışkanlığın karmaşık iş sorularını ölçülebilir hale getirmene yardım eder.",
+          "SQL ve görselleştirme öğrenmek için güçlü bir matematiksel temelin var."
+        ],
+        "firstSteps": [
+          "Google Sheets veya Excel ile küçük bir veri setinde özet istatistik ve grafik çıkar.",
+          "SQL temelleri için Patika.dev veya Kodluyoruz ücretsiz modüllerinden birini seç.",
+          "Kaggle’da basit bir notebook ile pandas girişi yap."
+        ],
+        "tags": [
+          "data",
+          "analytics",
+          "fintech"
+        ],
+        "dayInLife": {
+          "morning": "Sabah günlük KPI tablolarını ve dünkü kampanya metriklerini kontrol edersin; SQL ile küçük bir veri çekmesi veya mevcut dashboard’u güncellersin.",
+          "afternoon": "Öğleden sonra ürün veya pazarlama ekibiyle kısa bir senkron yapar, A/B testi sonuçlarını slaytta özetlersin; soru gelirse tek grafikle cevap üretirsin.",
+          "evening": "Akşam notlarını ve veri kaynaklarını dokümante eder, ertesi gün için analiz backlog’una iki madde eklersin."
+        },
+        "salaryRange": {
+          "junior": "28.000 - 48.000 ₺",
+          "mid": "45.000 - 72.000 ₺",
+          "senior": "68.000 - 105.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Trendyol",
+            "url": "https://careers.trendyol.com/"
+          },
+          {
+            "name": "Hepsiburada",
+            "url": "https://kurumsal.hepsiburada.com/tr/hakkimizda/kariyer"
+          },
+          {
+            "name": "Getir",
+            "url": "https://www.linkedin.com/company/getir/jobs/"
+          },
+          {
+            "name": "İş Bankası",
+            "url": "https://www.isbank.com.tr/kariyer"
+          },
+          {
+            "name": "Turkcell",
+            "url": "https://kariyerim.turkcell.com.tr/"
+          },
+          {
+            "name": "Insider",
+            "url": "https://useinsider.com/careers/"
+          },
+          {
+            "name": "LC Waikiki",
+            "url": "https://corporate.lcwaikiki.com/lc-waikikide-kariyer"
+          },
+          {
+            "name": "Migros",
+            "url": "https://www.migroskurumsal.com/kariyer/migroslu-yasam"
+          }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Trendyol Talent Program",
+            "url": "https://careers.trendyol.com/talent-program",
+            "summary": "E-ticaret ve teknoloji ekiplerinde dönemsel, proje odaklı staj/rotasyon; mentorluk ve değerlendirme aşamalı başvuru.",
+            "eligibility": "Genelde lisans 3–4. sınıf veya yeni mezun adaylar; takım ve İngilizce seviyesi ilan metninde netleşir."
+          },
+          {
+            "name": "Hepsiburada kariyer / staj ilanları",
+            "url": "https://kurumsal.hepsiburada.com/tr/hakkimizda/kariyer",
+            "summary": "Kurumsal kariyer sayfasında dönemsel açılan veri, analitik ve operasyon staj pozisyonları yayınlanır.",
+            "eligibility": "Üniversite öğrencisi veya yeni mezun; pozisyona göre bölüm ve süre şartları değişir."
+          },
+          {
+            "name": "Getir kariyer (Early careers)",
+            "url": "https://www.linkedin.com/company/getir/jobs/",
+            "summary": "Operasyon ve ürün odaklı ekiplerde staj veya junior program ilanları site üzerinden duyurulur.",
+            "eligibility": "Çoğunlukla lisans öğrencisi; tam zamanlı/part-time ilan açıklamasına bakın."
+          },
+          {
+            "name": "İş Bankası kariyer (staj / genç yetenek)",
+            "url": "https://www.isbank.com.tr/kariyer",
+            "summary": "Bankacılık ve destek birimlerinde yıl içinde açılan staj ve yetenek programları tek kariyer portalında toplanır.",
+            "eligibility": "Genelde lisans 3–4. sınıf; hukuk/uyum ve pozisyona özel ek koşullar ilanda yazar."
+          },
+          {
+            "name": "Turkcell kariyer",
+            "url": "https://kariyerim.turkcell.com.tr/",
+            "summary": "Telekom ve dijital ürün ekiplerinde staj ve yeni mezun programları dönemsel olarak açılır.",
+            "eligibility": "Öğrenci veya yeni mezun; teknik pozisyonlarda ilgili bölüm ve GPA beklentisi olabilir."
+          }
+        ]
+      },
+      {
+        "roleId": "ml-associate",
+        "roleName": "Makine Öğrenmesi / AI Destek Uzmanı",
+        "whyFits": [
+          "Lineer cebir ve optimizasyon, model eğitiminin arkasındaki dili anlamanı sağlar.",
+          "Deneysel düşünme ve hata analizi, ML projelerinde tekrarlanabilir deney tasarımına döner.",
+          "Üniversitedeki araştırma metodolojin, veri temizliği ve özellik mühendisliğinde güven verir."
+        ],
+        "firstSteps": [
+          "Python ile temel kütüphaneleri (pandas, scikit-learn) kur ve küçük bir sınıflandırma örneği çalıştır.",
+          "Bir açık veri setinde basit bir regresyon problemi seç ve sonuçları yorumla.",
+          "AI güvenliği ve önyargı konularında kısa bir makale oku; etik farkındalık işe alımda artı puan."
+        ],
+        "tags": [
+          "data",
+          "ai-ethics",
+          "research"
+        ],
+        "dayInLife": {
+          "morning": "Sabah dün eğittiğin modelin metriklerini ve logları incelersin; notebook’ta küçük bir hiperparametre denemesi veya veri temizliği yaparsın.",
+          "afternoon": "Öğleden sonra mühendislik ekibiyle model çıktısının ürüne nasıl bağlanacağını konuşur, önyargı veya kalite kontrolü için kısa bir checklist üzerinden geçersin.",
+          "evening": "Akşam deney sonuçlarını özetleyip paylaşılan dokümana işlersin, yarın denenecek bir hipotez notu bırakırsın."
+        },
+        "salaryRange": {
+          "junior": "42.000 - 65.000 ₺",
+          "mid": "65.000 - 98.000 ₺",
+          "senior": "95.000 - 145.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Dream Games",
+            "url": "https://www.dreamgames.com/careers"
+          },
+          {
+            "name": "Trendyol",
+            "url": "https://careers.trendyol.com/"
+          },
+          {
+            "name": "Getir",
+            "url": "https://www.linkedin.com/company/getir/jobs/"
+          },
+          {
+            "name": "Insider",
+            "url": "https://useinsider.com/careers/"
+          },
+          {
+            "name": "Garanti BBVA Teknoloji",
+            "url": "https://www.garantibbvateknoloji.com.tr/bizde-kariyer"
+          },
+          {
+            "name": "Huawei Türkiye",
+            "url": "https://career.huawei.com/"
+          },
+          {
+            "name": "Amazon Türkiye (ilanlar)",
+            "url": "https://www.amazon.jobs/en/search?loc_query=Turkey"
+          },
+          {
+            "name": "Microsoft Türkiye",
+            "url": "https://careers.microsoft.com/"
+          }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Amazon Student Programs",
+            "url": "https://www.amazon.jobs/en/business_categories/student-programs",
+            "summary": "Yaz stajı ve yeni mezun rolleri için global başvuru merkezi; Türkiye lokasyonlu ilanlar filtrelenebilir.",
+            "eligibility": "Lisans/yüksek lisans öğrencisi veya yeni mezun; pozisyona göre yazılım veya araştırma arka planı."
+          },
+          {
+            "name": "Microsoft — öğrenci ve mezun programları",
+            "url": "https://careers.microsoft.com/",
+            "summary": "Staj, mühendislik ve araştırma odaklı öğrenci programları için resmi Türkçe/EN kariyer girişi.",
+            "eligibility": "Üniversite kaydı veya yakın mezuniyet; teknik mülakat ve İngilizce sık aranır."
+          },
+          {
+            "name": "Google — Students",
+            "url": "https://careers.google.com/students/",
+            "summary": "Staj ve yeni mezun rolleri (ürün, yazılım, araştırma) için merkezi başvuru; lokasyon ve dönem ilana göre değişir.",
+            "eligibility": "Öğrenci veya yeni mezun; çoğu rolde güçlü algoritma ve iletişim becerisi beklenir."
+          },
+          {
+            "name": "Dream Games kariyer",
+            "url": "https://www.dreamgames.com/careers",
+            "summary": "Oyun ve ML yakın ekiplerde açılan staj ve junior roller duyurulur.",
+            "eligibility": "Genelde yazılım, oyun veya ilgili mühendislik bölümleri; portföy ve proje deneyimi artı puan."
+          },
+          {
+            "name": "TÜBİTAK — insan kaynakları / proje personeli",
+            "url": "https://kariyer.tubitak.gov.tr/",
+            "summary": "Kamu ARGE kurumlarında dönemsel proje personeli ve bursiyer ilanları; BİLGEM ve merkez duyuruları burada özetlenir.",
+            "eligibility": "Program bazında lisans/yüksek lisans; çoğu ilan tam zamanlı veya bursiyer statüsündedir."
+          }
+        ]
+      },
+      {
+        "roleId": "risk-analytics",
+        "roleName": "Risk ve Finansal Analitik Uzmanı",
+        "whyFits": [
+          "Olasılık ve stokastik süreçler bilgisi sigorta, bankacılık ve fintech risk ekiplerinde aranır.",
+          "Sayısal okuryazarlığın, düzenleyici raporlama ve stres testi senaryolarında doğrudan kullanılır.",
+          "Detay odaklı çalışman, model validasyonu ve kontrol süreçlerinde fark yaratır."
+        ],
+        "firstSteps": [
+          "Basit bir nakit akışı veya kredi riski örneğini tabloda modelle.",
+          "Finansal terimler için Türkçe/İngilizce bir sözlük çıkar ve haftada 3 terim öğren.",
+          "Açık kaynak bir risk vaka çalışmasını okuyup iki paragraf özet yaz."
+        ],
+        "tags": [
+          "fintech",
+          "analytics",
+          "data"
+        ],
+        "dayInLife": {
+          "morning": "Sabah regülasyon veya iç politika güncellemelerine bakar, risk raporundaki sayıları doğrularsın; Excel veya BI’da bir senaryo tablosunu tazeler sin.",
+          "afternoon": "Öğleden sonra denetim veya finans ile toplantıda stres testi varsayımlarını açıklar, olasılıksal sorulara tabloyla yanıt verirsin.",
+          "evening": "Akşam rapor taslağını revize eder, kaynak linklerini ve açıklayıcı notları tamamlarsın."
+        },
+        "salaryRange": {
+          "junior": "38.000 - 55.000 ₺",
+          "mid": "55.000 - 82.000 ₺",
+          "senior": "80.000 - 118.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Garanti BBVA",
+            "url": "https://kariyer.garantibbva.com.tr/"
+          },
+          {
+            "name": "İş Bankası",
+            "url": "https://www.isbank.com.tr/kariyer"
+          },
+          {
+            "name": "Allianz Türkiye",
+            "url": "https://careers.allianz.com/?locale=tr_TR"
+          },
+          {
+            "name": "Aksigorta",
+            "url": "https://www.aksigorta.com.tr/hakkimizda/insan-kaynaklari/aksigortada-insan-kaynaklari"
+          },
+          {
+            "name": "BKM",
+            "url": "https://www.bkm.com.tr/"
+          },
+          {
+            "name": "QNB Finansbank",
+            "url": "https://qnbkariyer.com/"
+          },
+          {
+            "name": "EY Türkiye",
+            "url": "https://www.ey.com/tr_tr/careers"
+          },
+          {
+            "name": "Deloitte Türkiye",
+            "url": "https://www.deloitte.com/tr/tr/careers.html"
+          }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Garanti BBVA — kariyer ve staj",
+            "url": "https://kariyer.garantibbva.com.tr/",
+            "summary": "Bankacılık, risk ve analitik birimlerinde dönemsel staj ve yetenek programı ilanları.",
+            "eligibility": "Çoğunlukla lisans 3–4. sınıf ekonomi, işletme, mühendislik; detay ilanda."
+          },
+          {
+            "name": "EY Türkiye — careers",
+            "url": "https://www.ey.com/tr_tr/careers",
+            "summary": "Denetim ve danışmanlıkta staj / graduate program başvuruları yıllık dönemlerde açılır.",
+            "eligibility": "İlgili bölüm + İngilizce; staj dönemleri genelde yaz veya dönemsel blok."
+          },
+          {
+            "name": "Deloitte Türkiye — careers",
+            "url": "https://www.deloitte.com/tr/tr/careers.html",
+            "summary": "Risk, analitik ve danışmanlık hatlarında staj ve analist programları.",
+            "eligibility": "Lisans/yüksek lisans; ofis ve program bazında farklı son başvuru tarihleri."
+          },
+          {
+            "name": "Allianz Türkiye kariyer",
+            "url": "https://careers.allianz.com/?locale=tr_TR",
+            "summary": "Sigorta ve risk fonksiyonlarında yıl içinde açılan staj ve yönetici adayı programları.",
+            "eligibility": "Öğrenci veya yeni mezun; pozisyona göre sayısal okuryazarlık ve dil şartı."
+          },
+          {
+            "name": "İş Bankası kariyer",
+            "url": "https://www.isbank.com.tr/kariyer",
+            "summary": "Finans ve operasyon stajları ile risk analitiğine yakın rotalar için ilan takvimi kariyer sitesinde.",
+            "eligibility": "Lisans ileri sınıflar çoğunlukla öncelikli; güncel ilan metnine bakın."
+          }
+        ]
+      },
+      {
+        "roleId": "data-storytelling",
+        "roleName": "Veri Hikâyesi ve İşletme İletişimi",
+        "whyFits": [
+          "Grafik ve özet istatistik okuryazarlığın, yönetim sunumlarında güven oluşturur.",
+          "Sayıları bağlama ve yorumlama becerin, ürün ve pazarlama ekiplerinde aranan bir yetkinlik.",
+          "Araştırma raporu yazımı deneyimin, veri ürünü dokümantasyonuna aktarılabilir."
+        ],
+        "firstSteps": [
+          "Tableau Public veya Metabase benzeri bir araçta örnek bir dashboard tasarla.",
+          "Gerçek veya hayali bir KPI seti için tek sayfalık yönetici özeti yaz.",
+          "Veri görselleştirme etiği (ölçek, eksen, renk) üzerine kısa not çıkar."
+        ],
+        "tags": [
+          "data",
+          "marketing-analytics",
+          "research"
+        ],
+        "dayInLife": {
+          "morning": "Sabah yöneticiler için hazırlayacağın özet grafikleri seçer, veri kaynağının güncelliğini kontrol edersin.",
+          "afternoon": "Öğleden sonra sunum taslağını paydaşlarla gözden geçirir, “tek sayfa hikâye” akışını netleştirirsin.",
+          "evening": "Akşam görsel dil ve eksen etiketlerini düzeltir, yarın paylaşılacak PDF veya dashboard linkini hazırlarsın."
+        },
+        "salaryRange": {
+          "junior": "32.000 - 48.000 ₺",
+          "mid": "48.000 - 72.000 ₺",
+          "senior": "70.000 - 102.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Unilever Türkiye",
+            "url": "https://www.unilever.com.tr/kariyer/"
+          },
+          {
+            "name": "Procter & Gamble Türkiye",
+            "url": "https://www.pgcareers.com/global/en"
+          },
+          {
+            "name": "Eczacıbaşı Holding",
+            "url": "https://www.eczacibasi.com.tr/tr/kariyer"
+          },
+          {
+            "name": "Trendyol",
+            "url": "https://careers.trendyol.com/"
+          },
+          {
+            "name": "Yemeksepeti (Delivery Hero)",
+            "url": "https://careers.deliveryhero.com/"
+          },
+          {
+            "name": "ING Türkiye",
+            "url": "https://www.ing.com.tr/tr/kariyer"
+          },
+          {
+            "name": "Publicis Groupe TR",
+            "url": "https://www.publicisgroupe.com/en/careers"
+          },
+          {
+            "name": "Mediacom / GroupM TR",
+            "url": "https://www.wpp.com/careers"
+          }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Unilever Türkiye — kariyer",
+            "url": "https://www.unilever.com.tr/kariyer/",
+            "summary": "FMCG markalarında pazarlama ve veri odaklı staj / management trainee benzeri programlar.",
+            "eligibility": "Lisans/yüksek lisans; genelde İngilizce ve takım çalışması vurgulanır."
+          },
+          {
+            "name": "P&G Careers",
+            "url": "https://www.pgcareers.com/global/en",
+            "summary": "Küresel staj ve yeni mezun programları; Türkiye ofisi ilanları site filtresiyle bulunur.",
+            "eligibility": "Öğrenci veya yeni mezun; analitik ve iletişim yetkinliği öne çıkar."
+          },
+          {
+            "name": "Trendyol Talent Program",
+            "url": "https://careers.trendyol.com/talent-program",
+            "summary": "Growth ve kategori ekiplerinde veri ile hikâye anlatımı yakın roller için başvuru yolu.",
+            "eligibility": "Lisans 3–4 / yeni mezun; program yılı ve kontenjan her dönem güncellenir."
+          },
+          {
+            "name": "ING Türkiye kariyer",
+            "url": "https://www.ing.com.tr/tr/kariyer",
+            "summary": "Bankacılık ve dijital kanallarda dönemsel staj ve internship duyuruları.",
+            "eligibility": "Üniversite öğrencisi; hukuk ve uyum koşulları ilana göre."
+          },
+          {
+            "name": "Publicis Groupe — careers",
+            "url": "https://www.publicisgroupe.com/en/careers",
+            "summary": "Ajans ağında içerik, medya ve veri stratejisi stajları merkezi portaldan yönetilir.",
+            "eligibility": "İletişim, tasarım veya analitik geçmişi faydalı; lokasyon ve dil ilana göre."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "disciplineId": "human-social",
+    "disciplineName": "İnsan ve Toplum Bilimleri (Psikoloji, Sosyoloji, Felsefe)",
+    "roleMatches": [
+      {
+        "roleId": "ux-researcher",
+        "roleName": "UX Araştırmacısı",
+        "whyFits": [
+          "Görüşme, gözlem ve anket tasarlama becerilerin kullanıcı görüşmeleriyle birebir örtüşür.",
+          "İnsan davranışına dair merakın, ürün kararlarını kanıta dayalı hale getirir.",
+          "Nitel veri analizi ve tema çıkarma, sosyal bilimlerde öğrendiğin yöntemlerle aynı aileden."
+        ],
+        "firstSteps": [
+          "Günlük kullandığın bir uygulama için 3 kişiyle 15’er dakikalık yapılandırılmış görüşme yap.",
+          "Bulgularını üç başlıkta özetle: ihtiyaç, acı noktası, öneri.",
+          "Figma’da basit bir kullanıcı yolculuğu çizimi için ücretsiz eğitime göz at."
+        ],
+        "tags": [
+          "ux",
+          "research",
+          "hrtech"
+        ],
+        "dayInLife": {
+          "morning": "Sabah dünkü kullanıcı görüşmesi notlarını temalar halinde kodlar, kısa bulgu listesini paylaşırsın.",
+          "afternoon": "Öğleden sonra tasarım ekibiyle wireframe veya prototip üzerinde bulguları tartışır, bir sonraki test için soru setini güncellersin.",
+          "evening": "Akşam özet raporu ve alıntıları düzenler, paydaşlara “ne öğrendik?” mailini gönderirsin."
+        },
+        "salaryRange": {
+          "junior": "36.000 - 54.000 ₺",
+          "mid": "52.000 - 78.000 ₺",
+          "senior": "75.000 - 112.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Yemeksepeti (Delivery Hero)",
+            "url": "https://careers.deliveryhero.com/"
+          },
+          {
+            "name": "Getir",
+            "url": "https://www.linkedin.com/company/getir/jobs/"
+          },
+          {
+            "name": "Trendyol",
+            "url": "https://careers.trendyol.com/"
+          },
+          {
+            "name": "Defacto",
+            "url": "https://kurumsal.defacto.com/ise-alim-ve-staj/"
+          },
+          {
+            "name": "ING Türkiye",
+            "url": "https://www.ing.com.tr/tr/kariyer"
+          },
+          {
+            "name": "Vakıf Katılım",
+            "url": "https://www.vakifkatilim.com.tr/kariyer"
+          },
+          {
+            "name": "Huawei Türkiye",
+            "url": "https://career.huawei.com/"
+          },
+          {
+            "name": "Booking.com",
+            "url": "https://careers.booking.com/"
+          }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Delivery Hero — careers (Yemeksepeti ağı)",
+            "url": "https://careers.deliveryhero.com/",
+            "summary": "Ürün ve tasarım ekiplerinde UX araştırma ve tasarım stajları grup çapında ilan edilir.",
+            "eligibility": "Öğrenci veya yeni mezun; portföy ve kullanıcı araştırması örnekleri istenebilir."
+          },
+          {
+            "name": "Getir kariyer",
+            "url": "https://www.linkedin.com/company/getir/jobs/",
+            "summary": "Mobil ürün ekiplerinde kullanıcı deneyimi ve araştırma rolleri dönemsel açılır.",
+            "eligibility": "Lisans; kullanıcı testi veya görüşme deneyimi artı sağlar."
+          },
+          {
+            "name": "Trendyol Early Careers",
+            "url": "https://careers.trendyol.com/early-careers",
+            "summary": "Ürün ve tasarım alanına yakın staj ve başlangıç seviyesi program özet sayfası.",
+            "eligibility": "Üniversite öğrencisi veya kısa süreli mezun; güncel başvuru penceresi sitede."
+          },
+          {
+            "name": "Booking.com Careers",
+            "url": "https://careers.booking.com/",
+            "summary": "Global ürün ve UX ekiplerinde staj ve graduate roller; uzaktan/hibrit seçenekler olabilir.",
+            "eligibility": "İngilizce ve güçlü portföy; bazı roller Hollanda veya diğer ofislerde."
+          },
+          {
+            "name": "Microsoft öğrenci programları",
+            "url": "https://careers.microsoft.com/",
+            "summary": "Araştırma ve ürün odaklı stajlar için Microsoft başvuru girişi.",
+            "eligibility": "Kayıtlı öğrenci veya yakın mezun; teknik mülakat süreçleri standarttır."
+          }
+        ]
+      },
+      {
+        "roleId": "ai-ethics",
+        "roleName": "AI Güvenilirlik ve Etik Odaklı Ürün Rolü",
+        "whyFits": [
+          "Etik ve epistemoloji dersleri, algoritmik adalet tartışmalarında güçlü bir çerçeve sunar.",
+          "Önyargı ve insan haklarına duyarlılığın, model ve veri seti incelemelerinde kritik.",
+          "Yazılım ekiplerine “neden böyle ölçüyoruz?” sorusunu taşıyabilirsin."
+        ],
+        "firstSteps": [
+          "Türkiye’deki bir yapay zeka haberini etik açıdan iki paragraf yorumla.",
+          "Basit bir sınıflandırma örneğinde hangi grupların az temsil edildiğini listeleyen mini çalışma yap.",
+          "Women Techmakers veya benzeri topluluklarda etik oturumlarına katıl."
+        ],
+        "tags": [
+          "ai-ethics",
+          "ux",
+          "research"
+        ],
+        "dayInLife": {
+          "morning": "Sabah yeni bir model veya veri seti talebini etik çerçevede okur, risk maddelerini listelersin.",
+          "afternoon": "Öğleden sonra ürün ve hukuk ile toplantıda önerilen ölçümün adalet etkisini tartışır, alternatifler sunarsın.",
+          "evening": "Akşam kısa bir iç politika veya FAQ taslağını günceller, açık soruları takip listesine alırsın."
+        },
+        "salaryRange": {
+          "junior": "35.000 - 50.000 ₺",
+          "mid": "50.000 - 75.000 ₺",
+          "senior": "72.000 - 108.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Microsoft Türkiye",
+            "url": "https://careers.microsoft.com/"
+          },
+          {
+            "name": "Google Kariyer",
+            "url": "https://careers.google.com/"
+          },
+          {
+            "name": "Türk Telekom",
+            "url": "https://www.turktelekom.com.tr/kariyer"
+          },
+          {
+            "name": "Turkcell",
+            "url": "https://kariyerim.turkcell.com.tr/"
+          },
+          {
+            "name": "İş Bankası",
+            "url": "https://www.isbank.com.tr/kariyer"
+          },
+          {
+            "name": "KoçSistem",
+            "url": "https://www.kocsistem.com.tr/kariyer"
+          },
+          {
+            "name": "IBM Türkiye",
+            "url": "https://www.ibm.com/careers"
+          },
+          {
+            "name": "SAP Türkiye",
+            "url": "https://jobs.sap.com/"
+          }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Microsoft Responsible AI / students",
+            "url": "https://careers.microsoft.com/",
+            "summary": "Kurumsal güven ve yapay zeka ilkeleri yakın ekiplerde staj fırsatları ara sıra açılır.",
+            "eligibility": "Bilgisayar, hukuk veya sosyal bilim çapraz geçmiş faydalı; ilan bazında netleşir."
+          },
+          {
+            "name": "Google Careers — Students",
+            "url": "https://careers.google.com/students/",
+            "summary": "Güvenlik, politika ve ürün güvenilirliği temalı stajlar dahil geniş öğrenci portföyü.",
+            "eligibility": "Öğrenci veya yeni mezun; rekabetçi başvuru ve çok aşamalı süreç."
+          },
+          {
+            "name": "IBM Careers",
+            "url": "https://www.ibm.com/careers",
+            "summary": "Kurumsal AI ve danışmanlık hatlarında staj ve yeni mezun rolleri.",
+            "eligibility": "Teknik veya iş analitiği geçmişi; global ilan filtresi ile Türkiye kontrol edin."
+          },
+          {
+            "name": "SAP Jobs",
+            "url": "https://jobs.sap.com/",
+            "summary": "Kurumsal yazılım ve veri ürünlerinde staj; lokasyon ve dil ilana göre.",
+            "eligibility": "İşletme veya mühendislik bölümleri sık görülür; İngilizce şart olabilir."
+          },
+          {
+            "name": "TÜBİTAK insan kaynakları",
+            "url": "https://kariyer.tubitak.gov.tr/",
+            "summary": "Kamu ARGE ortamında etik ve politika yakın araştırma rolleri proje duyurularıyla açılır.",
+            "eligibility": "Program duyurusuna göre; çoğu tam zamanlı veya bursiyer kapsamındadır."
+          }
+        ]
+      },
+      {
+        "roleId": "people-analytics",
+        "roleName": "İK Teknolojileri / People Analytics Yönünde Uzmanlık",
+        "whyFits": [
+          "Ölçek ve anket güvenirliği bilgin, çalışan anketlerinin yorumlanmasında işe yarar.",
+          "Örgütsel davranış dersleri, turnover ve bağlılık metrikleriyle doğal bağ kurar.",
+          "Empati ve iletişim becerilerin, paydaşlarla veriyi anlaşılır anlatmanda fark yaratır."
+        ],
+        "firstSteps": [
+          "Küçük bir hayali şirket için çalışan memnuniyeti anketi tasarla (5 soru).",
+          "Sonuçları hayali olarak yorumlayıp yöneticiye 3 öneri yaz.",
+          "People analytics terimleri için mini bir kelime listesi oluştur."
+        ],
+        "tags": [
+          "hrtech",
+          "analytics",
+          "research"
+        ],
+        "dayInLife": {
+          "morning": "Sabah anket veya HRIS verisinin günlük kontrolünü yapar, temel turnover ve katılım grafiklerine bakarsın.",
+          "afternoon": "Öğleden sonra yöneticilerle küçük grupla sonuçları yorumlar, gizlilik sınırları içinde öneri çıkarırsın.",
+          "evening": "Akşam slayt veya özet metni son haline getirir, anonimleştirme notlarını gözden geçirirsin."
+        },
+        "salaryRange": {
+          "junior": "30.000 - 45.000 ₺",
+          "mid": "45.000 - 65.000 ₺",
+          "senior": "62.000 - 92.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Arçelik",
+            "url": "https://www.arcelik.com.tr/kariyer"
+          },
+          {
+            "name": "Koç Holding",
+            "url": "https://www.koc.com.tr/en/careers"
+          },
+          {
+            "name": "Turkcell",
+            "url": "https://kariyerim.turkcell.com.tr/"
+          },
+          {
+            "name": "Ford Otosan",
+            "url": "https://www.fordotosan.com.tr/tr/kariyer"
+          },
+          {
+            "name": "Mercedes-Benz Türk",
+            "url": "https://group.mercedes-benz.com/careers/"
+          },
+          {
+            "name": "Ülker",
+            "url": "https://www.ulker.com.tr/kariyer"
+          },
+          {
+            "name": "İş Bankası",
+            "url": "https://www.isbank.com.tr/kariyer"
+          },
+          {
+            "name": "Eczacıbaşı Holding",
+            "url": "https://www.eczacibasi.com.tr/tr/kariyer"
+          }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Arçelik kariyer",
+            "url": "https://www.arcelik.com.tr/kariyer",
+            "summary": "Üretim ve kurumsal fonksiyonlarda İK ve insan analitiği yakın staj programları.",
+            "eligibility": "Endüstri mühendisliği, işletme, psikoloji gibi bölümler; dönemsel ilanlar."
+          },
+          {
+            "name": "Koç Holding — careers",
+            "url": "https://www.koc.com.tr/en/careers",
+            "summary": "Grup şirketlerinde yönetici adayı ve staj programları merkezi duyurulur.",
+            "eligibility": "Lisans/yüksek lisans; İngilizce ve genel yetkinlik testleri uygulanabilir."
+          },
+          {
+            "name": "Ford Otosan kariyer",
+            "url": "https://www.fordotosan.com.tr/tr/kariyer",
+            "summary": "Otomotiv endüstrisinde İK, üretim ve mühendislik stajları.",
+            "eligibility": "Üniversite öğrencisi; teknik ve idari pozisyonlar ayrı ilanlanır."
+          },
+          {
+            "name": "Turkcell kariyer",
+            "url": "https://kariyerim.turkcell.com.tr/",
+            "summary": "İK teknolojileri ve operasyonel İK rollerine yakın staj fırsatları.",
+            "eligibility": "Öğrenci statüsü; pozisyon detayında bölüm tercihi belirtilir."
+          },
+          {
+            "name": "Ülker kariyer",
+            "url": "https://www.ulker.com.tr/kariyer",
+            "summary": "Gıda sektöründe kurumsal staj ve yetenek programları.",
+            "eligibility": "İşletme ve mühendislik çizgileri yaygın; yıllık başvuru takvimine bakın."
+          }
+        ]
+      },
+      {
+        "roleId": "content-strategist",
+        "roleName": "İçerik Stratejisi ve Dijital Anlatı",
+        "whyFits": [
+          "Metin okuma ve üretme pratiğin, ürün içeriği ve mikro metinlerde doğrudan kullanılır.",
+          "Kültürel duyarlılığın, çok kitleli dijital ürünlerde ton ve erişilebilirlik için kritik.",
+          "Araştırma ve kaynakça alışkanlığın, SEO ve güvenilir içerik üretiminde fark yaratır."
+        ],
+        "firstSteps": [
+          "Sevdiğin bir markanın üç kanalda (web, sosyal, e-posta) tonunu karşılaştır.",
+          "Tek paragraf “ürün değer önerisi” ve üç başlıklı landing metni yaz.",
+          "Basit bir içerik takvimi şablonu doldur (haftalık 3 gönderi)."
+        ],
+        "tags": [
+          "marketing-analytics",
+          "ux",
+          "edtech"
+        ],
+        "dayInLife": {
+          "morning": "Sabah içerik takvimine ve performans metriklerine bakar, hangi kanalda neyin işe yaradığını not edersin.",
+          "afternoon": "Öğleden sonra pazarlama veya ürünle ton ve mesaj netliği için metin revizyonu yaparsın.",
+          "evening": "Akşam yarının gönderileri için taslakları düzeltir, SEO ve erişilebilirlik kontrol listesinden geçirirsin."
+        },
+        "salaryRange": {
+          "junior": "28.000 - 42.000 ₺",
+          "mid": "42.000 - 62.000 ₺",
+          "senior": "58.000 - 88.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Insider",
+            "url": "https://useinsider.com/careers/"
+          },
+          {
+            "name": "Trendyol",
+            "url": "https://careers.trendyol.com/"
+          },
+          {
+            "name": "Hepsiburada",
+            "url": "https://kurumsal.hepsiburada.com/tr/hakkimizda/kariyer"
+          },
+          {
+            "name": "Yemeksepeti (Delivery Hero)",
+            "url": "https://careers.deliveryhero.com/"
+          },
+          {
+            "name": "Publicis Groupe TR",
+            "url": "https://www.publicisgroupe.com/en/careers"
+          },
+          {
+            "name": "Doğuş Grubu",
+            "url": "https://www.dogusgrubu.com.tr/kariyer"
+          },
+          {
+            "name": "Demirören Medya",
+            "url": "https://www.demirorenmedya.com/kariyer"
+          },
+          {
+            "name": "Netflix Jobs",
+            "url": "https://jobs.netflix.com/"
+          }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Insider careers",
+            "url": "https://useinsider.com/careers/",
+            "summary": "Growth ve içerik pazarlaması odaklı global staj ve junior roller.",
+            "eligibility": "İletişim, pazarlama veya veri geçmişi; İngilizce çalışma dili olabilir."
+          },
+          {
+            "name": "Trendyol Talent Program",
+            "url": "https://careers.trendyol.com/talent-program",
+            "summary": "Growth ve kategori iletişiminde içerik ve kampanya stajları.",
+            "eligibility": "Lisans ileri sınıf veya yeni mezun; program kontenjanı yıllık değişir."
+          },
+          {
+            "name": "Hepsiburada kariyer",
+            "url": "https://kurumsal.hepsiburada.com/tr/hakkimizda/kariyer",
+            "summary": "Pazarlama ve içerik üretimi stajları dönemsel olarak yayınlanır.",
+            "eligibility": "Üniversite öğrencisi; medya ve e-ticaret ilgisi önemlidir."
+          },
+          {
+            "name": "Doğuş Grubu kariyer",
+            "url": "https://www.dogusgrubu.com.tr/kariyer",
+            "summary": "Medya ve dijital markalarda staj / yetenek programı duyuruları.",
+            "eligibility": "İlgili bölüm ve öğrenci belgesi; grup şirketine göre farklılık gösterir."
+          },
+          {
+            "name": "WPP careers",
+            "url": "https://www.wpp.com/careers",
+            "summary": "Ajans ağında içerik ve strateji stajları için merkezi giriş.",
+            "eligibility": "Portföy ve iletişim becerisi; lokasyon global ofislere göre."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "disciplineId": "life-sciences",
+    "disciplineName": "Doğa ve Yaşam Bilimleri (Biyoloji, Kimya, Genetik)",
+    "roleMatches": [
+      {
+        "roleId": "bioinformatics",
+        "roleName": "Biyoinformatik / Hesaplamalı Biyoloji",
+        "whyFits": [
+          "Laboratuvar disiplinin, veri üretimi ve tekrarlanabilirlik kültürüyle teknoloji ekiplerine benzer.",
+          "Genetik ve moleküler biyoloji bilgisi, omik veri setlerini anlamlandırmanda temel oluşturur.",
+          "İstatistiksel düşünme, klinik veya çevresel veri analizlerinde doğrudan kullanılır."
+        ],
+        "firstSteps": [
+          "PubMed veya benzeri kaynaktan küçük bir çalışmayı okuyup yöntem bölümünü özetle.",
+          "Python veya R ile basit bir veri tablosunda tanımlayıcı istatistik uygula.",
+          "Açık bir genomik veri setine giriş yapan ücretsiz bir kursa kaydol."
+        ],
+        "tags": [
+          "biotech",
+          "data",
+          "research"
+        ],
+        "dayInLife": {
+          "morning": "Sabah pipeline çıktılarını ve kalite kontrol metriklerini kontrol edersin; literatürden bir yöntem notu okursun.",
+          "afternoon": "Öğleden sonra biyolog veya klinisyen ekip arkadaşınla sonuçları yorumlar, görselleştirme için küçük bir script düzenlersin.",
+          "evening": "Akşam kod ve veri sürümlerini kayıt altına alır, yeniden üretilebilirlik için README satırları eklersin."
+        },
+        "salaryRange": {
+          "junior": "42.000 - 62.000 ₺",
+          "mid": "62.000 - 92.000 ₺",
+          "senior": "90.000 - 132.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Pfizer Türkiye",
+            "url": "https://www.pfizer.com.tr/kariyer"
+          },
+          {
+            "name": "Novartis Türkiye",
+            "url": "https://www.novartis.com/tr-tr/kariyer"
+          },
+          {
+            "name": "Roche Türkiye",
+            "url": "https://www.roche.com.tr/kariyer"
+          },
+          {
+            "name": "GE Healthcare Türkiye",
+            "url": "https://jobs.gecareers.com/global/en"
+          },
+          {
+            "name": "Siemens Healthineers",
+            "url": "https://jobs.siemens-healthineers.com/"
+          },
+          {
+            "name": "Acıbadem Sağlık Grubu",
+            "url": "https://www.acibadem.com.tr/acibadem-kariyer"
+          },
+          {
+            "name": "Medipol Sağlık Grubu",
+            "url": "https://www.medipol.com.tr/kariyer"
+          },
+          {
+            "name": "TÜBİTAK BİLGEM",
+            "url": "https://kariyer.tubitak.gov.tr/"
+          }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Pfizer Türkiye kariyer",
+            "url": "https://www.pfizer.com.tr/kariyer",
+            "summary": "İlaç ARGE ve sağlık hizmetleri çevresinde dönemsel staj ve yeni mezun programları.",
+            "eligibility": "Eczacılık, biyoloji, mühendislik; etik ve gizlilik eğitimleri zorunlu olabilir."
+          },
+          {
+            "name": "Novartis Türkiye",
+            "url": "https://www.novartis.com/tr-tr/kariyer",
+            "summary": "Global ilaç şirketinde araştırma ve sağlık çözümleri stajları.",
+            "eligibility": "İlgili lisans/yüksek lisans; çoğu program İngilizce gerektirir."
+          },
+          {
+            "name": "Roche Türkiye kariyer",
+            "url": "https://www.roche.com.tr/kariyer",
+            "summary": "Tanı ve ilaç alanında staj ve graduate pozisyonları yıllık açılır.",
+            "eligibility": "Sağlık bilimleri veya mühendislik; detay ilanda."
+          },
+          {
+            "name": "GE Healthcare jobs",
+            "url": "https://jobs.gecareers.com/global/en",
+            "summary": "Tıbbi görüntüleme ve sağlık teknolojileri stajları global portaldan.",
+            "eligibility": "STEM bölümleri; bazı roller yalnızca belirli ülkelerde."
+          },
+          {
+            "name": "TÜBİTAK insan kaynakları",
+            "url": "https://kariyer.tubitak.gov.tr/",
+            "summary": "Biyoveri ve hesaplama yakın ARGE projelerinde personel/stajyer duyuruları.",
+            "eligibility": "Proje bazlı; tam zamanlı veya bursiyer statüsü duyuruda belirtilir."
+          }
+        ]
+      },
+      {
+        "roleId": "health-product",
+        "roleName": "Sağlık Teknolojileri Ürün / Proje Rolü",
+        "whyFits": [
+          "Hasta güvenliği ve regülasyon farkındalığın, Sağlık Bakanlığı ve KVKK bağlamında değerlidir.",
+          "Bilimsel okuryazarlığın, klinik ekiplerle ortak dil kurmana yardım eder.",
+          "Sürdürülebilirlik ve sağlık inequity konularına duyarlılığın ürün yol haritasına yansır."
+        ],
+        "firstSteps": [
+          "Kullandığın bir sağlık uygulamasının gizlilik politikasını okuyup üç madde çıkar.",
+          "Basit bir kullanıcı hikâyesi (user story) yaz: “Hasta randevu hatırlatması”.",
+          "Türkiye’deki bir dijital sağlık girişimini araştırıp sunumunu 5 slaytta özetle."
+        ],
+        "tags": [
+          "biotech",
+          "pm",
+          "ux"
+        ],
+        "dayInLife": {
+          "morning": "Sabah kullanıcı hikâyelerini ve açık hataları incelersin; KVKK ve hasta güvenliği notlarını gözden geçirirsin.",
+          "afternoon": "Öğleden sonra tasarım veya geliştirme ile randevu akışı veya bildirim senaryosunu netleştirirsin.",
+          "evening": "Akşam kabul kriterlerini günceller, paydaşlara kısa durum özeti yazarsın."
+        },
+        "salaryRange": {
+          "junior": "45.000 - 65.000 ₺",
+          "mid": "65.000 - 95.000 ₺",
+          "senior": "92.000 - 140.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Acıbadem Sağlık Grubu",
+            "url": "https://www.acibadem.com.tr/acibadem-kariyer"
+          },
+          {
+            "name": "Medipol Sağlık Grubu",
+            "url": "https://www.medipol.com.tr/kariyer"
+          },
+          {
+            "name": "e-Nabız / Sağlık Bakanlığı",
+            "url": "https://www.saglik.gov.tr/"
+          },
+          {
+            "name": "Getir",
+            "url": "https://www.linkedin.com/company/getir/jobs/"
+          },
+          {
+            "name": "Trendyol",
+            "url": "https://careers.trendyol.com/"
+          },
+          {
+            "name": "Philips Türkiye",
+            "url": "https://careers.philips.com/global/en"
+          },
+          {
+            "name": "Boehringer Ingelheim TR",
+            "url": "https://www.boehringer-ingelheim.com/careers"
+          },
+          {
+            "name": "Sanofi Türkiye",
+            "url": "https://www.sanofi.com/en/careers"
+          }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Acıbadem Sağlık Grubu kariyer",
+            "url": "https://www.acibadem.com.tr/acibadem-kariyer",
+            "summary": "Hastane ve dijital sağlık ürünlerine yakın staj ve yönetici adayı programları.",
+            "eligibility": "Sağlık, mühendislik veya işletme; klinik alanlarda ek sertifika gerekebilir."
+          },
+          {
+            "name": "Medipol kariyer",
+            "url": "https://www.medipol.com.tr/kariyer",
+            "summary": "Sağlık hizmetleri ve destek birimlerinde dönemsel staj ilanları.",
+            "eligibility": "İlgili fakülte öğrencisi; hastane politikalarına uyum zorunludur."
+          },
+          {
+            "name": "Philips careers",
+            "url": "https://careers.philips.com/global/en",
+            "summary": "Sağlık teknolojisi stajları ve yeni mezun programları global sitede.",
+            "eligibility": "Mühendislik veya sağlık teknolojileri; lokasyon filtresi kullanın."
+          },
+          {
+            "name": "Sanofi careers",
+            "url": "https://www.sanofi.com/en/careers",
+            "summary": "İlaç ve aşı alanında staj ve graduate roller.",
+            "eligibility": "Yaşam bilimleri veya iş fonksiyonları; ülke bazlı ilanlar."
+          },
+          {
+            "name": "Getir kariyer (ürün/operasyon)",
+            "url": "https://www.linkedin.com/company/getir/jobs/",
+            "summary": "Mobil sağlık veya lojistik ürün ekiplerine yakın staj ilanları olabilir.",
+            "eligibility": "Öğrenci; güncel açık pozisyonları siteden kontrol edin."
+          }
+        ]
+      },
+      {
+        "roleId": "sustainability-tech",
+        "roleName": "Sürdürülebilirlik ve Çevre Verisi Uzmanlığı",
+        "whyFits": [
+          "Çevre kimyası ve ekoloji bilgin, karbon ayak izi ve atık verisi yorumlarında güç verir.",
+          "Deneysel titizliğin, sensör ve IoT verilerinin kalite kontrolünde işe yarar.",
+          "Sistem düşüncen, tedarik zinciri ve döngüsel ekonomi projelerinde fark yaratır."
+        ],
+        "firstSteps": [
+          "Günlük karbon ayak izini kabaca hesaplayan basit bir tablo oluştur.",
+          "Bir şehrin açık çevre verisi varsa küçük bir görselleştirme dene.",
+          "Sürdürülebilirlik raporu okuyup üç metrik seç ve anlamını yaz."
+        ],
+        "tags": [
+          "sustainability",
+          "data",
+          "research"
+        ],
+        "dayInLife": {
+          "morning": "Sabah enerji veya atık verisi akışlarını kontrol eder, sensör veya açık veri kaynaklarını doğrularsın.",
+          "afternoon": "Öğleden sonra tedarik veya operasyon ekibiyle sürdürülebilirlik KPI’larını konuşur, grafik taslağı hazırlarsın.",
+          "evening": "Akşam rapor paragraflarını ve metod notunu tamamlar, yarın sunulacak özet slaydını bırakırsın."
+        },
+        "salaryRange": {
+          "junior": "34.000 - 48.000 ₺",
+          "mid": "48.000 - 72.000 ₺",
+          "senior": "68.000 - 100.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Enerjisa",
+            "url": "https://www.enerjisa.com.tr/kariyer"
+          },
+          {
+            "name": "Şişecam",
+            "url": "https://www.sisecam.com.tr/tr/kariyer"
+          },
+          {
+            "name": "Türk Telekom",
+            "url": "https://www.turktelekom.com.tr/kariyer"
+          },
+          {
+            "name": "Arçelik",
+            "url": "https://www.arcelik.com.tr/kariyer"
+          },
+          {
+            "name": "Ford Otosan",
+            "url": "https://www.fordotosan.com.tr/tr/kariyer"
+          },
+          {
+            "name": "VESTEL",
+            "url": "https://www.vestel.com.tr/kariyer"
+          },
+          {
+            "name": "İTÜ ARI Teknokent",
+            "url": "https://www.ariteknokent.com.tr/"
+          },
+          {
+            "name": "TSKB",
+            "url": "https://www.tskb.com.tr/kariyer"
+          }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Enerjisa kariyer",
+            "url": "https://www.enerjisa.com.tr/kariyer",
+            "summary": "Enerji üretim ve dağıtımında sürdürülebilirlik ve mühendislik stajları.",
+            "eligibility": "Mühendislik ve işletme öğrencileri; saha stajları için sağlık şartları."
+          },
+          {
+            "name": "Şişecam kariyer",
+            "url": "https://www.sisecam.com.tr/tr/kariyer",
+            "summary": "Endüstride enerji verimliliği ve çevre projelerine yakın staj programları.",
+            "eligibility": "Kimya, malzeme, makine mühendisliği sık aranır."
+          },
+          {
+            "name": "Arçelik kariyer",
+            "url": "https://www.arcelik.com.tr/kariyer",
+            "summary": "Sürdürülebilir ürün ve üretim süreçleri stajları.",
+            "eligibility": "Lisans öğrencisi; yıllık kontenjan duyuruları."
+          },
+          {
+            "name": "VESTEL kariyer",
+            "url": "https://www.vestel.com.tr/kariyer",
+            "summary": "Elektronik ve enerji yönetimi projelerinde mühendislik stajları.",
+            "eligibility": "İlgili mühendislik bölümleri; fabrika ve ofis seçenekleri."
+          },
+          {
+            "name": "Ford Otosan kariyer",
+            "url": "https://www.fordotosan.com.tr/tr/kariyer",
+            "summary": "Otomotivde karbon ayak izi ve verimlilik projelerine yakın stajlar.",
+            "eligibility": "Üniversite öğrencisi; teknik ve idari ayrım ilanda."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "disciplineId": "business-econ",
+    "disciplineName": "İdari ve İktisadi Bilimler (İşletme, Ekonomi, Maliye)",
+    "roleMatches": [
+      {
+        "roleId": "product-manager",
+        "roleName": "Ürün Yöneticisi (PM) Yolunda Uzmanlaşma",
+        "whyFits": [
+          "Pazar analizi ve strateji dersleri, ürün keşfi ve önceliklendirme ile örtüşür.",
+          "Finansal okuryazarlığın, iş modeli ve birim ekonomisi tartışmalarında güven verir.",
+          "Paydaş yönetimi ve sunum becerilerin çapraz fonksiyonel ekiplerde kritik."
+        ],
+        "firstSteps": [
+          "Sevdiğin bir uygulama için problem, hedef kullanıcı ve başarı metriği yaz.",
+          "Basit bir yol haritası şablonunu doldur: şimdi / sonra / sonra.",
+          "Kullanıcı geri bildirimlerinden üç tema çıkar ve bir özellik önerisi yaz."
+        ],
+        "tags": [
+          "pm",
+          "marketing-analytics",
+          "fintech"
+        ],
+        "dayInLife": {
+          "morning": "Sabah backlog ve metrik panosuna bakar, öncelik sırasını güncellersin; kullanıcı geri bildirimlerinden iki madde seçersin.",
+          "afternoon": "Öğleden sonra tasarım ve mühendislikle sprint içi kararları netleştirir, kapsam ve tarih için kısa not alırsın.",
+          "evening": "Akşam paydaşlara günlük özet ve riskleri yazarsın, yarının deneme planını kontrol edersin."
+        },
+        "salaryRange": {
+          "junior": "48.000 - 70.000 ₺",
+          "mid": "70.000 - 105.000 ₺",
+          "senior": "100.000 - 165.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Garanti BBVA Teknoloji",
+            "url": "https://www.garantibbvateknoloji.com.tr/bizde-kariyer"
+          },
+          {
+            "name": "PayTR",
+            "url": "https://www.paytr.com/"
+          },
+          {
+            "name": "Amazon Türkiye (ilanlar)",
+            "url": "https://www.amazon.jobs/en/search?loc_query=Turkey"
+          },
+          {
+            "name": "Insider",
+            "url": "https://useinsider.com/careers/"
+          },
+          {
+            "name": "Dream Games",
+            "url": "https://www.dreamgames.com/careers"
+          },
+          {
+            "name": "Trendyol",
+            "url": "https://careers.trendyol.com/"
+          },
+          {
+            "name": "Getir",
+            "url": "https://www.linkedin.com/company/getir/jobs/"
+          },
+          {
+            "name": "N11",
+            "url": "https://www.n11.com/kurumsal/kariyer"
+          }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Garanti BBVA Teknoloji kariyer",
+            "url": "https://www.garantibbvateknoloji.com.tr/bizde-kariyer",
+            "summary": "Dijital bankacılık ürün ekiplerinde staj ve yeni mezun programları.",
+            "eligibility": "Bilgisayar veya ilgili mühendislik / işletme; teknik mülakat."
+          },
+          {
+            "name": "PayTR",
+            "url": "https://www.paytr.com/",
+            "summary": "Ödeme teknolojileri şirketinde dönemsel staj duyuruları site veya Kariyer.net üzerinden olabilir.",
+            "eligibility": "Öğrenci veya yeni mezun; güncel ilan için ana siteyi ve iş ilanı sitelerini takip edin."
+          },
+          {
+            "name": "Amazon Student Programs",
+            "url": "https://www.amazon.jobs/en/business_categories/student-programs",
+            "summary": "Ürün ve program yönetimine yakın staj rolleri global başvuru ile.",
+            "eligibility": "Öğrenci; İngilizce ve önceki proje deneyimi önemlidir."
+          },
+          {
+            "name": "Insider careers",
+            "url": "https://useinsider.com/careers/",
+            "summary": "SaaS ürün ekiplerinde staj ve başlangıç seviyesi roller.",
+            "eligibility": "Teknik veya iş analitiği geçmişi faydalı; İngilizce çalışma dili."
+          },
+          {
+            "name": "Trendyol Talent Program",
+            "url": "https://careers.trendyol.com/talent-program",
+            "summary": "Ürün ve büyüme ekiplerinde çapraz fonksiyonel staj deneyimi.",
+            "eligibility": "Lisans 3–4 / yeni mezun; program şartları yıllık güncellenir."
+          }
+        ]
+      },
+      {
+        "roleId": "business-analyst",
+        "roleName": "İş Analisti / İş Zekâsı",
+        "whyFits": [
+          "Mikro ve makro ekonomi bilgin, talep tahmini ve senaryo analizlerinde kullanılır.",
+          "Excel ve raporlama alışkanlığın BI araçlarına geçişi kolaylaştırır.",
+          "Süreç iyileştirme düşüncen, operasyon ekipleriyle ortak dil kurar."
+        ],
+        "firstSteps": [
+          "Küçük bir iş sürecini (ör. staj başvurusu) akış şeması olarak çiz.",
+          "Örnek bir satış tablosunda pivot tablo ve temel KPI’ları hesapla.",
+          "Power BI veya Looker Studio ile 10 dakikalık bir tanıtım videosu izle."
+        ],
+        "tags": [
+          "analytics",
+          "data",
+          "pm"
+        ],
+        "dayInLife": {
+          "morning": "Sabah talep dokümanını ve süreç akışını gözden geçirir, veri ihtiyaçlarını netleştirirsin.",
+          "afternoon": "Öğleden sonra IT veya operasyonla entegrasyon veya rapor gereksinimlerini konuşur, pivot tabloda senaryo denersin.",
+          "evening": "Akşam kullanıcı kabul testi maddelerini ve açık soruları listelersin."
+        },
+        "salaryRange": {
+          "junior": "33.000 - 48.000 ₺",
+          "mid": "48.000 - 74.000 ₺",
+          "senior": "72.000 - 108.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Deloitte Türkiye",
+            "url": "https://www.deloitte.com/tr/tr/careers.html"
+          },
+          {
+            "name": "EY Türkiye",
+            "url": "https://www.ey.com/tr_tr/careers"
+          },
+          {
+            "name": "PwC Türkiye",
+            "url": "https://www.pwc.com.tr/tr/careers.html"
+          },
+          {
+            "name": "KPMG Türkiye",
+            "url": "https://jobs.kpmg.com/"
+          },
+          {
+            "name": "Accenture Türkiye",
+            "url": "https://www.accenture.com/tr-en/careers"
+          },
+          {
+            "name": "İş Bankası",
+            "url": "https://www.isbank.com.tr/kariyer"
+          },
+          {
+            "name": "Garanti BBVA",
+            "url": "https://kariyer.garantibbva.com.tr/"
+          },
+          {
+            "name": "KoçSistem",
+            "url": "https://www.kocsistem.com.tr/kariyer"
+          }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "PwC Türkiye careers",
+            "url": "https://www.pwc.com.tr/tr/careers.html",
+            "summary": "Danışmanlık ve denetimde staj / graduate programları.",
+            "eligibility": "İşletme, mühendislik, iktisat; İngilizce ve vaka mülakatı."
+          },
+          {
+            "name": "KPMG Türkiye careers",
+            "url": "https://jobs.kpmg.com/",
+            "summary": "İş analitiği ve risk danışmanlığına yakın staj programları.",
+            "eligibility": "Lisans/yüksek lisans; dönemsel başvuru pencereleri."
+          },
+          {
+            "name": "Accenture Türkiye careers",
+            "url": "https://www.accenture.com/tr-en/careers",
+            "summary": "Teknoloji ve strateji danışmanlığında staj ve analist rolleri.",
+            "eligibility": "Öğrenci veya yeni mezun; teknik ve iş birimi ilanları ayrıdır."
+          },
+          {
+            "name": "EY Türkiye careers",
+            "url": "https://www.ey.com/tr_tr/careers",
+            "summary": "İş analizi ve süreç danışmanlığı stajları.",
+            "eligibility": "İlgili bölüm + İngilizce; yoğun dönem dışı başvurular kapanabilir."
+          },
+          {
+            "name": "İş Bankası kariyer",
+            "url": "https://www.isbank.com.tr/kariyer",
+            "summary": "Bankacılık süreç ve raporlama stajları.",
+            "eligibility": "Lisans ileri sınıflar öncelikli; resmi ilan metni esas."
+          }
+        ]
+      },
+      {
+        "roleId": "growth-marketing",
+        "roleName": "Büyüme ve Dijital Pazarlama Analitiği",
+        "whyFits": [
+          "Tüketici davranışı ve pazarlama dersleri, funnel ve dönüşüm optimizasyonuyla bağlantılı.",
+          "Sayısal hedef takibi, kampanya performansını yorumlamanda avantaj sağlar.",
+          "İçerik ve marka hikâyesi anlatımın, organik büyüme kanallarında öne çıkar."
+        ],
+        "firstSteps": [
+          "Hayali bir kampanya için bütçe, hedef KPI ve iki varyasyon (A/B) tanımla.",
+          "Meta veya Google Ads yardım merkezinden temel kavramları oku.",
+          "Küçük bir sosyal medya hesabında haftalık içerik planı tasarla."
+        ],
+        "tags": [
+          "marketing-analytics",
+          "pm",
+          "ux"
+        ],
+        "dayInLife": {
+          "morning": "Sabah kampanya panolarına ve dönüşüm hunisine bakar, dünkü denemelerin sonuçlarını not edersin.",
+          "afternoon": "Öğleden sonra yaratıcı ekip veya ajansla kısa brief yapar, A/B varyasyonları için metin veya görsel geri bildirimi verirsin.",
+          "evening": "Akşam bütçe ve hedefleri günceller, ertesi günün deney listesini yazarsın."
+        },
+        "salaryRange": {
+          "junior": "30.000 - 44.000 ₺",
+          "mid": "44.000 - 68.000 ₺",
+          "senior": "65.000 - 98.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Trendyol",
+            "url": "https://careers.trendyol.com/"
+          },
+          {
+            "name": "Hepsiburada",
+            "url": "https://kurumsal.hepsiburada.com/tr/hakkimizda/kariyer"
+          },
+          {
+            "name": "Yemeksepeti (Delivery Hero)",
+            "url": "https://careers.deliveryhero.com/"
+          },
+          {
+            "name": "Getir",
+            "url": "https://www.linkedin.com/company/getir/jobs/"
+          },
+          {
+            "name": "Insider",
+            "url": "https://useinsider.com/careers/"
+          },
+          {
+            "name": "Meta Careers",
+            "url": "https://www.metacareers.com/"
+          },
+          {
+            "name": "Google Kariyer",
+            "url": "https://careers.google.com/"
+          },
+          {
+            "name": "TikTok Careers",
+            "url": "https://careers.tiktok.com/"
+          }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Meta Careers",
+            "url": "https://www.metacareers.com/",
+            "summary": "Pazarlama ve ürün büyümesi stajları; global ilanlar ve uzaktan seçenekler.",
+            "eligibility": "Öğrenci veya yeni mezun; çoğu rol İngilizce ve portföy ister."
+          },
+          {
+            "name": "Google Students",
+            "url": "https://careers.google.com/students/",
+            "summary": "Pazarlama ve kullanıcı edinimi yakın öğrenci programları.",
+            "eligibility": "Rekabetçi süreç; analitik ve yaratıcılık birlikte değerlendirilir."
+          },
+          {
+            "name": "TikTok Careers",
+            "url": "https://careers.tiktok.com/",
+            "summary": "İçerik ve büyüme ekiplerinde global staj ve junior roller.",
+            "eligibility": "Dijital içerik deneyimi ve dil yeterliliği; lokasyon ilana göre."
+          },
+          {
+            "name": "Trendyol Talent Program",
+            "url": "https://careers.trendyol.com/talent-program",
+            "summary": "Growth ve pazarlama takımlarında yoğun staj/rotasyon.",
+            "eligibility": "Lisans 3–4 / yeni mezun; güncel başvuru tarihleri sitede."
+          },
+          {
+            "name": "Insider careers",
+            "url": "https://useinsider.com/careers/",
+            "summary": "B2B SaaS büyüme ve pazarlama stajları.",
+            "eligibility": "İngilizce ve veri okuryazarlığı; öğrenci veya yeni mezun."
+          }
+        ]
+      },
+      {
+        "roleId": "ops-automation",
+        "roleName": "Operasyon ve Süreç Otomasyonu (düşük kod / araç yığını)",
+        "whyFits": [
+          "Tablo ve süreç haritası disiplinin, CRM ve otomasyon akışlarına kolayca taşınır.",
+          "Mikro düzeyde verimlilik arayışın, no-code araçlarla hızlı prototiplemeye uyar.",
+          "Paydaş koordinasyonu deneyimin, çapraz fonksiyonel operasyon rollarında değerlidir."
+        ],
+        "firstSteps": [
+          "Günlük hayattan tekrarlayan bir görevi 5 adımlık süreç olarak yaz.",
+          "Make, Zapier veya benzeri bir araçta ücretsiz şablona göz at.",
+          "Basit bir Google Form + Sheet ile mini otomasyon kurgula."
+        ],
+        "tags": [
+          "pm",
+          "analytics",
+          "hrtech"
+        ],
+        "dayInLife": {
+          "morning": "Sabah tetiklenen otomasyonların loglarına bakar, hata veren akışı not edersin.",
+          "afternoon": "Öğleden sonra departmanlarla süreç adımlarını yeniden çizersin; no-code veya form entegrasyonunu test edersin.",
+          "evening": "Akşam dokümantasyonu ve erişim izinlerini günceller, küçük bir iyileştirme için yarın denenecek taslağı bırakırsın."
+        },
+        "salaryRange": {
+          "junior": "32.000 - 46.000 ₺",
+          "mid": "46.000 - 70.000 ₺",
+          "senior": "68.000 - 100.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Logo Yazılım",
+            "url": "https://www.logo.com.tr/LogoKariyer"
+          },
+          {
+            "name": "KoçSistem",
+            "url": "https://www.kocsistem.com.tr/kariyer"
+          },
+          {
+            "name": "Turkcell",
+            "url": "https://kariyerim.turkcell.com.tr/"
+          },
+          {
+            "name": "Vodafone Türkiye",
+            "url": "https://www.vodafone.com.tr/vodafone-kariyer.php"
+          },
+          {
+            "name": "Türk Telekom",
+            "url": "https://www.turktelekom.com.tr/kariyer"
+          },
+          {
+            "name": "Arçelik",
+            "url": "https://www.arcelik.com.tr/kariyer"
+          },
+          {
+            "name": "İş Bankası",
+            "url": "https://www.isbank.com.tr/kariyer"
+          },
+          {
+            "name": "SAP Türkiye",
+            "url": "https://jobs.sap.com/"
+          }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Logo Yazılım kariyer",
+            "url": "https://www.logo.com.tr/LogoKariyer",
+            "summary": "ERP ve otomasyon ürünlerinde yazılım ve danışmanlık stajları.",
+            "eligibility": "Bilgisayar veya endüstri mühendisliği; yıllık staj kotası."
+          },
+          {
+            "name": "KoçSistem kariyer",
+            "url": "https://www.kocsistem.com.tr/kariyer",
+            "summary": "Kurumsal IT ve süreç otomasyonu projelerinde staj.",
+            "eligibility": "Mühendislik veya yönetim bilişim sistemleri öğrencisi."
+          },
+          {
+            "name": "SAP Jobs",
+            "url": "https://jobs.sap.com/",
+            "summary": "Kurumsal süreç ve entegrasyon stajları global portaldan.",
+            "eligibility": "İş veya mühendislik geçmişi; Türkiye lokasyonu filtresi."
+          },
+          {
+            "name": "Vodafone Türkiye kariyer",
+            "url": "https://www.vodafone.com.tr/vodafone-kariyer.php",
+            "summary": "Telekom operasyon ve dijital süreç stajları.",
+            "eligibility": "Öğrenci belgesi; dönemsel ilanlar."
+          },
+          {
+            "name": "Turkcell kariyer",
+            "url": "https://kariyerim.turkcell.com.tr/",
+            "summary": "Operasyon ve IT otomasyon rollerine yakın staj programları.",
+            "eligibility": "Lisans; teknik mülakat olabilir."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "disciplineId": "education-arts",
+    "disciplineName": "Eğitim ve Sanat (Öğretmenlikler, Tasarım, Konservatuvar)",
+    "roleMatches": [
+      {
+        "roleId": "edtech",
+        "roleName": "EdTech İçerik ve Öğrenme Tasarımcısı",
+        "whyFits": [
+          "Ders planlama ve öğrenme hedefleri yazma becerin, müfredat ve mikro öğrenme modüllerine döner.",
+          "Sınıf yönetimi deneyimin, kullanıcı onboarding ve topluluk moderasyonunda işe yarar.",
+          "Erişilebilirlik ve kapsayıcılık duyarlılığın ürün kalitesini yükseltir."
+        ],
+        "firstSteps": [
+          "5 dakikalık bir konuyu üç seviyede (başlangıç/orta/ileri) anlatan mini müfredat yaz.",
+          "Bir eğitim videosunun senaryosunu zaman damgalarıyla planla.",
+          "Türkiye’deki bir çevrimiçi eğitim platformunu inceleyip güçlü/zayıf yanlarını listele."
+        ],
+        "tags": [
+          "edtech",
+          "ux",
+          "research"
+        ],
+        "dayInLife": {
+          "morning": "Sabah öğrenme hedeflerini ve modül sırasını gözden geçirir, erişilebilirlik kontrol listesinden geçersin.",
+          "afternoon": "Öğleden sonra içerik veya video ekibiyle senaryo ve süre uyumunu tartışır, geri bildirim notlarını işlersin.",
+          "evening": "Akşam değerlendirme sorusu veya mikro quiz taslağını tamamlar, LMS’e yükleme için checklist hazırlarsın."
+        },
+        "salaryRange": {
+          "junior": "28.000 - 40.000 ₺",
+          "mid": "40.000 - 58.000 ₺",
+          "senior": "55.000 - 82.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Udemy",
+            "url": "https://about.udemy.com/careers/"
+          },
+          {
+            "name": "Pearson",
+            "url": "https://pearson.jobs/"
+          },
+          {
+            "name": "Trendyol",
+            "url": "https://careers.trendyol.com/"
+          },
+          {
+            "name": "Turkcell",
+            "url": "https://kariyerim.turkcell.com.tr/"
+          },
+          {
+            "name": "MEB / EBA",
+            "url": "https://www.meb.gov.tr/"
+          },
+          {
+            "name": "TÜBİTAK",
+            "url": "https://kariyer.tubitak.gov.tr/"
+          },
+          {
+            "name": "Halkbank",
+            "url": "https://www.halkbank.com.tr/kariyer"
+          },
+          {
+            "name": "İstanbul Kodluyor (İBB)",
+            "url": "https://www.ibb.istanbul/"
+          }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Udemy careers",
+            "url": "https://about.udemy.com/careers/",
+            "summary": "EdTech ürün ve içerik ekiplerinde global staj ve junior roller.",
+            "eligibility": "Öğrenci veya yeni mezun; çoğu rol İngilizce ve ABD/Avrupa lokasyonlu olabilir."
+          },
+          {
+            "name": "Pearson jobs",
+            "url": "https://pearson.jobs/",
+            "summary": "Yayıncılık ve dijital öğrenme stajları.",
+            "eligibility": "Eğitim veya teknoloji geçmişi; lokasyon ilana göre."
+          },
+          {
+            "name": "Turkcell kariyer",
+            "url": "https://kariyerim.turkcell.com.tr/",
+            "summary": "Dijital eğitim ve içerik ortaklıklarına yakın staj fırsatları.",
+            "eligibility": "Üniversite öğrencisi; ilgili bölüm tercihi ilanda."
+          },
+          {
+            "name": "TÜBİTAK insan kaynakları",
+            "url": "https://kariyer.tubitak.gov.tr/",
+            "summary": "Eğitim teknolojisi ve STEM yayınlarına yakın proje personeli ilanları.",
+            "eligibility": "Program şartnamesine göre; çoğu tam zamanlı veya bursiyer."
+          },
+          {
+            "name": "MEB (resmi duyurular)",
+            "url": "https://www.meb.gov.tr/",
+            "summary": "Kamu eğitim projelerinde dönemsel staj ve gönüllülük duyuruları resmi sitede yayımlanır.",
+            "eligibility": "Öğretmen adayı veya ilgili fakülte; başvuru tarihleri duyuruya göre kısıtlıdır."
+          }
+        ]
+      },
+      {
+        "roleId": "ui-design",
+        "roleName": "UI / Görsel Tasarım ve Tasarım Sistemleri",
+        "whyFits": [
+          "Kompozisyon, tipografi ve renk teorisi bilgin arayüz tasarımına doğrudan taşınır.",
+          "Hikâye anlatımı ve estetik zevkin, marka tutarlılığı ve mikro etkileşimlerde öne çıkar.",
+          "Kullanıcı geri bildirimine açık olman iteratif tasarım döngüsüne uyum sağlar."
+        ],
+        "firstSteps": [
+          "Bir mobil ekranı yeniden tasarla: tipografi hiyerarşisi ve boşlukları iyileştir.",
+          "Figma topluluk dosyalarından bir bileşen kütüphanesini incele.",
+          "Erişilebilirlik için kontrast ve font boyutu kontrolü yapan küçük bir kontrol listesi uygula."
+        ],
+        "tags": [
+          "ux",
+          "gamedev",
+          "edtech"
+        ],
+        "dayInLife": {
+          "morning": "Sabah tasarım sistemindeki bileşenleri ve ekran varyantlarını gözden geçirirsin.",
+          "afternoon": "Öğleden sonra ürün ve geliştirme ile handoff ve etkileşim detaylarını netleştirirsin; Figma’da küçük düzeltmeler yaparsın.",
+          "evening": "Akşam kontrast ve tipografi notlarını toparlar, yarın revize edilecek ekran listesini yazarsın."
+        },
+        "salaryRange": {
+          "junior": "34.000 - 52.000 ₺",
+          "mid": "50.000 - 76.000 ₺",
+          "senior": "74.000 - 112.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Yemeksepeti (Delivery Hero)",
+            "url": "https://careers.deliveryhero.com/"
+          },
+          {
+            "name": "Getir",
+            "url": "https://www.linkedin.com/company/getir/jobs/"
+          },
+          {
+            "name": "Trendyol",
+            "url": "https://careers.trendyol.com/"
+          },
+          {
+            "name": "Defacto",
+            "url": "https://kurumsal.defacto.com/ise-alim-ve-staj/"
+          },
+          {
+            "name": "ING Türkiye",
+            "url": "https://www.ing.com.tr/tr/kariyer"
+          },
+          {
+            "name": "Huawei Türkiye",
+            "url": "https://career.huawei.com/"
+          },
+          {
+            "name": "Booking.com",
+            "url": "https://careers.booking.com/"
+          },
+          {
+            "name": "Spotify Jobs",
+            "url": "https://www.lifeatspotify.com/jobs"
+          }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Spotify jobs",
+            "url": "https://www.lifeatspotify.com/jobs",
+            "summary": "Ürün tasarımı ve deneyim stajları global ölçekte.",
+            "eligibility": "Güçlü portföy ve İngilizce; bazı roller Avrupa/Amerika ofislerinde."
+          },
+          {
+            "name": "Booking.com Careers",
+            "url": "https://careers.booking.com/",
+            "summary": "Arayüz ve görsel tasarım stajları.",
+            "eligibility": "Tasarım portföyü zorunlu; uzaktan/hibrit seçenekler değişken."
+          },
+          {
+            "name": "Trendyol Early Careers",
+            "url": "https://careers.trendyol.com/early-careers",
+            "summary": "Ürün tasarımı ve marka görünürlüğü stajları için giriş noktası.",
+            "eligibility": "Öğrenci veya yeni mezun; güncel kontenjan sitede."
+          },
+          {
+            "name": "Getir kariyer",
+            "url": "https://www.linkedin.com/company/getir/jobs/",
+            "summary": "Mobil arayüz ve tasarım sistemleri stajları.",
+            "eligibility": "Grafik veya etkileşim tasarımı portföyü."
+          },
+          {
+            "name": "Defacto kariyer",
+            "url": "https://kurumsal.defacto.com/ise-alim-ve-staj/",
+            "summary": "Perakende dijital kanallarında görsel tasarım stajları.",
+            "eligibility": "İlgili bölüm öğrencisi; moda veya UI ilgisi faydalı."
+          }
+        ]
+      },
+      {
+        "roleId": "game-community",
+        "roleName": "Oyun Geliştirme veya Topluluk Yönetimi",
+        "whyFits": [
+          "Disiplinli pratik alışkanlığin, oyun mekaniği ve seviye tasarımı sürekliliğine benzer.",
+          "Performans ve iş birliği deneyimin, canlı etkinlik ve topluluk programlarında kullanılır.",
+          "Yaratıcı problem çözme, indie oyun veya eğitsel oyun projelerinde fark yaratır."
+        ],
+        "firstSteps": [
+          "Basit bir oyun fikrini tek paragraf pitch olarak yaz.",
+          "Godot veya Unity için “ilk 30 dakika” eğitimine başla.",
+          "Discord veya benzeri bir toplulukta bir etkinlik fikri öner ve gönüllü rol üstlen."
+        ],
+        "tags": [
+          "gamedev",
+          "edtech",
+          "ux"
+        ],
+        "dayInLife": {
+          "morning": "Sabah topluluk mesajlarını ve etkinlik takvimini kontrol eder, kurallara aykırı içerikleri not edersin.",
+          "afternoon": "Öğleden sonra canlı yayın veya jam duyurusu hazırlar, Discord veya sosyal kanallarda kısa etkileşim yaparsın.",
+          "evening": "Akşam yarının programını ve moderasyon görev dağılımını paylaşırsın."
+        },
+        "salaryRange": {
+          "junior": "26.000 - 38.000 ₺",
+          "mid": "38.000 - 54.000 ₺",
+          "senior": "52.000 - 75.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Dream Games",
+            "url": "https://www.dreamgames.com/careers"
+          },
+          {
+            "name": "Peak (Zynga)",
+            "url": "https://www.peak.com/careers"
+          },
+          {
+            "name": "Rovio",
+            "url": "https://www.rovio.com/careers/"
+          },
+          {
+            "name": "Ubisoft",
+            "url": "https://jobs.ubisoft.com/"
+          },
+          {
+            "name": "Twitch Careers",
+            "url": "https://www.twitch.tv/jobs"
+          },
+          {
+            "name": "Discord Jobs",
+            "url": "https://discord.com/careers"
+          },
+          {
+            "name": "Steam / Valve",
+            "url": "https://www.valvesoftware.com/en/jobs"
+          },
+          {
+            "name": "Trendyol (gaming içerik)",
+            "url": "https://careers.trendyol.com/"
+          }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Dream Games careers",
+            "url": "https://www.dreamgames.com/careers",
+            "summary": "Mobil oyun stüdyosunda oyun ve topluluk rolleri stajları.",
+            "eligibility": "Oyun geliştirme veya iletişim bölümleri; portföy ve tutku önemli."
+          },
+          {
+            "name": "Peak (Zynga) careers",
+            "url": "https://www.peak.com/careers",
+            "summary": "Casual oyun geliştirme ve canlı operasyon stajları.",
+            "eligibility": "Yazılım, tasarım veya oyun üretimi geçmişi."
+          },
+          {
+            "name": "Ubisoft jobs",
+            "url": "https://jobs.ubisoft.com/",
+            "summary": "Global oyun stüdyolarında staj ve junior roller (çoğu yurtdışı ofis).",
+            "eligibility": "İngilizce ve portföy; Türkiye dışı lokasyon sık görülür."
+          },
+          {
+            "name": "Rovio careers",
+            "url": "https://www.rovio.com/careers/",
+            "summary": "Mobil oyun ve topluluk yönetimi stajları.",
+            "eligibility": "Öğrenci programları dönemsel; Avrupa ofisleri ağırlıklı."
+          },
+          {
+            "name": "Discord careers",
+            "url": "https://discord.com/careers",
+            "summary": "Topluluk güvenliği ve ürün rolleri için global staj ilanları.",
+            "eligibility": "Uzaktan veya yurtdışı; İngilizce ve önceki topluluk deneyimi."
+          }
+        ]
+      },
+      {
+        "roleId": "creative-tech",
+        "roleName": "Yaratıcı Kod / Etkileşimli Medya",
+        "whyFits": [
+          "Estetik ve ritim duyarlılığın, hareket grafikleri ve prototiplerde güç verir.",
+          "Disiplinli prova alışkanlığin, iteratif yazılım geliştirme döngüsüne benzer.",
+          "Hikâye anlatımı becerin, kullanıcı akışı ve deneyim tasarımıyla birleşir."
+        ],
+        "firstSteps": [
+          "p5.js veya benzeri ile 50 satırlık görsel bir sketch dene.",
+          "Sevdiğin bir sanal sergiyi veya etkileşimli projeyi üç cümleyle analiz et.",
+          "itch.io’da küçük oyun jam duyurularına göz at."
+        ],
+        "tags": [
+          "gamedev",
+          "ux",
+          "edtech"
+        ],
+        "dayInLife": {
+          "morning": "Sabah dünkü prototip veya sketch’i açar, referans ve ses/görsel moodboard’a bakarsın.",
+          "afternoon": "Öğleden sonra ekip arkadaşınla etkileşim veya animasyon akışını dener, küçük bir build alırsın.",
+          "evening": "Akşam iterasyon notlarını yazıp paylaşırsın, yarın denenecek tek riskli fikri işaretlersin."
+        },
+        "salaryRange": {
+          "junior": "32.000 - 48.000 ₺",
+          "mid": "48.000 - 72.000 ₺",
+          "senior": "70.000 - 105.000 ₺",
+          "source": "LinkedIn · Kariyer.net · Glassdoor TR · Indeed TR (2024-2025 tahmini, brüt ₺/ay)"
+        },
+        "employersTurkey": [
+          {
+            "name": "Dream Games",
+            "url": "https://www.dreamgames.com/careers"
+          },
+          {
+            "name": "Insider",
+            "url": "https://useinsider.com/careers/"
+          },
+          {
+            "name": "Publicis Groupe TR",
+            "url": "https://www.publicisgroupe.com/en/careers"
+          },
+          {
+            "name": "WPP / GroupM",
+            "url": "https://www.wpp.com/careers"
+          },
+          {
+            "name": "Adobe Careers",
+            "url": "https://careers.adobe.com/"
+          },
+          {
+            "name": "Autodesk",
+            "url": "https://careers.autodesk.com/"
+          },
+          {
+            "name": "Getir",
+            "url": "https://www.linkedin.com/company/getir/jobs/"
+          },
+          {
+            "name": "Trendyol",
+            "url": "https://careers.trendyol.com/"
+          }
+        ],
+        "internshipPrograms": [
+          {
+            "name": "Adobe careers",
+            "url": "https://careers.adobe.com/",
+            "summary": "Yaratıcı yazılım ve etkileşimli medya stajları.",
+            "eligibility": "Tasarım veya mühendislik portföyü; global başvuru."
+          },
+          {
+            "name": "Autodesk careers",
+            "url": "https://careers.autodesk.com/",
+            "summary": "3B tasarım ve mühendislik yazılımları stajları.",
+            "eligibility": "STEM veya tasarım geçmişi; lokasyon ilana göre."
+          },
+          {
+            "name": "Dream Games careers",
+            "url": "https://www.dreamgames.com/careers",
+            "summary": "Oyun içi deneyim ve yaratıcı prototipleme stajları.",
+            "eligibility": "Oyun veya görsel tasarım odaklı portföy."
+          },
+          {
+            "name": "WPP careers",
+            "url": "https://www.wpp.com/careers",
+            "summary": "Yaratıcı ajanslarda dijital prodüksiyon ve etkileşim stajları.",
+            "eligibility": "Portföy ve iletişim; çok dilli çalışma ortamı."
+          },
+          {
+            "name": "Insider careers",
+            "url": "https://useinsider.com/careers/",
+            "summary": "Ürün içi yaratıcı ve growth deneyimleri stajları.",
+            "eligibility": "Teknik veya pazarlama hibrit geçmiş faydalıdır."
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,15 @@
+# Ortam değişkenleri — asla GitHub’a gönderme
+.env
+.env.*
+!.env.example
+web/.env
+web/.env.*
+!web/.env.example
+
+# Bağımlılıklar ve derleme
+node_modules/
+web/node_modules/
+dist/
+web/dist/
+*.log
+.DS_Store
