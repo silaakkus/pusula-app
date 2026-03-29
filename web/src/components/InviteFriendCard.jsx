@@ -4,19 +4,19 @@ import { Button } from './ui/Button';
 import { Card } from './ui/Card';
 import { logEvent } from '../lib/analytics.js';
 
-const DEFAULT_SHARE_SITE_URL = 'https://pusula-fdnbtix3-silaakkus-projects.vercel.app';
-
 /**
- * Paylaşılan link sırası:
- * 1) VITE_APP_SHARE_CANONICAL_URL (manuel sabit domain)
- * 2) DEFAULT_SHARE_SITE_URL (projenin kalıcı production adresi)
- * 3) window.location.origin
- * 4) legacy VITE_APP_URL
+ * Paylaşım linki — dikkat: `…-hash-…-projects.vercel.app` gibi deployment URL’leri çoğunlukla
+ * Vercel Authentication ile korunur; paylaşımda kullanıcıyı giriş ekranına atar.
+ * Herkese açık adres için Vercel’de Project → Settings → Domains altındaki Production domain’i kullan.
+ *
+ * Sıra:
+ * 1) VITE_APP_SHARE_CANONICAL_URL (üretimde şunu mutlaka doldur)
+ * 2) window.location.origin (siteyi korumasız production domain’den açtıysan doğru olur)
+ * 3) VITE_APP_URL (bilerek ayarlandıysa)
  */
 function getShareSiteUrl() {
   const canonical = import.meta.env.VITE_APP_SHARE_CANONICAL_URL?.trim();
   if (canonical) return canonical.replace(/\/+$/, '');
-  if (DEFAULT_SHARE_SITE_URL) return DEFAULT_SHARE_SITE_URL.replace(/\/+$/, '');
   if (typeof window !== 'undefined' && window.location?.origin) {
     return window.location.origin.replace(/\/+$/, '');
   }
