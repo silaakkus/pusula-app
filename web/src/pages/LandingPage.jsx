@@ -78,7 +78,13 @@ export function LandingPage({ onStart }) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8 + idx * 0.1 }}
-            className="rounded-2xl border border-white/20 bg-white/50 p-6 text-left backdrop-blur-sm transition-all hover:shadow-lg"
+            role="button"
+            tabIndex={0}
+            onClick={onStart}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') onStart();
+            }}
+            className="cursor-pointer rounded-2xl border border-white/20 bg-white/50 p-6 text-left backdrop-blur-sm transition-all hover:-translate-y-1 hover:shadow-lg"
           >
             <div className="mb-4">{item.icon}</div>
             <h3 className="mb-2 font-bold">{item.title}</h3>
