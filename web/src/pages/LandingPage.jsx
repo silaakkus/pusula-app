@@ -13,7 +13,7 @@ export function LandingPage({ onStart, onResume, onOpenInfo, resumeAvailable, re
   };
 
   return (
-    <main className="relative mx-auto flex w-full max-w-none flex-col items-center px-3 pb-16 pt-16 text-center sm:px-4 lg:px-6 lg:pt-24">
+    <main className="relative mx-auto flex w-full max-w-none flex-col items-center px-2 pb-16 pt-16 text-center sm:px-3 lg:px-4 lg:pt-24">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -44,7 +44,7 @@ export function LandingPage({ onStart, onResume, onOpenInfo, resumeAvailable, re
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.4 }}
-        className="mb-10 w-full max-w-2xl text-lg leading-relaxed text-slate-600"
+        className="mb-10 w-full max-w-none text-lg leading-relaxed text-slate-600"
       >
         <p>
           Akademik arka planını teknoloji fırsatlarıyla birleştir; birkaç dakikada rota ve yerel fırsatlara
@@ -64,7 +64,7 @@ export function LandingPage({ onStart, onResume, onOpenInfo, resumeAvailable, re
         initial={{ opacity: 0, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, delay: 0.55 }}
-        className="flex w-full max-w-xl flex-col items-stretch justify-center gap-3 sm:max-w-2xl sm:flex-row sm:items-center sm:justify-center"
+        className="flex w-full max-w-none flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center sm:justify-center"
       >
         <Button size="lg" className="w-full sm:w-auto sm:min-w-[200px]" onClick={onStart}>
           Rotanı Oluştur
@@ -88,7 +88,7 @@ export function LandingPage({ onStart, onResume, onOpenInfo, resumeAvailable, re
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.75 }}
-          className="mt-5 max-w-xl text-center text-xs text-slate-500"
+          className="mt-5 w-full max-w-none text-center text-xs text-slate-500"
         >
           Kayıtlı oturum: {resumeSummary}
         </motion.p>

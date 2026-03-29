@@ -4,16 +4,30 @@ import { Button } from './ui/Button';
 import { Card } from './ui/Card';
 import { logEvent } from '../lib/analytics.js';
 
+/**
+ * Paylaşılan link: tarayıcıda varsayılan olarak **şu an açık olan adres** (origin).
+ * Böylece yanlış .env (başka Vercel/Netlify projesi) veya preview URL karışması azalır.
+ * Tüm paylaşımların tek sabit domaine gitmesi için üretimde VITE_APP_SHARE_CANONICAL_URL kullan.
+ */
 function getShareSiteUrl() {
-  const fromEnv = import.meta.env.VITE_APP_URL;
-  if (fromEnv && String(fromEnv).trim()) return String(fromEnv).trim().replace(/\/+$/, '');
-  if (typeof window !== 'undefined' && window.location?.origin) return window.location.origin.replace(/\/+$/, '');
+  const canonical = import.meta.env.VITE_APP_SHARE_CANONICAL_URL?.trim();
+  if (typeof window !== 'undefined' && window.location?.origin) {
+    const origin = window.location.origin.replace(/\/+$/, '');
+    if (canonical) return canonical.replace(/\/+$/, '');
+    return origin;
+  }
+  if (canonical) return canonical.replace(/\/+$/, '');
+  const legacy = import.meta.env.VITE_APP_URL?.trim();
+  if (legacy) return legacy.replace(/\/+$/, '');
   return '';
 }
 
 function buildShareText(siteUrl) {
-  const base = siteUrl || 'https://pusula-app.netlify.app';
-  return `Bölümüm ne olursa olsun geleceğim teknolojide! Sen de rotanı keşfet → ${base}`;
+  const base = siteUrl?.trim();
+  if (base) {
+    return `Bölümüm ne olursa olsun geleceğim teknolojide! Sen de rotanı keşfet → ${base}`;
+  }
+  return 'Bölümüm ne olursa olsun geleceğim teknolojide! Sen de Pusula ile rotanı keşfet.';
 }
 
 /**

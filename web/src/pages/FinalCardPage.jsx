@@ -45,7 +45,7 @@ export function FinalCardPage({
   }, [baselineBefore, baselineAfter, delta]);
 
   return (
-    <main className="relative mx-auto flex max-w-3xl flex-col items-center px-6 pb-16 pt-10 text-center sm:px-8">
+    <main className="relative mx-auto flex w-full max-w-none flex-col items-center px-2 pb-16 pt-10 text-center sm:px-4 lg:px-5">
       <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="w-full">
         <Card className="text-center">
           <h2 className="text-2xl font-extrabold text-indigo-900">Özgüven deltası (Δ)</h2>

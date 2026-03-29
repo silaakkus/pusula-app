@@ -17,7 +17,7 @@ export function LandingInfoPage({ onBack, initialSectionId, aiBrandLabel }) {
   const brand = aiBrandLabel || 'Yapay zeka';
 
   return (
-    <main className="relative mx-auto flex w-full max-w-none flex-col px-3 pb-20 pt-8 sm:px-4 lg:px-6">
+    <main className="relative mx-auto flex w-full max-w-none flex-col px-2 pb-20 pt-8 sm:px-3 lg:px-4">
       <motion.div
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
@@ -35,7 +35,7 @@ export function LandingInfoPage({ onBack, initialSectionId, aiBrandLabel }) {
         </Button>
       </motion.div>
 
-      <article className="mx-auto w-full max-w-3xl text-left text-slate-700">
+      <article className="mx-auto w-full max-w-none text-left text-slate-700">
         <motion.h1
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}

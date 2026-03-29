@@ -385,7 +385,7 @@ export function ResultsPage({
   };
 
   return (
-    <main className="relative mx-auto flex w-full max-w-none flex-col items-stretch gap-8 px-4 pb-16 pt-10 text-left sm:px-6 lg:px-10">
+    <main className="relative mx-auto flex w-full max-w-none flex-col items-stretch gap-8 px-2 pb-16 pt-10 text-left sm:px-4 lg:px-5">
       <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
         <div className="mb-2 flex flex-wrap items-center gap-2">
           <Badge>

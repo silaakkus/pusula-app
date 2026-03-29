@@ -117,7 +117,7 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
   };
 
   return (
-    <main className="relative mx-auto flex w-full max-w-none flex-col items-stretch px-4 pb-16 pt-10 text-left sm:px-6 lg:px-10">
+    <main className="relative mx-auto flex w-full max-w-none flex-col items-stretch px-2 pb-16 pt-10 text-left sm:px-4 lg:px-5">
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
         <Card>
           <div className="mb-3 text-sm font-semibold text-indigo-700">Profil (Çok boyutlu)</div>
