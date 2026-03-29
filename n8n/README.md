@@ -36,3 +36,9 @@ Son adımda arkadaşını davet ederken **e-posta alanını** dolduran kullanıc
 | `opportunities[]` | `name`, `url`, `description`, `forRole`, `source` (`dataset` \| `llm`) |
 
 Webhook gövdesi kökte gelir; bazı proxy’ler `{ "body": { ... } }` sararsa Code betiği bunu da çözer.
+
+## Sorun giderme
+
+- **“Workflow ran into an error”** ve arkadaş tamamlayınca mail gitmiyorsa: n8n’de **Executions** → hatalı çalıştırmayı açıp **Code** satırındaki mesaja bak. Eski betikte `davet_tamamlandi` dalı `esc` tanımlanmadan önce çalıştığı için `ReferenceError: esc is not defined` oluşabiliyordu; repodaki güncel `pusula-webhook-code.js` dosyasını Code node’a **yeniden yapıştır**.
+- Gmail’e **boş alıcı** gitmesi de hataya yol açar; güncel betik geçersiz `to` için çıktı üretmez (Gmail atlanır).
+- **To / Subject / Message** alanlarında ifade kullan: `{{ $json.to }}`, `{{ $json.subject }}`, `{{ $json.html }}`.

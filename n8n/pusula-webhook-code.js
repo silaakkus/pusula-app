@@ -1,23 +1,61 @@
 /**
  * n8n Code node — Pusula webhook → Gmail HTML
- * Gmail: Message = {{ $json.html }}, Subject = {{ $json.subject }}
+ * Gmail: Message = {{ $json.html }}, Subject = {{ $json.subject }}, To: {{ $json.to }}
+ *
+ * Not: `esc` ve `safeHref` dosya başında tanımlı olmalı; n8n Code sandbox'ında
+ * aksi halde davet_tamamlandi dalında ReferenceError oluşabiliyor.
  */
 
-const item = $input.first().json;
-const data =
-  item.body && typeof item.body === 'object' && !Array.isArray(item.body) ? item.body : item;
+function esc(s) {
+  return String(s ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function safeHref(url) {
+  const u = String(url ?? '').trim();
+  return /^https?:\/\//i.test(u) ? u : '';
+}
+
+/** Webhook: body nesne/string veya kök düz JSON */
+function resolveWebhookPayload(item) {
+  if (!item || typeof item !== 'object') return {};
+  const b = item.body;
+  if (b === undefined || b === null) {
+    if ('event' in item || 'email' in item || 'roles' in item || 'rolesDetail' in item) return item;
+    return item;
+  }
+  if (typeof b === 'string') {
+    try {
+      const p = JSON.parse(b);
+      if (p && typeof p === 'object' && !Array.isArray(p)) return p;
+    } catch {
+      /* ignore */
+    }
+    return {};
+  }
+  if (typeof b === 'object' && !Array.isArray(b)) return b;
+  return {};
+}
+
+const rawInput = $input.first();
+if (!rawInput || rawInput.json == null) return [];
+
+const data = resolveWebhookPayload(rawInput.json);
 
 /** Davet eden kullanıcıya: arkadaş sonuç sayfasına geldi. */
 if (data.event === 'davet_tamamlandi') {
   const inv = String(data.inviterEmail ?? '')
     .trim()
     .toLowerCase();
-  const roles = Array.isArray(data.roles) ? data.roles : [];
-  const rolesText = roles.map((r) => esc(String(r))).join(', ');
+  const rolesInvite = Array.isArray(data.roles) ? data.roles : [];
+  const rolesText = rolesInvite.map((r) => esc(String(r))).join(', ');
   const disc = esc(data.inviteeDiscipline ?? '');
   const city = esc(data.inviteeCity ?? '');
   if (!inv || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inv)) {
-    return [{ json: { email: '', to: '', subject: '', html: '', _pusulaSkip: true, _reason: 'invalid inviter' } }];
+    return [];
   }
   const html = `<div style="font-family:Arial,Helvetica,sans-serif;max-width:560px;margin:0 auto;padding:20px;line-height:1.55;color:#334155;">
   <p style="font-size:17px;font-weight:700;margin:0 0 12px;">Pusula — Davet haberi</p>
@@ -39,19 +77,6 @@ if (data.event === 'davet_tamamlandi') {
       },
     },
   ];
-}
-
-function esc(s) {
-  return String(s ?? '')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}
-
-function safeHref(url) {
-  const u = String(url ?? '').trim();
-  return /^https?:\/\//i.test(u) ? u : '';
 }
 
 function salarySectionHtml(rd) {
@@ -298,11 +323,16 @@ const html = `<div style="font-family: Arial, Helvetica, sans-serif; max-width: 
   <p style="color:#888;font-size:13px;text-align:center;margin-top:28px;border-top:1px solid #eee;padding-top:16px;line-height:1.55;">Teknoloji yolculuğunda başarılar 💜<br/><span style="color:#7c3aed;">Pusula</span></p>
 </div>`;
 
+const toAddr = String(email ?? '').trim();
+if (!toAddr || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(toAddr)) {
+  return [];
+}
+
 return [
   {
     json: {
-      email,
-      to: email,
+      email: toAddr,
+      to: toAddr,
       subject: 'Pusula — Kariyer analizin tamamlandı! 🧭',
       html,
     },
