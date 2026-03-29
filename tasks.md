@@ -120,3 +120,7 @@ Bu liste `prd.md` içeriğini adım adım koda dökmek için hazırlanmıştır.
 - [x] Yönelim sonucu: daha uzun sade metin, emoji’li başlıklar, adım satırlarında “başlık — açıklama”; uzak yanıtta kalan n8n kalıntıları `sanitizeOrientationBody` ile temizleniyor (`orientationQuiz.js`, `OrientationResultPage.jsx`)
 - [x] Rozetler: “Yönelim” ve “Harita” rozetleri eklendi; harita adımı işaretlenince otomatik açılıyor; uygulama açılışında mevcut harita ilerlemesi rozete yansıyor (`pusulaBadges.js`, `App.jsx`, `roadmapProgress.js`)
 - [x] Rozet şeridi mobilde sola hizalı satır kırılımı (`PusulaBadgesStrip.jsx` — `flex-wrap` + `justify-start` / `content-start`)
+- [x] Öğrenme yolu bağlantıları: her harici link için sitede hangi tür içeriğe denk gelindiğini anlatan `about` metni ve adım UI’ında gösterim (`roadmaps.json`, `RoadmapTrackPage.jsx`)
+- [x] Yönelim sonucu: disiplin matrisinden “Matris rehberi” kartı (`orientationMatrixHints.js`); `VITE_GROQ_API_KEY` ile Groq tamamlayıcı özet + ipuçları, görünür hâlde yükleme/hata/“Tekrar dene” (`orientationGroqEnrich.js`, `OrientationResultPage.jsx`)
+- [x] Arkadaş daveti: kullanıcıya görünen yardım metninden n8n / olay adı teknik ayrıntısı çıkarıldı (`InviteFriendCard.jsx`)
+- [x] `web/.env.example`: yönelim Groq ek önerisi için isteğe bağlı `VITE_GROQ_API_KEY` satırı
