@@ -10,6 +10,10 @@ import { BarrierPage } from './pages/BarrierPage';
 import { BarrierReviewPage } from './pages/BarrierReviewPage';
 import { PostSurveyPage } from './pages/PostSurveyPage';
 import { FinalCardPage } from './pages/FinalCardPage';
+import { RoadmapHubPage } from './pages/RoadmapHubPage.jsx';
+import { RoadmapTrackPage } from './pages/RoadmapTrackPage.jsx';
+import { OrientationQuizPage } from './pages/OrientationQuizPage.jsx';
+import { OrientationResultPage } from './pages/OrientationResultPage.jsx';
 import { PusulaBadgesStrip } from './components/PusulaBadgesStrip.jsx';
 import { loadPusulaData, getDisciplineById } from './lib/dataLoader.js';
 import { runCareerAnalysis, runBarrierReframe } from './lib/gemini.js';
@@ -50,6 +54,10 @@ function stepLabel(step) {
     barrierReview: 'Adım 6/8 · Engel özeti',
     postsurvey: 'Adım 7/8 · Son anket',
     card: 'Adım 8/8 · Kariyer kartı',
+    roadmapHub: 'Keşif · Öğrenme haritaları',
+    roadmapTrack: 'Keşif · Harita adımları',
+    orientationQuiz: 'Keşif · Yönelim testi',
+    orientationResult: 'Keşif · Yönelim sonucu',
   };
   return map[step] ?? '';
 }
@@ -81,6 +89,14 @@ function getPreviousStep(current) {
       return 'barrierReview';
     case 'card':
       return 'postsurvey';
+    case 'roadmapHub':
+      return 'home';
+    case 'roadmapTrack':
+      return 'roadmapHub';
+    case 'orientationQuiz':
+      return 'home';
+    case 'orientationResult':
+      return 'orientationQuiz';
     default:
       return null;
   }
@@ -103,6 +119,8 @@ const App = () => {
   const [barrierResult, setBarrierResult] = useState(null);
   const [barrierRetryBusy, setBarrierRetryBusy] = useState(false);
   const [landingInfoSectionId, setLandingInfoSectionId] = useState(null);
+  const [roadmapTrackId, setRoadmapTrackId] = useState(null);
+  const [orientationResult, setOrientationResult] = useState(null);
 
   const barrierProfileSummary = useMemo(
     () =>
@@ -114,6 +132,14 @@ const App = () => {
 
   useEffect(() => {
     if (step === 'home' || step === 'landingInfo') return;
+    if (
+      step === 'roadmapHub' ||
+      step === 'roadmapTrack' ||
+      step === 'orientationQuiz' ||
+      step === 'orientationResult'
+    ) {
+      return;
+    }
     if (step === 'profile' && !profile) return;
     saveFlowSnapshot({
       step,
@@ -254,9 +280,19 @@ const App = () => {
 
   const goHome = useCallback(() => {
     setLandingInfoSectionId(null);
+    setRoadmapTrackId(null);
+    setOrientationResult(null);
     setStep('home');
     logEvent('nav_home_logo', {});
   }, []);
+
+  useEffect(() => {
+    if (step === 'roadmapTrack' && !roadmapTrackId) setStep('roadmapHub');
+  }, [step, roadmapTrackId]);
+
+  useEffect(() => {
+    if (step === 'orientationResult' && !orientationResult) setStep('orientationQuiz');
+  }, [step, orientationResult]);
 
   const goToPreviousStep = useCallback(() => {
     const prev = getPreviousStep(step);
@@ -270,6 +306,8 @@ const App = () => {
     clearFlowSnapshot();
     clearProfileDraft();
     setLandingInfoSectionId(null);
+    setRoadmapTrackId(null);
+    setOrientationResult(null);
     setStep('home');
     setProfile(null);
     setBaselineBefore(3);
@@ -362,6 +400,14 @@ const App = () => {
         <LandingPage
           onStart={handleFlowStart}
           onResume={handleResume}
+          onOpenRoadmaps={() => {
+            setRoadmapTrackId(null);
+            setStep('roadmapHub');
+          }}
+          onOpenOrientation={() => {
+            setOrientationResult(null);
+            setStep('orientationQuiz');
+          }}
           onOpenInfo={(sectionId) => {
             setLandingInfoSectionId(sectionId ?? null);
             setStep('landingInfo');
@@ -369,6 +415,40 @@ const App = () => {
           resumeAvailable={hasResumeAvailable()}
           resumeSummary={getResumeSummaryText()}
         />
+      )}
+
+      {step === 'roadmapHub' && (
+        <RoadmapHubPage
+          onBack={goHome}
+          onSelectTrack={(id) => {
+            setRoadmapTrackId(id);
+            setStep('roadmapTrack');
+          }}
+        />
+      )}
+
+      {step === 'roadmapTrack' && roadmapTrackId && (
+        <RoadmapTrackPage
+          trackId={roadmapTrackId}
+          onBack={() => {
+            setRoadmapTrackId(null);
+            setStep('roadmapHub');
+          }}
+        />
+      )}
+
+      {step === 'orientationQuiz' && (
+        <OrientationQuizPage
+          onBack={goHome}
+          onComplete={(r) => {
+            setOrientationResult(r);
+            setStep('orientationResult');
+          }}
+        />
+      )}
+
+      {step === 'orientationResult' && orientationResult && (
+        <OrientationResultPage result={orientationResult} onBack={() => setStep('orientationQuiz')} onHome={goHome} />
       )}
 
       {step === 'landingInfo' && (

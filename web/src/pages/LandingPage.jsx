@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, ChevronDown, Compass, Rocket, RotateCcw, Shield, Sparkles } from 'lucide-react';
+import { ArrowRight, ChevronDown, Compass, Map, Rocket, RotateCcw, Shield, Sparkles } from 'lucide-react';
 import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
 import { getLlmBrandLabel } from '../lib/llmConfig.js';
@@ -13,7 +13,15 @@ const SECTION_ICONS = {
   'feature-ai-mentor': Sparkles,
 };
 
-export function LandingPage({ onStart, onResume, onOpenInfo, resumeAvailable, resumeSummary }) {
+export function LandingPage({
+  onStart,
+  onResume,
+  onOpenInfo,
+  onOpenRoadmaps,
+  onOpenOrientation,
+  resumeAvailable,
+  resumeSummary,
+}) {
   const brand = getLlmBrandLabel();
   const sections = useMemo(() => getLandingAccordionSections(brand), [brand]);
   const [openId, setOpenId] = useState(null);
@@ -89,6 +97,38 @@ export function LandingPage({ onStart, onResume, onOpenInfo, resumeAvailable, re
           </Button>
         )}
       </motion.div>
+
+      {(onOpenRoadmaps || onOpenOrientation) && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.62 }}
+          className="mt-5 flex w-full max-w-none flex-col gap-2 sm:flex-row sm:flex-wrap sm:justify-center"
+        >
+          {onOpenRoadmaps && (
+            <Button
+              size="lg"
+              variant="ghost"
+              className="w-full border border-indigo-200/80 bg-white/90 shadow-sm ring-1 ring-indigo-100/80 sm:w-auto sm:min-w-[200px]"
+              onClick={onOpenRoadmaps}
+            >
+              <Map className="h-5 w-5 shrink-0 text-indigo-600" aria-hidden />
+              Öğrenme haritası
+            </Button>
+          )}
+          {onOpenOrientation && (
+            <Button
+              size="lg"
+              variant="ghost"
+              className="w-full border border-violet-200/80 bg-white/90 shadow-sm ring-1 ring-violet-100/80 sm:w-auto sm:min-w-[200px]"
+              onClick={onOpenOrientation}
+            >
+              <Sparkles className="h-5 w-5 shrink-0 text-violet-600" aria-hidden />
+              Hangi alana yakınsın?
+            </Button>
+          )}
+        </motion.div>
+      )}
 
       {resumeAvailable && resumeSummary && (
         <motion.p
