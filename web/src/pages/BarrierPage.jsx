@@ -25,13 +25,14 @@ export function BarrierPage({ apiKey, profile, matrix, profileSummary, onResult,
     const matrixSuggestion = buildMatrixBarrierSuggestion({ profile, matrix, barrierText: trimmed });
     try {
       const llm = await runBarrierReframe({ apiKey, barrierText: trimmed, profileSummary });
-      onResult({ llm, matrix: matrixSuggestion });
+      onResult({ llm, matrix: matrixSuggestion, barrierText: trimmed });
     } catch (e) {
       logEvent('barrier_llm_error', { message: e?.message ?? String(e) });
       onResult({
         llm: null,
         matrix: matrixSuggestion,
         llmError: e?.message ?? 'Yapay zeka yanıtı alınamadı',
+        barrierText: trimmed,
       });
     } finally {
       setLoading(false);

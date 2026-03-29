@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Loader2, RefreshCw } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
 import { flowPreviousStepButtonClass } from '../lib/flowPreviousStepButton.js';
@@ -17,7 +17,7 @@ function ActionList({ items }) {
   );
 }
 
-export function BarrierReviewPage({ result, onPreviousStep, onNext }) {
+export function BarrierReviewPage({ result, onPreviousStep, onNext, onRetryLlm, retryBusy }) {
   const brand = getLlmBrandLabel();
   const isDual = Boolean(result?.matrix);
   const legacyFlat = result && !result.matrix && result.reframe;
@@ -49,10 +49,34 @@ export function BarrierReviewPage({ result, onPreviousStep, onNext }) {
                   </p>
                 )}
                 {llmError && (
-                  <p className="mt-3 rounded-lg border border-amber-200 bg-amber-50/90 px-3 py-2 text-sm text-amber-900">
-                    {brand} yanıtı alınamadı: {llmError}. Matris rehberi önerisini kullanabilir veya bağlantını kontrol
-                    edip akışa dönebilirsin.
-                  </p>
+                  <div className="mt-3 space-y-3 rounded-lg border border-amber-200 bg-amber-50/90 px-3 py-3 text-sm text-amber-900">
+                    <p>
+                      {brand} yanıtı alınamadı: {llmError}. Matris rehberi önerisini kullanabilir veya aşağıdan tekrar
+                      deneyebilirsin.
+                    </p>
+                    {typeof onRetryLlm === 'function' && (
+                      <Button
+                        type="button"
+                        size="lg"
+                        variant="ghost"
+                        disabled={retryBusy}
+                        className="w-full border border-amber-300/90 bg-white/90 text-amber-950 hover:bg-white sm:w-auto"
+                        onClick={() => onRetryLlm()}
+                      >
+                        {retryBusy ? (
+                          <>
+                            <Loader2 className="h-5 w-5 shrink-0 animate-spin" aria-hidden />
+                            Yeniden deneniyor…
+                          </>
+                        ) : (
+                          <>
+                            <RefreshCw className="h-5 w-5 shrink-0" aria-hidden />
+                            {brand} önerisini tekrar dene
+                          </>
+                        )}
+                      </Button>
+                    )}
+                  </div>
                 )}
                 {llmBlock && !llmError && (
                   <>

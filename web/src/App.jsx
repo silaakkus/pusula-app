@@ -12,7 +12,7 @@ import { PostSurveyPage } from './pages/PostSurveyPage';
 import { FinalCardPage } from './pages/FinalCardPage';
 import { PusulaBadgesStrip } from './components/PusulaBadgesStrip.jsx';
 import { loadPusulaData, getDisciplineById } from './lib/dataLoader.js';
-import { runCareerAnalysis } from './lib/gemini.js';
+import { runCareerAnalysis, runBarrierReframe } from './lib/gemini.js';
 import { getLlmApiKey, getLlmProvider, getLlmBrandLabel } from './lib/llmConfig.js';
 import { savePusulaSession } from './lib/pusulaSession.js';
 import { rolesFromMatrix } from './lib/fallbackRoles.js';
@@ -101,7 +101,14 @@ const App = () => {
   const [geminiError, setGeminiError] = useState('');
 
   const [barrierResult, setBarrierResult] = useState(null);
+  const [barrierRetryBusy, setBarrierRetryBusy] = useState(false);
   const [landingInfoSectionId, setLandingInfoSectionId] = useState(null);
+
+  const barrierProfileSummary = useMemo(
+    () =>
+      `${profile?.disciplineLabel ?? ''}; ilgi: ${profile?.interests?.join(', ')}; güçlü yön: ${profile?.strengths?.join(', ')}; hedef: ${profile?.goal ?? ''}`,
+    [profile],
+  );
 
   const navLabel = useMemo(() => stepLabel(step), [step]);
 
@@ -279,6 +286,42 @@ const App = () => {
     logEvent('barrier_complete', {});
   };
 
+  const handleBarrierLlmRetry = useCallback(async () => {
+    if (!barrierResult || !profile || !matrix) return;
+    const text = barrierResult.barrierText?.trim();
+    if (!text) {
+      setStep('barrier');
+      return;
+    }
+    const key = getLlmApiKey()?.trim();
+    if (!key) {
+      setStep('barrier');
+      return;
+    }
+    logEvent('barrier_llm_retry', {});
+    setBarrierRetryBusy(true);
+    setBarrierResult((prev) => (prev ? { ...prev, llmError: undefined } : prev));
+    const matrixSuggestion = buildMatrixBarrierSuggestion({ profile, matrix, barrierText: text });
+    try {
+      const llm = await runBarrierReframe({
+        apiKey: key,
+        barrierText: text,
+        profileSummary: barrierProfileSummary,
+      });
+      setBarrierResult({ llm, matrix: matrixSuggestion, barrierText: text });
+    } catch (e) {
+      logEvent('barrier_llm_error', { message: e?.message ?? String(e), retry: true });
+      setBarrierResult({
+        llm: null,
+        matrix: matrixSuggestion,
+        llmError: e?.message ?? 'Yapay zeka yanıtı alınamadı',
+        barrierText: text,
+      });
+    } finally {
+      setBarrierRetryBusy(false);
+    }
+  }, [barrierResult, profile, matrix, barrierProfileSummary]);
+
   const apiKey = getLlmApiKey();
 
   return (
@@ -286,32 +329,32 @@ const App = () => {
       <div className="pointer-events-none absolute left-[-10%] top-[-10%] h-[40%] w-[40%] rounded-full bg-pusula-purple/20 blur-3xl" />
       <div className="pointer-events-none absolute bottom-[-10%] right-[-10%] h-[40%] w-[40%] rounded-full bg-pusula-coral/15 blur-3xl" />
 
-      <nav className="relative z-20 flex w-full max-w-full flex-col gap-3 px-1 py-5 sm:px-2 lg:px-3">
-        <div className="flex w-full flex-wrap items-center gap-3 sm:justify-between">
-          <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2 sm:gap-3">
+      <nav className="relative z-20 w-full max-w-full px-1 py-4 sm:px-2 sm:py-5 lg:px-3">
+        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-start sm:justify-between sm:gap-x-4 sm:gap-y-3">
+          <div className="flex w-full min-w-0 shrink-0 sm:w-auto sm:max-w-[min(100%,28rem)]">
             <button
               type="button"
               onClick={goHome}
-              className="group flex cursor-pointer items-center gap-2.5 rounded-xl border-0 bg-transparent p-0 text-left transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 focus-visible:ring-offset-2 sm:gap-3"
+              className="group flex min-w-0 cursor-pointer items-center gap-2 rounded-xl border-0 bg-transparent p-0 text-left transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 focus-visible:ring-offset-2 sm:gap-3"
               aria-label="Ana sayfaya dön"
             >
-              <div className="rounded-xl bg-indigo-600 p-2.5 transition-transform duration-300 group-hover:rotate-12 sm:p-3">
-                <Compass className="h-7 w-7 text-white sm:h-8 sm:w-8" aria-hidden />
+              <div className="shrink-0 rounded-xl bg-indigo-600 p-2 transition-transform duration-300 group-hover:rotate-12 sm:p-3">
+                <Compass className="h-6 w-6 text-white sm:h-8 sm:w-8" aria-hidden />
               </div>
-              <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-3xl font-bold leading-none tracking-tight text-transparent sm:text-[2rem]">
+              <span className="min-w-0 truncate bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-2xl font-bold leading-tight tracking-tight text-transparent sm:text-[2rem] sm:leading-none">
                 Pusula
               </span>
             </button>
           </div>
 
-        <div className="flex flex-col items-stretch gap-2 sm:items-end">
-          <PusulaBadgesStrip />
-          {step !== 'home' && step !== 'landingInfo' && (
-            <div className="rounded-full border border-white/40 bg-white/40 px-4 py-2 text-center text-xs font-semibold text-slate-700 backdrop-blur-sm sm:text-right">
-              {navLabel}
-            </div>
-          )}
-        </div>
+          <div className="flex min-w-0 flex-col gap-2 sm:max-w-[min(100%,42rem)] sm:items-end">
+            <PusulaBadgesStrip />
+            {step !== 'home' && step !== 'landingInfo' && (
+              <div className="w-full rounded-full border border-white/40 bg-white/40 px-3 py-2 text-center text-[11px] font-semibold leading-snug text-slate-700 backdrop-blur-sm sm:w-auto sm:px-4 sm:text-right sm:text-xs">
+                {navLabel}
+              </div>
+            )}
+          </div>
         </div>
       </nav>
 
@@ -405,7 +448,7 @@ const App = () => {
           apiKey={apiKey}
           profile={profile}
           matrix={matrix}
-          profileSummary={`${profile?.disciplineLabel ?? ''}; ilgi: ${profile?.interests?.join(', ')}; güçlü yön: ${profile?.strengths?.join(', ')}; hedef: ${profile?.goal ?? ''}`}
+          profileSummary={barrierProfileSummary}
           onResult={(res) => {
             unlockPusulaBadge(BADGE_IDS.BARRIER);
             finishBarrier(res);
@@ -431,6 +474,8 @@ const App = () => {
         <BarrierReviewPage
           result={barrierResult}
           onPreviousStep={goToPreviousStep}
+          onRetryLlm={handleBarrierLlmRetry}
+          retryBusy={barrierRetryBusy}
           onNext={() => setStep('postsurvey')}
         />
       )}
