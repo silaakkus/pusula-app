@@ -22,7 +22,7 @@ Son adımda arkadaşını davet ederken **e-posta alanını** dolduran kullanıc
 | `inviteeDiscipline`, `inviteeCity` | Özet metin için (PII yok) |
 | `timestamp` | ISO zaman |
 
-`pusula-webhook-code.js` bu `event` değerini görünce kısa bir HTML üretir ve **alıcıyı** `inviterEmail` yapar. Kullanıcının “Sonuçları e-postaya gönder” akışı (`buildRichWebhookPayload`) aynı webhook’a gider; `event` alanı olmadığı için Code betiği uzun analiz e-postasını üretmeye devam eder.
+`pusula-webhook-code.js` bu `event` değerini görünce kısa bir HTML üretir ve **alıcıyı** `inviterEmail` yapar. Kullanıcının “Sonuçları e-postaya gönder” akışı (`buildRichWebhookPayload`) aynı webhook’a gider; `event` alanı olmadığı için Code betiği uzun analiz e-postasını üretmeye devam eder. **Not:** Arkadaşın sonuçları kendi adresine istemesi gerekmez; uygulama sonuç sayfasına gelindiğinde / akış ilerlediğinde bu bildirim ayrı gönderilir.
 
 ## Payload özeti
 

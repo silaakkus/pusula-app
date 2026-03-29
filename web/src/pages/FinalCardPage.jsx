@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Download, Home, Loader2 } from 'lucide-react';
 import { Button } from '../components/ui/Button';
@@ -8,6 +8,7 @@ import { downloadCareerCardPng } from '../lib/downloadCareerCard.js';
 import { logEvent } from '../lib/analytics.js';
 import { flowPreviousStepButtonClass } from '../lib/flowPreviousStepButton.js';
 import { InviteFriendCard } from '../components/InviteFriendCard.jsx';
+import { postInviterCompletionOnce } from '../lib/inviteReferral.js';
 
 export function FinalCardPage({
   profile,
@@ -21,6 +22,10 @@ export function FinalCardPage({
   const cardRef = useRef(null);
   const [busy, setBusy] = useState(false);
   const delta = baselineAfter - baselineBefore;
+
+  useEffect(() => {
+    void postInviterCompletionOnce({ profile, roles });
+  }, [profile, roles]);
   const dateLabel = new Intl.DateTimeFormat('tr-TR', {
     day: 'numeric',
     month: 'long',

@@ -34,6 +34,7 @@ import {
   captureInviterFromUrl,
   clearCompletionNotifyFlag,
   clearInviteReferralState,
+  postInviterCompletionOnce,
 } from './lib/inviteReferral.js';
 import { unlockPusulaBadge, BADGE_IDS } from './lib/pusulaBadges.js';
 import { Button } from './components/ui/Button';
@@ -391,7 +392,10 @@ const App = () => {
             logEvent('analysis_retry', {});
             runAnalysis();
           }}
-          onContinue={() => setStep('barrier')}
+          onContinue={() => {
+            void postInviterCompletionOnce({ profile, roles });
+            setStep('barrier');
+          }}
           onPreviousStep={goToPreviousStep}
         />
       )}

@@ -49,3 +49,60 @@ export function markCompletionNotifySent() {
   if (typeof window === 'undefined') return;
   sessionStorage.setItem(NOTIFY_KEY, '1');
 }
+
+function roleTitlesForInviterNotify(roles) {
+  return (roles ?? [])
+    .map((r) => {
+      if (typeof r?.roleName === 'string' && r.roleName.trim()) return r.roleName.trim();
+      if (typeof r?.title === 'string' && r.title.trim()) return r.title.trim();
+      return '';
+    })
+    .filter(Boolean);
+}
+
+let inviterCompletionInFlight = null;
+
+/**
+ * Davet eden kişiye n8n üzerinden “arkadaş sonuçları gördü” bildirimi (bir oturumda en fazla bir kez).
+ * Arkadaşın sonuçları kendi e-postasına göndermesi gerekmez.
+ */
+export async function postInviterCompletionOnce({ profile, roles }) {
+  if (typeof window === 'undefined') return { ok: false, reason: 'no_window' };
+  const inviter = getStoredInviterEmail();
+  if (!inviter || !isValidInviterEmail(inviter)) return { ok: false, reason: 'no_inviter' };
+  if (hasCompletionNotifySent()) return { ok: true, reason: 'already_sent' };
+
+  const webhookUrl = import.meta.env.VITE_N8N_WEBHOOK_URL;
+  if (!webhookUrl || !String(webhookUrl).trim()) return { ok: false, reason: 'no_webhook' };
+  if (!Array.isArray(roles) || roles.length === 0) return { ok: false, reason: 'no_roles' };
+
+  const roleTitles = roleTitlesForInviterNotify(roles);
+
+  if (inviterCompletionInFlight) return inviterCompletionInFlight;
+
+  inviterCompletionInFlight = (async () => {
+    try {
+      const payload = {
+        event: 'davet_tamamlandi',
+        inviterEmail: inviter.trim(),
+        inviteeDiscipline: profile?.disciplineLabel ?? '',
+        inviteeCity: profile?.cityLabel ?? profile?.cityId ?? '',
+        roles: roleTitles,
+        timestamp: new Date().toISOString(),
+      };
+      const res = await fetch(String(webhookUrl).trim(), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (res.ok) markCompletionNotifySent();
+      return { ok: res.ok };
+    } catch {
+      return { ok: false, reason: 'network' };
+    } finally {
+      inviterCompletionInFlight = null;
+    }
+  })();
+
+  return inviterCompletionInFlight;
+}

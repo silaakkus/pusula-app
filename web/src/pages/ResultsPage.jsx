@@ -32,12 +32,7 @@ import {
 } from '../lib/internshipsNormalize.js';
 import { getLlmBrandLabel } from '../lib/llmConfig.js';
 import { flowPreviousStepButtonClass } from '../lib/flowPreviousStepButton.js';
-import {
-  getStoredInviterEmail,
-  hasCompletionNotifySent,
-  isValidInviterEmail,
-  markCompletionNotifySent,
-} from '../lib/inviteReferral.js';
+import { postInviterCompletionOnce } from '../lib/inviteReferral.js';
 
 function getRoleTitlesForWebhook(roles) {
   return (roles ?? [])
@@ -346,38 +341,7 @@ export function ResultsPage({
 
   useEffect(() => {
     if (!Array.isArray(roles) || roles.length === 0) return;
-    const inviter = getStoredInviterEmail();
-    if (!inviter || !isValidInviterEmail(inviter)) return;
-    if (hasCompletionNotifySent()) return;
-    const webhookUrl = import.meta.env.VITE_N8N_WEBHOOK_URL;
-    if (!webhookUrl || !String(webhookUrl).trim()) return;
-
-    let cancelled = false;
-    const payload = {
-      event: 'davet_tamamlandi',
-      inviterEmail: inviter.trim(),
-      inviteeDiscipline: profile?.disciplineLabel ?? '',
-      inviteeCity: profile?.cityLabel ?? profile?.cityId ?? '',
-      roles: getRoleTitlesForWebhook(roles),
-      timestamp: new Date().toISOString(),
-    };
-
-    (async () => {
-      try {
-        const res = await fetch(String(webhookUrl).trim(), {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        });
-        if (!cancelled && res.ok) markCompletionNotifySent();
-      } catch {
-        /* sessiz; kullanıcı sayfada kalır */
-      }
-    })();
-
-    return () => {
-      cancelled = true;
-    };
+    void postInviterCompletionOnce({ profile, roles });
   }, [roles, profile]);
 
   const handleEmailSubmit = async (e) => {
