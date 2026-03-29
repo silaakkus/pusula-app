@@ -2,6 +2,8 @@
  * employersTurkey: dizi içinde düz metin veya { name, url? } karışık olabilir.
  */
 
+import { normalizeToHttpsUrl } from './internshipsNormalize.js';
+
 function isHttpsUrl(s) {
   return typeof s === 'string' && /^https:\/\//i.test(s.trim());
 }
@@ -11,8 +13,8 @@ export function normalizeEmployerEntry(e) {
   if (e && typeof e === 'object' && typeof e.name === 'string' && e.name.trim()) {
     const name = e.name.trim();
     const rawUrl = e.url ?? e.careerUrl;
-    const url = isHttpsUrl(rawUrl) ? String(rawUrl).trim() : null;
-    return { name, url };
+    const url = normalizeToHttpsUrl(rawUrl) || (isHttpsUrl(rawUrl) ? String(rawUrl).trim() : null);
+    return { name, url: url || null };
   }
   return null;
 }

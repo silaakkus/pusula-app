@@ -6,7 +6,7 @@ const FALLBACK_EMPLOYERS = {
   data: [
     { name: 'Trendyol', url: 'https://careers.trendyol.com/' },
     { name: 'Hepsiburada', url: 'https://kurumsal.hepsiburada.com/tr/hakkimizda/kariyer' },
-    { name: 'Getir', url: 'https://careers.getir.com/' },
+    { name: 'Getir', url: 'https://www.linkedin.com/company/getir/jobs/' },
     { name: 'İş Bankası', url: 'https://www.isbank.com.tr/kariyer' },
     { name: 'Turkcell', url: 'https://kariyerim.turkcell.com.tr/' },
     { name: 'Insider', url: 'https://useinsider.com/careers/' },
@@ -15,13 +15,13 @@ const FALLBACK_EMPLOYERS = {
   ],
   ux: [
     { name: 'Yemeksepeti (Delivery Hero)', url: 'https://careers.deliveryhero.com/' },
-    { name: 'Getir', url: 'https://careers.getir.com/' },
+    { name: 'Getir', url: 'https://www.linkedin.com/company/getir/jobs/' },
     { name: 'Trendyol', url: 'https://careers.trendyol.com/' },
     { name: 'Defacto', url: 'https://kurumsal.defacto.com.tr/kariyer' },
     { name: 'ING Türkiye', url: 'https://www.ing.com.tr/tr/kariyer' },
     { name: 'Huawei Türkiye', url: 'https://career.huawei.com/' },
     { name: 'Booking.com', url: 'https://careers.booking.com/' },
-    { name: 'Microsoft Türkiye', url: 'https://careers.microsoft.com/professional/tr-tr' },
+    { name: 'Microsoft Türkiye', url: 'https://careers.microsoft.com/' },
   ],
   pm: [
     { name: 'Garanti BBVA Teknoloji', url: 'https://www.garantibbvatech.com.tr/kariyer' },
@@ -29,7 +29,7 @@ const FALLBACK_EMPLOYERS = {
     { name: 'Dream Games', url: 'https://www.dreamgames.com/careers' },
     { name: 'Insider', url: 'https://useinsider.com/careers/' },
     { name: 'Trendyol', url: 'https://careers.trendyol.com/' },
-    { name: 'Getir', url: 'https://careers.getir.com/' },
+    { name: 'Getir', url: 'https://www.linkedin.com/company/getir/jobs/' },
     { name: 'Amazon Türkiye (ilanlar)', url: 'https://www.amazon.jobs/en/search?loc_query=Turkey' },
     { name: 'N11', url: 'https://www.n11.com/kurumsal/kariyer' },
   ],
@@ -75,7 +75,7 @@ const FALLBACK_INTERNSHIPS = [
   },
   {
     name: 'Microsoft — öğrenci programları',
-    url: 'https://careers.microsoft.com/students/tr-tr',
+    url: 'https://careers.microsoft.com/',
     summary: 'Staj ve yeni mezun rolleri için Microsoft başvuru girişi.',
     eligibility: 'Kayıtlı öğrenci veya yakın mezuniyet; teknik mülakat ve İngilizce sık istenir.',
   },

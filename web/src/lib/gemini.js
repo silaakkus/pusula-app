@@ -1,7 +1,10 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { getDisciplineById, validateDayInLife, validateSalaryRange } from './dataLoader.js';
 import { normalizeEmployersList } from './employersNormalize.js';
-import { normalizeInternshipPrograms, normalizeLlmApplicationPrograms } from './internshipsNormalize.js';
+import {
+  normalizeInternshipProgramsWithLlmFallback,
+  normalizeLlmApplicationPrograms,
+} from './internshipsNormalize.js';
 import { loadPusulaSession } from './pusulaSession.js';
 import { getLlmProvider } from './llmConfig.js';
 import { groqGenerateText } from './groqClient.js';
@@ -141,6 +144,80 @@ function splitLooseList(s) {
     .filter(Boolean);
 }
 
+/** JSON anahtarını karşılaştırma için sadeleştirir (Türkçe / farklı yazım). */
+function normSalaryKey(k) {
+  return String(k ?? '')
+    .toLowerCase()
+    .replace(/ı/g, 'i')
+    .replace(/ğ/g, 'g')
+    .replace(/ü/g, 'u')
+    .replace(/ş/g, 's')
+    .replace(/ö/g, 'o')
+    .replace(/ç/g, 'c')
+    .replace(/[\s_\-]/g, '');
+}
+
+function asTrimmedString(v) {
+  if (v == null) return '';
+  if (typeof v === 'number' && Number.isFinite(v)) return String(v);
+  if (typeof v === 'string') return v.trim();
+  return String(v).trim();
+}
+
+/**
+ * Groq/Gemini bazen source bırakmaz veya junior/mid yerine Türkçe anahtar kullanır;
+ * validateSalaryRange geçmezse maaş tamamen düşer — matriste tek blok kalır.
+ */
+function coerceSalaryRangeObject(raw) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return null;
+
+  let junior = '';
+  let mid = '';
+  let senior = '';
+  let source = '';
+
+  for (const [key, val] of Object.entries(raw)) {
+    const nk = normSalaryKey(key);
+    const s = asTrimmedString(val);
+    if (!s) continue;
+
+    if (nk === 'junior' || nk === 'juniorlevel' || nk.startsWith('junior')) {
+      if (!junior) junior = s;
+      continue;
+    }
+    if (nk === 'mid' || nk === 'middle' || nk === 'orta' || nk === 'ortaseviye' || nk.startsWith('mid')) {
+      if (!mid) mid = s;
+      continue;
+    }
+    if (
+      nk === 'senior' ||
+      nk === 'kidemli' ||
+      nk.startsWith('senior') ||
+      (nk.includes('kidem') && !nk.includes('junior'))
+    ) {
+      if (!senior) senior = s;
+      continue;
+    }
+    if (nk === 'source' || nk === 'kaynak' || nk === 'referans' || nk === 'aciklama' || nk === 'not') {
+      if (!source) source = s;
+    }
+  }
+
+  if (!junior || !mid || !senior) return null;
+  if (!source) {
+    source =
+      'Tahmini piyasa bandı (yapay zeka), Türkiye, brüt ₺/ay; şehir ve şirkete göre değişir — kesin ücret değildir.';
+  }
+  return { junior, mid, senior, source };
+}
+
+function pickRawSalaryRange(r) {
+  if (!r || typeof r !== 'object') return null;
+  if (r.salaryRange && typeof r.salaryRange === 'object') return r.salaryRange;
+  if (r.salary_range && typeof r.salary_range === 'object') return r.salary_range;
+  return null;
+}
+
 /**
  * API yanıtı: yeni şema { title, why, tags, resources } veya eski { roleName, whyFits, ... }
  */
@@ -197,7 +274,7 @@ function normalizeRole(r, index) {
 
   const employersTurkey = normalizeEmployersList(Array.isArray(r?.employersTurkey) ? r.employersTurkey : [], 8);
 
-  const internshipPrograms = normalizeInternshipPrograms(
+  const internshipPrograms = normalizeInternshipProgramsWithLlmFallback(
     Array.isArray(r?.internshipPrograms) ? r.internshipPrograms : [],
     6,
   );
@@ -219,13 +296,17 @@ function normalizeRole(r, index) {
   }
 
   let salaryRange;
-  if (validateSalaryRange(r?.salaryRange)) {
+  const rawSr = pickRawSalaryRange(r);
+  if (validateSalaryRange(rawSr)) {
     salaryRange = {
-      junior: r.salaryRange.junior.trim(),
-      mid: r.salaryRange.mid.trim(),
-      senior: r.salaryRange.senior.trim(),
-      source: r.salaryRange.source.trim(),
+      junior: rawSr.junior.trim(),
+      mid: rawSr.mid.trim(),
+      senior: rawSr.senior.trim(),
+      source: rawSr.source.trim(),
     };
+  } else {
+    const coerced = coerceSalaryRangeObject(rawSr);
+    if (coerced) salaryRange = coerced;
   }
 
   if (!firstSteps.length) {
@@ -328,29 +409,54 @@ Yanıtların Türkçe, samimi ve yargılamayan bir tonda olmalı.
 Her zaman TEK bir JSON nesnesi döndür; başka metin veya markdown yok.
 
 Şema:
-{ "roles": [ { "title", "why", "tags", "resources", "salaryRange", "internshipPrograms", "applicationPrograms" } ] }
+{ "roles": [ { "title", "why", "tags", "resources", "employersTurkey", "salaryRange", "internshipPrograms", "applicationPrograms" } ] }
 
 Genel:
 - Tam olarak 3 rol.
 - why: string veya string dizisi (en az iki gerekçe).
 - tags: kısa etiket dizisi (örn. data, ux, pm).
-- resources: en az 3 kısa kaynak adı veya başlık (metin linki değil).
+- resources: en az 3 **somut** kaynak (metin linki değil; tek satırda okunur başlık). Yasak: "Veri analizi kitabı", "Python kursu" gibi genel etiket.
+  • Kitap: tam kitap adı + yazar (örn. "Python for Data Analysis — Wes McKinney").
+  • Kurs: platform + gerçek program adı (örn. "Coursera — Google Data Analytics Professional Certificate").
+  • Dokümantasyon / rehber: kaynağın net adı (örn. "pandas — resmi kullanıcı rehberi (pydata.org)").
+  Sadece varlığından emin olduğun başlıkları yaz; uydurma eser adı yasak.
 
-salaryRange (her rol için zorunlu):
-- Nesne: { "junior", "mid", "senior", "source" }.
-- junior / mid / senior: Türkiye teknoloji (veya önerilen role uygun) piyasası için güncel **brüt aylık maaş aralığı** kısa metin (örn. "42.000 - 62.000 ₺"); juniör ≈ 0–3 yıl, orta ≈ 3–7 yıl, kıdemli ≈ 7+ yıl.
-- source: tek satır — hangi dönem/tahmin olduğunu belirt (örn. "Tahmini piyasa bandı, Türkiye 2025–2026, brüt ₺/ay; şehir ve şirkete göre değişir").
-- Kesin ücret vaadi değil; yönlendirici aralık ver.
+employersTurkey (her rol için 3–5 öğe):
+- Türkiye’de bu role uygun teknoloji / veri / ürün şirketleri.
+- Her öğe: { "name", "url" }; url şirketin **resmi** https kariyer veya kurumsal site adresi (emin olduğun).
+- Matriste görülebilecek şirketlerle çakışsa da yaz; arayüzde matris + AI birleşik gösterilir.
 
-internshipPrograms (her rol için 2–4 öğe, mümkünse profil ve şehre uygun):
-- Yalnızca gerçek ve doğrulanabilir https:// ile başlayan resmi başvuru veya kariyer/staj ilan sayfaları.
-- Her öğe: { "name", "url", "summary" (1 cümle), "eligibility" (kimler başvurur, 1 cümle) }.
-- Uydurma alan adı veya var olmayan URL üretme; emin değilsen daha az öğe ver.
+salaryRange (her rol için zorunlu — ayrı matris maaşıyla karşılaştırma için kritik):
+- Anahtar adları TAM olarak İngilizce ve küçük harf: "junior", "mid", "senior", "source" (başka isim kullanma).
+- Örnek: "salaryRange": { "junior": "38.000 - 55.000 ₺", "mid": "55.000 - 82.000 ₺", "senior": "80.000 - 118.000 ₺", "source": "Tahmini piyasa bandı, Türkiye 2025–2026, brüt ₺/ay; AI tahmini, kesin değildir" }
+- junior / mid / senior: Türkiye (veya rolle uyumlu) **brüt aylık** aralık metni; juniör ≈ 0–3 yıl, orta ≈ 3–7, kıdemli ≈ 7+.
+- source: mutlaka doldur; kısaca dönem + "AI tahmini" veya benzeri yaz.
+- Kesin ücret vaadi değil.
 
-applicationPrograms (her rol için 2–4 öğe; staj dışı başvurulabilir programlar):
-- Bootcamp, academy, trainee programı, burs veya açık cohort başvuru sayfası gibi doğrudan başvuru URL’leri.
-- Her öğe: { "name", "url" (https), "forWho" (hedef kitle, 1 cümle), "summary" (isteğe bağlı, ek cümle) }.
-- Yine yalnızca gerçek kurum siteleri; bilgi yoksa alanı boş bırakma yerine o öğeyi hiç ekleme.
+internshipPrograms (isteğe bağlı; şüphede boş dizi []):
+- Her öğe: { "name", "url", "summary", "eligibility" }. "url" zorunlu ve **tıklanınca gerçekten açılan** tam https:// adresi olmalı.
+- Uydurma path, tahmini slug veya hayali ilan sayfası **kesinlikle yasak**. Tek satır bile şüpheliyse o öğeyi ekleme.
+
+applicationPrograms (her rol için en az 2, tercihen 3–4 öğe):
+- Fırsat radarında listelenir; eksik bırakma.
+- Her öğe: { "name", "url", "forWho", isteğe bağlı "summary" }. url yalnızca emin olduğun canlı https sayfa.
+- Farklı kurumları karıştır: örn. biri Patika yolu, biri Kodluyoruz, biri YGA veya SistersLab kökü (yukarıdaki doğrulanmış listelerden).
+- Hayali academy adı veya uydurma alt path verme; emin değilsen o öğeyi atla ama en az 2 güvenilir öğe bırak.
+
+Tıklanabilir bağlantı politikası (kullanıcı bu URL’lere güvenecek):
+1) Yalnızca varlığından emin olduğun tam adresi yaz; “muhtemelen vardır” ile öğe ekleme.
+2) Bilinçli olarak yalnız kök veya liste sayfası önerebileceğin durumda, aşağıdaki Pusula veri katmanında kullanılan **doğrulanmış kökleri** tercih et (gerekirse ilgili gerçek alt sayfayı yalnız kesin bildiğinde yaz):
+   - https://www.kodluyoruz.org/
+   - https://www.patika.dev/
+   - https://yga.org.tr/
+   - https://sisterslab.org/
+   - https://developers.google.com/womentechmakers
+   - Microsoft (güncel kariyer girişi — eski /tr-tr yolları kalktı): https://careers.microsoft.com/
+   - Getir açık pozisyonlar (career.getir.com sık kapalı/503; LinkedIn iş ilanları): https://www.linkedin.com/company/getir/jobs/
+   - LC Waikiki İK: https://corporate.lcwaikiki.com/lc-waikikide-kariyer
+   - Aksigorta İK: https://www.aksigorta.com.tr/hakkimizda/insan-kaynaklari/aksigortada-insan-kaynaklari
+3) Büyük teknoloji şirketleri için yalnızca o şirketin **resmi kariyer** alanının güncel tam URL’sini kullan; Microsoft’ta tr-tr path’leri artık geçerli değil — kök https://careers.microsoft.com/ kullan.
+4) "name" ile sitedeki kurum/marka tutarlı olsun.
 
 Profil ve matris özetini kişiselleştirmede kullan; metni aynen kopyalama.`;
 
@@ -408,6 +514,7 @@ export async function runCareerAnalysis({ apiKey, profile, matrix }) {
       apiKey: key,
       systemInstruction: GROQ_CAREER_SYSTEM,
       userPrompt: prompt,
+      temperature: 0.2,
     });
     return parseAndValidateCareerJson(text);
   }

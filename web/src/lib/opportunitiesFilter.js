@@ -76,12 +76,14 @@ export function llmApplicationProgramsToOpportunityRows(role, roleIndex = 0) {
   });
 }
 
-/** Yerel JSON fırsatları + LLM linkleri (URL tekrarında LLM satırı düşer). */
+/**
+ * Yerel JSON fırsatları + Groq applicationPrograms.
+ * URL’si yerel satırla çakışsa da Groq satırları eklenir (etiketle ayırt edilir).
+ */
 export function opportunitiesForRoleWithLlm(role, allOpportunities, minCount = 3, userCityId = 'all', roleIndex = 0) {
   const local = opportunitiesForRole(role, allOpportunities, minCount, userCityId);
   const llmRows = llmApplicationProgramsToOpportunityRows(role, roleIndex);
-  const seen = new Set(local.map((o) => o.url));
-  return [...local, ...llmRows.filter((o) => !seen.has(o.url))];
+  return [...local, ...llmRows];
 }
 
 export function hasProgramOrCommunity(opportunities) {
@@ -102,27 +104,14 @@ export function buildWebhookOpportunities(roles, allOpportunities, minCount = 3,
   const out = [];
   (roles ?? []).forEach((role, roleIndex) => {
     const forRole = roleDisplayTitle(role);
-    const opps = opportunitiesForRole(role, allOpportunities, minCount, userCityId);
+    const opps = opportunitiesForRoleWithLlm(role, allOpportunities, minCount, userCityId, roleIndex);
     for (const o of opps) {
       out.push({
         name: o.name,
         url: o.url,
         description: typeof o.forWho === 'string' ? o.forWho : '',
         forRole,
-        source: 'dataset',
-      });
-    }
-    const llmRows = llmApplicationProgramsToOpportunityRows(role, roleIndex);
-    const seen = new Set(opps.map((o) => o.url));
-    for (const o of llmRows) {
-      if (seen.has(o.url)) continue;
-      seen.add(o.url);
-      out.push({
-        name: o.name,
-        url: o.url,
-        description: typeof o.forWho === 'string' ? o.forWho : '',
-        forRole,
-        source: 'llm',
+        source: o.fromLlm ? 'llm' : 'dataset',
       });
     }
   });

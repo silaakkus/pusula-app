@@ -12,10 +12,14 @@ function groqTimeoutMs() {
 /**
  * OpenAI uyumlu sohbet API’si; yanıt metni (istemde JSON istenir, parse tarafında gevşetilir).
  */
-export async function groqGenerateText({ apiKey, systemInstruction, userPrompt }) {
+export async function groqGenerateText({ apiKey, systemInstruction, userPrompt, temperature } = {}) {
   if (!apiKey || !String(apiKey).trim()) throw new Error('Groq API anahtarı eksik');
 
   const model = import.meta.env.VITE_GROQ_MODEL?.trim() || DEFAULT_GROQ_MODEL;
+  const temp =
+    typeof temperature === 'number' && Number.isFinite(temperature) && temperature >= 0 && temperature <= 2
+      ? temperature
+      : 0.35;
   const timeoutMs = groqTimeoutMs();
   const controller = new AbortController();
   const timer = window.setTimeout(() => controller.abort(), timeoutMs);
@@ -34,7 +38,7 @@ export async function groqGenerateText({ apiKey, systemInstruction, userPrompt }
           { role: 'system', content: systemInstruction },
           { role: 'user', content: userPrompt },
         ],
-        temperature: 0.35,
+        temperature: temp,
         max_tokens: 8192,
       }),
     });

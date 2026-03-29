@@ -26,7 +26,10 @@ import {
   validateSalaryRange,
 } from '../lib/dataLoader.js';
 import { normalizeEmployersList } from '../lib/employersNormalize.js';
-import { normalizeInternshipPrograms } from '../lib/internshipsNormalize.js';
+import {
+  normalizeInternshipPrograms,
+  normalizeInternshipProgramsWithLlmFallback,
+} from '../lib/internshipsNormalize.js';
 import { getLlmBrandLabel } from '../lib/llmConfig.js';
 import { flowPreviousStepButtonClass } from '../lib/flowPreviousStepButton.js';
 
@@ -98,17 +101,34 @@ function salaryBlockTagLabel(from, analysisSource) {
   return `${getLlmBrandLabel()} tahmini`;
 }
 
+function employerNameKey(name) {
+  return String(name ?? '')
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, ' ');
+}
+
+/** Matris rehberi + Groq employersTurkey; aynı isim tekil. */
 function resolveEmployers(matrix, profile, role) {
-  const fromRole = normalizeEmployersList(role?.employersTurkey, 8);
-  if (fromRole.length) return fromRole;
-  const fromMatrix = findEmployersInMatrix(matrix, profile?.disciplineId, role);
-  if (fromMatrix?.length) return normalizeEmployersList(fromMatrix, 8);
-  return [];
+  const fromMatrix = normalizeEmployersList(findEmployersInMatrix(matrix, profile?.disciplineId, role) ?? [], 8).map(
+    (e) => ({ ...e, _source: 'matrix' }),
+  );
+  const fromLlm = normalizeEmployersList(role?.employersTurkey, 6).map((e) => ({ ...e, _source: 'llm' }));
+  const seen = new Set();
+  const out = [];
+  for (const e of [...fromMatrix, ...fromLlm]) {
+    const k = employerNameKey(e.name);
+    if (!k || seen.has(k)) continue;
+    seen.add(k);
+    out.push(e);
+    if (out.length >= 14) break;
+  }
+  return out;
 }
 
 /** LLM staj linkleri ile matris stajlarını birleştirir; `_source`: `llm` | `matrix`. */
 function resolveInternships(matrix, profile, role) {
-  const fromLlm = normalizeInternshipPrograms(role?.internshipPrograms, 6).map((p) => ({
+  const fromLlm = normalizeInternshipProgramsWithLlmFallback(role?.internshipPrograms, 6).map((p) => ({
     ...p,
     _source: 'llm',
   }));
@@ -150,12 +170,13 @@ function buildRichWebhookPayload({
       b ? { junior: b.junior, mid: b.mid, senior: b.senior, source: b.source } : null;
     const primarySalary = salaryBlocks[0];
     const employers = resolveEmployers(matrix, profile, role)
-      .slice(0, 8)
-      .map(({ name, url }) => ({ name, url: url || '' }));
+      .slice(0, 14)
+      .map(({ name, url, _source }) => ({ name, url: url || '', source: _source === 'llm' ? 'llm' : 'matrix' }));
     const internships = resolveInternships(matrix, profile, role).slice(0, 5).map((p) => ({
       name: p.name,
       url: p.url,
       summary: typeof p.summary === 'string' ? p.summary.slice(0, 400) : '',
+      eligibility: typeof p.eligibility === 'string' ? p.eligibility.slice(0, 400) : '',
       source: p._source === 'llm' ? 'llm' : 'matrix',
     }));
     const llmApplicationPrograms = Array.isArray(role?.llmApplicationPrograms)
@@ -246,12 +267,15 @@ function structuredSourceType(matrix, profile, role, analysisSource, kind) {
     return 'default';
   }
   if (kind === 'employers') {
-    if (normalizeEmployersList(role?.employersTurkey, 8).length) return 'llm';
-    if (findEmployersInMatrix(matrix, profile?.disciplineId, role)?.length) return 'matrix';
+    const llmN = normalizeEmployersList(role?.employersTurkey, 6).length;
+    const matN = findEmployersInMatrix(matrix, profile?.disciplineId, role)?.length ?? 0;
+    if (llmN && matN) return 'mixed-employers';
+    if (llmN) return 'llm';
+    if (matN) return 'matrix';
     return 'default';
   }
   if (kind === 'internships') {
-    const llmN = normalizeInternshipPrograms(role?.internshipPrograms, 6).length;
+    const llmN = normalizeInternshipProgramsWithLlmFallback(role?.internshipPrograms, 6).length;
     const matRaw = findInternshipProgramsInMatrix(matrix, profile?.disciplineId, role);
     const matN = Array.isArray(matRaw) ? matRaw.length : 0;
     if (llmN && matN) return 'mixed-internships';
@@ -266,6 +290,7 @@ function structuredSourceLabel(sourceType, analysisSource) {
   if (sourceType === 'matrix') return 'Matris rehberi';
   if (sourceType === 'mixed-salary') return `Matris + ${getLlmBrandLabel()}`;
   if (sourceType === 'mixed-internships') return 'Matris + Groq';
+  if (sourceType === 'mixed-employers') return 'Matris + Groq';
   if (sourceType === 'default') return 'Genel şablon';
   if (analysisSource === 'fallback') return 'Matris rehberi';
   return `${getLlmBrandLabel()} önerisi`;
@@ -405,6 +430,8 @@ export function ResultsPage({
           const salaryMixed =
             salaryBlocks.some((b) => b._from === 'llm') && salaryBlocks.some((b) => b._from === 'matrix');
           const employers = resolveEmployers(matrix, profile, role);
+          const empMixed =
+            employers.some((e) => e._source === 'llm') && employers.some((e) => e._source === 'matrix');
           const internships = resolveInternships(matrix, profile, role);
           const internMixed =
             internships.some((p) => p._source === 'llm') && internships.some((p) => p._source === 'matrix');
@@ -619,7 +646,8 @@ export function ResultsPage({
                       <div className="space-y-3 border-t border-slate-200/70 p-3 pb-3">
                         <p className="text-xs leading-relaxed text-amber-800/90">
                           Başvuru pencereleri yıla ve şirkete göre değişir; linkler yönlendirici olup ilan kapanmış veya
-                          yenilenmiş olabilir — mutlaka resmi sayfadaki güncel metni kontrol et.
+                          yenilenmiş olabilir — mutlaka resmi sayfadaki güncel metni kontrol et. Yapay zekâ önerdiği
+                          adreslerde de aynı kontrolü yap.
                         </p>
                         <ul className="space-y-3">
                           {internships.map((prog, pi) => (
@@ -628,22 +656,26 @@ export function ResultsPage({
                               className="rounded-xl border border-white/50 bg-white/80 p-3 text-left shadow-sm"
                             >
                               <div className="flex flex-wrap items-center gap-2">
-                                <a
-                                  href={prog.url}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  onClick={() =>
-                                    logEvent('internship_click', {
-                                      name: prog.name,
-                                      role: role.roleName,
-                                      source: prog._source,
-                                    })
-                                  }
-                                  className="inline-flex items-center gap-1 text-sm font-bold text-indigo-700 hover:text-indigo-900"
-                                >
-                                  {prog.name}
-                                  <ExternalLink className="h-4 w-4 shrink-0 opacity-70" aria-hidden />
-                                </a>
+                                {prog.url ? (
+                                  <a
+                                    href={prog.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    onClick={() =>
+                                      logEvent('internship_click', {
+                                        name: prog.name,
+                                        role: role.roleName,
+                                        source: prog._source,
+                                      })
+                                    }
+                                    className="inline-flex items-center gap-1 text-sm font-bold text-indigo-700 hover:text-indigo-900"
+                                  >
+                                    {prog.name}
+                                    <ExternalLink className="h-4 w-4 shrink-0 opacity-70" aria-hidden />
+                                  </a>
+                                ) : (
+                                  <span className="text-sm font-bold text-slate-800">{prog.name}</span>
+                                )}
                                 {internMixed && prog._source === 'llm' && (
                                   <ResultSectionSourceTag label={`${getLlmBrandLabel()} önerisi`} />
                                 )}
@@ -668,7 +700,15 @@ export function ResultsPage({
                   <div className="mt-6 rounded-2xl bg-slate-50/80 p-4">
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <h4 className="text-sm font-bold text-slate-800">Türkiye’de örnek işverenler</h4>
-                      <ResultSectionSourceTag label={structuredSourceLabel(empSrc, analysisSource)} />
+                      <div className="flex flex-wrap items-center justify-end gap-1">
+                        {empMixed && (
+                          <>
+                            <ResultSectionSourceTag label="Matris rehberi" />
+                            <ResultSectionSourceTag label={`${getLlmBrandLabel()} önerisi`} />
+                          </>
+                        )}
+                        {!empMixed && <ResultSectionSourceTag label={structuredSourceLabel(empSrc, analysisSource)} />}
+                      </div>
                     </div>
                     <p className="mt-1 text-xs text-slate-500">
                       Kesin iş garantisi değildir; kariyer sayfalarını inceleyerek ilan ve staj fırsatlarına
@@ -680,22 +720,34 @@ export function ResultsPage({
                           key={`${entry.name}-${ei}`}
                           className="rounded-lg border border-slate-200 bg-white text-xs font-medium text-slate-700"
                         >
-                          {entry.url ? (
-                            <a
-                              href={entry.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              onClick={() =>
-                                logEvent('employer_career_click', { name: entry.name, role: role.roleName })
-                              }
-                              className="inline-flex items-center gap-1 px-2 py-1.5 font-semibold text-indigo-700 hover:text-indigo-900"
-                            >
-                              {entry.name}
-                              <ExternalLink className="h-3.5 w-3.5 shrink-0 opacity-70" aria-hidden />
-                            </a>
-                          ) : (
-                            <span className="block px-2 py-1.5">{entry.name}</span>
-                          )}
+                          <div className="flex flex-wrap items-center gap-1.5 px-2 py-1.5">
+                            {entry.url ? (
+                              <a
+                                href={entry.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={() =>
+                                  logEvent('employer_career_click', {
+                                    name: entry.name,
+                                    role: role.roleName,
+                                    source: entry._source,
+                                  })
+                                }
+                                className="inline-flex items-center gap-1 font-semibold text-indigo-700 hover:text-indigo-900"
+                              >
+                                {entry.name}
+                                <ExternalLink className="h-3.5 w-3.5 shrink-0 opacity-70" aria-hidden />
+                              </a>
+                            ) : (
+                              <span className="font-semibold text-slate-800">{entry.name}</span>
+                            )}
+                            {empMixed && entry._source === 'llm' && (
+                              <ResultSectionSourceTag label={`${getLlmBrandLabel()} önerisi`} />
+                            )}
+                            {empMixed && entry._source === 'matrix' && (
+                              <ResultSectionSourceTag label="Matris rehberi" />
+                            )}
+                          </div>
                         </li>
                       ))}
                     </ul>
@@ -713,8 +765,8 @@ export function ResultsPage({
                     </div>
                   </div>
                   <p className="mt-1 text-xs text-slate-500">
-                    Yerel veri setindeki programlar ve yapay zekânın önerdiği başvuru sayfaları aynı listede; satır
-                    etiketinden kaynağı ayırt edebilirsin.
+                    Yerel veri ile yapay zekâ önerileri aynı listede; etiketten kaynağı ayırt edebilirsin. Tüm
+                    bağlantılarda resmi sayfadaki güncel metni doğrula.
                   </p>
                   <ul className="mt-3 space-y-3">
                     {opps.map((o) => (
@@ -722,7 +774,7 @@ export function ResultsPage({
                         key={o.opportunityId}
                         className="flex flex-col gap-2 rounded-2xl border border-white/40 bg-white/50 p-3 sm:flex-row sm:items-center sm:justify-between"
                       >
-                        <div className="min-w-0">
+                        <div className="min-w-0 flex-1">
                           <div className="flex flex-wrap items-center gap-2">
                             <div className="font-semibold text-slate-900">{o.name}</div>
                             {o.fromLlm ? (
@@ -746,22 +798,28 @@ export function ResultsPage({
                             {o.forWho}
                           </div>
                         </div>
-                        <a
-                          href={o.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={() =>
-                            logEvent('opportunity_click', {
-                              opportunityId: o.opportunityId,
-                              role: role.roleName,
-                              fromLlm: !!o.fromLlm,
-                            })
-                          }
-                          className="inline-flex shrink-0 items-center gap-1 text-sm font-bold text-indigo-600 hover:text-indigo-800"
-                        >
-                          Siteye git
-                          <ExternalLink className="h-4 w-4" />
-                        </a>
+                        {o.url ? (
+                          <a
+                            href={o.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={() =>
+                              logEvent('opportunity_click', {
+                                opportunityId: o.opportunityId,
+                                role: role.roleName,
+                                fromLlm: !!o.fromLlm,
+                              })
+                            }
+                            className="inline-flex shrink-0 items-center gap-1 self-start text-sm font-bold text-indigo-600 hover:text-indigo-800 sm:self-center"
+                          >
+                            Siteye git
+                            <ExternalLink className="h-4 w-4" />
+                          </a>
+                        ) : (
+                          <span className="shrink-0 self-start text-xs text-slate-400 sm:self-center">
+                            Bağlantı yok
+                          </span>
+                        )}
                       </li>
                     ))}
                   </ul>
@@ -775,46 +833,49 @@ export function ResultsPage({
       <Card className="border-indigo-100 bg-white/90">
         <h3 className="text-lg font-extrabold text-indigo-900">Sonuçlarını e-postayla al</h3>
         <p className="mt-2 text-sm text-slate-600">
-          Önerilen rol başlıkları ve şehir bilgin güvenli webhook’a iletilir; n8n veya benzeri bir akışa
-          bağlayabilirsin.
+          E-posta adresine, profil özetin, önerilen roller, maaş ve staj bağlantıları ile program önerilerinin
+          derlendiği bir özet gönderilir. Posta kutunu bir süre sonra kontrol etmeyi unutma. Aynı veya farklı adrese
+          istediğin kadar tekrar gönderebilirsin.
         </p>
-        {emailSuccess ? (
+        {emailSuccess && (
           <p className="mt-4 text-sm font-semibold text-emerald-700" role="status">
-            E-posta gönderildi!
+            E-posta gönderildi! Özeti başka bir adrese veya tekrar aynı adrese göndermek için alanı düzenleyip
+            &quot;Gönder&quot;e bas.
           </p>
-        ) : (
-          <form className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end" onSubmit={handleEmailSubmit} noValidate>
-            <div className="min-w-0 flex-1">
-              <label htmlFor="pusula-results-email" className="mb-1 block text-xs font-semibold text-slate-700">
-                E-posta
-              </label>
-              <Input
-                id="pusula-results-email"
-                type="email"
-                name="email"
-                autoComplete="email"
-                placeholder="ornek@eposta.com"
-                value={email}
-                onChange={(ev) => {
-                  setEmail(ev.target.value);
-                  if (emailSuccess) setEmailSuccess(false);
-                }}
-                disabled={emailSending}
-                className="w-full"
-              />
-            </div>
-            <Button type="submit" disabled={emailSending} className="shrink-0 sm:min-w-[120px]">
-              {emailSending ? (
-                <>
-                  <Loader2 className="h-5 w-5 animate-spin" />
-                  Gönderiliyor…
-                </>
-              ) : (
-                'Gönder'
-              )}
-            </Button>
-          </form>
         )}
+        <form className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end" onSubmit={handleEmailSubmit} noValidate>
+          <div className="min-w-0 flex-1">
+            <label htmlFor="pusula-results-email" className="mb-1 block text-xs font-semibold text-slate-700">
+              E-posta
+            </label>
+            <Input
+              id="pusula-results-email"
+              type="email"
+              name="email"
+              autoComplete="email"
+              placeholder="ornek@eposta.com"
+              value={email}
+              onChange={(ev) => {
+                setEmail(ev.target.value);
+                if (emailSuccess) setEmailSuccess(false);
+              }}
+              disabled={emailSending}
+              className="w-full"
+            />
+          </div>
+          <Button type="submit" disabled={emailSending} className="shrink-0 sm:min-w-[120px]">
+            {emailSending ? (
+              <>
+                <Loader2 className="h-5 w-5 animate-spin" />
+                Gönderiliyor…
+              </>
+            ) : emailSuccess ? (
+              'Tekrar gönder'
+            ) : (
+              'Gönder'
+            )}
+          </Button>
+        </form>
         {emailError && (
           <p className="mt-3 text-sm text-red-600" role="alert">
             {emailError}
