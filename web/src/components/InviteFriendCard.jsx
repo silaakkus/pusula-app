@@ -4,25 +4,45 @@ import { Button } from './ui/Button';
 import { Card } from './ui/Card';
 import { logEvent } from '../lib/analytics.js';
 
+/** Settings → Domains → Production (hash’siz, herkese açık olması gereken adres). */
+const PUBLIC_VERCEL_PRODUCTION = 'https://pusula-app-two.vercel.app';
+
+function isVercelTeamDeploymentHost(url) {
+  try {
+    const u = String(url ?? '').trim();
+    if (!u) return false;
+    const { hostname } = new URL(u.includes('://') ? u : `https://${u}`);
+    return hostname.endsWith('-projects.vercel.app');
+  } catch {
+    return /-projects\.vercel\.app$/i.test(String(url ?? ''));
+  }
+}
+
 /**
- * Paylaşım linki — dikkat: `…-hash-…-projects.vercel.app` gibi deployment URL’leri çoğunlukla
- * Vercel Authentication ile korunur; paylaşımda kullanıcıyı giriş ekranına atar.
- * Herkese açık adres için Vercel’de Project → Settings → Domains altındaki Production domain’i kullan.
- *
  * Sıra:
- * 1) VITE_APP_SHARE_CANONICAL_URL (üretimde şunu mutlaka doldur)
- * 2) window.location.origin (siteyi korumasız production domain’den açtıysan doğru olur)
- * 3) VITE_APP_URL (bilerek ayarlandıysa)
+ * 1) VITE_APP_SHARE_CANONICAL_URL
+ * 2) window.origin — *-projects.vercel.app ise (korunur) PUBLIC_VERCEL_PRODUCTION kullan
+ * 3) VITE_APP_URL — aynı kural
+ * 4) PUBLIC_VERCEL_PRODUCTION
  */
 function getShareSiteUrl() {
+  const strip = (s) => String(s).trim().replace(/\/+$/, '');
   const canonical = import.meta.env.VITE_APP_SHARE_CANONICAL_URL?.trim();
-  if (canonical) return canonical.replace(/\/+$/, '');
+  if (canonical) return strip(canonical);
+
   if (typeof window !== 'undefined' && window.location?.origin) {
-    return window.location.origin.replace(/\/+$/, '');
+    const origin = strip(window.location.origin);
+    if (isVercelTeamDeploymentHost(origin)) return strip(PUBLIC_VERCEL_PRODUCTION);
+    return origin;
   }
+
   const legacy = import.meta.env.VITE_APP_URL?.trim();
-  if (legacy) return legacy.replace(/\/+$/, '');
-  return '';
+  if (legacy) {
+    const l = strip(legacy);
+    if (!isVercelTeamDeploymentHost(l)) return l;
+  }
+
+  return strip(PUBLIC_VERCEL_PRODUCTION);
 }
 
 function buildShareText(siteUrl) {
