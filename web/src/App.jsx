@@ -23,9 +23,13 @@ import {
   saveFlowSnapshot,
   loadFlowSnapshot,
   clearFlowSnapshot,
-  hasSavedFlow,
-  getSavedFlowSummary,
 } from './lib/pusulaFlow.js';
+import {
+  clearProfileDraft,
+  getResumeSummaryText,
+  hasProfileDraft,
+  hasResumeAvailable,
+} from './lib/profileDraft.js';
 import { unlockPusulaBadge, BADGE_IDS } from './lib/pusulaBadges.js';
 import { Button } from './components/ui/Button';
 
@@ -118,6 +122,7 @@ const App = () => {
 
   const handleFlowStart = useCallback(async () => {
     clearFlowSnapshot();
+    clearProfileDraft();
     setProfile(null);
     setRoles([]);
     setBarrierResult(null);
@@ -144,7 +149,29 @@ const App = () => {
 
   const handleResume = useCallback(async () => {
     const s = loadFlowSnapshot();
-    if (!s) return;
+    if (!s) {
+      if (hasProfileDraft()) {
+        if (!matrix || !opportunities) {
+          setDataLoading(true);
+          setDataError('');
+          try {
+            const d = await loadPusulaData();
+            setMatrix(d.matrix);
+            setOpportunities(d.opportunities);
+          } catch (e) {
+            setDataError(e?.message ?? 'Veri yüklenemedi');
+            setStep('home');
+            return;
+          } finally {
+            setDataLoading(false);
+          }
+        }
+        setStep('profile');
+        logEvent('flow_resume', { step: 'profile', source: 'profile_draft' });
+        return;
+      }
+      return;
+    }
 
     let nextStep = resumeTargetStep(s);
     if (nextStep !== 'profile' && !s.profile) nextStep = 'profile';
@@ -226,6 +253,7 @@ const App = () => {
 
   const resetFlow = () => {
     clearFlowSnapshot();
+    clearProfileDraft();
     setLandingInfoSectionId(null);
     setStep('home');
     setProfile(null);
@@ -287,8 +315,8 @@ const App = () => {
             setLandingInfoSectionId(sectionId ?? null);
             setStep('landingInfo');
           }}
-          resumeAvailable={hasSavedFlow()}
-          resumeSummary={getSavedFlowSummary()}
+          resumeAvailable={hasResumeAvailable()}
+          resumeSummary={getResumeSummaryText()}
         />
       )}
 

@@ -3,11 +3,12 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Star } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
+import { flowPreviousStepButtonClass } from '../lib/flowPreviousStepButton.js';
 
 export function BaselinePage({
   value,
   onChange,
-  onBack,
+  onPreviousStep,
   onNext,
 }) {
   return (
@@ -18,15 +19,10 @@ export function BaselinePage({
         transition={{ duration: 0.35 }}
       >
         <Card>
-          <Button variant="ghost" onClick={onBack} className="mb-8 rounded-xl px-3 py-2 text-sm">
-            <ArrowLeft className="h-4 w-4" />
-            Geri
-          </Button>
-
           <div className="mb-3 text-sm font-semibold text-indigo-700">
             Baseline (Özgüven Ölçümü)
           </div>
-          <h2 className="mb-2 text-2xl font-extrabold tracking-tight text-indigo-900">
+          <h2 className="mb-2 text-xl font-extrabold tracking-tight text-indigo-900 sm:text-2xl">
             Şu an teknoloji sektöründe kendine yer bulma konusunda özgüvenin kaç?
           </h2>
           <p className="mb-8 text-sm leading-relaxed text-slate-600">
@@ -46,7 +42,7 @@ export function BaselinePage({
                 >
                   <Star
                     className={[
-                      'h-9 w-9 transition',
+                      'h-8 w-8 transition sm:h-9 sm:w-9',
                       active ? 'fill-pusula-coral text-pusula-coral' : 'text-slate-300',
                       'group-hover:scale-110',
                     ].join(' ')}
@@ -60,7 +56,18 @@ export function BaselinePage({
             Seçimin: <span className="text-indigo-700">{value}/5</span>
           </div>
 
-          <div className="mt-10 flex justify-end">
+          <div className="mt-10 flex flex-wrap items-center justify-end gap-3">
+            {typeof onPreviousStep === 'function' && (
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={onPreviousStep}
+                className={flowPreviousStepButtonClass}
+              >
+                <ArrowLeft className="h-5 w-5" aria-hidden />
+                Önceki adım
+              </Button>
+            )}
             <Button onClick={onNext}>
               Devam et
               <ArrowRight className="h-5 w-5" />

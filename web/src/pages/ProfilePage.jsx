@@ -1,9 +1,38 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
 import { flowPreviousStepButtonClass } from '../lib/flowPreviousStepButton.js';
+import { clearProfileDraft, loadProfileDraft, saveProfileDraft } from '../lib/profileDraft.js';
+
+function readProfileDraftInitial() {
+  const d = loadProfileDraft();
+  if (!d || typeof d !== 'object') {
+    return {
+      disciplineId: '',
+      interests: [],
+      strengths: [],
+      interestSkip: false,
+      strengthSkip: false,
+      learningStyle: 'mixed',
+      goalId: 'explore',
+      goalDetail: '',
+      cityId: 'all',
+    };
+  }
+  return {
+    disciplineId: d.disciplineId ?? '',
+    interests: Array.isArray(d.interests) ? d.interests : [],
+    strengths: Array.isArray(d.strengths) ? d.strengths : [],
+    interestSkip: Boolean(d.interestSkip),
+    strengthSkip: Boolean(d.strengthSkip),
+    learningStyle: d.learningStyle ?? 'mixed',
+    goalId: d.goalId ?? 'explore',
+    goalDetail: typeof d.goalDetail === 'string' ? d.goalDetail : '',
+    cityId: d.cityId ?? 'all',
+  };
+}
 
 const INTEREST_OPTIONS = [
   'Veri ve analiz',
@@ -54,17 +83,48 @@ function toggleInList(list, item) {
 
 export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
   const disciplines = useMemo(() => matrix ?? [], [matrix]);
+  const draftIni = useMemo(() => readProfileDraftInitial(), []);
 
-  const [disciplineId, setDisciplineId] = useState('');
-  const [interests, setInterests] = useState([]);
-  const [strengths, setStrengths] = useState([]);
-  const [interestSkip, setInterestSkip] = useState(false);
-  const [strengthSkip, setStrengthSkip] = useState(false);
-  const [learningStyle, setLearningStyle] = useState('mixed');
-  const [goalId, setGoalId] = useState('explore');
-  const [goalDetail, setGoalDetail] = useState('');
-  const [cityId, setCityId] = useState('all');
+  const [disciplineId, setDisciplineId] = useState(draftIni.disciplineId);
+  const [interests, setInterests] = useState(draftIni.interests);
+  const [strengths, setStrengths] = useState(draftIni.strengths);
+  const [interestSkip, setInterestSkip] = useState(draftIni.interestSkip);
+  const [strengthSkip, setStrengthSkip] = useState(draftIni.strengthSkip);
+  const [learningStyle, setLearningStyle] = useState(draftIni.learningStyle);
+  const [goalId, setGoalId] = useState(draftIni.goalId);
+  const [goalDetail, setGoalDetail] = useState(draftIni.goalDetail);
+  const [cityId, setCityId] = useState(draftIni.cityId);
   const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    const row = disciplines.find((d) => d.disciplineId === disciplineId);
+    const t = window.setTimeout(() => {
+      saveProfileDraft({
+        disciplineId,
+        disciplineLabel: row?.disciplineName ?? '',
+        interests,
+        strengths,
+        interestSkip,
+        strengthSkip,
+        learningStyle,
+        goalId,
+        goalDetail,
+        cityId,
+      });
+    }, 450);
+    return () => window.clearTimeout(t);
+  }, [
+    disciplines,
+    disciplineId,
+    interests,
+    strengths,
+    interestSkip,
+    strengthSkip,
+    learningStyle,
+    goalId,
+    goalDetail,
+    cityId,
+  ]);
 
   const handleInterestSkip = (checked) => {
     setInterestSkip(checked);
@@ -97,6 +157,7 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
   const handleContinue = () => {
     if (!validate()) return;
 
+    clearProfileDraft();
     const row = disciplines.find((d) => d.disciplineId === disciplineId);
     const effInterests = interestSkip ? [PREFER_NOT] : interests;
     const effStrengths = strengthSkip ? [PREFER_NOT] : strengths;
@@ -121,7 +182,7 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
         <Card>
           <div className="mb-3 text-sm font-semibold text-indigo-700">Profil (Çok boyutlu)</div>
-          <h2 className="mb-2 text-2xl font-extrabold tracking-tight text-indigo-900">
+          <h2 className="mb-2 text-xl font-extrabold tracking-tight text-indigo-900 sm:text-2xl">
             Seni tanıyalım
           </h2>
           <p className="mb-8 text-sm leading-relaxed text-slate-600">

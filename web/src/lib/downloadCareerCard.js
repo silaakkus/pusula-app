@@ -9,6 +9,10 @@ export async function downloadCareerCardPng(element, filename = 'pusula-kariyer-
     backgroundColor: '#ffffff',
     useCORS: true,
     logging: false,
+    scrollX: 0,
+    scrollY: 0,
+    windowWidth: element.scrollWidth,
+    windowHeight: element.scrollHeight,
   });
 
   const url = canvas.toDataURL('image/png');

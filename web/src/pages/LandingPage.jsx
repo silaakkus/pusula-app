@@ -40,7 +40,7 @@ export function LandingPage({ onStart, onResume, onOpenInfo, resumeAvailable, re
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
-        className="mb-8 text-5xl font-extrabold leading-tight text-indigo-800 lg:text-7xl"
+        className="mb-8 text-4xl font-extrabold leading-tight text-indigo-800 sm:text-5xl lg:text-6xl"
       >
         <span className="text-indigo-800">Bölümün Ne Olursa Olsun,</span> <br />
         <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-orange-500 bg-clip-text text-transparent">

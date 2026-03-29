@@ -27,29 +27,12 @@ export function LandingInfoPage({ onBack, initialSectionId, aiBrandLabel }) {
 
   return (
     <main className="relative mx-auto flex w-full max-w-none flex-col px-1 pb-20 pt-8 sm:px-2 lg:px-3">
-      <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
-      >
-        <Button
-          type="button"
-          variant="ghost"
-          size="md"
-          className="w-fit border border-slate-200/90 bg-white/90 shadow-sm"
-          onClick={onBack}
-        >
-          <ArrowLeft className="h-5 w-5 shrink-0" aria-hidden />
-          Ana sayfaya dön
-        </Button>
-      </motion.div>
-
       <article className="mx-auto w-full max-w-none text-left text-slate-700">
         <motion.h1
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.05 }}
-          className="text-2xl font-extrabold tracking-tight text-indigo-900 sm:text-3xl"
+          className="text-xl font-extrabold tracking-tight text-indigo-900 sm:text-2xl"
         >
           Pusula nasıl çalışır?
         </motion.h1>
@@ -58,7 +41,7 @@ export function LandingInfoPage({ onBack, initialSectionId, aiBrandLabel }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.1 }}
-          className="mt-5 text-base leading-relaxed sm:text-lg"
+          className="mt-5 text-sm leading-relaxed sm:text-base"
         >
           Akademik arka planını teknoloji dünyasının fırsatlarıyla birleştir. Kariyer önerileri öncelikle{' '}
           <span className="font-semibold text-indigo-900">{brand}</span> yapay zeka altyapısıyla üretilir;
@@ -91,7 +74,14 @@ export function LandingInfoPage({ onBack, initialSectionId, aiBrandLabel }) {
         })}
 
         <div className="mt-10 flex justify-center">
-          <Button type="button" size="lg" onClick={onBack}>
+          <Button
+            type="button"
+            size="lg"
+            variant="ghost"
+            className="border border-slate-200/90 bg-white/90 shadow-sm"
+            onClick={onBack}
+          >
+            <ArrowLeft className="h-5 w-5 shrink-0" aria-hidden />
             Ana sayfaya dön
           </Button>
         </div>
