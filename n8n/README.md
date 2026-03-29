@@ -6,7 +6,11 @@ Uygulama `ResultsPage` içinde **JSON POST** eder; gövde `web/src/pages/Results
 
 1. **Webhook** (POST, JSON) — URL’yi `web/.env` içinde `VITE_N8N_WEBHOOK_URL` olarak tanımla.
 2. **Code** — `pusula-webhook-code.js` dosyasının **tamamını** Code node’a yapıştır (mode: run once for all items).
-3. **Gmail** (veya Send Email) — HTML: `{{ $json.html }}`, konu: `{{ $json.subject }}`, alıcı: `{{ $json.to }}` (Code çıktısı her iki olayda da `to` doldurur).
+3. **Gmail** (veya Send Email) — alanları **ifade (Expression)** modunda doldur; düz metin kutusuna `{{ $json.subject }}` yazarsan Gmail konuyu aynen böyle gönderir.
+   - **Alıcı (To):** ifade → `{{ $json.to }}` veya bazı sürümlerde `={{ $json.to }}`
+   - **Konu (Subject):** ifade → `={{ $json.subject }}` (n8n 1.80+ çoğu yerde `=` ile ifade başlar)
+   - **Message (HTML):** ifade → `={{ $json.html }}`
+   Code çıktısı hem analiz hem `davet_tamamlandi` için `to` / `subject` / `html` üretir.
 
 **Önemli:** Tek bir **Webhook → Code → Gmail** hattı kullan. Code node aynı formatta çıktı üretir; Gmail’i **If** düğümünün yalnızca bir dalına bağlama — her istek Code’dan geçmeli.
 
@@ -41,4 +45,5 @@ Webhook gövdesi kökte gelir; bazı proxy’ler `{ "body": { ... } }` sararsa C
 
 - **“Workflow ran into an error”** ve arkadaş tamamlayınca mail gitmiyorsa: n8n’de **Executions** → hatalı çalıştırmayı açıp **Code** satırındaki mesaja bak. Eski betikte `davet_tamamlandi` dalı `esc` tanımlanmadan önce çalıştığı için `ReferenceError: esc is not defined` oluşabiliyordu; repodaki güncel `pusula-webhook-code.js` dosyasını Code node’a **yeniden yapıştır**.
 - Gmail’e **boş alıcı** gitmesi de hataya yol açar; güncel betik geçersiz `to` için çıktı üretmez (Gmail atlanır).
-- **To / Subject / Message** alanlarında ifade kullan: `{{ $json.to }}`, `{{ $json.subject }}`, `{{ $json.html }}`.
+- **To / Subject / Message** alanlarında **ifade** kullan (alanın sağındaki **Expression** / **fx** veya metnin başına `=`). Düz metin modunda `{{ $json.subject }}` yazdıysan gelen mailin konusu tam olarak bu kalır — düzelt: konu alanını ifadeye çevir ve içeriği `={{ $json.subject }}` yap.
+- n8n arayüzünde bir çalıştırma açıp **Gmail** düğümüne tıkla; **INPUT** panelinde Code çıktısında `subject`, `to`, `html` dolu mu kontrol et. Doluysa sorun yalnızca Gmail alanının “fixed” kalmasıdır.
