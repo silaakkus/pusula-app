@@ -133,6 +133,35 @@ function parseJsonLoose(text) {
   return JSON.parse(cleaned);
 }
 
+/** Groq/Gemini bazen JSON öncesi/sonrası metin veya gevşek biçim döndürür. */
+function extractJsonObject(rawText) {
+  if (rawText == null) return null;
+  let cleaned = stripCodeFences(String(rawText).trim());
+  try {
+    return JSON.parse(cleaned);
+  } catch {
+    /* devam */
+  }
+  const start = cleaned.indexOf('{');
+  if (start === -1) return null;
+  let depth = 0;
+  for (let i = start; i < cleaned.length; i += 1) {
+    const ch = cleaned[i];
+    if (ch === '{') depth += 1;
+    else if (ch === '}') {
+      depth -= 1;
+      if (depth === 0) {
+        try {
+          return JSON.parse(cleaned.slice(start, i + 1));
+        } catch {
+          return null;
+        }
+      }
+    }
+  }
+  return null;
+}
+
 function isNonEmptyString(v) {
   return typeof v === 'string' && v.trim().length > 0;
 }
@@ -370,7 +399,8 @@ export function parseAndValidateCareerJson(rawText) {
 }
 
 export function parseBarrierResponse(rawText) {
-  const obj = parseJsonLoose(rawText);
+  const obj = extractJsonObject(rawText);
+  if (!obj) throw new Error('Engel yanıtı JSON olarak çözülemedi');
   const reframe = isNonEmptyString(obj?.reframe) ? obj.reframe.trim() : '';
   let actions = Array.isArray(obj?.actions) ? obj.actions.filter(isNonEmptyString).map((s) => s.trim()) : [];
   if (!reframe) throw new Error('reframe alanı eksik');
@@ -471,6 +501,18 @@ JSON formatında yanıt ver: {reframe, actions: [action1, action2]}
 Başka metin veya markdown ekleme; yalnızca tek bir JSON nesnesi.
 "İmkansız", "yapamazsın" gibi dışlayıcı dil kullanma.`;
 
+/** Groq: sözdizimi kararlılığı için ek sıkı kurallar (parse hatası → yedek metne düşmesin). */
+const BARRIER_GROQ_SYSTEM = `Sen empati kuran bir kariyer koçusun. Kullanıcının yazdığı engeli yargılamadan, kariyer dışlayıcı değil,
+yeniden çerçeveleyen bir dille ele al.
+
+ZORUNLU ÇIKTI: Yalnızca TEK bir JSON nesnesi. Başında/sonunda açıklama yok; markdown yok; \`\`\` kod bloğu yok.
+Şema (Türkçe metinler):
+{"reframe":"2–4 cümle, sıcak ve destekleyici","actions":["somut aksiyon 1","somut aksiyon 2"]}
+
+- actions tam olarak 2 öğe.
+- İngilizce tek kelime düşmesin; kullanıcı Türkçe (ör. "necessary" yazma).
+- "İmkansız", "yapamazsın", "asla" gibi dışlayıcı dil kullanma.`;
+
 function buildSuggestedRolesContext() {
   const session = loadPusulaSession();
   const list = session?.roles;
@@ -548,8 +590,9 @@ Kullanıcının engeli: ${barrierText}`;
   if (getLlmProvider() === 'groq') {
     const text = await groqGenerateText({
       apiKey: key,
-      systemInstruction: BARRIER_SYSTEM,
+      systemInstruction: BARRIER_GROQ_SYSTEM,
       userPrompt: prompt,
+      temperature: 0.15,
     });
     return parseBarrierResponse(text);
   }

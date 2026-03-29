@@ -17,6 +17,7 @@ import { getLlmApiKey, getLlmProvider, getLlmBrandLabel } from './lib/llmConfig.
 import { savePusulaSession } from './lib/pusulaSession.js';
 import { rolesFromMatrix } from './lib/fallbackRoles.js';
 import { BARRIER_STATIC_FALLBACK } from './lib/barrierFallback.js';
+import { buildMatrixBarrierSuggestion } from './lib/barrierMatrixSuggestion.js';
 import { logEvent } from './lib/analytics.js';
 import {
   saveFlowSnapshot,
@@ -361,6 +362,8 @@ const App = () => {
       {step === 'barrier' && (
         <BarrierPage
           apiKey={apiKey}
+          profile={profile}
+          matrix={matrix}
           profileSummary={`${profile?.disciplineLabel ?? ''}; ilgi: ${profile?.interests?.join(', ')}; güçlü yön: ${profile?.strengths?.join(', ')}; hedef: ${profile?.goal ?? ''}`}
           onResult={(res) => {
             unlockPusulaBadge(BADGE_IDS.BARRIER);
@@ -368,7 +371,16 @@ const App = () => {
           }}
           onSkip={() => {
             logEvent('barrier_skip', {});
-            finishBarrier(BARRIER_STATIC_FALLBACK);
+            const matrixSuggestion = buildMatrixBarrierSuggestion({
+              profile,
+              matrix,
+              barrierText: '',
+            });
+            finishBarrier({
+              llm: { ...BARRIER_STATIC_FALLBACK },
+              matrix: matrixSuggestion,
+              skippedLlm: true,
+            });
           }}
           onPreviousStep={goToPreviousStep}
         />

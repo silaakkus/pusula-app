@@ -5,10 +5,10 @@ import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
 import { runBarrierReframe } from '../lib/gemini.js';
 import { logEvent } from '../lib/analytics.js';
-import { BARRIER_STATIC_FALLBACK } from '../lib/barrierFallback.js';
+import { buildMatrixBarrierSuggestion } from '../lib/barrierMatrixSuggestion.js';
 import { flowPreviousStepButtonClass } from '../lib/flowPreviousStepButton.js';
 
-export function BarrierPage({ apiKey, profileSummary, onResult, onSkip, onPreviousStep }) {
+export function BarrierPage({ apiKey, profile, matrix, profileSummary, onResult, onSkip, onPreviousStep }) {
   const [text, setText] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -22,11 +22,17 @@ export function BarrierPage({ apiKey, profileSummary, onResult, onSkip, onPrevio
     setError('');
     setLoading(true);
     logEvent('barrier_submit', { length: trimmed.length });
+    const matrixSuggestion = buildMatrixBarrierSuggestion({ profile, matrix, barrierText: trimmed });
     try {
-      const res = await runBarrierReframe({ apiKey, barrierText: trimmed, profileSummary });
-      onResult(res);
-    } catch {
-      onResult(BARRIER_STATIC_FALLBACK);
+      const llm = await runBarrierReframe({ apiKey, barrierText: trimmed, profileSummary });
+      onResult({ llm, matrix: matrixSuggestion });
+    } catch (e) {
+      logEvent('barrier_llm_error', { message: e?.message ?? String(e) });
+      onResult({
+        llm: null,
+        matrix: matrixSuggestion,
+        llmError: e?.message ?? 'Yapay zeka yanıtı alınamadı',
+      });
     } finally {
       setLoading(false);
     }
