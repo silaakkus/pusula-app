@@ -7,6 +7,40 @@ const item = $input.first().json;
 const data =
   item.body && typeof item.body === 'object' && !Array.isArray(item.body) ? item.body : item;
 
+/** Davet eden kullanıcıya: arkadaş sonuç sayfasına geldi. */
+if (data.event === 'davet_tamamlandi') {
+  const inv = String(data.inviterEmail ?? '')
+    .trim()
+    .toLowerCase();
+  const roles = Array.isArray(data.roles) ? data.roles : [];
+  const rolesText = roles.map((r) => esc(String(r))).join(', ');
+  const disc = esc(data.inviteeDiscipline ?? '');
+  const city = esc(data.inviteeCity ?? '');
+  if (!inv || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inv)) {
+    return [{ json: { email: '', to: '', subject: '', html: '', _pusulaSkip: true, _reason: 'invalid inviter' } }];
+  }
+  const html = `<div style="font-family:Arial,Helvetica,sans-serif;max-width:560px;margin:0 auto;padding:20px;line-height:1.55;color:#334155;">
+  <p style="font-size:17px;font-weight:700;margin:0 0 12px;">Pusula — Davet haberi</p>
+  <p style="margin:0 0 10px;font-size:15px;">Merhaba,</p>
+  <p style="margin:0 0 10px;font-size:15px;">Paylaştığın Pusula linkiyle gelen bir kişi <strong>kariyer önerilerini</strong> (sonuç adımına) ulaştı.</p>
+  ${disc ? `<p style="margin:0 0 6px;font-size:14px;"><strong>Disiplin (özet):</strong> ${disc}</p>` : ''}
+  ${city ? `<p style="margin:0 0 6px;font-size:14px;"><strong>Şehir / filtre:</strong> ${city}</p>` : ''}
+  ${rolesText ? `<p style="margin:12px 0 0;font-size:14px;"><strong>Önerilen rol başlıkları:</strong> ${rolesText}</p>` : ''}
+  <p style="margin:20px 0 0;font-size:13px;color:#64748b;">Bu ileti otomatik gönderilmiştir. Kişisel veri minimizasyonu için ayrıntılı profil eklenmez.</p>
+</div>`;
+  return [
+    {
+      json: {
+        email: inv,
+        to: inv,
+        subject: 'Pusula — Davet ettiğin kişi önerilerini gördü',
+        html,
+        _pusulaEvent: 'davet_tamamlandi',
+      },
+    },
+  ];
+}
+
 function esc(s) {
   return String(s ?? '')
     .replace(/&/g, '&amp;')

@@ -30,6 +30,11 @@ import {
   hasProfileDraft,
   hasResumeAvailable,
 } from './lib/profileDraft.js';
+import {
+  captureInviterFromUrl,
+  clearCompletionNotifyFlag,
+  clearInviteReferralState,
+} from './lib/inviteReferral.js';
 import { unlockPusulaBadge, BADGE_IDS } from './lib/pusulaBadges.js';
 import { Button } from './components/ui/Button';
 
@@ -121,6 +126,7 @@ const App = () => {
   }, [step, roles]);
 
   const handleFlowStart = useCallback(async () => {
+    clearCompletionNotifyFlag();
     clearFlowSnapshot();
     clearProfileDraft();
     setProfile(null);
@@ -252,6 +258,7 @@ const App = () => {
   }, [step]);
 
   const resetFlow = () => {
+    clearInviteReferralState();
     clearFlowSnapshot();
     clearProfileDraft();
     setLandingInfoSectionId(null);
