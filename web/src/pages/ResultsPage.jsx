@@ -290,8 +290,8 @@ function structuredSourceType(matrix, profile, role, analysisSource, kind) {
 function structuredSourceLabel(sourceType, analysisSource) {
   if (sourceType === 'matrix') return 'Matris rehberi';
   if (sourceType === 'mixed-salary') return `Matris + ${getLlmBrandLabel()}`;
-  if (sourceType === 'mixed-internships') return 'Matris + Groq';
-  if (sourceType === 'mixed-employers') return 'Matris + Groq';
+  if (sourceType === 'mixed-internships') return `Matris + ${getLlmBrandLabel()}`;
+  if (sourceType === 'mixed-employers') return `Matris + ${getLlmBrandLabel()}`;
   if (sourceType === 'default') return 'Genel şablon';
   if (analysisSource === 'fallback') return 'Matris rehberi';
   return `${getLlmBrandLabel()} önerisi`;

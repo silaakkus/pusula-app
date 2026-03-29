@@ -173,6 +173,16 @@ function splitLooseList(s) {
     .filter(Boolean);
 }
 
+/** Groq/Gemini bazen internshipPrograms anahtarını farklı yazar */
+function pickInternshipProgramsRaw(r) {
+  if (!r || typeof r !== 'object') return [];
+  const keys = ['internshipPrograms', 'internship_programs', 'internships', 'stajProgramlari', 'staj_programlari'];
+  for (const k of keys) {
+    if (Array.isArray(r[k])) return r[k];
+  }
+  return [];
+}
+
 /** JSON anahtarını karşılaştırma için sadeleştirir (Türkçe / farklı yazım). */
 function normSalaryKey(k) {
   return String(k ?? '')
@@ -303,10 +313,7 @@ function normalizeRole(r, index) {
 
   const employersTurkey = normalizeEmployersList(Array.isArray(r?.employersTurkey) ? r.employersTurkey : [], 8);
 
-  const internshipPrograms = normalizeInternshipProgramsWithLlmFallback(
-    Array.isArray(r?.internshipPrograms) ? r.internshipPrograms : [],
-    6,
-  );
+  const internshipPrograms = normalizeInternshipProgramsWithLlmFallback(pickInternshipProgramsRaw(r), 6);
 
   const llmApplicationPrograms = normalizeLlmApplicationPrograms(
     Array.isArray(r?.applicationPrograms) ? r.applicationPrograms : [],
@@ -360,7 +367,14 @@ function normalizeRole(r, index) {
  * Tam 3 rol; UI için whyFits / firstSteps / starterResources tamamlanır.
  */
 export function parseAndValidateCareerJson(rawText) {
-  const obj = parseJsonLoose(rawText);
+  let obj = extractJsonObject(rawText);
+  if (!obj || !Array.isArray(obj.roles)) {
+    try {
+      obj = parseJsonLoose(rawText);
+    } catch {
+      obj = null;
+    }
+  }
   let roles = Array.isArray(obj?.roles) ? obj.roles : null;
   if (!roles) throw new Error('Yanıtta roles dizisi yok');
 
@@ -463,9 +477,17 @@ salaryRange (her rol için zorunlu — ayrı matris maaşıyla karşılaştırma
 - source: mutlaka doldur; kısaca dönem + "AI tahmini" veya benzeri yaz.
 - Kesin ücret vaadi değil.
 
-internshipPrograms (isteğe bağlı; şüphede boş dizi []):
-- Her öğe: { "name", "url", "summary", "eligibility" }. "url" zorunlu ve **tıklanınca gerçekten açılan** tam https:// adresi olmalı.
-- Uydurma path, tahmini slug veya hayali ilan sayfası **kesinlikle yasak**. Tek satır bile şüpheliyse o öğeyi ekleme.
+internshipPrograms (her rol için **zorunlu en az 2**, tercihen 3 öğe — boş dizi [] kullanma):
+- Arayüzde "AI staj önerisi" ile matris stajları yan yana gösterilir; kullanıcı ek kök bağlantılar görmeli.
+- Her öğe: { "name", "url", "summary", "eligibility" }. "url" **https://** ile başlayan, tıklanınca açılan gerçek kariyer/staj veya iş ilanı kökü olmalı.
+- summary / eligibility kısa ve dürüst olsun; emin değilsen genel ama doğru cümle yaz (örn. "Güncel ilan metnini siteden doğrula").
+- Uydurma domain veya hayali slug yasak; yalnızca emin olduğun adresler.
+- Rol ile uyumlu farklı şirketleri çeşitlendir; aşağıdaki **doğrulanmış örneklerden** en az birini mümkünse kullan:
+  • Trendyol Talent / teknoloji kariyer: https://careers.trendyol.com/talent-program
+  • Hepsiburada kurumsal kariyer: https://kurumsal.hepsiburada.com/tr/hakkimizda/kariyer
+  • Turkcell kariyer: https://kariyerim.turkcell.com.tr/
+  • İş Bankası kariyer: https://www.isbank.com.tr/kariyer
+  • Getir iş ilanları (LinkedIn): https://www.linkedin.com/company/getir/jobs/
 
 applicationPrograms (her rol için en az 2, tercihen 3–4 öğe):
 - Fırsat radarında listelenir; eksik bırakma.

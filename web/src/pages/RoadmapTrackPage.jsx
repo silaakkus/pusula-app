@@ -12,6 +12,14 @@ import {
 } from '../lib/roadmapProgress.js';
 import { logEvent } from '../lib/analytics.js';
 
+function linkHostname(url) {
+  try {
+    return new URL(url).hostname.replace(/^www\./i, '');
+  } catch {
+    return '';
+  }
+}
+
 export function RoadmapTrackPage({ trackId, onBack }) {
   const [data, setData] = useState(null);
   const [err, setErr] = useState('');
@@ -143,23 +151,42 @@ export function RoadmapTrackPage({ trackId, onBack }) {
                       </div>
                       <p className="mt-2 text-sm leading-relaxed text-slate-700">{s.detail}</p>
                       {Array.isArray(s.links) && s.links.length > 0 && (
-                        <ul className="mt-3 flex flex-wrap gap-2">
-                          {s.links.map((l, j) =>
-                            l?.url ? (
-                              <li key={j}>
-                                <a
-                                  href={l.url}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="inline-flex items-center gap-1 rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-800 ring-1 ring-indigo-200/80 hover:bg-indigo-100"
-                                >
-                                  {l.label || 'Bağlantı'}
-                                  <ExternalLink className="h-3 w-3" aria-hidden />
-                                </a>
-                              </li>
-                            ) : null,
-                          )}
-                        </ul>
+                        <>
+                          <p className="mt-3 text-xs leading-relaxed text-slate-600">
+                            Bu adımda aşağıdaki bağlantıdan ilgili sitedeki eğitim veya öğretici içeriğe geçebilirsin.
+                            Çoğu kaynak ücretsizdir; önce giriş bölümleriyle başlaman, sonra derinleşmen yeterli — hepsini
+                            bir seferde bitirmek zorunda değilsin.
+                          </p>
+                          <ul className="mt-2 flex flex-wrap gap-2">
+                            {s.links.map((l, j) => {
+                              const host = linkHostname(l.url);
+                              const label = l.label || 'Bağlantı';
+                              return l?.url ? (
+                                <li key={j}>
+                                  <a
+                                    href={l.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    title={
+                                      host
+                                        ? `${label} — ${host} sitesinde açılır; sayfadaki modülleri kendi hızında inceleyebilirsin.`
+                                        : undefined
+                                    }
+                                    className="inline-flex max-w-full items-center gap-1 rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-800 ring-1 ring-indigo-200/80 hover:bg-indigo-100"
+                                  >
+                                    <span className="min-w-0 truncate">{label}</span>
+                                    {host ? (
+                                      <span className="hidden font-normal text-[10px] text-indigo-600/90 sm:inline">
+                                        ({host})
+                                      </span>
+                                    ) : null}
+                                    <ExternalLink className="h-3 w-3 shrink-0" aria-hidden />
+                                  </a>
+                                </li>
+                              ) : null;
+                            })}
+                          </ul>
+                        </>
                       )}
                     </Card>
                   </li>
