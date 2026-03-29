@@ -19,42 +19,43 @@ const VALID_ARCH = new Set([
   'urun-ux',
 ]);
 
+// Uygulamadaki `web/src/lib/orientationQuiz.js` ile aynı metinler (son kullanıcı dili)
 const COPY = {
   frontend: {
-    headline: 'Sen frontend dünyasına çok yakınsın!',
-    subline: 'Arayüz, kullanıcı akışı ve görsel düzen seni besliyor.',
-    body: 'HTML/CSS’ten başlayıp JavaScript ve bir framework ile derinleşebilirsin. Küçük arayüz projeleri ve erişilebilirlik pratiği seni hızlı taşır.',
-    nextSteps: ['MDN ile HTML/CSS pekiştir', 'JavaScript temelleri + mini DOM projesi', 'React veya Vue resmi dokümantasyonla ilk SPA'],
+    headline: 'Görünen tarafla ilgilenmek sana yakın görünüyor',
+    subline: 'Yani ekranda gördüğün düğmeler, menüler ve sayfa düzeni.',
+    body: 'Önce basit bir sayfa yapısını ve tıklanınca değişen küçük şeyleri öğrenmek iyi bir başlangıç. İleride ekipler bunu “web arayüzü” diye de anlatır.',
+    nextSteps: ['Tek sayfalık basit bir örnek yap', 'Renk ve yazı tipiyle oyna', 'İnternetteki ücretsiz başlangıç derslerinden birini bitir'],
   },
   backend: {
-    headline: 'Sen backend tarafına güçlü kayıyorsun!',
-    subline: 'Sistemlerin güvenilir çalışması ve API’ler seni çekiyor.',
-    body: 'HTTP/REST, bir dil seçimi ve veritabanı ile servis yazmayı öğren; kimlik doğrulama ve dağıtım adımlarını sıraya koy.',
-    nextSteps: ['HTTP + REST pratiği', 'FastAPI veya Express ile CRUD', 'SQL ve migration alıştırmaları'],
+    headline: 'Görünmeyen, sunucu tarafı sana yakın görünüyor',
+    subline: 'Yani verinin saklandığı ve uygulamanın “beyninin” çalıştığı kısım.',
+    body: 'Kayıt tutma, giriş yapma, diğer servislerle konuşma gibi işler burada yapılır. Bir programlama diliyle çok küçük bir örnek üzerinden ilerlemek mantıklı.',
+    nextSteps: ['İnternet isteği–cevap fikrini izle bir videoda', 'Mini bir “liste kaydet” örneği ara', 'Basit veritabanı öğreticisine bak'],
   },
   'veri-bilimi': {
-    headline: 'Veri bilimi sana çok uyuyor!',
-    subline: 'Tablolar, grafikler ve ölçülebilir içgörü seni heyecanlandırıyor.',
-    body: 'Python, pandas ve SQL ile başla; istatistik sezgisi ve basit modellerle hikâye anlatmayı birleştir.',
-    nextSteps: ['pandas ile açık veri seti', 'SQL JOIN ve GROUP BY', 'scikit-learn ile ilk model'],
+    headline: 'Sayılar ve tablolarla uğraşmak sana yakın görünüyor',
+    subline: 'Yani Excel’e benzer ama daha büyük veri ve grafiklerle içgörü üretmek.',
+    body: 'Mevcut veriyi temizleyip grafik çıkarmak, sonra “acaba burada ne anlatıyor?” demek bu alanın özü. İleri istatistik ilk gün şart değil.',
+    nextSteps: ['Herkese açık küçük bir veri seti indir', 'Bir grafik çiz ve tek cümleyle özetle', 'YouTube’da “veri analizi giriş” aratıp bir video izle'],
   },
   'yapay-zeka': {
-    headline: 'Yapay zeka ve ML yoluna yakınsın!',
-    subline: 'Deneme, model ve yeni teknikler senin için merak kaynağı.',
-    body: 'Klasik ML temelleri → derin öğrenmeye geçiş → LLM/API güvenliği ve etik konularına zaman ayır.',
-    nextSteps: ['scikit-learn ile denetimli öğrenme', 'PyTorch veya TensorFlow giriş', 'LLM API’leri + prompt güvenliği farkındalığı'],
+    headline: 'Akıllı sistemler ve yeni teknikler seni çekiyor gibi',
+    subline: 'Sohbet botlarından basit tahmin modellerine kadar geniş bir dünya.',
+    body: 'Önce “bilgisayar örneklere bakıp tahmin öğrenir” fikrini kurmak, sonra hazır araçları güvenle kullanmak iyi bir sıra. Her şeyi matematikle başlatmak zorunda değilsin.',
+    nextSteps: ['Ücretsiz bir giriş dersi seç (video veya yazılı)', 'Hazır bir demo ile oyalan', 'Veri ve gizlilik konusunda kısa bir yazı oku'],
   },
   devops: {
-    headline: 'DevOps ve altyapı tarafı sana yakın!',
-    subline: 'Otomasyon, konteyner ve güvenilir yayın seni motive ediyor.',
-    body: 'Linux/shell, Docker, CI/CD ve bulut temelleriyle pipeline kurmayı hedefle.',
-    nextSteps: ['Shell ve temel Linux', 'Dockerfile + compose', 'GitHub Actions ile CI'],
+    headline: '“Çalışır halde kalsın” kısmı sana yakın görünüyor',
+    subline: 'Yani yazılımı paketlemek, sunucuya koymak ve bozulunca haber almak.',
+    body: 'Sadece kod yazmaktan farklı ama çok aranan bir yan. Komut satırı ve “aynı ortamda çalışsın” gibi fikirlerle başlamak yeterli.',
+    nextSteps: ['Temel komut satırı alıştırması yap', '“Docker nedir” diye 15 dk’lık özet izle', 'Küçük bir projeyi bir yere yüklemeyi dene'],
   },
   'urun-ux': {
-    headline: 'Ürün ve UX düşüncesi öne çıkıyor!',
-    subline: 'Kullanıcı problemi, keşif ve net teslim senin güçlü yanın.',
-    body: 'Araştırma, prototip ve önceliklendirme çerçevelerini öğren; ölçümle iterasyon kültürünü benimse.',
-    nextSteps: ['5 kullanıcıyla görüşme taslağı', 'Düşük sadakat prototip', 'Basit ürün metrikleri'],
+    headline: 'Kullanıcı için doğru şeyi seçmek öne çıkıyor',
+    subline: 'Yani önce kimin derdi çözülüyor, sonra nasıl gösterelim?',
+    body: 'Güzel ekran çizmek önemli ama “kime fayda” sorusuna cevap olmadan yetmeyebilir. Konuşma, taslak ve sırayı netleştirme bu alanın kalbi.',
+    nextSteps: ['Bir uygulamada seni rahatsız eden bir akımı not al', 'Kağıtta ekran taslakları çiz', '“Kullanıcı araştırması nedir” için kısa okuma yap'],
   },
 };
 
@@ -79,16 +80,13 @@ function pickArchetype(body) {
 const archetype = pickArchetype(raw);
 const template = COPY[archetype] ?? COPY.frontend;
 
-// Burada answers ile ekstra mantık yazabilirsin
-const nAnswers = Array.isArray(raw.answers) ? raw.answers.length : 0;
-
 return [
   {
     json: {
       archetype,
       headline: template.headline,
       subline: template.subline,
-      body: `${template.body}\n\n(n8n ile işlendi — ${nAnswers} cevap.)`,
+      body: template.body,
       nextSteps: template.nextSteps,
     },
   },

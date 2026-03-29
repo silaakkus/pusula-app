@@ -54,8 +54,8 @@ function stepLabel(step) {
     barrierReview: 'Adım 6/8 · Engel özeti',
     postsurvey: 'Adım 7/8 · Son anket',
     card: 'Adım 8/8 · Kariyer kartı',
-    roadmapHub: 'Keşif · Öğrenme haritaları',
-    roadmapTrack: 'Keşif · Harita adımları',
+    roadmapHub: 'Keşif · Öğrenme yolları',
+    roadmapTrack: 'Keşif · Adım adım yol',
     orientationQuiz: 'Keşif · Yönelim testi',
     orientationResult: 'Keşif · Yönelim sonucu',
   };

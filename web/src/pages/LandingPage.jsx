@@ -113,7 +113,7 @@ export function LandingPage({
               onClick={onOpenRoadmaps}
             >
               <Map className="h-5 w-5 shrink-0 text-indigo-600" aria-hidden />
-              Öğrenme haritası
+              Öğrenme yolları
             </Button>
           )}
           {onOpenOrientation && (

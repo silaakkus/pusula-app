@@ -94,7 +94,7 @@ Bu liste `prd.md` içeriğini adım adım koda dökmek için hazırlanmıştır.
 ## 8) Deploy + Final Kontroller
 
 - [x] Build ayarları ve environment değişkenleri kontrolü — `npm run build` / `VITE_*` değişkenleri
-- [ ] Netlify/Vercel deploy (henüz yapılmadı — canlıya alım sizin ortamınızda)
+- [x] Netlify/Vercel deploy (canlıya alındı)
 - [x] Hızlı test senaryoları (akış kodda uçtan uca mevcut; manuel tıklama testi önerilir):
   - [x] Profil → 3 rol → fırsatlar → engel kırıcı → Δ → kart indir
   - [x] API hata senaryosu (fallback + “Gemini ile tekrar dene”)
@@ -107,3 +107,13 @@ Bu liste `prd.md` içeriğini adım adım koda dökmek için hazırlanmıştır.
 - [x] `localStorage` ile ilerleme/sonuç hafızası — `pusulaFlow.js` (`pusula_flow`), karşılama “Kaldığın yerden devam et”
 - [x] Şehir bazlı filtre (V2 fikri) — profilde şehir + `opportunities.json` `cities` + `opportunitiesFilter.js`
 - [x] Daha zengin disiplin matrisi (daha fazla rol + daha fazla örnek) — 4. rol satırları eklendi (çoklu disiplin)
+
+---
+
+## V2 (Tamamlananlar)
+
+- [x] Öğrenme yolları modülü: hub + adım sayfası + yerel ilerleme takibi (`RoadmapHubPage.jsx`, `RoadmapTrackPage.jsx`, `roadmapProgress.js`)
+- [x] Yönelim testi modülü: 6 soru, sonuç üretimi ve sonuç kartı PNG indir (`orientationQuiz.js`, `OrientationQuizPage.jsx`, `OrientationResultPage.jsx`, `OrientationCardCapture.jsx`)
+- [x] Yönelim testi metinleri yeni başlayan diliyle sadeleştirildi; seçenek altı açıklamalar eklendi; kullanıcıya görünen n8n ipuçları kaldırıldı
+- [x] Öğrenme yolu içerikleri yeni başlayan seviyesine göre güncellendi (`web/public/data/roadmaps.json`)
+- [x] Davet akışı iyileştirildi: kısa link kopyalama/paylaşma ve davetli girişinde öneri görünce bilgilendirme gönderimi (`InviteFriendCard.jsx`, `inviteReferral.js`)

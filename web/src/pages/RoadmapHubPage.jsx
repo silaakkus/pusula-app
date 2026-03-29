@@ -51,10 +51,11 @@ export function RoadmapHubPage({ onBack, onSelectTrack }) {
         <Card className="border-indigo-200/80 bg-gradient-to-br from-indigo-50/90 via-white to-violet-50/50">
           <div className="flex flex-wrap items-center gap-2 text-indigo-800">
             <Map className="h-7 w-7 shrink-0" aria-hidden />
-            <h1 className="text-2xl font-extrabold tracking-tight text-indigo-950 sm:text-3xl">Dinamik öğrenme haritaları</h1>
+            <h1 className="text-2xl font-extrabold tracking-tight text-indigo-950 sm:text-3xl">Öğrenme yolları</h1>
           </div>
           <p className="mt-3 max-w-none text-sm leading-relaxed text-slate-600">
-            Alan seç; adımları sırayla takip et. Her adımı tamamlayınca işaretle — ilerlemen bu cihazda saklanır.
+            İlgin çeken başlığa dokun. Her kutuda sana yol gösterecek kısa açıklamalar var; bitti sandığın adımı
+            işaretleyebilirsin. İlerlemen sadece bu tarayıcıda saklanır.
           </p>
         </Card>
 
@@ -62,7 +63,7 @@ export function RoadmapHubPage({ onBack, onSelectTrack }) {
         {!data && !err && (
           <div className="mt-10 flex items-center gap-2 text-slate-600">
             <Loader2 className="h-6 w-6 animate-spin" aria-hidden />
-            Haritalar yükleniyor…
+            Yollar yükleniyor…
           </div>
         )}
 
@@ -93,7 +94,7 @@ export function RoadmapHubPage({ onBack, onSelectTrack }) {
                       {done}/{n} adım · %{pct}
                     </span>
                     <span className="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-indigo-600">
-                      Haritayı aç
+                      Yolu aç
                       <ChevronRight className="h-4 w-4" aria-hidden />
                     </span>
                   </button>

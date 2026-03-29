@@ -7,12 +7,12 @@ import { OrientationCardCapture } from '../components/OrientationCardCapture.jsx
 import { downloadOrientationCardPng } from '../lib/downloadOrientationCard.js';
 
 const ARCHETYPE_LABELS = {
-  frontend: 'Frontend',
-  backend: 'Backend',
-  'veri-bilimi': 'Veri bilimi',
-  'yapay-zeka': 'Yapay zeka / ML',
-  devops: 'DevOps',
-  'urun-ux': 'Ürün & UX',
+  frontend: 'Web arayüzü',
+  backend: 'Sunucu ve veri tarafı',
+  'veri-bilimi': 'Veri ve grafikler',
+  'yapay-zeka': 'Yapay zekâ ve akıllı sistemler',
+  devops: 'Yayın ve altyapı',
+  'urun-ux': 'Ürün ve kullanıcı deneyimi',
 };
 
 export function OrientationResultPage({ result, onBack, onHome }) {
@@ -57,7 +57,7 @@ export function OrientationResultPage({ result, onBack, onHome }) {
           <div className="flex flex-wrap items-center gap-2">
             <Sparkles className="h-6 w-6 text-violet-600" aria-hidden />
             <span className="rounded-full bg-violet-100 px-2 py-0.5 text-[10px] font-bold uppercase text-violet-800">
-              {result.source === 'n8n' ? 'n8n + Pusula' : 'Pusula skoru'}
+              {result.source === 'remote' ? 'Güncellenmiş özet' : 'Yönelim özeti'}
             </span>
           </div>
           <h1 className="mt-3 text-2xl font-extrabold text-indigo-950 sm:text-3xl">{result.headline}</h1>

@@ -2,223 +2,223 @@
   "tracks": [
     {
       "id": "frontend",
-      "title": "Frontend geliştirme",
-      "summary": "Arayüzden modern framework’lere doğru öğrenme sırası.",
+      "title": "Web sitesinin görünen yüzü",
+      "summary": "Butonların, menülerin ve sayfa düzeninin nasıl yapıldığını adım adım öğrenmek için — önce çok basit, sonra biraz daha ileri.",
       "steps": [
         {
           "id": "fe-1",
-          "title": "HTML, CSS ve erişilebilirlik",
-          "detail": "Semantik HTML, flex/grid, kontrast ve klavye ile gezinme. MDN ve web.dev üzerinden pratik yap.",
-          "links": [{ "label": "MDN — HTML", "url": "https://developer.mozilla.org/tr/docs/Learn/HTML" }]
+          "title": "Sayfa iskeleti ve görüntü (HTML & CSS)",
+          "detail": "İnternet sayfası aslında yazı ve kutulardan oluşur. Başlıklar, listeler, renk ve boşlukları düzenlemeyi öğrenirsin; böylece ekranda neyin nerede duracağını kontrol edebilirsin.",
+          "links": [{ "label": "Başlangıç rehberi (MDN)", "url": "https://developer.mozilla.org/tr/docs/Learn/HTML" }]
         },
         {
           "id": "fe-2",
-          "title": "JavaScript temelleri",
-          "detail": "DOM, async/await, modüller. Küçük etkileşimli bileşenler yaz.",
-          "links": [{ "label": "MDN — JS", "url": "https://developer.mozilla.org/tr/docs/Learn/JavaScript" }]
+          "title": "Sayfaya “can veren” kod (JavaScript)",
+          "detail": "Tıklanınca açılan menü, form kontrolü gibi şeyler için sayfayı hareket ettiren dili tanırsın. Küçük bir sayfada birkaç tıkla değişen öğe yapmak iyi alıştırma olur.",
+          "links": [{ "label": "JavaScript giriş", "url": "https://developer.mozilla.org/tr/docs/Learn/JavaScript" }]
         },
         {
           "id": "fe-3",
-          "title": "Git ve paket yöneticileri",
-          "detail": "git temel akışı, npm/pnpm. Küçük bir repo açıp branch denemeleri.",
+          "title": "Kodunu kaydetmek ve paylaşmak (Git)",
+          "detail": "Projeyi bilgisayarında saklamak ve değişiklikleri geri almak için çoğu ekip Git diye bir sistemi kullanır. Tek başına da küçük bir klasörü kaynak olarak yönetmeyi deneyebilirsin.",
           "links": [{ "label": "GitHub Skills", "url": "https://skills.github.com/" }]
         },
         {
           "id": "fe-4",
-          "title": "Bir framework (React veya Vue)",
-          "detail": "Bileşen mantığı, state, routing. Resmi dokümantasyonla mini proje.",
-          "links": [{ "label": "React öğren", "url": "https://react.dev/learn" }]
+          "title": "Hazır araçlarla büyük projeler (örnek: React)",
+          "detail": "Tekrarlayan işleri kolaylaştıran paketler ve çerçeveler vardır. Resmi başlangıç rehberiyle çok küçük bir ekran yapmak, gerçek iş dünyasına yaklaşmanı sağlar.",
+          "links": [{ "label": "React — ilk adımlar", "url": "https://react.dev/learn" }]
         },
         {
           "id": "fe-5",
-          "title": "Test ve performans",
-          "detail": "Temel test fikri, Lighthouse, lazy loading. Gerçek bir sayfada ölçüm yap.",
-          "links": [{ "label": "web.dev — Performance", "url": "https://web.dev/performance/" }]
+          "title": "Hız ve kaliteye dikkat",
+          "detail": "Sayfanın yavaş açılmaması ve herkesin (örneğin ekran okuyucu kullananların) kullanabilmesi önemlidir. Hazır araçlarla hız ölçümü yapmayı öğrenmek faydalıdır.",
+          "links": [{ "label": "Performans ipuçları", "url": "https://web.dev/performance/" }]
         }
       ]
     },
     {
       "id": "backend",
-      "title": "Backend geliştirme",
-      "summary": "API, veri ve güvenilir servis tasarımı.",
+      "title": "Görünmeyen taraf: sunucu ve veri",
+      "summary": "Uygulamanın “beyni”: kayıtların saklanması, giriş yapma, diğer sistemlerle konuşma. Ekrandan bağımsız çalışan kısım.",
       "steps": [
         {
           "id": "be-1",
-          "title": "HTTP ve REST mantığı",
-          "detail": "İstek/yanıt, durum kodları, idempotent işlemler. Postman veya curl ile dene.",
-          "links": [{ "label": "MDN — HTTP", "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP" }]
+          "title": "İstek ve cevap: internet nasıl konuşur?",
+          "detail": "Telefonundaki uygulama sunucuya bir istek gönderir; sunucu cevap döner. Bu dilin temel kurallarını anlamak, her şeyin üstüne oturur.",
+          "links": [{ "label": "HTTP hakkında (İng.)", "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP" }]
         },
         {
           "id": "be-2",
-          "title": "Bir dil + çalışma ortamı",
-          "detail": "Python (FastAPI/Django) veya Node (Express/Nest) ile basit CRUD API.",
-          "links": [{ "label": "FastAPI", "url": "https://fastapi.tiangolo.com/" }]
+          "title": "Bir programlama diliyle küçük servis yazmak",
+          "detail": "İsim kaydı veya liste gösterme gibi basit bir işi sunucuda yapan çok küçük bir program yazmayı hedefle. Hangi dili seçeceğin ekiplere göre değişir; önemli olan mantığı kurmak.",
+          "links": [{ "label": "Python FastAPI giriş", "url": "https://fastapi.tiangolo.com/" }]
         },
         {
           "id": "be-3",
-          "title": "İlişkisel veritabanı",
-          "detail": "SQL sorguları, indeks fikri, migration. SQLite veya Postgres ile pratik.",
-          "links": [{ "label": "PostgreSQL egzersizleri", "url": "https://www.postgresql.org/docs/" }]
+          "title": "Veritabanı: bilgiyi düzgün saklamak",
+          "detail": "Kayıtların tablolarda durduğu yerdir. Listelemek, filtrelemek ve birbiriyle ilişkilendirmek için sorgu yazmayı öğrenirsin.",
+          "links": [{ "label": "PostgreSQL dokümantasyonu", "url": "https://www.postgresql.org/docs/" }]
         },
         {
           "id": "be-4",
-          "title": "Kimlik doğrulama ve yetkilendirme",
-          "detail": "JWT veya session, rol bazlı erişim kavramları. Hazır örnekle deneme.",
-          "links": [{ "label": "OWASP Cheat Sheet", "url": "https://cheatsheetseries.owasp.org/" }]
+          "title": "Kim girer, neye dokunur? (giriş ve yetki)",
+          "detail": "Hesap açma, şifre, “sadece yönetici görsün” gibi kurallar güvenlik içindir. Ortak terimleri ve neden önemli olduklarını öğrenmek yeterli başlangıçtır.",
+          "links": [{ "label": "OWASP özetleri", "url": "https://cheatsheetseries.owasp.org/" }]
         },
         {
           "id": "be-5",
-          "title": "Dağıtım ve gözlemlenebilirlik",
-          "detail": "Loglama, health check, temel metrik. Küçük bir servisi canlıya yakın ortama al.",
-          "links": [{ "label": "12 factor", "url": "https://12factor.net/" }]
+          "title": "Yayımlamak ve takip etmek",
+          "detail": "Yazdığın servisin çalıştığından nasıl emin olacağını, hata kayıtlarına nasıl bakacağını öğrenirsin. İlk aşamada çok basit bir ortamda canlıya yakın deneme yeterli.",
+          "links": [{ "label": "On iki faktör (İng.)", "url": "https://12factor.net/" }]
         }
       ]
     },
     {
       "id": "veri-bilimi",
-      "title": "Veri bilimi",
-      "summary": "Veriyi temizleme, analiz ve sunuma kadar çekirdek beceriler.",
+      "title": "Sayılar ve tablolarla hikâye çıkarmak",
+      "summary": "Excel gibi düşün ama daha büyük veri ve grafiklerle: ne olduğunu anlamak ve anlatmak.",
       "steps": [
         {
           "id": "ds-1",
-          "title": "Python + Jupyter",
-          "detail": "NumPy ve pandas ile tablo işlemleri; küçük bir açık veri seti seç.",
+          "title": "Tablo işleri için Python",
+          "detail": "Bilgisayarda bir “not defteri” gibi çalışan ortamda tabloları birleştirip temizlemeyi öğrenirsin. İlk başta herkese açık küçük bir veri seti seçmek iyidir.",
           "links": [{ "label": "pandas", "url": "https://pandas.pydata.org/" }]
         },
         {
           "id": "ds-2",
-          "title": "İstatistik ve görselleştirme",
-          "detail": "Dağılım, korelasyon, basit hipotez. matplotlib veya plotly.",
+          "title": "Grafik ve ortalama gibi temel kavramlar",
+          "detail": "Dağılım, tipik değer, iki şeyin birlikte hareket edip etmediği gibi fikirleri görselleştirerek öğrenirsin. Karmaşık formül şart değil; sezgi kazanmak önemli.",
           "links": [{ "label": "Khan — İstatistik", "url": "https://www.khanacademy.org/math/statistics-probability" }]
         },
         {
           "id": "ds-3",
-          "title": "SQL ile veri çekme",
-          "detail": "JOIN, GROUP BY, pencere fonksiyonlarına giriş. Gerçek bir veritabanına bağlan.",
-          "links": [{ "label": "Mode SQL", "url": "https://mode.com/sql-tutorial/" }]
+          "title": "Veritabanından veri çekmek (SQL)",
+          "detail": "Şirketlerin verisi çoğunlukla veritabanındadır. Filtreleme ve özetleme dilini bilmek, işe “veriyle uğraşıyorum” diye girerken çok işine yarar.",
+          "links": [{ "label": "SQL öğretici", "url": "https://mode.com/sql-tutorial/" }]
         },
         {
           "id": "ds-4",
-          "title": "Temel makine öğrenmesi",
-          "detail": "Regresyon/sınıflandırma, train-test ayrımı, basit metrikler.",
+          "title": "Bilgisayara basit tahmin öğretmek",
+          "detail": "Örneklerden yola çıkarak “ya hep ya hiç” veya “tahmini sayı” gibi tahminler üreten basit modeller kurmayı dene. İleri matematik ilk günden şart değil.",
           "links": [{ "label": "scikit-learn", "url": "https://scikit-learn.org/stable/" }]
         },
         {
           "id": "ds-5",
-          "title": "Hikâye anlatımı",
-          "detail": "Bulguları slayt veya notebook’ta net başlıklarla özetle; paydaş diline çevir.",
-          "links": [{ "label": "Storytelling with data", "url": "https://www.storytellingwithdata.com/blog" }]
+          "title": "Bulguları anlatmak",
+          "detail": "Grafiği güzel yapmış olman yetmez; dinleyicine net bir öykü: soru, bulgu, ne yapılabilir. Sunum veya kısa yazıyla pratik yap.",
+          "links": [{ "label": "Veri ile hikâye", "url": "https://www.storytellingwithdata.com/blog" }]
         }
       ]
     },
     {
       "id": "yapay-zeka",
-      "title": "Yapay zeka / ML mühendisliği",
-      "summary": "Model, veri hattı ve güvenli kullanım odaklı rota.",
+      "title": "Yapay zeka ve akıllı sistemler",
+      "summary": "Metin üreten araçlardan sayı tahminine: modellerin nasıl eğitildiğini ve güvenle nasıl kullanılacağını öğrenmeye dair yol.",
       "steps": [
         {
           "id": "ai-1",
-          "title": "Matematik ve Python altyapısı",
-          "detail": "Lineer cebir temelleri, NumPy; türev kavramını sezgisel anla.",
+          "title": "Sayılar ve kod altyapısı",
+          "detail": "Vektör ve matris gibi kavramları sezgisel anlamak, sonraki adımlarda işini kolaylaştırır. Görsel anlatımlı ders videolarıyla başlamak iyi gelir.",
           "links": [{ "label": "3Blue1Brown", "url": "https://www.3blue1brown.com/" }]
         },
         {
           "id": "ai-2",
-          "title": "Klasik ML",
-          "detail": "scikit-learn ile denetimli öğrenme; overfitting ve çapraz doğrulama.",
-          "links": [{ "label": "Fast.ai (pratik)", "url": "https://course.fast.ai/" }]
+          "title": "Klasik öğrenme: örnekten kural çıkarma",
+          "detail": "Etiketli örneklerden “bu resim kedi mi köpek mü” gibi ayrım veya sayı tahmini yapmayı öğrenirsin. Aşırı ezber (overfitting) kavramını da burada tanırsın.",
+          "links": [{ "label": "Fast.ai dersleri", "url": "https://course.fast.ai/" }]
         },
         {
           "id": "ai-3",
           "title": "Derin öğrenmeye giriş",
-          "detail": "PyTorch veya TensorFlow ile basit sinir ağı; GPU fikri.",
-          "links": [{ "label": "PyTorch tutorials", "url": "https://pytorch.org/tutorials/" }]
+          "detail": "Katmanlı yapılarla daha zor problemlere yaklaşılır. Küçük bir örneği takip ederek kodu çalıştırmak, “ben de yaptım” hissi verir.",
+          "links": [{ "label": "PyTorch öğreticileri", "url": "https://pytorch.org/tutorials/" }]
         },
         {
           "id": "ai-4",
-          "title": "LLM ve prompt mühendisliği",
-          "detail": "API kullanımı, token maliyeti, güvenlik (prompt injection farkındalığı).",
-          "links": [{ "label": "OpenAI docs", "url": "https://platform.openai.com/docs" }]
+          "title": "Sohbet botları ve büyük dil modelleri",
+          "detail": "Hazır bir modele soru sormak ile kendi uygulamanı ona bağlamak farklı şeyler. Ücret, gizlilik ve güvenli kullanım konularına da mutlaka bak.",
+          "links": [{ "label": "OpenAI belgeleri", "url": "https://platform.openai.com/docs" }]
         },
         {
           "id": "ai-5",
-          "title": "Değerlendirme ve etik",
-          "detail": "Yanıltıcılık, önyargı, gizlilik; üretimde izleme ve geri bildirim döngüsü.",
-          "links": [{ "label": "PAIR — Google", "url": "https://pair.withgoogle.com/" }]
+          "title": "Adil kullanım ve güven",
+          "detail": "Yanlış cevap, önyargı ve kişisel verinin korunması gerçek hayatta çok konuşulur. Ürün yapacaksan bu başlıkları erken öğrenmek avantajdır.",
+          "links": [{ "label": "PAIR kaynakları", "url": "https://pair.withgoogle.com/" }]
         }
       ]
     },
     {
       "id": "devops",
-      "title": "DevOps & bulut",
-      "summary": "Otomasyon, konteyner ve güvenilir dağıtım.",
+      "title": "Kodun çalışır halde kalması",
+      "summary": "Yazılımı paketlemek, sunucuya almak ve bir şey bozulunca haberin olması — tek başına kod yazmaktan farklı ama çok değerli bir alan.",
       "steps": [
         {
           "id": "do-1",
-          "title": "Linux ve shell",
-          "detail": "Dosya sistemi, süreçler, izinler; bash veya zsh ile günlük komutlar.",
+          "title": "Bilgisayarı komutla yönetmek",
+          "detail": "Sunucularda çoğu iş yazılı komutlarla yapılır. Klasörler, dosya izinleri, çalışan programlar gibi temelleri öğrenmek ilk adımdır.",
           "links": [{ "label": "Linux Journey", "url": "https://linuxjourney.com/" }]
         },
         {
           "id": "do-2",
-          "title": "Docker",
-          "detail": "İmaj, konteyner, compose. Uygulamanı Dockerfile ile paketle.",
-          "links": [{ "label": "Docker docs", "url": "https://docs.docker.com/get-started/" }]
+          "title": "Kutularda çalışan uygulama (Docker)",
+          "detail": "“Benim bilgisayarımda çalışıyordu” sorununu azaltmak için uygulama standardı bir kutuya konur. Bu kutunun nasıl yapıldığını basit bir örnekle dene.",
+          "links": [{ "label": "Docker başlangıç", "url": "https://docs.docker.com/get-started/" }]
         },
         {
           "id": "do-3",
-          "title": "CI/CD temeli",
-          "detail": "GitHub Actions veya benzeri ile test + build pipeline.",
+          "title": "Her gönderimde otomatik kontrol",
+          "detail": "Kodunu kaydettiğinde test veya derleme işinin kendiliğeğinden olmasına yardımcı sistemler kurulur. Popüler platformlarda adım adım rehber vardır.",
           "links": [{ "label": "GitHub Actions", "url": "https://docs.github.com/actions" }]
         },
         {
           "id": "do-4",
-          "title": "Bulut servisleri",
-          "detail": "VM, object storage, ağ kavramları; bir sağlıcının ücretsiz katmanında deneme.",
+          "title": "Bulut: başkasının bilgisayarını kullanmak",
+          "detail": "Dosya saklama, sanal sunucu gibi hizmetleri ücretsiz katmanlarından deneyerek kavramları öğrenebilirsin.",
           "links": [{ "label": "AWS Skill Builder", "url": "https://skillbuilder.aws/" }]
         },
         {
           "id": "do-5",
-          "title": "Gözlemlenebilirlik",
-          "detail": "Log toplama, uyarı, basit dashboard; olayları kök neden analiziyle bağla.",
-          "links": [{ "label": "OpenTelemetry", "url": "https://opentelemetry.io/docs/" }]
+          "title": "Ne oldu, neden oldu?",
+          "detail": "Log kayıtları ve uyarılar sayesinde sistem bozulduğunda iz sürmek mümkün olur. İleride takımında bu işi yapan biri olsan da temelini bilmek değerlidir.",
+          "links": [{ "label": "OpenTelemetry giriş", "url": "https://opentelemetry.io/docs/" }]
         }
       ]
     },
     {
       "id": "urun-ux",
-      "title": "Ürün & UX",
-      "summary": "Keşiften teslimata kullanıcı odaklı düşünme.",
+      "title": "Kullanıcı için doğru şeyi yapmak",
+      "summary": "Ekran çizmekten önce: kimin derdi çözülüyor, sıra ne, önce hangi küçük parça? Ürün ve deneyim düşüncesi.",
       "steps": [
         {
           "id": "pu-1",
-          "title": "Problem ve kullanıcı tanımı",
-          "detail": "Görüşme, persona yerine görev odaklı çerçeve; öznel varsayımları yazılı tut.",
-          "links": [{ "label": "Nielsen Norman", "url": "https://www.nngroup.com/articles/" }]
+          "title": "Asıl problem ne?",
+          "detail": "İnsanlarla konuşarak veya gözlemleyerek varsayımlarını yazılı tutarsın. “Kim için, hangi sıkıntı?” sorusuna cevap netleşmeden güzel tasarım yetmez.",
+          "links": [{ "label": "Nielsen Norman yazıları", "url": "https://www.nngroup.com/articles/" }]
         },
         {
           "id": "pu-2",
-          "title": "Araştırma yöntemleri",
-          "detail": "Anket, kullanılabilirlik testi, rakip taraması; küçük örnekle dene.",
-          "links": [{ "label": "IDEO design kit", "url": "https://www.designkit.org/" }]
+          "title": "İhtiyacı anlamanın yolları",
+          "detail": "Anket, basit görüşme, başka ürünlere bakmak gibi yöntemler vardır. Küçük çaplı bir deneme bile seni çok şey öğretir.",
+          "links": [{ "label": "IDEO araçları", "url": "https://www.designkit.org/" }]
         },
         {
           "id": "pu-3",
-          "title": "Bilgi mimarisi ve prototip",
-          "detail": "Akış şeması, düşük sadakat tel çerçeve; Figma veya kağıt.",
-          "links": [{ "label": "Figma Learn", "url": "https://help.figma.com/hc/en-us/categories/360006895533" }]
+          "title": "Taslak ve düşük maliyetli model",
+          "detail": "Kağıt veya basit dijital çizimle akışı dener, erken geri bildirim alırsın. Pahalı geliştirmeden önce “doğru yönde miyiz?” sorusunu cevaplarsın.",
+          "links": [{ "label": "Figma öğren", "url": "https://help.figma.com/hc/en-us/categories/360006895533" }]
         },
         {
           "id": "pu-4",
-          "title": "Önceliklendirme",
-          "detail": "Etki/effort, RICE veya benzeri; MVP kapsamını netleştir.",
-          "links": [{ "label": "Intercom on Product", "url": "https://www.intercom.com/blog" }]
+          "title": "Ne önce, ne sonra?",
+          "detail": "Her fikri aynı anda yapmak mümkün değildir. Etkisi büyük ve yapımı kolay işleri öne almak gibi basit çerçeveler kullanılır.",
+          "links": [{ "label": "Intercom blog", "url": "https://www.intercom.com/blog" }]
         },
         {
           "id": "pu-5",
-          "title": "Ölçüm ve iterasyon",
-          "detail": "Temel ürün metrikleri, deney hipotezi, geri bildirim döngüsü.",
-          "links": [{ "label": "Amplitude — learning", "url": "https://amplitude.com/blog" }]
+          "title": "İlerleyip ilerlemediğini görmek",
+          "detail": "İnsanlar gerçekten kullanıyor mu, nerede takılıyor? Sayılar ve tekrarlayan incelemelerle yolu sürekli iyileştirirsin.",
+          "links": [{ "label": "Amplitude blog", "url": "https://amplitude.com/blog" }]
         }
       ]
     }

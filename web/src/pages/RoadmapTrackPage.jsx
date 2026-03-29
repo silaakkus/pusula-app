@@ -59,7 +59,7 @@ export function RoadmapTrackPage({ trackId, onBack }) {
           {typeof onBack === 'function' && (
             <Button type="button" variant="ghost" onClick={onBack}>
               <ArrowLeft className="h-5 w-5" aria-hidden />
-              Tüm haritalar
+              Tüm yollar
             </Button>
           )}
         </div>
@@ -76,6 +76,10 @@ export function RoadmapTrackPage({ trackId, onBack }) {
             <Card className="mb-8 border-indigo-200/80">
               <h1 className="text-2xl font-extrabold text-indigo-950 sm:text-3xl">{track.title}</h1>
               <p className="mt-2 text-sm text-slate-600">{track.summary}</p>
+              <p className="mt-2 text-xs leading-relaxed text-slate-500">
+                Terimleri ilk kez görüyorsan sorun değil; her adımda ne demek istediğini sade dille anlatmaya çalıştık. İstediğin
+                adımı “Öğrenildi” ile işaretlemen tamamen sana kalmış — sadece kendi düzenini takip etmek için.
+              </p>
               <div className="mt-4 h-2.5 overflow-hidden rounded-full bg-slate-200">
                 <div
                   className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-violet-500 transition-[width] duration-300"
@@ -157,7 +161,7 @@ export function RoadmapTrackPage({ trackId, onBack }) {
             </ol>
           </>
         )}
-        {data && !track && !err && <p className="text-sm text-slate-600">Harita bulunamadı.</p>}
+        {data && !track && !err && <p className="text-sm text-slate-600">Bu öğrenme yolu bulunamadı.</p>}
       </motion.div>
     </main>
   );
