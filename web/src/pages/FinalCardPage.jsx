@@ -7,6 +7,7 @@ import { CareerCardCapture } from '../components/CareerCardCapture.jsx';
 import { downloadCareerCardPng } from '../lib/downloadCareerCard.js';
 import { logEvent } from '../lib/analytics.js';
 import { flowPreviousStepButtonClass } from '../lib/flowPreviousStepButton.js';
+import { InviteFriendCard } from '../components/InviteFriendCard.jsx';
 
 export function FinalCardPage({
   profile,
@@ -94,6 +95,8 @@ export function FinalCardPage({
             Başa dön
           </Button>
         </div>
+
+        <InviteFriendCard />
       </motion.div>
     </main>
   );
