@@ -12,7 +12,7 @@ function getShareSiteUrl() {
 }
 
 function buildShareText(siteUrl) {
-  const base = siteUrl || 'https://pusula.app';
+  const base = siteUrl || 'https://pusula-app.netlify.app';
   return `Bölümüm ne olursa olsun geleceğim teknolojide! Sen de rotanı keşfet → ${base}`;
 }
 
