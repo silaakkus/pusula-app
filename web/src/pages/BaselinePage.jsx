@@ -30,8 +30,7 @@ export function BaselinePage({
             Şu an teknoloji sektöründe kendine yer bulma konusunda özgüvenin kaç?
           </h2>
           <p className="mb-8 text-sm leading-relaxed text-slate-600">
-            1 en düşük, 5 en yüksek. Bu skor, ileride \( \Delta \) hesabı için başlangıç
-            noktamız olacak.
+            1 en düşük, 5 en yüksek. Bu skor, ileride Δ (delta) hesabı için başlangıç noktamız olacak.
           </p>
 
           <div className="flex items-center justify-center gap-3">

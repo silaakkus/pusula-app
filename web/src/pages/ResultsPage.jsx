@@ -747,6 +747,12 @@ export function ResultsPage({
                             {empMixed && entry._source === 'matrix' && (
                               <ResultSectionSourceTag label="Matris rehberi" />
                             )}
+                            {!empMixed && empSrc === 'llm' && (
+                              <ResultSectionSourceTag label={`${getLlmBrandLabel()} önerisi`} />
+                            )}
+                            {!empMixed && empSrc === 'matrix' && (
+                              <ResultSectionSourceTag label="Matris rehberi" />
+                            )}
                           </div>
                         </li>
                       ))}
