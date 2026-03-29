@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Compass } from 'lucide-react';
 import { LandingPage } from './pages/LandingPage';
+import { LandingInfoPage } from './pages/LandingInfoPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { BaselinePage } from './pages/BaselinePage';
 import { AnalyzingPage } from './pages/AnalyzingPage';
@@ -12,7 +13,7 @@ import { FinalCardPage } from './pages/FinalCardPage';
 import { PusulaBadgesStrip } from './components/PusulaBadgesStrip.jsx';
 import { loadPusulaData, getDisciplineById } from './lib/dataLoader.js';
 import { runCareerAnalysis } from './lib/gemini.js';
-import { getLlmApiKey, getLlmProvider } from './lib/llmConfig.js';
+import { getLlmApiKey, getLlmProvider, getLlmBrandLabel } from './lib/llmConfig.js';
 import { savePusulaSession } from './lib/pusulaSession.js';
 import { rolesFromMatrix } from './lib/fallbackRoles.js';
 import { BARRIER_STATIC_FALLBACK } from './lib/barrierFallback.js';
@@ -89,11 +90,12 @@ const App = () => {
   const [geminiError, setGeminiError] = useState('');
 
   const [barrierResult, setBarrierResult] = useState(null);
+  const [landingInfoSectionId, setLandingInfoSectionId] = useState(null);
 
   const navLabel = useMemo(() => stepLabel(step), [step]);
 
   useEffect(() => {
-    if (step === 'home') return;
+    if (step === 'home' || step === 'landingInfo') return;
     if (step === 'profile' && !profile) return;
     saveFlowSnapshot({
       step,
@@ -209,6 +211,7 @@ const App = () => {
   }, [profile, matrix, baselineBefore]);
 
   const goHome = useCallback(() => {
+    setLandingInfoSectionId(null);
     setStep('home');
     logEvent('nav_home_logo', {});
   }, []);
@@ -222,6 +225,7 @@ const App = () => {
 
   const resetFlow = () => {
     clearFlowSnapshot();
+    setLandingInfoSectionId(null);
     setStep('home');
     setProfile(null);
     setBaselineBefore(3);
@@ -265,7 +269,7 @@ const App = () => {
 
         <div className="flex flex-col items-stretch gap-2 sm:items-end">
           <PusulaBadgesStrip />
-          {step !== 'home' && (
+          {step !== 'home' && step !== 'landingInfo' && (
             <div className="rounded-full border border-white/40 bg-white/40 px-4 py-2 text-center text-xs font-semibold text-slate-700 backdrop-blur-sm sm:text-right">
               {navLabel}
             </div>
@@ -278,8 +282,23 @@ const App = () => {
         <LandingPage
           onStart={handleFlowStart}
           onResume={handleResume}
+          onOpenInfo={(sectionId) => {
+            setLandingInfoSectionId(sectionId ?? null);
+            setStep('landingInfo');
+          }}
           resumeAvailable={hasSavedFlow()}
           resumeSummary={getSavedFlowSummary()}
+        />
+      )}
+
+      {step === 'landingInfo' && (
+        <LandingInfoPage
+          initialSectionId={landingInfoSectionId}
+          aiBrandLabel={getLlmBrandLabel()}
+          onBack={() => {
+            setLandingInfoSectionId(null);
+            setStep('home');
+          }}
         />
       )}
 
