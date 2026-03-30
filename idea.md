@@ -1,134 +1,114 @@
 # Pusula 🧭
-> Teknolojiye ilk adım atan kadınlar için AI destekli kariyer keşif rehberi
+
+> Üniversiteli kadınlar için Groq / Gemini destekli teknoloji kariyer rehberi
 
 ---
 
 ## Problem
 
-Türkiye'de teknoloji sektöründe kadın temsili hâlâ erkeklerin çok gerisinde. Bunun en kritik kırılma noktası üniversite yılları: teknolojiye ilgi duyan pek çok kadın öğrenci, hangi alana yöneleceğini bilemiyor, "ben buna uygun muyum?" sorusuna takılıp kalıyor ve ilk adımı atmadan vazgeçiyor.
+Türkiye’de teknoloji alanına adım atmak isteyen birçok kadın üniversite öğrencisi **nereden başlayacağını** ve **hangi rolün kendine uygun olduğunu** netleştiremiyor. Bilgi kirliliği yüksek; bölümü “klasik mühendislik” olmayan öğrenciler ise “ben buna uygun değilim” hissine kapılarak ilk adımı hiç atmıyor.
 
-Sorun bilgi eksikliği değil — yön eksikliği.
+**Özet:** Sorun yalnızca bilgi eksikliği değil; kişiye özel, yargılamayan ve Türkiye bağlamında uygulanabilir **yön** eksikliğidir.
 
-**Ürün kapsamı bilinçli olarak Türkiye odaklıdır.** Çünkü hedef kullanıcı Türkiye'deki kadın öğrenciler olduğu için yönlendirmeler de Türkiye’de erişilebilir kaynak, program ve topluluklar üzerinden tasarlanır.
+**Kapsam:** Ürün bilinçli olarak Türkiye odaklıdır (kaynaklar, programlar, şehir filtresi, maaş bantları dili).
 
 ---
 
 ## Kullanıcı
 
-**Kim?** Teknolojiye yeni başlayan veya başlamayı düşünen üniversite öğrencisi kadınlar.
+**Kim?** Teknolojiye ilgi duyan veya yön arayan **üniversite öğrencisi kadınlar** (fakülte / bölüm çeşitliliği yüksek; teknoloji bölümü şartı yok).
 
-**Nasıl hissediyor?**
-- "Kodlamayı hiç bilmiyorum, geç mi kaldım?"
-- "Veri bilimi mi, siber güvenlik mi, hangisi bana uyar?"
-- "Matematiği sevmiyorum, bu yüzden teknoloji benim için değil mi?"
+**Tipik ihtiyaçlar / hisler:**
 
-**Ne istiyor?** Yargılamayan, kişisel ve somut bir yön.
+- “Hangi teknoloji rolü bana daha yakın?”
+- “Bölümüm teknolojiye kapı açıyor mu?”
+- “İlk adımı atmaktan çekiniyorum; yargılanmadan net bir rota istiyorum.”
 
----
-
-## Çözüm
-
-Pusula, kullanıcıya 5-6 eğlenceli soru sorar — ilgi alanları, güçlü yönleri, günlük alışkanlıkları. Ardından AI iki şeyi birden yapar:
-
-1. **Kariyer Önerisi:** Kullanıcının profiline en uygun **3 rol** önerir, her biri için "neden sen?" açıklaması üretir.
-2. **Engel Kırıcı:** Kullanıcı bir engel yazdığında ("matematik bilmiyorum", "bu işler benim için değil") AI bunu kariyer dışlayıcı olarak değil, yeniden çerçeveleyen bir bakış açısıyla ele alır.
-
-Öneri ekranı, sadece alan adıyla bitmez. Her öneri için şunları sunar:
-- Türkiye'de bu alanda işe alan şirket örnekleri (opsiyonel)
-- Ücretsiz Türkçe başlangıç kaynakları
-- UP School / YGA programlarına yönlendirme
+**Ne bekliyor?** Samimi dil, kişiselleştirilmiş rol önerileri, başlangıç kaynakları, mümkün olduğunda yerel fırsat ve program köprüleri, paylaşılabilir bir özet (kariyer kartı).
 
 ---
 
-## AI'ın Rolü
+## Çözüm (ürünün bugünkü hali)
 
-Yapay zeka bu projede iki kritik noktada devreye girer:
+Pusula çok adımlı bir akış sunar:
 
-| Nokta | AI Ne Yapıyor? |
-|---|---|
-| Kariyer keşfi | Kullanıcı cevaplarını analiz edip kişiselleştirilmiş alan önerisi üretir |
-| Engel kırıcı | Kullanıcının yazdığı engeli alır, teknoloji kariyer bağlamında yeniden çerçeveler |
-
-Kullanılan model: Gemini API (Google AI Studio)
-
----
-
-## Rakip Durum
-
-| Rakip | Ne Yapıyor | Eksik Olan |
-|---|---|---|
-| ChatGPT | Genel kariyer önerisi | Kişiselleştirme yok, Türkiye odaklı değil |
-| LinkedIn AI | İş ilanı eşleştirme | Başlangıç seviyesine uygun değil |
-| UP AI | Genel kişisel gelişim, rol deneyimleme | Teknoloji kariyer keşfine özel değil |
-| techwomen.io | AI destekli kariyer koçu + iş eşleştirme | İngilizce, abonelik gerekli, Türkiye odaklı değil |
-| MentorHer | AI kariyer yol haritası + mentor eşleştirme | Genel kadın profesyoneller için, başlangıç seviyesine özel değil |
-| Asha Bot | Ses destekli AI kariyer botu, bias tespiti | Hackathon projesi, iş gücüne yeniden dönenler için tasarlanmış |
-| Yabancı platformlar | Gelişmiş öneri motorları | Türkçe yok, Türk iş piyasasını tanımıyor |
-
-**Pusula'nın net farkı:**
-> *"Mevcut çözümlerin tamamı İngilizce, abonelik bazlı ve global. Pusula; Türkçe, ücretsiz, Türkiye iş piyasasına odaklı ve teknolojiye ilk kez adım atan üniversite öğrencisi kadınlara özel ilk AI kariyer rehberidir."*
+1. **Landing:** Akışa başlama, kaldığı yerden devam, isteğe bağlı öğrenme yolları ve yönelim testi girişleri; gizlilik / özellik özeti.
+2. **Çok boyutlu profil:** Fakülte, bölüm, bölüm ilgileri, teknoloji ilgi kümeleri (alan / el becerisi / ortam), hedef, öğrenme ve çalışma tercihleri, şehir vb.
+3. **Ön anket (baseline):** Özgüven 1–5.
+4. **AI analiz:** Profil + disiplin matrisi özeti + (varsa) yönelim sonucu ile **4–5 rol**; her rol için gerekçe, ilk adımlar, başlangıç kaynakları, maaş bandı (LLM + matris / kalibrasyon), işveren ve staj/program ipuçları.
+5. **Sonuç ekranı:** Fırsat filtresi, detaylı rol kartları.
+6. **Engel:** Kullanıcının yazdığı engeli AI ile yeniden çerçeveleme ve aksiyonlar.
+7. **Son anket + kariyer kartı:** Özgüven tekrarı, Δ hesabı, PNG kart indirme.
+8. **Opsiyonel:** Yol haritaları (roadmap), yönelim testi ve sonuç zenginleştirme (Groq), davet / n8n e-posta otomasyonu.
 
 ---
 
-## Başarı Kriteri
+## AI'ın Rolü (zorunlu özet)
 
-Bu proje başarılı olursa:
+| Bağlam | AI ne yapıyor? |
+|--------|----------------|
+| Kariyer analizi | Profil ve matris sinyallerini yorumlayıp kişiselleştirilmiş rol seti ve açıklamalar üretir. Sağlayıcı: **Groq** veya **Gemini** (`VITE_LLM_PROVIDER` ile seçilir). |
+| Engel modülü | Engeli dışlayıcı olmayan dilde yeniden çerçeveler; 3–4 somut aksiyon önerir. |
+| Yönelim sonucu | İsteğe bağlı ek özet ve sıradaki adımlar (Groq zenginleştirme). |
+| n8n | Webhook üzerinden profil / sonuç verisini işleyip e-posta gibi dış sistemlere iletir (otomasyon katmanı). |
 
-- Kullanıcı uygulamayı açtıktan 3 dakika içinde hangi teknoloji alanına yöneleceğini bilir
-- "Ben buna uygun değilim" düşüncesiyle gelen kullanıcı, çıkarken somut bir sonraki adımla ayrılır
-- UP School programlarına yönlendirilen kullanıcı sayısı artar
-
-## MVP Teslim Odağı (10 Günlük Prototip)
-
-Brief’in beklentisiyle uyumlu şekilde, ilk çalışan prototipi mümkün olduğunca erken görmek için kapsamı katmanlayacağız:
-
-1. Önce en temel akış: soru-cevap -> Gemini önerisi (2-3 alan) -> “sonraki adım” butonları
-2. Ardından kariyer kartı: öneriyi paylaşılabilir tek bir “profil kartı”na dönüştürme
-3. Ardından engel kırıcı: kullanıcı engelini yazınca yeniden çerçeveleme + aksiyon önerisi
-4. Zaman kalırsa: rozet sistemi + `localStorage` ile kaldığı yerden devam
-
-Bu sırayı korumak, 5 günde (ve 10 günde çalışan prototip vizyonunda) “görünür değer üreten” bir ürün çıkarma riskini azaltır.
-
-## Ek Başarı Metriği (Test Anketi)
-
-Engel kırıcı modülün gerçekten “engel hissini” azalttığını ölçmek için kısa bir anket ekleyeceğiz:
-
-- Engel örneği girdikten sonra kullanıcıya 1-5 arası “özgüven/uygunluk” puanı (örn. 1=çok düşük, 5=çok yüksek)
-- Engel kırıcı öneriyi gördükten sonra aynı soruyu tekrar sorup puan artışını (delta) kaydetme
-
-Bu metrik 5. adım test sürecini somutlaştırır ve “AI’ın etkisi var mı?” sorusuna yanıt verir.
-
-## Cursor İçin Uygulama Önceliği
-
-Cursor/Agent modunda ilk yazdırılacak akış şu olmalı:
-
-1. Soru ekranı (minimum 5-6 soru) + tek seferde form gönderimi
-2. Gemini’den alan önerisi alma (stream değil, tek yanıt MVP)
-3. Öneri kartı içinde “Türkiye odaklı kaynaklar” + UP School/YGA yönlendirme butonları
-4. Kullanıcı engelini yazınca Gemini’den yeniden çerçeveleme + 1-2 somut aksiyon
-5. Kariyer kartı (paylaşılabilir görsel)
-6. Zaman kalırsa: rozet + `localStorage` (tamamlandı/rozet aldım durumları)
-
-## Bir Sonraki Adım
-
-Şu an Adım 2’ye geçmek için (PRD + görevleri bölme):
-
-- `idea.md` içeriğini baz alarak kısa bir PRD taslağı çıkar
-- PRD’den `tasks.md` türet (MVP scope, ekranlar, API entegrasyonu, başarı metriklerini kaydetme)
-
-Gemini/Canvas prompt örneği:
-
-"Hazırladığım `idea.md` dosyasını baz alarak bana bir PRD (Ürün Gereksinim Belgesi) hazırlar mısın? İçinde kullanıcı akışı (user flow), teknik yığın (tech stack: React/Tailwind/Gemini API gibi) ve Cursor için adım adım `tasks.md` (görev listesi) olsun. 5 gün içinde çalışan MVP önceliğini özellikle uygula."
+**Önemli:** AI çıktıları tahmin niteliğindedir; özellikle maaş ve işveren örnekleri için kullanıcıya “resmi teklif / garanti değildir” mesajı UI’da korunur.
 
 ---
 
-## Kapsam (5 Günlük Buildathon)
+## Rakip Durum (kısa)
+
+| Tür | Örnek | Pusula farkı |
+|-----|--------|--------------|
+| Genel sohbet | ChatGPT | Türkiye odaklı akış, profil + matris + kart entegre değil |
+| Global platformlar | İngilizce kariyer araçları | Türkçe, yerel program ve fırsat dili |
+| Tek özellik | Sadece ik veya sadece quiz | Profil + AI + engel + Δ + kart + opsiyonel yönelim / roadmap |
+
+---
+
+## Başarı kriteri
+
+- Kullanıcı akışı sonunda **somut roller** ve **ilk adımlar** ile ayrılır.
+- Engel adımından sonra **yeniden çerçevelenmiş** ve **eyleme dönük** mesaj alır.
+- Kariyer kartında Δ ve özet görünür; **paylaşılabilir çıktı** üretilir.
+- (Bonus) n8n ile e-posta / bildirim hattı çalışır.
+
+---
+
+## MVP / Buildathon teslim odağı — **10 günlük plan** (brief ile uyumlu)
+
+Buildathon **10 günde ve 6 adımda** ilerler; Pusula bu çerçevede şu teslimleri karşılar:
+
+| Gün / adım (brief) | Pusula karşılığı |
+|-------------------|------------------|
+| 1–2: Problem, rakip, idea.md | Bu dosya + rakip özeti |
+| 2–4: PRD, tasks, user-flow, tech-stack | `prd.md`, `tasks.md`, `user-flow.md`, `tech-stack.md` |
+| 3–6: Çalışan kod | `web/` (React/Vite), `features/README.md` envanteri |
+| 6–7: AI güçlendirme | Sistem promptları, Groq yönelim zenginleştirme, maaş kalibrasyonu |
+| 7–8: Yayın ve test | Canlı demo (README’deki Vercel linki) |
+| 9–10: Demo video + README | README’de ekran görüntüleri; demo video linki eklenebilir |
+
+**Not:** Eski taslaklardaki “5 günlük sprint” ifadesi kaldırıldı; tek resmi plan **10 günlük buildathon** olarak bu belgede tanımlıdır.
+
+---
+
+## Kapsam tablosu (güncel)
 
 | Özellik | Durum |
-|---|---|
-| Kariyer keşif akışı (sorular → AI öneri) | ✅ Yapılacak |
-| Engel kırıcı modül | ✅ Yapılacak |
-| Kariyer kartı (paylaşılabilir görsel) | ✅ Yapılacak |
-| Rozet sistemi | ⭐ Zaman kalırsa |
-| localStorage hafıza | ⭐ Zaman kalırsa |
-| Gerçek topluluk eşleştirme | 🔜 V2 |
+|---------|--------|
+| Çok boyutlu profil + AI rol önerisi | ✅ |
+| Disiplin matrisi + yerel fırsat verisi | ✅ |
+| Engel kırıcı (AI) | ✅ |
+| Ön / son anket + Δ + kariyer kartı PNG | ✅ |
+| Yönelim testi (opsiyonel) | ✅ |
+| Öğrenme yolları (roadmap) | ✅ |
+| Rozetler + localStorage akış kaydı | ✅ |
+| n8n webhook (e-posta / tamamlanma) | ✅ |
+
+---
+
+## Bir sonraki adım (sürdürülebilirlik)
+
+- Demo video linkini README’ye sabitlemek.
+- Geri bildirim formu (brief Adım 5) ile 5+ kullanıcı testi özetini eklemek.
+- `agents/` altında prompt / değerlendirme notlarını genişletmek (bonus).
