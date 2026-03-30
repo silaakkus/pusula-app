@@ -511,12 +511,6 @@ export function ResultsPage({
         </div>
         <h2 className="text-3xl font-extrabold tracking-tight text-indigo-900">Önerilen rol haritası</h2>
         <p className="mt-2 max-w-none text-sm text-slate-600">
-          {profile?.disciplineLabel && (
-            <>
-              <span className="font-semibold text-slate-800">{profile.disciplineLabel}</span>
-              {' · '}
-            </>
-          )}
           Profiline göre teknoloji ekosisteminde öne çıkan yollar.
           {profile?.cityId && profile.cityId !== 'all' && (
             <span className="mt-1 block text-xs text-slate-500">
