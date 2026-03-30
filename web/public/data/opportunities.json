@@ -27,6 +27,78 @@
     "url": "https://upschool.io/"
   },
   {
+    "opportunityId": "upschool-e-ticarette-guclu-kadinlar",
+    "name": "UP School — E-Ticarette Güçlü Kadınlar Programı",
+    "type": "program",
+    "targetTags": ["marketing-analytics", "pm", "fintech", "sustainability", "hrtech"],
+    "cities": ["all", "remote", "istanbul", "ankara", "izmir"],
+    "forWho": "E-ticaret alanında dijital beceriler kazanıp gelir üretme odaklı kariyer adımı atmak isteyen kadınlar.",
+    "url": "https://www.upschool.io/program"
+  },
+  {
+    "opportunityId": "upschool-google-cloud-ace",
+    "name": "UP School — Google Associate Cloud Engineer Certificate Programme",
+    "type": "course",
+    "targetTags": ["data", "devops", "cloud", "analytics", "ai-ethics"],
+    "cities": ["all", "remote"],
+    "forWho": "Cloud altyapısı ve sertifikasyon odaklı ilerlemek isteyen öğrenciler ve erken kariyer adayları.",
+    "url": "https://www.upschool.io/program"
+  },
+  {
+    "opportunityId": "upschool-java-development",
+    "name": "UP School — Java Development Programı",
+    "type": "course",
+    "targetTags": ["backend", "fintech", "data", "pm"],
+    "cities": ["all", "remote"],
+    "forWho": "Back-end temeli kurup kurumsal yazılım tarafına geçmek isteyen adaylar.",
+    "url": "https://www.upschool.io/program"
+  },
+  {
+    "opportunityId": "upschool-machine-learning",
+    "name": "UP School — Machine Learning Program",
+    "type": "course",
+    "targetTags": ["data", "analytics", "ai-ethics", "research", "biotech"],
+    "cities": ["all", "remote"],
+    "forWho": "Makine öğrenmesi temellerini proje odaklı ilerletmek isteyen öğrenciler.",
+    "url": "https://www.upschool.io/program"
+  },
+  {
+    "opportunityId": "upschool-data-analysis",
+    "name": "UP School — Data Analysis Programı",
+    "type": "course",
+    "targetTags": ["data", "analytics", "pm", "marketing-analytics", "fintech"],
+    "cities": ["all", "remote"],
+    "forWho": "Veri analizi ve raporlama becerisiyle iş problemlerine çözüm geliştirmek isteyen adaylar.",
+    "url": "https://www.upschool.io/program"
+  },
+  {
+    "opportunityId": "upschool-data-science",
+    "name": "UP School — Data Science Programı",
+    "type": "course",
+    "targetTags": ["data", "analytics", "ai-ethics", "research", "biotech"],
+    "cities": ["all", "remote"],
+    "forWho": "İleri seviye veri bilimi ve modelleme yetkinliği kazanmak isteyenler.",
+    "url": "https://www.upschool.io/program"
+  },
+  {
+    "opportunityId": "upschool-frontend-development",
+    "name": "UP School — Frontend Development Programı",
+    "type": "course",
+    "targetTags": ["ux", "frontend", "pm", "edtech", "gamedev"],
+    "cities": ["all", "remote"],
+    "forWho": "Arayüz geliştirme, kullanıcı deneyimi ve ürün odaklı web geliştirme öğrenmek isteyen adaylar.",
+    "url": "https://www.upschool.io/program"
+  },
+  {
+    "opportunityId": "upschool-digital-marketing",
+    "name": "UP School — Digital Marketing Programı",
+    "type": "course",
+    "targetTags": ["marketing-analytics", "pm", "sustainability", "hrtech"],
+    "cities": ["all", "remote"],
+    "forWho": "Performans pazarlama, kampanya ölçümleme ve dijital büyüme odaklı kariyer isteyenler.",
+    "url": "https://www.upschool.io/program"
+  },
+  {
     "opportunityId": "sisterslab",
     "name": "SistersLab — Bilim ve Teknolojide Kadın Derneği",
     "type": "program",
@@ -41,7 +113,7 @@
     "type": "program",
     "targetTags": ["data", "ux", "research", "hrtech", "edtech"],
     "cities": ["all", "remote"],
-    "forWho": "Üniversite öğrencisi veya yeni mezun kadınlar için mentorluk ve kariyer geçişi odaklı teknoloji programı.",
+    "forWho": "Kimler katılabilir: Üniversite öğrencisi veya yeni mezun kadınlar. Mentorluk ve kariyer geçişi odaklı teknoloji programı.",
     "url": "https://sisterslab.org/"
   },
   {
@@ -50,8 +122,44 @@
     "type": "program",
     "targetTags": ["pm", "marketing-analytics", "fintech", "data", "edtech"],
     "cities": ["all", "remote", "istanbul", "ankara", "izmir"],
-    "forWho": "Mühendislik ve ilgili bölümlerde okuyan kadın öğrenciler için e-ticaret, girişimcilik ve mentorluk desteği.",
+    "forWho": "Kimler katılabilir: Üniversitelerin mühendislik fakültelerinde okuyan 3. ve 4. sınıf öğrencileri. Program e-ticaret, girişimcilik ve dijital pazarlama alanlarında yetkinlik geliştirmeye odaklanır.",
     "url": "https://sisterslab.org/hepsi-burada-yarinlara-soz-programi/"
+  },
+  {
+    "opportunityId": "sisterslab-tech4youth",
+    "name": "SistersLab — Tech4Youth (NEET Gençler için Dijital ve Sosyal Beceriler)",
+    "type": "program",
+    "targetTags": ["edtech", "research", "pm", "sustainability", "marketing-analytics"],
+    "cities": ["all", "remote", "istanbul", "ankara", "izmir"],
+    "forWho": "Kimler katılabilir: 18-30 yaş arası, ne eğitimde ne istihdamda olan (NEET) genç kadınlar.",
+    "url": "https://sisterslab.org/"
+  },
+  {
+    "opportunityId": "sisterslab-dijital-kizlar",
+    "name": "SistersLab — Dijital Kızlar Projesi",
+    "type": "program",
+    "targetTags": ["edtech", "research", "sustainability"],
+    "cities": ["all", "remote"],
+    "forWho": "Kimler katılabilir: 13-18 yaş arası kız çocukları (lise düzeyi).",
+    "url": "https://sisterslab.org/"
+  },
+  {
+    "opportunityId": "sisterslab-stem-kizlara-iyi-gelecek",
+    "name": "SistersLab — STEM Kızlara İyi Gelecek Projesi",
+    "type": "program",
+    "targetTags": ["edtech", "research", "sustainability"],
+    "cities": ["all", "remote"],
+    "forWho": "Kimler katılabilir: 13-18 yaş arası lise öğrencisi kız çocukları.",
+    "url": "https://sisterslab.org/"
+  },
+  {
+    "opportunityId": "sisterslab-tech-plus-45",
+    "name": "SistersLab — Tech+45 Dijital Beceri Programı",
+    "type": "program",
+    "targetTags": ["edtech", "hrtech", "sustainability"],
+    "cities": ["all", "remote"],
+    "forWho": "Kimler katılabilir: 45 yaş ve üzeri kadınlar.",
+    "url": "https://sisterslab.org/"
   },
   {
     "opportunityId": "kodluyoruz",

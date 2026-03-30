@@ -487,10 +487,15 @@ PROGRAM VE EĞİTİM KALİTESİ:
 - Her kaynak mümkün olduğunca spesifik program/kurs/kitap/dokümantasyon adı içermeli.
 - internshipPrograms ve applicationPrograms içinde marka + program adı seviyesinde netlik ver.
 - Her program girdisi gerçekçi, tıklanabilir https URL içermeli.
+- Her program girdisinde "kimler katılabilir" bilgisini açık yaz:
+  • internshipPrograms.eligibility alanı zorunlu ve net kitle tanımı içermeli.
+  • applicationPrograms.forWho alanı "Kimler katılabilir: ..." formatında başlamalı.
 
 SPESİFİK PROGRAM KATALOĞU (öncelikli kullan; role göre seç):
 - UP School: "Birbirini Geliştiren Kadınlar", "Future Talent Program", "AI-First Developer Programı" (https://upschool.io/)
+- UP School (program sayfasındaki geçmiş programlardan role göre seç): "E-Ticarette Güçlü Kadınlar Programı", "Google Associate Cloud Engineer Certificate Programme", "AI-First Developer Programı", "Java Development Programı", "Machine Learning Program", "Data Analysis Programı", "Data Science Programı", "Frontend Development Programı", "Digital Marketing Programı" (https://www.upschool.io/program)
 - SistersLab: "Women in Tech Academy", "Hepsiburada Yarınlara Söz Programı", STEAM/dijital beceri programları (https://sisterslab.org/)
+- SistersLab (Projelerimiz bölümünü role göre kullan): "Tech4Youth", "Dijital Kızlar", "STEM Kızlara İyi Gelecek", "Tech+45", "Hepsiburada Yarınlara Söz Programı" (https://sisterslab.org/)
 - Kodluyoruz: bootcamp ve topluluk programları (https://www.kodluyoruz.org/)
 - Patika.dev: yazılım/veri patikaları, AI/Data öğrenme patikaları (https://www.patika.dev/)
 - Women Techmakers: topluluk etkinlikleri (https://www.womentechmakers.com/)

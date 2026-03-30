@@ -23,8 +23,26 @@ function tagOverlapScore(oppTags, roleTags) {
 }
 
 const TAG_PRIORITY_OPPORTUNITY_IDS = {
-  data: ['upschool-ai-literacy', 'upschool-future-talent', 'patika-ai-track', 'patika-bootcamp', 'youthall-staj-program', 'patika-dev'],
-  analytics: ['upschool-future-talent', 'patika-ai-track', 'academy-patika-upskill', 'patika-bootcamp', 'youthall-staj-program'],
+  data: [
+    'upschool-data-analysis',
+    'upschool-data-science',
+    'upschool-machine-learning',
+    'upschool-ai-literacy',
+    'upschool-future-talent',
+    'patika-ai-track',
+    'patika-bootcamp',
+    'youthall-staj-program',
+    'patika-dev',
+  ],
+  analytics: [
+    'upschool-data-analysis',
+    'upschool-future-talent',
+    'upschool-machine-learning',
+    'patika-ai-track',
+    'academy-patika-upskill',
+    'patika-bootcamp',
+    'youthall-staj-program',
+  ],
   'ai-ethics': ['upschool-ai-literacy', 'wtm-turkey', 'gdsc'],
   pm: [
     'upschool-birgibi',
@@ -33,14 +51,32 @@ const TAG_PRIORITY_OPPORTUNITY_IDS = {
     'yga-young-leaders',
     'teknolojide-kadin-dernegi',
   ],
-  ux: ['sisterslab', 'sisterslab-quest', 'upschool-birgibi', 'wtm-turkey'],
+  ux: ['upschool-frontend-development', 'sisterslab', 'sisterslab-quest', 'upschool-birgibi', 'wtm-turkey'],
   hrtech: ['upschool-birgibi', 'teknolojide-kadin-dernegi', 'sisterslab-quest'],
-  fintech: ['academy-patika-upskill', 'upschool-future-talent', 'patika-bootcamp', 'youthall-staj-program', 'kariyer-net-staj'],
+  fintech: [
+    'academy-patika-upskill',
+    'upschool-future-talent',
+    'upschool-java-development',
+    'upschool-data-analysis',
+    'patika-bootcamp',
+    'youthall-staj-program',
+    'kariyer-net-staj',
+  ],
   biotech: ['patika-dev', 'youthall-staj-program', 'kariyer-net-staj', 'sisterslab'],
   sustainability: ['yga-ignite', 'yga-young-leaders', 'yga-twin', 'teknolojide-kadin-dernegi'],
   gamedev: ['tr-btk-hackathon', 'gdsc-solution-challenge', 'gdsc', 'open-source-tr'],
-  edtech: ['sisterslab', 'sisterslab-topluluk', 'yga-young-leaders', 'teknolojide-kadin-dernegi'],
+  edtech: [
+    'sisterslab',
+    'sisterslab-tech4youth',
+    'sisterslab-topluluk',
+    'sisterslab-dijital-kizlar',
+    'sisterslab-stem-kizlara-iyi-gelecek',
+    'yga-young-leaders',
+    'teknolojide-kadin-dernegi',
+  ],
   'marketing-analytics': [
+    'upschool-digital-marketing',
+    'upschool-e-ticarette-guclu-kadinlar',
     'academy-patika-upskill',
     'sisterslab-hepsiburada-yarinlara-soz',
     'youthall-staj-program',
@@ -48,7 +84,15 @@ const TAG_PRIORITY_OPPORTUNITY_IDS = {
     'upschool-birgibi',
     'yga-young-leaders',
   ],
-  research: ['gdsc-solution-challenge', 'gdsc', 'wtm-ambassador', 'wtm-turkey', 'linkedin-jobs-early-career', 'open-source-tr'],
+  research: [
+    'gdsc-solution-challenge',
+    'gdsc',
+    'sisterslab-tech4youth',
+    'wtm-ambassador',
+    'wtm-turkey',
+    'linkedin-jobs-early-career',
+    'open-source-tr',
+  ],
 };
 
 function preferredOpportunityIdsForRole(roleTags) {
