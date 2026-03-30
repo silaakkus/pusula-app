@@ -329,6 +329,30 @@ function ResultSectionSourceTag({ label }) {
   );
 }
 
+const TAG_HELP = {
+  data: 'Data: Veriyi toplama, temizleme, analiz etme ve anlamlı içgörü üretme odağı.',
+  analytics: 'Analytics: KPI takibi, raporlama ve karar destek için veri yorumlama becerileri.',
+  fintech: 'Fintech: Finans + teknoloji kesişimi; ödeme, bankacılık ve risk ürünleri alanı.',
+  ux: 'UX: Kullanıcı deneyimini araştırma, test etme ve iyileştirme yaklaşımı.',
+  pm: 'PM: Ürün yönetimi; kullanıcı ihtiyacını iş hedefiyle birleştirip önceliklendirme.',
+  'ai-ethics': 'AI Ethics: Yapay zekada adalet, güvenilirlik, şeffaflık ve sorumlu kullanım odağı.',
+  hrtech: 'HRTech: İnsan kaynakları süreçlerini teknoloji ve veriyle iyileştirme alanı.',
+  biotech: 'Biotech: Biyoloji ve teknolojiyi birleştirerek sağlık/yaşam bilimleri çözümleri üretme.',
+  sustainability: 'Sustainability: Çevresel etkiyi azaltan, sürdürülebilir ürün ve süreç yaklaşımı.',
+  gamedev: 'GameDev: Oyun tasarımı, oyun mekaniği, topluluk ve canlı operasyon süreçleri.',
+  edtech: 'EdTech: Eğitim teknolojileri; öğrenme deneyimini dijital araçlarla güçlendirme.',
+  'marketing-analytics': 'Marketing Analytics: Kampanya performansını ölçme ve büyüme kararları alma.',
+  research: 'Research: Araştırma odaklı çalışma; nitel/nicel veriyle hipotez test etme.',
+};
+
+function formatTagLabel(tag) {
+  return String(tag ?? '')
+    .split('-')
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ');
+}
+
 export function ResultsPage({
   profile,
   matrix,
@@ -348,6 +372,7 @@ export function ResultsPage({
   const [dayPeriodOpen, setDayPeriodOpen] = useState({});
   const [salaryMainOpen, setSalaryMainOpen] = useState({});
   const [internMainOpen, setInternMainOpen] = useState({});
+  const [activeTagByRole, setActiveTagByRole] = useState({});
 
   useEffect(() => {
     if (!Array.isArray(roles) || roles.length === 0) return;
@@ -472,14 +497,27 @@ export function ResultsPage({
                 <h3 className="text-xl font-extrabold text-indigo-950">{role.roleName}</h3>
                 <div className="mt-2 flex flex-wrap gap-1">
                   {(role.tags ?? []).map((t) => (
-                    <span
+                    <button
                       key={t}
-                      className="rounded-full bg-indigo-50 px-2 py-0.5 text-xs font-medium text-indigo-800"
+                      type="button"
+                      onClick={() =>
+                        setActiveTagByRole((prev) => ({
+                          ...prev,
+                          [idx]: prev[idx] === t ? null : t,
+                        }))
+                      }
+                      className="rounded-full bg-indigo-50 px-2 py-0.5 text-xs font-medium text-indigo-800 ring-1 ring-indigo-200/70 hover:bg-indigo-100"
                     >
-                      {t}
-                    </span>
+                      {formatTagLabel(t)}
+                    </button>
                   ))}
                 </div>
+                {activeTagByRole[idx] ? (
+                  <p className="mt-2 rounded-lg border border-indigo-100 bg-indigo-50/60 px-2.5 py-2 text-xs leading-relaxed text-indigo-900">
+                    {TAG_HELP[activeTagByRole[idx]] ??
+                      `${formatTagLabel(activeTagByRole[idx])}: Bu etiket, rolün odaklandığı beceri alanını ifade eder.`}
+                  </p>
+                ) : null}
 
                 <div className="mt-6">
                   <div className="flex flex-wrap items-center justify-between gap-2">
