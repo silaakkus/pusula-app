@@ -53,7 +53,7 @@ Buildathon kapsaminda **7 katilimci** ile kullanici testi yuruttum. Katilimcilar
 
 ## Yol haritasi (sonraki guncellemeler)
 
-Mevcut sürüm, tanımlı ürün ve teslimat hedeflerini karşılayan, üretim ortamında çalışan bir temel sunmaktadır. Sonraki güncellemelerde, planlanan **V3 kapsamındaki** geliştirmeleri önceliklendirerek depoya taşımayı hedefliyorum; böylece otomasyonun ölçeklenebilirliği, fırsat keşfi deneyimi, önceliklendirme ve veri güncelliği gibi başlıklarda sürdürülebilir ilerleme sağlanacaktır.
+Şu an yayında olan sürümü, tanımlı ürün ve teslimat hedeflerini karşılayan ve üretimde çalışan bir **temel** olarak görüyorum. Sonraki güncellemelerde **V3** kapsamında planladığım geliştirmeleri öncelik sırasıyla depoya taşımayı hedefliyorum; özellikle otomasyonun ölçeklenebilirliği, fırsat keşfi deneyimi, önceliklendirme ve veri güncelliği başlıklarında adım adım ilerlemek istiyorum.
 
 **Geri bildirimlerimden:** Pusula’yı deneyenlerle yaptığım görüşmelerde bana en çok şunu ilettiler: şirketlerin üniversite öğrencilerine yönelik açtığı **güncel staj fırsatlarının**, uygulamada ilerledikleri **hedef rolle uyumlu** şekilde toparlanmasını ve bu özetin **e-posta ile** düzenli olarak kendilerine ulaşmasını istiyorlar. Ben de sonraki güncellemelerde fırsat keşfini ve bildirim akışını bu ihtiyaca göre önceliklendirmeyi planlıyorum.
 
