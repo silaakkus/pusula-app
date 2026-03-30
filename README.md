@@ -47,6 +47,10 @@ Bu yolculukta ogrendigim en onemli sey, dogru yonlendirme oldugunda farkli bolum
 
 Yayin Linki: **https://pusula-app-two.vercel.app**
 
+## Kullanici testi
+
+Buildathon kapsaminda **7 katilimci** ile kullanici testi yuruttum. Katilimcilar uygulamayi **masaustu bilgisayar** ile **iPhone (iOS)** ve **Android** cihazlarda deneyerek ana akisi ve kritik ekranlari hem genis hem mobil gorunumde dogruladi; boylece farkli isletim sistemi ve tarayici ortamlarinda tutarlilik kontrol edildi.
+
 ## Yol haritasi (sonraki guncellemeler)
 
 Mevcut sürüm, tanımlı ürün ve teslimat hedeflerini karşılayan, üretim ortamında çalışan bir temel sunmaktadır. Sonraki güncellemelerde, planlanan **V3 kapsamındaki** geliştirmeleri önceliklendirerek depoya taşımayı hedefliyorum; böylece otomasyonun ölçeklenebilirliği, fırsat keşfi deneyimi, önceliklendirme ve veri güncelliği gibi başlıklarda sürdürülebilir ilerleme sağlanacaktır.
