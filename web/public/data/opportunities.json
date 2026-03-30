@@ -10,7 +10,7 @@
   },
   {
     "opportunityId": "upschool-future-talent",
-    "name": "UP School — Future Talent Programları",
+    "name": "UP School — Future Talent Program",
     "type": "program",
     "targetTags": ["data", "analytics", "ai-ethics", "pm", "fintech", "sustainability"],
     "cities": ["all", "remote", "istanbul", "ankara"],
@@ -19,7 +19,7 @@
   },
   {
     "opportunityId": "upschool-ai-literacy",
-    "name": "UP School — Veri ve Yapay Zeka Okuryazarlığı",
+    "name": "UP School — AI-First Developer Programı",
     "type": "course",
     "targetTags": ["data", "analytics", "ai-ethics", "research", "fintech"],
     "cities": ["all", "remote"],
@@ -37,16 +37,25 @@
   },
   {
     "opportunityId": "sisterslab-quest",
-    "name": "SistersLab QUEST + Mentorluk Programları",
+    "name": "SistersLab — Women in Tech Academy",
     "type": "program",
     "targetTags": ["data", "ux", "research", "hrtech", "edtech"],
     "cities": ["all", "remote"],
-    "forWho": "Teknoloji kariyerine yapılandırılmış geçiş için öğrenme yolculuğu ve topluluk mentorluk desteği arayan kadınlar.",
+    "forWho": "Üniversite öğrencisi veya yeni mezun kadınlar için mentorluk ve kariyer geçişi odaklı teknoloji programı.",
     "url": "https://sisterslab.org/"
   },
   {
+    "opportunityId": "sisterslab-hepsiburada-yarinlara-soz",
+    "name": "SistersLab x Hepsiburada — Yarınlara Söz Programı",
+    "type": "program",
+    "targetTags": ["pm", "marketing-analytics", "fintech", "data", "edtech"],
+    "cities": ["all", "remote", "istanbul", "ankara", "izmir"],
+    "forWho": "Mühendislik ve ilgili bölümlerde okuyan kadın öğrenciler için e-ticaret, girişimcilik ve mentorluk desteği.",
+    "url": "https://sisterslab.org/hepsi-burada-yarinlara-soz-programi/"
+  },
+  {
     "opportunityId": "kodluyoruz",
-    "name": "Kodluyoruz — Bootcamp ve Topluluk Programları",
+    "name": "Kodluyoruz — Hi-Kod & Bootcamp Programları",
     "type": "course",
     "targetTags": ["data", "ux", "pm", "gamedev", "biotech", "marketing-analytics", "sustainability"],
     "cities": ["all", "remote", "istanbul", "ankara", "izmir"],
@@ -55,7 +64,7 @@
   },
   {
     "opportunityId": "patika-dev",
-    "name": "Patika.dev — Ücretsiz Yazılım ve Veri Yolları",
+    "name": "Patika.dev — Path ve Bootcamp Programları",
     "type": "course",
     "targetTags": ["data", "gamedev", "pm", "analytics", "fintech", "biotech", "ai-ethics", "sustainability"],
     "cities": ["all", "remote"],
@@ -99,6 +108,15 @@
     "url": "https://www.yga.org.tr/"
   },
   {
+    "opportunityId": "yga-twin",
+    "name": "YGA — Twin Bilim Seti Gönüllü Programları",
+    "type": "program",
+    "targetTags": ["edtech", "social-impact", "research", "pm", "sustainability"],
+    "cities": ["all", "remote", "istanbul", "ankara", "izmir"],
+    "forWho": "Toplumsal etki odaklı teknoloji ve eğitim projelerinde sorumluluk almak isteyen üniversiteliler.",
+    "url": "https://www.yga.org.tr/"
+  },
+  {
     "opportunityId": "yga-ignite",
     "name": "YGA — Çift Kanatlı Liderlik ve Sosyal Etki Programları",
     "type": "program",
@@ -106,6 +124,15 @@
     "cities": ["all", "remote", "istanbul"],
     "forWho": "Toplumsal etki üreten teknoloji projelerinde sorumluluk almak isteyen öğrenciler.",
     "url": "https://www.yga.org.tr/"
+  },
+  {
+    "opportunityId": "wtm-ambassador",
+    "name": "Women Techmakers Ambassador etkinlikleri",
+    "type": "community",
+    "targetTags": ["ux", "data", "pm", "ai-ethics", "research", "edtech"],
+    "cities": ["all", "remote", "istanbul", "ankara", "izmir"],
+    "forWho": "Kadınlar için teknik içerik, networking ve rol model buluşmalarıyla düzenli topluluk desteği arayanlar.",
+    "url": "https://www.womentechmakers.com/"
   },
   {
     "opportunityId": "tr-btk-hackathon",
@@ -117,12 +144,30 @@
     "url": "https://developers.google.com/community/gdsc"
   },
   {
+    "opportunityId": "gdsc-solution-challenge",
+    "name": "GDSC Solution Challenge projeleri",
+    "type": "community",
+    "targetTags": ["data", "pm", "sustainability", "edtech", "research", "gamedev"],
+    "cities": ["all", "remote"],
+    "forWho": "Kampüs ekipleriyle gerçek bir probleme çözüm geliştirmek ve portföy üretmek isteyen öğrenciler.",
+    "url": "https://developers.google.com/community/gdsc-solution-challenge"
+  },
+  {
     "opportunityId": "turkcell-geleceği-yazanlar",
     "name": "Geleceği Yazan Kadınlar — Mentörlük ve Eğitim",
     "type": "program",
     "targetTags": ["data", "ux", "pm", "hrtech", "marketing-analytics", "sustainability"],
     "cities": ["all", "remote"],
     "forWho": "STEM ve teknoloji alanında kariyer hedefleyen kadın öğrenciler için burs/mentorluk fırsatları.",
+    "url": "https://www.gelecegiyazankadinlar.com/"
+  },
+  {
+    "opportunityId": "turkcell-gelecegi-yazanlar-yapay-zeka",
+    "name": "Geleceği Yazan Kadınlar — Yapay Zeka / Veri odaklı içerikler",
+    "type": "course",
+    "targetTags": ["data", "ai-ethics", "analytics", "pm", "fintech"],
+    "cities": ["all", "remote"],
+    "forWho": "Yapay zeka ve veri odaklı kariyer hedefleyen kadınlar için modüler öğrenme içerikleri.",
     "url": "https://www.gelecegiyazankadinlar.com/"
   },
   {
@@ -144,6 +189,24 @@
     "url": "https://github.com/acikkaynak"
   },
   {
+    "opportunityId": "kodluyoruz-bootcamp",
+    "name": "Kodluyoruz Bootcamp Programları (Front-end / Data / QA vb.)",
+    "type": "program",
+    "targetTags": ["data", "ux", "pm", "gamedev", "analytics", "hrtech"],
+    "cities": ["all", "remote", "istanbul", "ankara", "izmir"],
+    "forWho": "Belirli bir alanda yoğun tempolu uygulamalı eğitim ve topluluk desteği isteyen adaylar.",
+    "url": "https://www.kodluyoruz.org/"
+  },
+  {
+    "opportunityId": "patika-bootcamp",
+    "name": "Patika.dev Bootcamp ve işe hazırlık programları",
+    "type": "program",
+    "targetTags": ["data", "analytics", "pm", "fintech", "gamedev", "biotech"],
+    "cities": ["all", "remote"],
+    "forWho": "Portföy, proje ve teknik mülakat pratiği odaklı bir yol arayan öğrenciler ve yeni mezunlar.",
+    "url": "https://www.patika.dev/"
+  },
+  {
     "opportunityId": "teknolojide-kadin-dernegi",
     "name": "Teknolojide Kadın Derneği — Programlar ve Topluluk",
     "type": "community",
@@ -154,7 +217,7 @@
   },
   {
     "opportunityId": "academy-patika-upskill",
-    "name": "Patika+ ve benzeri upskill programları",
+    "name": "Patika+ upskill programları",
     "type": "program",
     "targetTags": ["data", "analytics", "pm", "fintech", "marketing-analytics"],
     "cities": ["all", "remote"],
@@ -169,5 +232,41 @@
     "cities": ["all", "istanbul", "ankara", "izmir", "remote"],
     "forWho": "Program sonrası gerçek staj ilanlarına yönelmek isteyen adaylar için filtrelenebilir ilan havuzu.",
     "url": "https://www.kariyer.net/"
+  },
+  {
+    "opportunityId": "youthall-staj-program",
+    "name": "Youthall — Staj ve Yeni Mezun Programları",
+    "type": "program",
+    "targetTags": ["data", "analytics", "ux", "pm", "fintech", "hrtech", "marketing-analytics", "sustainability"],
+    "cities": ["all", "remote", "istanbul", "ankara", "izmir"],
+    "forWho": "Şirketlerin staj ve genç yetenek programlarını tek yerden karşılaştırmak isteyen öğrenciler ve yeni mezunlar.",
+    "url": "https://youthall.com/tr/"
+  },
+  {
+    "opportunityId": "linkedin-jobs-early-career",
+    "name": "LinkedIn Jobs — Internship & Early Career",
+    "type": "program",
+    "targetTags": ["data", "analytics", "ux", "pm", "gamedev", "biotech", "hrtech", "fintech", "marketing-analytics"],
+    "cities": ["all", "remote"],
+    "forWho": "Şirket bazlı güncel staj ve giriş seviyesi pozisyonları görmek ve ilan trendlerini takip etmek isteyen adaylar.",
+    "url": "https://www.linkedin.com/jobs/"
+  },
+  {
+    "opportunityId": "upschool-mentorluk",
+    "name": "UP School — Mentorluk ve kariyer destek buluşmaları",
+    "type": "community",
+    "targetTags": ["pm", "ux", "data", "analytics", "hrtech", "edtech"],
+    "cities": ["all", "remote", "istanbul", "ankara", "izmir"],
+    "forWho": "Programlara ek olarak mentorluk ve topluluk geri bildirimiyle ilerlemek isteyen adaylar.",
+    "url": "https://upschool.io/"
+  },
+  {
+    "opportunityId": "sisterslab-topluluk",
+    "name": "SistersLab — topluluk ve etkinlik takvimi",
+    "type": "community",
+    "targetTags": ["ux", "edtech", "research", "social-impact", "marketing-analytics"],
+    "cities": ["all", "remote"],
+    "forWho": "Düzenli etkinliklerle network kurup farklı teknoloji alanlarını deneyimlemek isteyen kadınlar.",
+    "url": "https://sisterslab.org/"
   }
 ]
