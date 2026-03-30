@@ -24,6 +24,9 @@ function readProfileDraftInitial() {
       goalDetail: '',
       disciplineFocus: '',
       availability: 'medium',
+      workMode: 'balanced',
+      workEnvironment: 'hybrid',
+      impactTheme: 'social-impact',
       cityId: 'all',
     };
   }
@@ -40,6 +43,9 @@ function readProfileDraftInitial() {
     goalDetail: typeof d.goalDetail === 'string' ? d.goalDetail : '',
     disciplineFocus: typeof d.disciplineFocus === 'string' ? d.disciplineFocus : '',
     availability: d.availability ?? 'medium',
+    workMode: d.workMode ?? 'balanced',
+    workEnvironment: d.workEnvironment ?? 'hybrid',
+    impactTheme: d.impactTheme ?? 'social-impact',
     cityId: d.cityId ?? 'all',
   };
 }
@@ -49,6 +55,8 @@ const LEARNING_OPTIONS = [
   { id: 'course', label: 'Yapılandırılmış kurs ve bootcamp ile' },
   { id: 'mentor', label: 'Mentorluk ve topluluk etkinlikleriyle' },
   { id: 'mixed', label: 'Karışık (hepsi)' },
+  { id: 'challenge', label: 'Hackathon / challenge ve uygulamalı görevlerle' },
+  { id: 'internship', label: 'Staj içinde öğrenme ve gerçek görevlerle' },
 ];
 
 const GOAL_OPTIONS = [
@@ -56,6 +64,8 @@ const GOAL_OPTIONS = [
   { id: 'switch', label: 'Bölümümden teknoloji rolüne geçiş' },
   { id: 'skill', label: 'Belirli bir beceride güçlenmek' },
   { id: 'explore', label: 'Henüz keşfetme aşamasındayım' },
+  { id: 'career', label: 'Mezuniyet sonrası teknoloji rolüne doğrudan başlamak' },
+  { id: 'startup', label: 'Girişim veya ürün fikri geliştirmek' },
 ];
 
 const CITY_OPTIONS = [
@@ -70,6 +80,28 @@ const AVAILABILITY_OPTIONS = [
   { id: 'low', label: 'Haftada 2-4 saat (çok yoğun)' },
   { id: 'medium', label: 'Haftada 5-8 saat (dengeli)' },
   { id: 'high', label: 'Haftada 9+ saat (hızlı ilerleme)' },
+  { id: 'sprint', label: 'Dönemsel sprintler: bazı haftalar yoğun, bazı haftalar hafif' },
+];
+
+const WORK_MODE_OPTIONS = [
+  { id: 'solo', label: 'Tek başıma derin çalışmayı seviyorum' },
+  { id: 'team', label: 'Ekip içinde fikir alışverişiyle ilerlemeyi seviyorum' },
+  { id: 'balanced', label: 'Denge: hem bireysel hem ekip çalışması' },
+];
+
+const WORK_ENV_OPTIONS = [
+  { id: 'remote', label: 'Uzaktan / dağıtık çalışma bana uygun' },
+  { id: 'office', label: 'Ofis ortamı ve yüz yüze iletişim bana uygun' },
+  { id: 'hybrid', label: 'Hibrit çalışma benim için en verimli' },
+];
+
+const IMPACT_THEME_OPTIONS = [
+  { id: 'social-impact', label: 'Toplumsal etki ve erişilebilirlik' },
+  { id: 'health', label: 'Sağlık ve yaşam kalitesi' },
+  { id: 'finance', label: 'Finansal kapsayıcılık ve ekonomi' },
+  { id: 'education', label: 'Eğitim ve öğrenme deneyimi' },
+  { id: 'sustainability', label: 'Sürdürülebilirlik ve çevre' },
+  { id: 'productivity', label: 'İş süreçlerinde verimlilik' },
 ];
 
 const PREFER_NOT = 'Belirtmek istemiyorum';
@@ -95,6 +127,9 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
   const [goalId, setGoalId] = useState(draftIni.goalId);
   const [goalDetail, setGoalDetail] = useState(draftIni.goalDetail);
   const [availability, setAvailability] = useState(draftIni.availability);
+  const [workMode, setWorkMode] = useState(draftIni.workMode);
+  const [workEnvironment, setWorkEnvironment] = useState(draftIni.workEnvironment);
+  const [impactTheme, setImpactTheme] = useState(draftIni.impactTheme);
   const [cityId, setCityId] = useState(draftIni.cityId);
   const [errors, setErrors] = useState({});
   const selectedFaculty = useMemo(() => HACETTEPE_FACULTIES.find((f) => f.id === facultyId) ?? null, [facultyId]);
@@ -138,6 +173,9 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
         goalId,
         goalDetail,
         availability,
+        workMode,
+        workEnvironment,
+        impactTheme,
         cityId,
       });
     }, 450);
@@ -157,6 +195,9 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
     goalId,
     goalDetail,
     availability,
+    workMode,
+    workEnvironment,
+    impactTheme,
     cityId,
   ]);
 
@@ -198,6 +239,9 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
     const effJoyActivities = joySkip ? [PREFER_NOT] : joyActivities;
     const goalLabel = GOAL_OPTIONS.find((g) => g.id === goalId)?.label ?? goalId;
     const availabilityLabel = AVAILABILITY_OPTIONS.find((a) => a.id === availability)?.label ?? availability;
+    const workModeLabel = WORK_MODE_OPTIONS.find((w) => w.id === workMode)?.label ?? workMode;
+    const workEnvironmentLabel = WORK_ENV_OPTIONS.find((w) => w.id === workEnvironment)?.label ?? workEnvironment;
+    const impactThemeLabel = IMPACT_THEME_OPTIONS.find((i) => i.id === impactTheme)?.label ?? impactTheme;
     const cityLabel = CITY_OPTIONS.find((c) => c.id === cityId)?.label ?? cityId;
 
     onSubmit({
@@ -216,6 +260,12 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
       disciplineFocus: effDeptInterests[0] ?? '',
       availability,
       availabilityLabel,
+      workMode,
+      workModeLabel,
+      workEnvironment,
+      workEnvironmentLabel,
+      impactTheme,
+      impactThemeLabel,
       cityId,
       cityLabel,
     });
@@ -236,7 +286,7 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
 
           <div className="space-y-8">
             <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-800">1. Fakülte (Hacettepe)</label>
+              <label className="mb-2 block text-sm font-semibold text-slate-800">1. Fakülte</label>
               <select
                 value={facultyId}
                 onChange={(e) => setFacultyId(e.target.value)}
@@ -402,7 +452,53 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-800">8. Şehir (fırsat filtresi)</label>
+              <label className="mb-2 block text-sm font-semibold text-slate-800">8. Çalışma modu tercihi</label>
+              <div className="space-y-2">
+                {WORK_MODE_OPTIONS.map((opt) => (
+                  <label key={opt.id} className="flex cursor-pointer items-center gap-2 text-sm text-slate-700">
+                    <input type="radio" name="work-mode" checked={workMode === opt.id} onChange={() => setWorkMode(opt.id)} />
+                    {opt.label}
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <label className="mb-2 block text-sm font-semibold text-slate-800">9. Çalışma ortamı tercihi</label>
+              <div className="space-y-2">
+                {WORK_ENV_OPTIONS.map((opt) => (
+                  <label key={opt.id} className="flex cursor-pointer items-center gap-2 text-sm text-slate-700">
+                    <input
+                      type="radio"
+                      name="work-environment"
+                      checked={workEnvironment === opt.id}
+                      onChange={() => setWorkEnvironment(opt.id)}
+                    />
+                    {opt.label}
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <label className="mb-2 block text-sm font-semibold text-slate-800">10. Etki yaratmak istediğin tema</label>
+              <div className="space-y-2">
+                {IMPACT_THEME_OPTIONS.map((opt) => (
+                  <label key={opt.id} className="flex cursor-pointer items-center gap-2 text-sm text-slate-700">
+                    <input
+                      type="radio"
+                      name="impact-theme"
+                      checked={impactTheme === opt.id}
+                      onChange={() => setImpactTheme(opt.id)}
+                    />
+                    {opt.label}
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <label className="mb-2 block text-sm font-semibold text-slate-800">11. Şehir (fırsat filtresi)</label>
               <p className="mb-3 text-xs text-slate-500">
                 Yerel etkinlik ağırlıklı önerileri öne çıkarmak için; çevrim içi ve Türkiye geneli kaynaklar yine
                 listelenir.

@@ -419,10 +419,10 @@ export function parseBarrierResponse(rawText) {
   const reframe = isNonEmptyString(obj?.reframe) ? obj.reframe.trim() : '';
   let actions = Array.isArray(obj?.actions) ? obj.actions.filter(isNonEmptyString).map((s) => s.trim()) : [];
   if (!reframe) throw new Error('reframe alanı eksik');
-  while (actions.length < 2) {
-    actions.push('Bu hafta 20 dakika ayırıp önerilen rollerden biriyle ilgili tek bir kaynağı incele.');
+  while (actions.length < 3) {
+    actions.push('Bu hafta 20 dakika ayırıp önerilen rollerden biriyle ilgili tek bir kaynağı incele ve 2 maddelik not çıkar.');
   }
-  if (actions.length > 2) actions = actions.slice(0, 2);
+  if (actions.length > 4) actions = actions.slice(0, 4);
   return { reframe, actions };
 }
 
@@ -519,8 +519,8 @@ Tıklanabilir bağlantı politikası (kullanıcı bu URL’lere güvenecek):
 Profil ve matris özetini kişiselleştirmede kullan; metni aynen kopyalama.`;
 
 const BARRIER_SYSTEM = `Sen empati kuran bir kariyer koçusun. Kullanıcının yazdığı engeli kariyer dışlayıcı olarak değil,
-yeniden çerçeveleyerek ele al. Yanıtın Türkçe olsun ve 2 somut aksiyon adımı içersin.
-JSON formatında yanıt ver: {reframe, actions: [action1, action2]}
+yeniden çerçeveleyerek ele al. Yanıtın Türkçe olsun ve 3-4 somut aksiyon adımı içersin.
+JSON formatında yanıt ver: {reframe, actions: [action1, action2, action3]}
 Başka metin veya markdown ekleme; yalnızca tek bir JSON nesnesi.
 "İmkansız", "yapamazsın" gibi dışlayıcı dil kullanma.`;
 
@@ -530,9 +530,11 @@ yeniden çerçeveleyen bir dille ele al.
 
 ZORUNLU ÇIKTI: Yalnızca TEK bir JSON nesnesi. Başında/sonunda açıklama yok; markdown yok; \`\`\` kod bloğu yok.
 Şema (Türkçe metinler):
-{"reframe":"2–4 cümle, sıcak ve destekleyici","actions":["somut aksiyon 1","somut aksiyon 2"]}
+{"reframe":"4-6 cümle, destekleyici ve kişiye özel","actions":["somut aksiyon 1","somut aksiyon 2","somut aksiyon 3","opsiyonel aksiyon 4"]}
 
-- actions tam olarak 2 öğe.
+- reframe içinde: (1) duyguyu doğrula, (2) engeli yeniden çerçevele, (3) profil/rol bağlamına köprü kur, (4) kısa umut cümlesi ver.
+- actions 3 veya 4 öğe olsun; her madde tek cümle, uygulanabilir ve net zaman/süre veya çıktı içersin.
+- Her aksiyon mümkünse bu formata yakın olsun: "Ne yap? + ne kadar süre? + somut çıktı".
 - İngilizce tek kelime düşmesin; kullanıcı Türkçe (ör. "necessary" yazma).
 - "İmkansız", "yapamazsın", "asla" gibi dışlayıcı dil kullanma.`;
 
@@ -580,6 +582,12 @@ export async function runCareerAnalysis({ apiKey, profile, matrix }) {
       disciplineFocus: profile.disciplineFocus,
       availability: profile.availability,
       availabilityLabel: profile.availabilityLabel,
+      workMode: profile.workMode,
+      workModeLabel: profile.workModeLabel,
+      workEnvironment: profile.workEnvironment,
+      workEnvironmentLabel: profile.workEnvironmentLabel,
+      impactTheme: profile.impactTheme,
+      impactThemeLabel: profile.impactThemeLabel,
       cityId: profile.cityId,
       cityLabel: profile.cityLabel,
     },
@@ -624,7 +632,7 @@ Kullanıcının engeli: ${barrierText}`;
       apiKey: key,
       systemInstruction: BARRIER_GROQ_SYSTEM,
       userPrompt: prompt,
-      temperature: 0.15,
+      temperature: 0.2,
     });
     return parseBarrierResponse(text);
   }

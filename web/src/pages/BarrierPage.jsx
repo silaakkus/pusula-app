@@ -48,8 +48,10 @@ export function BarrierPage({ apiKey, profile, matrix, profileSummary, onResult,
             Seni durduran şey ne?
           </h2>
           <p className="mb-6 text-sm leading-relaxed text-slate-600">
-            Örneğin: “Bölümüm alakasız”, “Geç kaldım”, “Matematik zayıfım”, “Aile desteği konusunda emin değilim”…
-            Yargılanmayacaksın; amaç metni yeniden çerçevelemek ve küçük aksiyonlar üretmek.
+            Örnek cümleler: “Bölümüm teknolojiyle doğrudan ilgili değil, nereden başlayacağımı bilmiyorum.”,
+            “Çok geç kaldığımı düşünüyorum ve yetişemeyeceğimden korkuyorum.”, “Matematikte zorlanıyorum; veri
+            alanına girersem başarısız olurum diye endişeliyim.”, “Ailemin desteği sınırlı; bu yüzden istikrarlı
+            ilerleyemiyorum.” Yargılanmayacaksın; amaç metni yeniden çerçevelemek ve uygulanabilir küçük adımlar üretmek.
           </p>
 
           <textarea

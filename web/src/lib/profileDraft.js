@@ -44,6 +44,10 @@ export function hasProfileDraft() {
   if (d.goalId && d.goalId !== 'explore') return true;
   if (d.cityId && d.cityId !== 'all') return true;
   if (d.learningStyle && d.learningStyle !== 'mixed') return true;
+  if (d.availability && d.availability !== 'medium') return true;
+  if (d.workMode && d.workMode !== 'balanced') return true;
+  if (d.workEnvironment && d.workEnvironment !== 'hybrid') return true;
+  if (d.impactTheme && d.impactTheme !== 'social-impact') return true;
   return false;
 }
 

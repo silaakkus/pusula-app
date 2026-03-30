@@ -1,152 +1,207 @@
+function makeDept(id, name, disciplineId, focusInterests, joyActivities) {
+  return { id, name, disciplineId, focusInterests, joyActivities };
+}
+
+const PROFILE = {
+  quant: {
+    disciplineId: 'quant-analytics',
+    focus: ['Veri analizi', 'Modelleme', 'Algoritmik düşünme', 'Sayısal problem çözme', 'Karar destek sistemleri'],
+    joy: ['Veriyle örüntü bulmak', 'Model performansı kıyaslamak', 'Karmaşık problemi parçalamak', 'Rapor hazırlamak'],
+  },
+  social: {
+    disciplineId: 'human-social',
+    focus: ['Kullanıcı araştırması', 'Davranış analizi', 'Toplumsal etki', 'İletişim ve içerik tasarımı', 'Etik değerlendirme'],
+    joy: ['İnsanla görüşme yapmak', 'Nitel veri yorumlamak', 'Empati haritası çıkarmak', 'Anlatı oluşturmak'],
+  },
+  life: {
+    disciplineId: 'life-sciences',
+    focus: ['Sağlık verisi', 'Laboratuvar çıktıları', 'Biyoenformatik', 'Bilimsel araştırma', 'Klinik süreçler'],
+    joy: ['Deney sonucu yorumlamak', 'Bilimsel makale incelemek', 'Veriyle hipotez test etmek', 'Araştırma planlamak'],
+  },
+  business: {
+    disciplineId: 'business-econ',
+    focus: ['Ürün ve süreç yönetimi', 'Pazar analitiği', 'Finansal analiz', 'Operasyon optimizasyonu', 'Dijital strateji'],
+    joy: ['İş problemi tanımlamak', 'Önceliklendirme yapmak', 'Süreç akışı çıkarmak', 'Veriyle karar savunmak'],
+  },
+  educationArts: {
+    disciplineId: 'education-arts',
+    focus: ['Eğitim teknolojileri', 'İçerik üretimi', 'Tasarım ve yaratıcılık', 'Oyunlaştırma', 'Topluluk etkileşimi'],
+    joy: ['Karmaşık konuyu sade anlatmak', 'Görsel/dijital içerik hazırlamak', 'Yaratıcı fikir geliştirmek', 'Öğrenme deneyimi tasarlamak'],
+  },
+  mixed: {
+    disciplineId: 'business-econ',
+    focus: ['Dijital dönüşüm', 'Süreç ve kalite', 'Kurumsal operasyon', 'Kullanıcı odaklı hizmet tasarımı'],
+    joy: ['Plan yapıp takip etmek', 'Ekiplerle koordinasyon kurmak', 'Sistematik ilerlemek', 'Süreci iyileştirmek'],
+  },
+};
+
+function withProfile(id, name, key) {
+  const p = PROFILE[key];
+  return makeDept(id, name, p.disciplineId, p.focus, p.joy);
+}
+
 export const HACETTEPE_FACULTIES = [
   {
-    id: 'muhendislik',
-    name: 'Mühendislik Fakültesi',
+    id: 'bilgisayar-ve-bilisim-bilimleri',
+    name: 'Bilgisayar ve Bilişim Bilimleri Fakültesi',
     departments: [
-      {
-        id: 'bilgisayar-muh',
-        name: 'Bilgisayar Mühendisliği',
-        disciplineId: 'quant-analytics',
-        focusInterests: ['Yazılım geliştirme', 'Veri yapıları ve algoritmalar', 'Yapay zeka uygulamaları', 'Sistem tasarımı'],
-        joyActivities: ['Kodla bir problemi çözmek', 'Hata ayıklayıp sistemi ayağa kaldırmak', 'Mini proje geliştirip yayınlamak', 'Yeni teknolojiyi denemek'],
-      },
-      {
-        id: 'yapay-zeka-muh',
-        name: 'Yapay Zeka Mühendisliği',
-        disciplineId: 'quant-analytics',
-        focusInterests: ['Makine öğrenmesi', 'Doğal dil işleme', 'Görüntü işleme', 'Model değerlendirme'],
-        joyActivities: ['Veri setiyle model deneyi yapmak', 'Model çıktısını iyileştirmek', 'AI ürün fikri prototiplemek', 'Araştırma makalesi incelemek'],
-      },
-      {
-        id: 'endustri-muh',
-        name: 'Endüstri Mühendisliği',
-        disciplineId: 'business-econ',
-        focusInterests: ['Süreç optimizasyonu', 'Operasyon analitiği', 'Karar destek sistemleri', 'Ürün verimliliği'],
-        joyActivities: ['Süreçteki darboğazı tespit etmek', 'Veriyle iş kararı desteklemek', 'Akış diyagramı çıkarmak', 'Planlama senaryoları kurmak'],
-      },
-      {
-        id: 'elektrik-elektronik-muh',
-        name: 'Elektrik-Elektronik Mühendisliği',
-        disciplineId: 'quant-analytics',
-        focusInterests: ['Gömülü sistemler', 'Sinyal işleme', 'Otomasyon', 'IoT uygulamaları'],
-        joyActivities: ['Sistem bileşenlerini birleştirmek', 'Teknik problemi ölçümle çözmek', 'Donanım-yazılım entegrasyonu yapmak', 'Prototip devre denemek'],
-      },
+      withProfile('bilgisayar-bilimleri', 'Bilgisayar Bilimleri', 'quant'),
+      withProfile('yapay-zeka-ve-veri', 'Yapay Zeka ve Veri Mühendisliği', 'quant'),
+      withProfile('bilisim-sistemleri-teknolojileri', 'Bilişim Sistemleri Teknolojileri', 'business'),
     ],
   },
   {
-    id: 'fen',
-    name: 'Fen Fakültesi',
-    departments: [
-      {
-        id: 'istatistik',
-        name: 'İstatistik',
-        disciplineId: 'quant-analytics',
-        focusInterests: ['Veri analizi', 'Tahminleme', 'Deney tasarımı', 'İş zekası'],
-        joyActivities: ['Veriyi görselleştirip anlatmak', 'Model performansı kıyaslamak', 'A/B testi yorumlamak', 'Rapor hazırlamak'],
-      },
-      {
-        id: 'matematik',
-        name: 'Matematik',
-        disciplineId: 'quant-analytics',
-        focusInterests: ['Modelleme', 'Algoritmik düşünme', 'Optimizasyon', 'Teorik altyapı'],
-        joyActivities: ['Zor problemi adım adım parçalamak', 'Soyut fikri uygulamaya çevirmek', 'Analitik mantık kurmak', 'Alternatif çözüm yaklaşımı üretmek'],
-      },
-      {
-        id: 'fizik',
-        name: 'Fizik',
-        disciplineId: 'quant-analytics',
-        focusInterests: ['Hesaplamalı analiz', 'Simülasyon', 'Veri tabanlı deney', 'Teknik modelleme'],
-        joyActivities: ['Deney verisini analiz etmek', 'Modelle gerçek veriyi karşılaştırmak', 'Simülasyon çıktısını yorumlamak', 'Bilimsel merakla araştırmak'],
-      },
-      {
-        id: 'biyoloji',
-        name: 'Biyoloji',
-        disciplineId: 'life-sciences',
-        focusInterests: ['Biyoenformatik', 'Genetik veri analizi', 'Laboratuvar verisi', 'Sağlık teknolojileri'],
-        joyActivities: ['Biyolojik veriyi sınıflandırmak', 'Araştırma sonucu yorumlamak', 'Bilimsel problem çözmek', 'Teknoloji-biyoloji kesişimini keşfetmek'],
-      },
-    ],
+    id: 'dis-hekimligi',
+    name: 'Diş Hekimliği Fakültesi',
+    departments: [withProfile('dis-hekimligi', 'Diş Hekimliği', 'life')],
   },
   {
-    id: 'iktisadi-idari',
-    name: 'İktisadi ve İdari Bilimler Fakültesi',
-    departments: [
-      {
-        id: 'isletme',
-        name: 'İşletme',
-        disciplineId: 'business-econ',
-        focusInterests: ['Ürün yönetimi', 'Dijital strateji', 'Pazar analitiği', 'Süreç tasarımı'],
-        joyActivities: ['Kullanıcı problemi tanımlamak', 'Ürün fikri geliştirmek', 'Veriyle iş önceliği belirlemek', 'Ekipler arası koordinasyon yapmak'],
-      },
-      {
-        id: 'iktisat',
-        name: 'İktisat',
-        disciplineId: 'business-econ',
-        focusInterests: ['Ekonomik veri analizi', 'Finansal modelleme', 'Politika etkisi', 'Pazar dinamikleri'],
-        joyActivities: ['Trendleri veriden okumak', 'Senaryo analizi yapmak', 'Kararları sayısal gerekçeyle savunmak', 'Raporlama yapmak'],
-      },
-      {
-        id: 'maliye',
-        name: 'Maliye',
-        disciplineId: 'business-econ',
-        focusInterests: ['Finansal analiz', 'Risk değerlendirme', 'Regülasyon ve uyum', 'İş zekası'],
-        joyActivities: ['Sayılarla risk görmek', 'Düzenli ve güvenilir süreç kurmak', 'Detaylı kontrol yapmak', 'Analitik rapor üretmek'],
-      },
-    ],
+    id: 'eczacilik',
+    name: 'Eczacılık Fakültesi',
+    departments: [withProfile('eczacilik', 'Eczacılık', 'life')],
   },
   {
     id: 'edebiyat',
     name: 'Edebiyat Fakültesi',
     departments: [
-      {
-        id: 'psikoloji',
-        name: 'Psikoloji',
-        disciplineId: 'human-social',
-        focusInterests: ['Kullanıcı araştırması', 'Davranış analitiği', 'UX içgörüsü', 'İnsan merkezli tasarım'],
-        joyActivities: ['Kullanıcıyla görüşme yapmak', 'İçgörüleri kategorize etmek', 'Empati haritası çıkarmak', 'Kullanıcı deneyimini iyileştirmek'],
-      },
-      {
-        id: 'sosyoloji',
-        name: 'Sosyoloji',
-        disciplineId: 'human-social',
-        focusInterests: ['Topluluk analizi', 'Dijital kültür', 'Sosyal etki', 'Araştırma yöntemleri'],
-        joyActivities: ['Nitel veri yorumlamak', 'Topluluk davranışını gözlemlemek', 'Etkisi yüksek problem seçmek', 'Anlatı oluşturmak'],
-      },
-      {
-        id: 'felsefe',
-        name: 'Felsefe',
-        disciplineId: 'human-social',
-        focusInterests: ['AI etik', 'Eleştirel düşünme', 'Kavramsal modelleme', 'Ürün kararlarında etik'],
-        joyActivities: ['Argüman analizi yapmak', 'Etik ikilemi tartışmak', 'Soyut düşünceyi somutlaştırmak', 'Sorgulayıcı çerçeve kurmak'],
-      },
+      withProfile('antropoloji', 'Antropoloji', 'social'),
+      withProfile('arkeoloji', 'Arkeoloji', 'social'),
+      withProfile('cagdas-turk-lehceleri', 'Çağdaş Türk Lehçeleri ve Edebiyatları', 'social'),
+      withProfile('felsefe', 'Felsefe', 'social'),
+      withProfile('ingiliz-dili-ve-edebiyati', 'İngiliz Dili ve Edebiyatı', 'social'),
+      withProfile('psikoloji', 'Psikoloji', 'social'),
+      withProfile('sanat-tarihi', 'Sanat Tarihi', 'educationArts'),
+      withProfile('sosyoloji', 'Sosyoloji', 'social'),
+      withProfile('tarih', 'Tarih', 'social'),
+      withProfile('turk-dili-ve-edebiyati', 'Türk Dili ve Edebiyatı', 'social'),
     ],
   },
   {
     id: 'egitim',
     name: 'Eğitim Fakültesi',
     departments: [
-      {
-        id: 'bilgisayar-ogretmenligi',
-        name: 'Bilgisayar ve Öğretim Teknolojileri Öğretmenliği',
-        disciplineId: 'education-arts',
-        focusInterests: ['EdTech ürünleri', 'Öğrenme deneyimi tasarımı', 'Dijital içerik', 'Erişilebilir eğitim teknolojileri'],
-        joyActivities: ['Karmaşık konuyu sade anlatmak', 'Etkileşimli içerik hazırlamak', 'Öğrenen geri bildirimi toplamak', 'Eğitim akışı tasarlamak'],
-      },
-      {
-        id: 'rehberlik-psikolojik-danismanlik',
-        name: 'Rehberlik ve Psikolojik Danışmanlık',
-        disciplineId: 'human-social',
-        focusInterests: ['İnsan odaklı ürünler', 'Topluluk destek sistemleri', 'Kullanıcı ihtiyaç analizi', 'İletişim tasarımı'],
-        joyActivities: ['İnsanı dinleyip ihtiyacı netleştirmek', 'Yönlendirici içerik üretmek', 'Güvenli iletişim dili kurmak', 'Gelişim odaklı plan yapmak'],
-      },
-      {
-        id: 'sinif-ogretmenligi',
-        name: 'Sınıf Öğretmenliği',
-        disciplineId: 'education-arts',
-        focusInterests: ['Öğrenme tasarımı', 'Eğitsel oyunlaştırma', 'İçerik geliştirme', 'Dijital sınıf araçları'],
-        joyActivities: ['Ders akışını tasarlamak', 'Anlaşılır materyal üretmek', 'Öğrenmeyi ölçüp iyileştirmek', 'Öğrenciyi motive eden fikir üretmek'],
-      },
+      withProfile('bilgisayar-ve-ogretim-teknolojileri', 'Bilgisayar ve Öğretim Teknolojileri Eğitimi', 'educationArts'),
+      withProfile('egitim-bilimleri', 'Eğitim Bilimleri', 'educationArts'),
+      withProfile('ilkogretim-matematik', 'İlköğretim Matematik Öğretmenliği', 'quant'),
+      withProfile('ingilizce-ogretmenligi', 'İngilizce Öğretmenliği', 'educationArts'),
+      withProfile('okul-oncesi-ogretmenligi', 'Okul Öncesi Öğretmenliği', 'educationArts'),
+      withProfile('rehberlik-ve-psikolojik-danismanlik', 'Rehberlik ve Psikolojik Danışmanlık', 'social'),
+      withProfile('sinif-ogretmenligi', 'Sınıf Öğretmenliği', 'educationArts'),
+      withProfile('turkce-ogretmenligi', 'Türkçe Öğretmenliği', 'educationArts'),
     ],
+  },
+  {
+    id: 'fen',
+    name: 'Fen Fakültesi',
+    departments: [
+      withProfile('aktuerya-bilimleri', 'Aktüerya Bilimleri', 'quant'),
+      withProfile('biyoloji', 'Biyoloji', 'life'),
+      withProfile('fizik', 'Fizik', 'quant'),
+      withProfile('istatistik', 'İstatistik', 'quant'),
+      withProfile('kimya', 'Kimya', 'life'),
+      withProfile('matematik', 'Matematik', 'quant'),
+    ],
+  },
+  {
+    id: 'fizik-tedavi-ve-rehabilitasyon',
+    name: 'Fizik Tedavi ve Rehabilitasyon Fakültesi',
+    departments: [withProfile('fizyoterapi-ve-rehabilitasyon', 'Fizyoterapi ve Rehabilitasyon', 'life')],
+  },
+  {
+    id: 'guzel-sanatlar',
+    name: 'Güzel Sanatlar Fakültesi',
+    departments: [
+      withProfile('grafik', 'Grafik', 'educationArts'),
+      withProfile('heykel', 'Heykel', 'educationArts'),
+      withProfile('ic-mimarlik-ve-cevre-tasarimi', 'İç Mimarlık ve Çevre Tasarımı', 'educationArts'),
+      withProfile('resim', 'Resim', 'educationArts'),
+      withProfile('seramik', 'Seramik', 'educationArts'),
+    ],
+  },
+  {
+    id: 'hemsirelik',
+    name: 'Hemşirelik Fakültesi',
+    departments: [withProfile('hemsirelik', 'Hemşirelik', 'life')],
+  },
+  {
+    id: 'hukuk',
+    name: 'Hukuk Fakültesi',
+    departments: [withProfile('hukuk', 'Hukuk', 'social')],
+  },
+  {
+    id: 'iktisadi-ve-idari-bilimler',
+    name: 'İktisadi ve İdari Bilimler Fakültesi',
+    departments: [
+      withProfile('aile-ve-tuketici-bilimleri', 'Aile ve Tüketici Bilimleri', 'business'),
+      withProfile('iktisat', 'İktisat', 'business'),
+      withProfile('isletme', 'İşletme', 'business'),
+      withProfile('maliye', 'Maliye', 'business'),
+      withProfile('saglik-yonetimi', 'Sağlık Yönetimi', 'business'),
+      withProfile('siyaset-bilimi-ve-kamu-yonetimi', 'Siyaset Bilimi ve Kamu Yönetimi', 'social'),
+      withProfile('uluslararasi-iliskiler', 'Uluslararası İlişkiler', 'social'),
+    ],
+  },
+  {
+    id: 'iletisim',
+    name: 'İletişim Fakültesi',
+    departments: [
+      withProfile('halkla-iliskiler-ve-tanitim', 'Halkla İlişkiler ve Tanıtım', 'social'),
+      withProfile('iletisim-bilimleri', 'İletişim Bilimleri', 'social'),
+      withProfile('radyo-tv-ve-sinema', 'Radyo, Televizyon ve Sinema', 'educationArts'),
+    ],
+  },
+  {
+    id: 'mimarlik',
+    name: 'Mimarlık Fakültesi',
+    departments: [
+      withProfile('ic-mimarlik-ve-cevre-tasarimi', 'İç Mimarlık ve Çevre Tasarımı', 'educationArts'),
+      withProfile('mimarlik', 'Mimarlık', 'educationArts'),
+      withProfile('sehir-ve-bolge-planlama', 'Şehir ve Bölge Planlama', 'business'),
+    ],
+  },
+  {
+    id: 'muhendislik',
+    name: 'Mühendislik Fakültesi',
+    departments: [
+      withProfile('bilgisayar-muhendisligi', 'Bilgisayar Mühendisliği', 'quant'),
+      withProfile('cevre-muhendisligi', 'Çevre Mühendisliği', 'life'),
+      withProfile('elektrik-elektronik-muhendisligi', 'Elektrik-Elektronik Mühendisliği', 'quant'),
+      withProfile('endustri-muhendisligi', 'Endüstri Mühendisliği', 'business'),
+      withProfile('fizik-muhendisligi', 'Fizik Mühendisliği', 'quant'),
+      withProfile('gida-muhendisligi', 'Gıda Mühendisliği', 'life'),
+      withProfile('insaat-muhendisligi', 'İnşaat Mühendisliği', 'quant'),
+      withProfile('jeoloji-muhendisligi', 'Jeoloji Mühendisliği', 'life'),
+      withProfile('kimya-muhendisligi', 'Kimya Mühendisliği', 'life'),
+      withProfile('maden-muhendisligi', 'Maden Mühendisliği', 'quant'),
+      withProfile('makine-muhendisligi', 'Makine Mühendisliği', 'quant'),
+    ],
+  },
+  {
+    id: 'saglik-bilimleri',
+    name: 'Sağlık Bilimleri Fakültesi',
+    departments: [
+      withProfile('beslenme-ve-diyetetik', 'Beslenme ve Diyetetik', 'life'),
+      withProfile('cocuk-gelisimi', 'Çocuk Gelişimi', 'social'),
+      withProfile('dil-ve-konusma-terapisi', 'Dil ve Konuşma Terapisi', 'life'),
+      withProfile('ergoterapi', 'Ergoterapi', 'life'),
+      withProfile('odyoloji', 'Odyoloji', 'life'),
+      withProfile('saglik-yonetimi', 'Sağlık Yönetimi', 'business'),
+      withProfile('sosyal-hizmet', 'Sosyal Hizmet', 'social'),
+    ],
+  },
+  {
+    id: 'spor-bilimleri',
+    name: 'Spor Bilimleri Fakültesi',
+    departments: [
+      withProfile('antrenorluk-egitimi', 'Antrenörlük Eğitimi', 'educationArts'),
+      withProfile('rekreasyon', 'Rekreasyon', 'educationArts'),
+      withProfile('spor-yoneticiligi', 'Spor Yöneticiliği', 'business'),
+    ],
+  },
+  {
+    id: 'tip',
+    name: 'Tıp Fakültesi',
+    departments: [withProfile('tip', 'Tıp', 'life')],
   },
 ];
 
