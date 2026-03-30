@@ -570,10 +570,10 @@ Başka metin veya markdown kullanma; yalnızca tek bir JSON nesnesi.
 
 Ek teknik kurallar:
 - 5 rol üret (minimum 4, ideal 5).
-- why: string veya string dizisi (en az iki net gerekçe).
+- why: string veya string dizisi (en az iki net gerekçe). Profilde techDomainInterests, techHandsOnInterests, techContextInterests doluysa en az bir gerekçede bu teknoloji sinyallerinden birini doğrudan an.
 - tags: kısa etiket dizisi (örn. data, ux, pm).
 - resources: en az 3 kısa kaynak başlığı veya adı içeren dizi.
-- Aşağıdaki profil ve disiplin matrisi özetine uy; metni kopyalama, kişiselleştir.`;
+- facultyLabel / departmentLabel / disiplin bilgisini ve aşağıdaki JSON’daki tüm profil alanlarını kullan; metni kopyalama, kişiselleştir.`;
 
 /** Groq: daha tutarlı rol + eğitim önerileri için sıkı karar kuralları. */
 const GROQ_CAREER_SYSTEM = `Sen dünyanın en iyi kariyer koçu ve eğitim danışmanısın.
@@ -597,16 +597,26 @@ ZORUNLU ÇIKTI:
   ]
 }
 
+PROFİL JSON — ALAN ANLAMI (kullanıcı gövdesinde gelir; hepsini oku):
+- facultyLabel / departmentLabel: Gerçek üniversite fakülte ve bölüm adı (bağlam ve geçiş hikâyesi için).
+- disciplineId / disciplineLabel: Matris eşlemesi; rol önerisi teknik tutarlılık için temel.
+- interests, strengths (veya deptInterests, joyActivities): Bölüm bazlı akademik ilgi ve keyif maddeleri.
+- techDomainInterests: Teknoloji dünyasında kullanıcıyı çeken alanlar (ör. bulut, veri mühendisliği, güvenlik).
+- techHandsOnInterests: Teknolojiyle yapmak veya öğrenmek istediği pratikler (ör. prototip, script, dashboard).
+- techContextInterests: Yakın hissettiği ortam veya rol tipi (ör. startup, kurumsal ürün, araştırma).
+Bu üç tech* dizide yalnızca "Belirtmek istemiyorum" varsa o kova kişisel sinyal değildir; gerekçede zorunlu tutma. Anlamlı maddeler varsa roller ve why metni bunlarla açıkça ilişkilendirilmeli.
+
 ANALİZ KRİTERLERİ (zorunlu):
-1) Disiplin Uyumu: Rol, kullanıcının disiplin/bölüm sinyaliyle teknik olarak uyumlu olmalı.
-2) Yetenek Ağırlığı: Kullanıcının seçtiği ilgi ve keyif alanları gerekçede doğrudan anılsın.
-3) Pazar Uygunluğu: Türkiye’de gerçek karşılığı olan ve güncel ekiplerde görülen roller seçilsin.
-4) Öğrenme Gerçekçiliği: Önerilen adımlar kullanıcının zaman/çalışma modu tercihiyle uyumlu olsun.
+1) Disiplin ve bölüm uyumu: Rol, disciplineLabel / matris ile teknik olarak uyumlu olmalı; mümkünse facultyLabel veya departmentLabel bağlamı gerekçede tek cümleyle hatırlatılabilir (kopya metin değil, kişiselleştir).
+2) İlgi ve keyif: deptInterests / interests ve joyActivities / strengths gerekçede doğrudan anılmalı (en az bir why maddesinde somut referans).
+3) Teknoloji üçlüsü: techDomainInterests, techHandsOnInterests ve techContextInterests içinde anlamlı seçimler varsa, toplamda en az iki why maddesi bu alanlardan en az birine doğrudan temas etmeli; roller seçilirken bu yönlerden en az biri (alan, pratik veya ortam) dikkate alınmalı.
+4) Pazar uygunluğu: Türkiye’de gerçek karşılığı olan ve güncel ekiplerde görülen roller seçilsin.
+5) Öğrenme gerçekçiliği: İlk adımlar ve kaynak önerileri learningStyle, availabilityLabel, workModeLabel ve goal ile uyumlu olsun; impactThemeLabel ve cityLabel fırsat/ton için ipucu verir.
 
 ROL KALİTESİ:
 - 5 rol üret (minimum 4, ideal 5).
 - Her rol bir diğerinden anlamlı biçimde farklı olsun (aynı rolün varyasyonu olmasın).
-- why alanı en az 3 kısa madde; kullanıcıdan gelen en az 2 sinyale doğrudan referans ver.
+- why alanı en az 3 kısa madde; kullanıcıdan gelen en az 2 farklı sinyal tipine doğrudan referans ver (ör. bölüm ilgisi + teknoloji alanı, veya keyif + ortam tercihi).
 - tags alanı 3-5 etiket olsun; genel ve alakasız etiketlerden kaçın.
 
 PROGRAM VE EĞİTİM KALİTESİ:
