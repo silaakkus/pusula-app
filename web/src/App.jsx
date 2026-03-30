@@ -189,6 +189,7 @@ const App = () => {
       geminiError,
       barrierResult,
     });
+    if (profile) clearProfileDraft();
   }, [step, profile, baselineBefore, baselineAfter, roles, analysisSource, geminiError, barrierResult]);
 
   useEffect(() => {
@@ -199,6 +200,16 @@ const App = () => {
 
   useEffect(() => {
     ensureRoadmapBadgeIfProgressExists();
+  }, []);
+
+  /** Tamamlanmış akışta profil varsa eski taslak ana sayfada yanlış “taslak” satırına yol açmasın */
+  useEffect(() => {
+    try {
+      const s = loadFlowSnapshot();
+      if (s?.profile) clearProfileDraft();
+    } catch {
+      /* ignore */
+    }
   }, []);
 
   const handleFlowStart = useCallback(async () => {

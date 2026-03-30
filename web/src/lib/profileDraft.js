@@ -89,12 +89,18 @@ export function getResumeSummaryText() {
     if (head) return head;
     if (s.profile.disciplineLabel) return s.profile.disciplineLabel;
   }
+  // Akış özeti var ama profil nesnesi boş / eksik (eski veya bozuk kayıt)
+  if (s && !s.profile && s.step && FLOW_STEP_LABELS[s.step]) {
+    return `Kayıtlı adım: ${FLOW_STEP_LABELS[s.step]} — “Kaldığın yerden devam et” ile ilerle`;
+  }
   const d = loadProfileDraft();
   if (d) {
     const head = profileHeadlineFromObject(d);
-    if (head) return `${head} (taslak)`;
-    if (d.disciplineLabel) return `${d.disciplineLabel} (taslak)`;
+    const draftNote =
+      ' (henüz “Devam et” ile gönderilmedi — taslak)';
+    if (head) return `${head}${draftNote}`;
+    if (d.disciplineLabel) return `${d.disciplineLabel}${draftNote}`;
   }
-  if (hasProfileDraft()) return 'Taslak profil — devam etmek için “Kaldığın yerden devam et”';
+  if (hasProfileDraft()) return 'Taslak profil — “Kaldığın yerden devam et” ile profili tamamla';
   return 'Kayıtlı oturum';
 }

@@ -135,14 +135,23 @@ export function LandingPage({
       )}
 
       {resumeAvailable && resumeSummary && (
-        <motion.p
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.75 }}
           className="mx-auto mt-5 max-w-2xl text-center text-xs leading-snug text-slate-500"
         >
-          <span className="font-semibold text-slate-600">Kayıtlı oturum:</span> {resumeSummary}
-        </motion.p>
+          <p>
+            <span className="font-semibold text-slate-600">Kayıtlı oturum:</span> {resumeSummary}
+          </p>
+          {resumeSummary.includes('henüz “Devam et” ile gönderilmedi') && (
+            <p className="mt-1.5 text-[11px] text-slate-400">
+              Profil sayfasında doldurduğun alanlar tarayıcıda taslak olarak saklanır; ana rotayı kaydetmek için
+              formun en altındaki <strong className="font-medium text-slate-500">Devam et</strong> düğmesine
+              basman gerekir.
+            </p>
+          )}
+        </motion.div>
       )}
 
       <div className="mt-12 w-full max-w-none space-y-2 text-left" role="region" aria-label="Konular">
