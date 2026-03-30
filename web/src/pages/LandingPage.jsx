@@ -41,7 +41,12 @@ export function LandingPage({
       >
         <Badge>
           <Sparkles size={16} />
-          <span>{brand} destekli · Üniversiteli kadınlar için teknoloji rehberi</span>
+          <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-indigo-700">
+            {brand} Destekli
+          </span>
+          <span className="text-[13px] font-semibold text-indigo-800">
+            Üniversiteli kadınlar için teknoloji kariyeri rehberi
+          </span>
         </Badge>
       </motion.div>
 
@@ -64,9 +69,9 @@ export function LandingPage({
         className="mb-8 w-full max-w-none text-lg leading-relaxed text-slate-600"
       >
         <p>
-          Fakülte ve bölümünü seçip çok boyutlu profili doldurursun — bölüm ilgileri, teknolojide seni çeken üç soru grubu,
-          hedef ve tercihler; ardından rota ve öneriler oluşur. Aşağıdaki başlıklara tıklayarak gizlilik ve özellikleri
-          okuyabilirsin.
+          Fakülte ve bölümünü seçerek çok boyutlu kariyer profilini oluşturursun; bölüm ilgilerin, teknolojide seni çeken üç
+          soru grubu ile hedef ve tercihlerinden yola çıkarak kişiselleştirilmiş rota ve öneriler üretiyoruz. Aşağıdaki
+          başlıklara tıklayarak gizlilik ilkelerini ve ürünün sunduğu özellikleri inceleyebilirsin.
         </p>
         {onOpenInfo && (
           <button
