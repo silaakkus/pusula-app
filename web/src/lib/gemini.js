@@ -245,15 +245,12 @@ function sanitizeCareerResourceLine(line) {
     return UP_SCHOOL_SAFE_LINE;
   }
 
+  /* resources[]: özel patika/bootcamp yol adları yerine genel portal (prompt da kitap odaklı) */
   if (n.includes('patika')) {
-    if (/simulasyon|simulation/.test(n) || /simulasyon\s+patika|simulation\s+path/.test(n)) {
-      return PATIKA_SAFE_LINE;
-    }
+    return PATIKA_SAFE_LINE;
   }
   if (n.includes('kodluyoruz') || n.includes('kodluyor')) {
-    if (/simulasyon|simulation/.test(n)) {
-      return KODLUYORUZ_SAFE_LINE;
-    }
+    return KODLUYORUZ_SAFE_LINE;
   }
 
   return raw;
@@ -420,6 +417,15 @@ function normalizeRole(r, index) {
     starterResources = r.starterResources.filter(isNonEmptyString).map((s) => s.trim());
   }
   starterResources = starterResources.map(sanitizeCareerResourceLine).filter(Boolean);
+  {
+    const seen = new Set();
+    starterResources = starterResources.filter((s) => {
+      const k = s.trim().toLowerCase();
+      if (!k || seen.has(k)) return false;
+      seen.add(k);
+      return true;
+    });
+  }
 
   let firstSteps = Array.isArray(r?.firstSteps)
     ? r.firstSteps.filter(isNonEmptyString).map((s) => normalizeStepText(s))
@@ -476,11 +482,17 @@ function normalizeRole(r, index) {
   }
 
   if (!firstSteps.length) {
-    const r0 = starterResources[0] ?? 'Patika.dev veya Kodluyoruz giriş modülü';
+    const portalLike = (s) =>
+      /patika\.dev|kodluyoruz|upschool|http/i.test(String(s ?? ''));
+    const bookOrDoc =
+      starterResources.find((s) => !portalLike(s)) ?? starterResources[0] ?? null;
+    const step0 = bookOrDoc
+      ? `Şu kaynaktan ilk bölümü veya giriş ünitesini bu hafta bitir ve dört maddelik özet yaz: ${bookOrDoc}.`
+      : 'Rolüne uygun bir giriş kitabı veya resmi dokümantasyon seç; ilk bölümü bu hafta bitir ve kısa not çıkar.';
     firstSteps = [
-      `${r0} için başvuru/takvim sayfasını kontrol et; canlı ders saatlerini takvimine ekleyip ilk oturuma kayıt ol.`,
-      'Bu hafta tamamlayacağın tek küçük çıktıyı (ör. özet, mini proje) yaz.',
-      'SistersLab, UP School veya WTM duyurularından bir etkinliği takvimine ekle.',
+      step0,
+      'Bu hafta tamamlayacağın tek küçük çıktıyı (ör. özet, küçük egzersiz, mini not) yaz.',
+      'İlerleyen hafta için takvimine bir sonraki bölümü veya bir uygulamalı mini görevi blokla.',
     ];
   }
 
@@ -513,7 +525,11 @@ export function parseAndValidateCareerJson(rawText) {
         {
           title: `Önerilen rol ${roles.length + 1}`,
           why: ['Profil ve disiplin matrisi sinyalleriyle uyumlu bir rol.'],
-          resources: ['UP School', 'SistersLab', 'Women Techmakers etkinlikleri'],
+          resources: [
+            'Rolüne uygun çok okunan bir giriş kitabı seç (başlık ve yazar adıyla).',
+            'İlgili konuda resmi dokümantasyon veya ücretsiz ders notu (ör. Khan Academy, Python.org) işaretle.',
+            'Seçtiğin kitabın ilk iki bölümü için haftalık okuma planı yaz.',
+          ],
           tags: ['data'],
         },
         roles.length,
@@ -530,8 +546,14 @@ export function parseAndValidateCareerJson(rawText) {
       }
     }
     if (r.starterResources.length < 3) {
+      const pad = [
+        'Üniversite kütüphanesinde veya açık erişimde aynı konuda bir ders kitabı araştır.',
+        'Rol etiketlerinden biriyle arama yapıp bir “getting started” rehberi veya resmi öğretici sayfası ekle.',
+      ];
+      let i = 0;
       while (r.starterResources.length < 3) {
-        r.starterResources.push('Yerel program ve topluluk duyurularını takip et.');
+        r.starterResources.push(pad[i % pad.length]);
+        i += 1;
       }
     }
     if (r.tags.length < 1) r.tags.push('research');
@@ -572,7 +594,7 @@ Ek teknik kurallar:
 - 5 rol üret (minimum 4, ideal 5).
 - why: string veya string dizisi (en az iki net gerekçe). Profilde techDomainInterests, techHandsOnInterests, techContextInterests doluysa en az bir gerekçede bu teknoloji sinyallerinden birini doğrudan an.
 - tags: kısa etiket dizisi (örn. data, ux, pm).
-- resources: en az 3 kısa kaynak başlığı veya adı içeren dizi.
+- resources: en az 3 madde; çoğunluğu gerçek kitap adı (yazar ile) veya tanınmış dokümantasyon / kaliteli giriş kaynağı; bootcamp veya patika özel program adları buraya değil (bunlar ayrı program listelerinde).
 - facultyLabel / departmentLabel / disiplin bilgisini ve aşağıdaki JSON’daki tüm profil alanlarını kullan; metni kopyalama, kişiselleştir.`;
 
 /** Groq: daha tutarlı rol + eğitim önerileri için sıkı karar kuralları. */
@@ -588,7 +610,7 @@ ZORUNLU ÇIKTI:
       "title": "Rol adı",
       "why": ["gerekçe1", "gerekçe2", "gerekçe3"],
       "tags": ["data","analytics","pm"],
-      "resources": ["spesifik kaynak adı 1", "spesifik kaynak adı 2", "spesifik kaynak adı 3"],
+      "resources": ["Yazar — Kitap adı 1", "Yazar — Kitap adı 2", "Resmi dokümantasyon veya güvenilir giriş kaynağı"],
       "employersTurkey": [{"name":"...", "url":"https://..."}],
       "salaryRange": {"junior":"...", "mid":"...", "senior":"...", "source":"..."},
       "internshipPrograms": [{"name":"...", "url":"https://...", "summary":"...", "eligibility":"..."}],
@@ -619,16 +641,21 @@ ROL KALİTESİ:
 - why alanı en az 3 kısa madde; kullanıcıdan gelen en az 2 farklı sinyal tipine doğrudan referans ver (ör. bölüm ilgisi + teknoloji alanı, veya keyif + ortam tercihi).
 - tags alanı 3-5 etiket olsun; genel ve alakasız etiketlerden kaçın.
 
-PROGRAM VE EĞİTİM KALİTESİ:
-- resources alanında genel ifadeler YASAK ("Python kursu", "AI eğitimi" vb).
-- Her kaynak mümkün olduğunca spesifik program/kurs/kitap/dokümantasyon adı içermeli.
-- internshipPrograms ve applicationPrograms içinde marka + program adı seviyesinde netlik ver.
+BAŞLANGIÇ KAYNAKLARI (resources — arayüzde "Başlangıç kaynakları"):
+- Tam olarak en az 3 madde; bunlardan en az 2’si gerçek kitap adı olmalı (mümkünse "Yazar — Başlık" formatında; Türkçe veya İngilizce; örn. "Andy Hunt, Dave Thomas — Pragmatik Programcı", "Charles Petzold — Code", "Albert Cairo — The Truthful Art", "Joel Grus — Data Science from Scratch").
+- Kalan maddeler: resmi dokümantasyon, ücretsiz ders notu veya güvenilir giriş kaynağı (örn. "Python.org — Tutorial", "MDN — Learn HTML"; soyut "Python kursu", "AI eğitimi" YASAK).
+- Bu diziye bootcamp veya platforma özel uydurma yol/program adı koyma (örn. "Veri Analizi Patikası", "X Bootcamp 2026" uydurması); böyle içerik internshipPrograms / applicationPrograms içinde URL ve bilinen katalogla verilsin.
+- En fazla 1 madde genel portal olabilir (örn. Patika veya Kodluyoruz ana site — tek satır); öncelik her zaman kitap ve temel öğrenme.
+
+PROGRAM VE BOOTCAMP LİSTELERİ (internshipPrograms / applicationPrograms):
+- Burada marka + bilinen veya katalogdaki program adı ve net https URL kullan.
 - Her program girdisi gerçekçi, tıklanabilir https URL içermeli.
 - Her program girdisinde "kimler katılabilir" bilgisini açık yaz:
   • internshipPrograms.eligibility alanı zorunlu ve net kitle tanımı içermeli.
   • applicationPrograms.forWho alanı "Kimler katılabilir: ..." formatında başlamalı.
 
 HALÜSİNASYON YASAĞI (kritik):
+- resources içinde uydurma "X Patikası", "Y Bootcamp" özel adı veya rol uydurmak için sahte kurs adı yazma; şüphede kitap veya genel resmi dokümantasyon öner.
 - Rol adına göre uydurma program adı yazma (örn. "Simülasyon Programı", "Simülasyon Patikası", "Simülasyon Bootcamp").
 - UP School için YALNIZCA aşağıdaki katalogdaki tam program adlarından birini kullan veya genel yaz: "UP School — programlar: https://www.upschool.io/program"
 - Simülasyon / operasyon araştırması ilgisi için uygunsa tek istisna: "UP AI Growth Companion" (rol simülasyonu / mikro öğrenme; https://www.upschool.io/en/up veya upschool.io çatısı) — "UP School Simülasyon Programı" diye AYRI bir bootcamp adı uydurma.
