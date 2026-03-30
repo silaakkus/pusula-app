@@ -48,15 +48,20 @@ Yayin Linki: **https://pusula-app-two.vercel.app**
 
 ## Ekran Goruntuleri
 
-Asagidaki goruntuler README'ye eklenecek sekilde proje icinde tutulabilir:
+### Landing
+![Landing](assets/screenshots/landing.png)
 
-- Landing ekrani
-- Profil akisi
-- Yönelim testi ekrani
-- Sonuc/oneri ekrani
-- Kariyer rota karti
+### Profil Akisi
+![Profil Akisi](assets/screenshots/profile-flow.png)
 
-Not: Goruntuleri `assets/screenshots/` altina ekleyip bu bolume markdown image satirlari ile baglayabilirsiniz.
+### Yonelim Testi
+![Yonelim Testi](assets/screenshots/orientation-quiz.png)
+
+### Sonuc / Oneri
+![Sonuc Ekrani](assets/screenshots/results.png)
+
+### Kariyer Rota Karti
+![Kariyer Rota Karti](assets/screenshots/career-card.png)
 
 ## Portfolyo Metni (200 kelime)
 
