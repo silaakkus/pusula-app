@@ -36,13 +36,12 @@ Bu yolculukta ogrendigim en onemli sey, dogru yonlendirme oldugunda farkli bolum
 
 - Cok adimli profil ve akis yonetimi
 - **Pusula** simgesine basarak ana menüye dönüş
-- Yönelim testi + sonuc yorumlama
+- Yönelim testi: sonuç metni **n8n** üzerinde **Webhook (POST) → Code in JavaScript → Respond to Webhook** akışıyla üretilir ve uygulama sonuç ekranında gösterilir; **Groq** ile üretilen ek AI özeti ve ipuçları da **aynı ekranda** birlikte sunulur
 - AI destekli rol ve gelisim onerileri
 - Yol haritasi (roadmap) modulu
 - Engel yeniden cerceveleme adimi
 - PNG olarak indirilebilir "Kariyer Rota Karti"
 - Sonuclar ekranından **e-posta ile özet gönderimi** (n8n webhook)
-- Yönelim testi sonucunu **AI ile yorumlayıp alan önerisi** (n8n webhook)
 
 ## Canli Demo
 
