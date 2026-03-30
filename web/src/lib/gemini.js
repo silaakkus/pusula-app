@@ -360,7 +360,36 @@ function coerceSalaryRangeObject(raw) {
     source =
       'Tahmini piyasa bandı (yapay zeka), Türkiye, brüt ₺/ay; şehir ve şirkete göre değişir — kesin ücret değildir.';
   }
-  return { junior, mid, senior, source };
+  const meta = pickSalaryMetaFromObject(raw);
+  return { junior, mid, senior, source, ...meta };
+}
+
+function pickSalaryMetaFromObject(raw) {
+  if (!raw || typeof raw !== 'object') return {};
+  let methodology = '';
+  let referenceYear = '';
+  for (const [key, val] of Object.entries(raw)) {
+    const nk = normSalaryKey(key);
+    const s = asTrimmedString(val);
+    if (!s) continue;
+    if (nk === 'methodology' || nk === 'methodoloji' || nk === 'yontem' || nk.includes('methodol')) {
+      methodology = s;
+      continue;
+    }
+    if (
+      nk === 'referenceyear' ||
+      nk === 'referansyili' ||
+      nk === 'veriyili' ||
+      nk === 'yil' ||
+      nk === 'datayear'
+    ) {
+      referenceYear = s;
+    }
+  }
+  const out = {};
+  if (methodology) out.methodology = methodology;
+  if (referenceYear) out.referenceYear = referenceYear;
+  return out;
 }
 
 function pickRawSalaryRange(r) {
@@ -476,6 +505,9 @@ function normalizeRole(r, index) {
       senior: rawSr.senior.trim(),
       source: rawSr.source.trim(),
     };
+    const meta = pickSalaryMetaFromObject(rawSr);
+    if (meta.methodology) salaryRange.methodology = meta.methodology;
+    if (meta.referenceYear) salaryRange.referenceYear = meta.referenceYear;
   } else {
     const coerced = coerceSalaryRangeObject(rawSr);
     if (coerced) salaryRange = coerced;
@@ -595,6 +627,7 @@ Ek teknik kurallar:
 - why: string veya string dizisi (en az iki net gerekçe). Profilde techDomainInterests, techHandsOnInterests, techContextInterests doluysa en az bir gerekçede bu teknoloji sinyallerinden birini doğrudan an.
 - tags: kısa etiket dizisi (örn. data, ux, pm).
 - resources: en az 3 madde; çoğunluğu gerçek kitap adı (yazar ile) veya tanınmış dokümantasyon / kaliteli giriş kaynağı; bootcamp veya patika özel program adları buraya değil (bunlar ayrı program listelerinde).
+- Tam şema kullanıyorsan salaryRange içinde source, referenceYear ve methodology (kaynak türü ve yıl açıklaması) alanlarını doldur.
 - facultyLabel / departmentLabel / disiplin bilgisini ve aşağıdaki JSON’daki tüm profil alanlarını kullan; metni kopyalama, kişiselleştir.`;
 
 /** Groq: daha tutarlı rol + eğitim önerileri için sıkı karar kuralları. */
@@ -612,7 +645,7 @@ ZORUNLU ÇIKTI:
       "tags": ["data","analytics","pm"],
       "resources": ["Yazar — Kitap adı 1", "Yazar — Kitap adı 2", "Resmi dokümantasyon veya güvenilir giriş kaynağı"],
       "employersTurkey": [{"name":"...", "url":"https://..."}],
-      "salaryRange": {"junior":"...", "mid":"...", "senior":"...", "source":"..."},
+      "salaryRange": {"junior":"...", "mid":"...", "senior":"...", "source":"Kısa kaynak etiketi (örn. Glassdoor TR · Kariyer.net)", "referenceYear":"2025", "methodology":"3-5 cümle: hangi kaynak türlerine dayandın, hangi şehir/segment varsayımı, nasıl yuvarladın; kesin ücret olmadığını belirt"},
       "internshipPrograms": [{"name":"...", "url":"https://...", "summary":"...", "eligibility":"..."}],
       "applicationPrograms": [{"name":"...", "url":"https://...", "forWho":"...", "summary":"..."}]
     }
@@ -627,6 +660,11 @@ PROFİL JSON — ALAN ANLAMI (kullanıcı gövdesinde gelir; hepsini oku):
 - techHandsOnInterests: Teknolojiyle yapmak veya öğrenmek istediği pratikler (ör. prototip, script, dashboard).
 - techContextInterests: Yakın hissettiği ortam veya rol tipi (ör. startup, kurumsal ürün, araştırma).
 Bu üç tech* dizide yalnızca "Belirtmek istemiyorum" varsa o kova kişisel sinyal değildir; gerekçede zorunlu tutma. Anlamlı maddeler varsa roller ve why metni bunlarla açıkça ilişkilendirilmeli.
+
+YÖNELİM TESTİ (orientation — gövdede nesne olarak gelir):
+- Kullanıcı JSON içinde "orientation" alanında archetypeId, archetypeLabel, headline (ve varsa subline, scoreHints) ile yönelim özetini gönderir.
+- orientation null değilse roller ve en az iki why maddesi bu yön ile uyumlu olmalı; matris disipliniyle çelişen öneri verme. Yönelim + bölüm + tech sinyallerini birlikte kullan.
+- orientation null ise yalnızca profil ve matris özetiyle yürü.
 
 ANALİZ KRİTERLERİ (zorunlu):
 1) Disiplin ve bölüm uyumu: Rol, disciplineLabel / matris ile teknik olarak uyumlu olmalı; mümkünse facultyLabel veya departmentLabel bağlamı gerekçede tek cümleyle hatırlatılabilir (kopya metin değil, kişiselleştir).
@@ -683,9 +721,11 @@ BAĞLANTI GÜVENİLİRLİĞİ:
 - Emin olmadığın durumda daha genel ama gerçek kurum/program adı ver; sahte detay uydurma.
 - Staj/program URL'si için mümkünse resmi kariyer sayfası; alternatif olarak Youthall veya LinkedIn Jobs kullanılabilir.
 
-salaryRange zorunlu:
-- junior/mid/senior/source anahtarları mutlaka dolu.
-- Türkiye brüt aylık bandı ver; kesin ücret iddiası kurma.
+salaryRange (her rol için zorunlu):
+- junior, mid, senior, source mutlaka dolu; Türkiye brüt aylık bandı; kesin ücret iddiası kurma.
+- referenceYear: veriyi hangi yıla veya döneme yakın düşündüğün (örn. "2025", "2024–2025") — tek kısa ifade.
+- methodology: 3-5 tam cümle Türkçe; şunları açık yaz: (1) Örnekleme için hangi kaynak türlerini kullandın (LinkedIn/Kariyer.net/Glassdoor TR/Indeed TR/şirket kariyer sayfaları/sektör blogları vb.), (2) bandı hangi kariyer seviyesine göre yuvarladın, (3) şehir veya segment varsayımı (örn. İstanbul kurumsal teknoloji), (4) Bu çıktının tahmin olduğu ve gerçek tekliften sapabileceği.
+- source alanı kısa bir etiket cümlesi olabilir; ayrıntı methodology içinde olmalı.
 
 Dil:
 - Türkçe, anlaşılır, yargılamayan ve motive eden ton.
@@ -728,7 +768,7 @@ function buildSuggestedRolesContext() {
   );
 }
 
-export async function runCareerAnalysis({ apiKey, profile, matrix }) {
+export async function runCareerAnalysis({ apiKey, profile, matrix, orientation }) {
   const key = apiKey != null ? String(apiKey).trim() : '';
   if (!key) {
     throw new Error(
@@ -768,9 +808,10 @@ export async function runCareerAnalysis({ apiKey, profile, matrix }) {
       techContextInterests: profile.techContextInterests,
     },
     matrixExcerpt: buildMatrixExcerpt(matrix, profile.disciplineId),
+    orientation: orientation ?? null,
   };
 
-  const prompt = `Aşağıdaki profil ve matris özetini kullanarak yalnızca JSON üret.\n\n${JSON.stringify(userPayload, null, 2)}`;
+  const prompt = `Aşağıdaki profil, yönelim (varsa) ve matris özetini kullanarak yalnızca JSON üret.\n\n${JSON.stringify(userPayload, null, 2)}`;
 
   if (getLlmProvider() === 'groq') {
     const text = await groqGenerateText({

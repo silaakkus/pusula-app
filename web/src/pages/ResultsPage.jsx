@@ -35,6 +35,19 @@ import {
 import { getLlmBrandLabel } from '../lib/llmConfig.js';
 import { flowPreviousStepButtonClass } from '../lib/flowPreviousStepButton.js';
 import { postInviterCompletionOnce } from '../lib/inviteReferral.js';
+import { ORIENTATION_ARCHETYPE_LABELS } from '../lib/orientationQuiz.js';
+
+const MATRIX_SALARY_METHODOLOGY =
+  'Pusula disiplin matrisinde bu rol için tanımlı rehber bantlar; kaynak satırında adı geçen iş ilanı ve ücret araştırma sitelerinin 2024–2025 dönemine yakın göstergeleriyle hizalanmıştır. Şehir, şirket ve yan haklara göre değişir; kesin teklif değildir.';
+
+const LLM_SALARY_METHODOLOGY_FALLBACK =
+  'Yapay zekâ tarafından üretilmiştir; LinkedIn, Kariyer.net, Glassdoor TR, Indeed TR ve benzeri kamuya açık ilan ve ücret göstergelerinin genel bandlarıyla uyumlu yaklaşık brüt aylık aralıklardır. Somut bir veri seti veya resmi istatistik iddiası yoktur; şehir ve sektöre göre sapma beklenir.';
+
+function inferSalaryReferencePeriod(text) {
+  const m = String(text ?? '').match(/20\d{2}/g);
+  if (m?.length) return [...new Set(m)].slice(0, 4).join(', ');
+  return '2025–2026 (tahmine dayalı)';
+}
 
 function getRoleTitlesForWebhook(roles) {
   return (roles ?? [])
@@ -79,11 +92,22 @@ function resolveDayInLife(matrix, profile, role) {
 function resolveSalaryBlocks(matrix, profile, role) {
   const blocks = [];
   if (validateSalaryRange(role?.salaryRange)) {
+    const sr = role.salaryRange;
+    const methodology =
+      typeof sr.methodology === 'string' && sr.methodology.trim()
+        ? sr.methodology.trim()
+        : LLM_SALARY_METHODOLOGY_FALLBACK;
+    const referenceYear =
+      typeof sr.referenceYear === 'string' && sr.referenceYear.trim()
+        ? sr.referenceYear.trim()
+        : inferSalaryReferencePeriod(sr.source);
     blocks.push({
-      junior: role.salaryRange.junior.trim(),
-      mid: role.salaryRange.mid.trim(),
-      senior: role.salaryRange.senior.trim(),
-      source: role.salaryRange.source.trim(),
+      junior: sr.junior.trim(),
+      mid: sr.mid.trim(),
+      senior: sr.senior.trim(),
+      source: sr.source.trim(),
+      methodology,
+      referenceYear,
       _from: 'llm',
     });
   }
@@ -94,6 +118,8 @@ function resolveSalaryBlocks(matrix, profile, role) {
       mid: fromMatrix.mid.trim(),
       senior: fromMatrix.senior.trim(),
       source: fromMatrix.source.trim(),
+      methodology: MATRIX_SALARY_METHODOLOGY,
+      referenceYear: inferSalaryReferencePeriod(fromMatrix.source),
       _from: 'matrix',
     });
   }
@@ -103,6 +129,8 @@ function resolveSalaryBlocks(matrix, profile, role) {
       mid: DEFAULT_SALARY_RANGE.mid,
       senior: DEFAULT_SALARY_RANGE.senior,
       source: DEFAULT_SALARY_RANGE.source,
+      methodology: MATRIX_SALARY_METHODOLOGY,
+      referenceYear: inferSalaryReferencePeriod(DEFAULT_SALARY_RANGE.source),
       _from: 'default',
     });
   }
@@ -181,13 +209,23 @@ function buildRichWebhookPayload({
   opportunities,
   cityId,
   analysisSource,
+  orientationResult,
 }) {
   const rolesDetail = (roles ?? []).map((role) => {
     const dil = resolveDayInLife(matrix, profile, role);
     const salaryBlocks = resolveSalaryBlocks(matrix, profile, role);
     const pickSalary = (from) => salaryBlocks.find((b) => b._from === from);
     const salaryChunk = (b) =>
-      b ? { junior: b.junior, mid: b.mid, senior: b.senior, source: b.source } : null;
+      b
+        ? {
+            junior: b.junior,
+            mid: b.mid,
+            senior: b.senior,
+            source: b.source,
+            referenceYear: b.referenceYear,
+            methodology: b.methodology,
+          }
+        : null;
     const primarySalary = salaryBlocks[0];
     const employers = resolveEmployers(matrix, profile, role)
       .slice(0, 14)
@@ -252,6 +290,15 @@ function buildRichWebhookPayload({
       techHandsOnInterests: profile?.techHandsOnInterests ?? [],
       techContextInterests: profile?.techContextInterests ?? [],
     },
+    orientation: orientationResult
+      ? {
+          archetype: orientationResult.archetype ?? '',
+          archetypeLabel: ORIENTATION_ARCHETYPE_LABELS[orientationResult.archetype] ?? orientationResult.archetype ?? '',
+          headline: orientationResult.headline ?? '',
+          subline: orientationResult.subline ?? '',
+          source: orientationResult.source ?? '',
+        }
+      : null,
     roles: getRoleTitlesForWebhook(roles),
     rolesDetail,
     opportunities: buildWebhookOpportunities(roles, opportunities, 3, cityId),
@@ -379,6 +426,7 @@ export function ResultsPage({
   matrix,
   roles,
   opportunities,
+  orientationResult,
   analysisSource,
   geminiErrorMessage,
   onRetryAnalysis,
@@ -423,6 +471,7 @@ export function ResultsPage({
       opportunities,
       cityId,
       analysisSource,
+      orientationResult,
     });
 
     setEmailSending(true);
@@ -693,7 +742,11 @@ export function ResultsPage({
                               <span className="text-sm font-semibold tabular-nums text-indigo-900">{row.range}</span>
                             </div>
                           ))}
-                          <p className="text-xs leading-snug text-slate-500">{block.source}</p>
+                          <p className="mt-2 text-xs font-semibold text-slate-600">
+                            Referans dönem / yıl: {block.referenceYear}
+                          </p>
+                          <p className="mt-1 text-xs leading-relaxed text-slate-600">{block.methodology}</p>
+                          <p className="mt-2 text-xs leading-snug text-slate-500">Kaynak özeti: {block.source}</p>
                         </div>
                       ))}
                     </div>

@@ -104,7 +104,17 @@ function salarySectionHtml(rd) {
     <div style="margin:8px 0;padding:10px;background:#f5f3ff;border-radius:8px;border:1px solid #e9d5ff;">
       <strong style="font-size:12px;color:#5b21b6;">${esc(label)}</strong>
       <p style="margin:6px 0 0;font-size:13px;color:#444;">Juniör: ${esc(chunk.junior)} · Orta: ${esc(chunk.mid)} · Kıdemli: ${esc(chunk.senior)}</p>
-      <span style="color:#888;font-size:11px;">${esc(chunk.source)}</span>
+      ${
+        chunk.referenceYear
+          ? `<p style="margin:6px 0 0;font-size:12px;color:#334155;font-weight:600;">Referans dönem / yıl: ${esc(chunk.referenceYear)}</p>`
+          : ''
+      }
+      ${
+        chunk.methodology
+          ? `<p style="margin:4px 0 0;font-size:12px;color:#555;line-height:1.55;">${esc(chunk.methodology)}</p>`
+          : ''
+      }
+      <span style="color:#888;font-size:11px;display:block;margin-top:6px;">Kaynak özeti: ${esc(chunk.source)}</span>
     </div>`,
     )
     .join('');
@@ -194,6 +204,34 @@ if (
   </div>`;
 }
 
+let orientationHtml = '';
+if (orientation && (orientation.headline || orientation.archetypeLabel)) {
+  orientationHtml = `
+  <div style="background:#faf5ff;padding:14px 16px;border-radius:10px;margin-bottom:18px;border:1px solid #e9d5ff;">
+    <strong style="color:#6d28d9;font-size:15px;">Yönelim testi özeti</strong>
+    ${
+      orientation.archetypeLabel
+        ? `<p style="margin:8px 0 4px;color:#333;font-size:14px;"><strong>Yön:</strong> ${esc(orientation.archetypeLabel)}</p>`
+        : ''
+    }
+    ${
+      orientation.headline
+        ? `<p style="margin:4px 0;color:#1e1b4b;font-size:16px;font-weight:700;line-height:1.35;">${esc(orientation.headline)}</p>`
+        : ''
+    }
+    ${
+      orientation.subline
+        ? `<p style="margin:6px 0 0;color:#555;font-size:14px;line-height:1.55;">${esc(orientation.subline)}</p>`
+        : ''
+    }
+    ${
+      orientation.source
+        ? `<p style="margin:8px 0 0;font-size:11px;color:#64748b;">Özet kaynağı: ${esc(orientation.source)}</p>`
+        : ''
+    }
+  </div>`;
+}
+
 let aiLine = '';
 if (analysisSource === 'fallback') {
   aiLine =
@@ -226,7 +264,17 @@ if (rolesDetail.length) {
         (sal
           ? `<p style="margin:8px 0;font-size:13px;color:#444;"><strong>Maaş bantları (yaklaşık):</strong><br/>
         Juniör: ${esc(sal.junior)} · Orta: ${esc(sal.mid)} · Kıdemli: ${esc(sal.senior)}<br/>
-        <span style="color:#888;font-size:12px;">${esc(sal.source)}</span></p>`
+        ${
+          sal.referenceYear
+            ? `<span style="color:#334155;font-size:12px;font-weight:600;display:block;margin-top:6px;">Referans dönem: ${esc(sal.referenceYear)}</span>`
+            : ''
+        }
+        ${
+          sal.methodology
+            ? `<span style="color:#555;font-size:12px;display:block;margin-top:6px;line-height:1.5;">${esc(sal.methodology)}</span>`
+            : ''
+        }
+        <span style="color:#888;font-size:11px;display:block;margin-top:6px;">Kaynak özeti: ${esc(sal.source)}</span></p>`
           : '');
 
       const empItems = (rd.employers || [])
@@ -340,6 +388,7 @@ const html = `<div style="font-family: Arial, Helvetica, sans-serif; max-width: 
   </div>
   ${aiLine}
   ${profileHtml}
+  ${orientationHtml}
   <h2 style="color:#333;font-size:18px;margin:20px 0 10px;">Önerilen roller</h2>
   ${rolesHtml}
   <h3 style="color:#333;margin-top:26px;font-size:17px;">📚 Rollerine özel program / topluluk / kurs</h3>

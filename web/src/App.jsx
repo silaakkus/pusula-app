@@ -64,22 +64,29 @@ import {
 import { unlockPusulaBadge, BADGE_IDS } from './lib/pusulaBadges.js';
 import { ensureRoadmapBadgeIfProgressExists } from './lib/roadmapProgress.js';
 import { Button } from './components/ui/Button';
+import {
+  clearFlowOrientationResult,
+  isValidFlowOrientationResult,
+  loadFlowOrientationResult,
+  orientationSummaryForLlm,
+  saveFlowOrientationResult,
+} from './lib/orientationQuiz.js';
 
 function stepLabel(step) {
   const map = {
-    home: 'Adım 1/8 · Karşılama',
-    profile: 'Adım 2/8 · Profil',
-    baseline: 'Adım 3/8 · Ön anket',
-    analyzing: 'Adım 4/8 · Analiz',
-    results: 'Adım 5/8 · Sonuçlar',
-    barrier: 'Adım 6/8 · Engel',
-    barrierReview: 'Adım 6/8 · Engel özeti',
-    postsurvey: 'Adım 7/8 · Son anket',
-    card: 'Adım 8/8 · Kariyer kartı',
+    home: 'Adım 1/10 · Karşılama',
+    orientationQuiz: 'Adım 2/10 · Yönelim testi',
+    orientationResult: 'Adım 2/10 · Yönelim sonucu',
+    profile: 'Adım 3/10 · Profil',
+    baseline: 'Adım 4/10 · Ön anket',
+    analyzing: 'Adım 5/10 · Analiz',
+    results: 'Adım 6/10 · Sonuçlar',
+    barrier: 'Adım 7/10 · Engel',
+    barrierReview: 'Adım 7/10 · Engel özeti',
+    postsurvey: 'Adım 8/10 · Son anket',
+    card: 'Adım 9/10 · Kariyer kartı',
     roadmapHub: 'Keşif · Öğrenme yolları',
     roadmapTrack: 'Keşif · Adım adım yol',
-    orientationQuiz: 'Keşif · Yönelim testi',
-    orientationResult: 'Keşif · Yönelim sonucu',
   };
   return map[step] ?? '';
 }
@@ -96,7 +103,7 @@ function resumeTargetStep(s) {
 function getPreviousStep(current) {
   switch (current) {
     case 'profile':
-      return 'home';
+      return 'orientationResult';
     case 'baseline':
       return 'profile';
     case 'analyzing':
@@ -143,8 +150,12 @@ const App = () => {
   const [landingInfoSectionId, setLandingInfoSectionId] = useState(null);
   const [roadmapTrackId, setRoadmapTrackId] = useState(null);
   const [orientationResult, setOrientationResult] = useState(null);
+  const [resumeStepAfterOrientation, setResumeStepAfterOrientation] = useState(null);
 
   const barrierProfileSummary = useMemo(() => {
+    const oriLine = orientationResult
+      ? `yönelim: ${orientationResult.headline ?? ''} (${orientationResult.archetype ?? ''})`
+      : '';
     const techBlock = [
       profile?.techDomainInterests?.length
         ? `teknoloji alanları: ${profile.techDomainInterests.join(', ')}`
@@ -160,11 +171,12 @@ const App = () => {
       .join('; ');
     return [
       `${profile?.disciplineLabel ?? ''}; ilgi: ${profile?.interests?.join(', ')}; güçlü yön: ${profile?.strengths?.join(', ')}; hedef: ${profile?.goal ?? ''}`,
+      oriLine,
       techBlock,
     ]
       .filter(Boolean)
       .join(' | ');
-  }, [profile]);
+  }, [profile, orientationResult]);
 
   const navLabel = useMemo(() => stepLabel(step), [step]);
 
@@ -182,6 +194,7 @@ const App = () => {
     saveFlowSnapshot({
       step,
       profile,
+      orientationResult,
       baselineBefore,
       baselineAfter,
       roles,
@@ -190,7 +203,7 @@ const App = () => {
       barrierResult,
     });
     if (profile) clearProfileDraft();
-  }, [step, profile, baselineBefore, baselineAfter, roles, analysisSource, geminiError, barrierResult]);
+  }, [step, profile, orientationResult, baselineBefore, baselineAfter, roles, analysisSource, geminiError, barrierResult]);
 
   useEffect(() => {
     if (step === 'results' && roles.length > 0) {
@@ -216,6 +229,9 @@ const App = () => {
     clearCompletionNotifyFlag();
     clearFlowSnapshot();
     clearProfileDraft();
+    clearFlowOrientationResult();
+    setOrientationResult(null);
+    setResumeStepAfterOrientation(null);
     setProfile(null);
     setRoles([]);
     setBarrierResult(null);
@@ -224,7 +240,7 @@ const App = () => {
     setBaselineBefore(3);
     setBaselineAfter(3);
     logEvent('flow_start', {});
-    setStep('profile');
+    setStep('orientationQuiz');
     if (matrix && opportunities) return;
 
     setDataLoading(true);
@@ -266,10 +282,6 @@ const App = () => {
       return;
     }
 
-    let nextStep = resumeTargetStep(s);
-    if (nextStep !== 'profile' && !s.profile) nextStep = 'profile';
-    if (nextStep === 'results' && (!Array.isArray(s.roles) || s.roles.length === 0)) nextStep = 'baseline';
-
     setProfile(s.profile ?? null);
     setBaselineBefore(typeof s.baselineBefore === 'number' ? s.baselineBefore : 3);
     setBaselineAfter(typeof s.baselineAfter === 'number' ? s.baselineAfter : 3);
@@ -279,6 +291,31 @@ const App = () => {
     );
     setGeminiError(typeof s.geminiError === 'string' ? s.geminiError : '');
     setBarrierResult(s.barrierResult ?? null);
+
+    const storedOri = s.orientationResult ?? loadFlowOrientationResult();
+    setOrientationResult(isValidFlowOrientationResult(storedOri) ? storedOri : null);
+
+    let targetStep = resumeTargetStep(s);
+    if (targetStep !== 'profile' && !s.profile) targetStep = 'profile';
+    if (targetStep === 'results' && (!Array.isArray(s.roles) || s.roles.length === 0)) targetStep = 'baseline';
+
+    const needsOrientationFlow = new Set([
+      'profile',
+      'baseline',
+      'analyzing',
+      'results',
+      'barrier',
+      'barrierReview',
+      'postsurvey',
+      'card',
+    ]);
+    const hasOri = isValidFlowOrientationResult(storedOri);
+    if (s.profile && needsOrientationFlow.has(targetStep) && !hasOri) {
+      setResumeStepAfterOrientation(targetStep);
+      targetStep = 'orientationQuiz';
+    } else {
+      setResumeStepAfterOrientation(null);
+    }
 
     if (!matrix || !opportunities) {
       setDataLoading(true);
@@ -296,20 +333,26 @@ const App = () => {
       }
     }
 
-    setStep(nextStep);
-    logEvent('flow_resume', { step: nextStep });
+    setStep(targetStep);
+    logEvent('flow_resume', { step: targetStep });
   }, [matrix, opportunities]);
 
   const runAnalysis = useCallback(async () => {
     if (!profile || !matrix?.length) return;
+    if (!isValidFlowOrientationResult(orientationResult)) {
+      setResumeStepAfterOrientation('baseline');
+      setStep('orientationQuiz');
+      return;
+    }
     setStep('analyzing');
     setGeminiError('');
     try {
       const key = getLlmApiKey();
-      const out = await runCareerAnalysis({ apiKey: key, profile, matrix });
+      const orientation = orientationSummaryForLlm(orientationResult);
+      const out = await runCareerAnalysis({ apiKey: key, profile, matrix, orientation });
       setRoles(out.roles);
       savePusulaSession({
-        answers: { profile, baselineConfidenceBefore: baselineBefore },
+        answers: { profile, baselineConfidenceBefore: baselineBefore, orientation },
         roles: out.roles,
       });
       const src = getLlmProvider() === 'groq' ? 'groq' : 'gemini';
@@ -321,7 +364,11 @@ const App = () => {
       const r = rolesFromMatrix(row);
       setRoles(r);
       savePusulaSession({
-        answers: { profile, baselineConfidenceBefore: baselineBefore },
+        answers: {
+          profile,
+          baselineConfidenceBefore: baselineBefore,
+          orientation: orientationSummaryForLlm(orientationResult),
+        },
         roles: r,
       });
       setAnalysisSource('fallback');
@@ -329,12 +376,13 @@ const App = () => {
       logEvent('analysis_done', { source: 'fallback', error: e?.message ?? String(e) });
       setStep('results');
     }
-  }, [profile, matrix, baselineBefore]);
+  }, [profile, matrix, baselineBefore, orientationResult]);
 
   const goHome = useCallback(() => {
     setLandingInfoSectionId(null);
     setRoadmapTrackId(null);
     setOrientationResult(null);
+    setResumeStepAfterOrientation(null);
     setStep('home');
     logEvent('nav_home_logo', {});
   }, []);
@@ -347,6 +395,19 @@ const App = () => {
     if (step === 'orientationResult' && !orientationResult) setStep('orientationQuiz');
   }, [step, orientationResult]);
 
+  /** Taslak veya eski oturum: profil adımına gelindiğinde geçerli yönelim yoksa teste yönlendir */
+  useEffect(() => {
+    if (step !== 'profile') return;
+    if (dataLoading || dataError || !matrix) return;
+    const merged = orientationResult ?? loadFlowOrientationResult();
+    if (isValidFlowOrientationResult(merged)) {
+      if (!orientationResult) setOrientationResult(merged);
+      return;
+    }
+    setResumeStepAfterOrientation('profile');
+    setStep('orientationQuiz');
+  }, [step, matrix, dataLoading, dataError, orientationResult]);
+
   const goToPreviousStep = useCallback(() => {
     const prev = getPreviousStep(step);
     if (!prev) return;
@@ -358,9 +419,11 @@ const App = () => {
     clearInviteReferralState();
     clearFlowSnapshot();
     clearProfileDraft();
+    clearFlowOrientationResult();
     setLandingInfoSectionId(null);
     setRoadmapTrackId(null);
     setOrientationResult(null);
+    setResumeStepAfterOrientation(null);
     setStep('home');
     setProfile(null);
     setBaselineBefore(3);
@@ -496,6 +559,7 @@ const App = () => {
           onBack={goHome}
           onComplete={(r) => {
             unlockPusulaBadge(BADGE_IDS.ORIENTATION);
+            saveFlowOrientationResult(r);
             setOrientationResult(r);
             setStep('orientationResult');
           }}
@@ -503,7 +567,37 @@ const App = () => {
       )}
 
       {step === 'orientationResult' && orientationResult && (
-        <OrientationResultPage result={orientationResult} onBack={() => setStep('orientationQuiz')} onHome={goHome} />
+        <OrientationResultPage
+          result={orientationResult}
+          onBack={() => setStep('orientationQuiz')}
+          onHome={goHome}
+          onContinueToNext={async () => {
+            const next = resumeStepAfterOrientation ?? 'profile';
+            setResumeStepAfterOrientation(null);
+            logEvent('orientation_continue', { to: next });
+            if (next === 'profile' && (!matrix || !opportunities)) {
+              setDataLoading(true);
+              setDataError('');
+              try {
+                const d = await loadPusulaData();
+                setMatrix(d.matrix);
+                setOpportunities(d.opportunities);
+              } catch (e) {
+                setDataError(e?.message ?? 'Veri yüklenemedi');
+                setStep('home');
+                return;
+              } finally {
+                setDataLoading(false);
+              }
+            }
+            setStep(next);
+          }}
+          continueToNextLabel={
+            resumeStepAfterOrientation && resumeStepAfterOrientation !== 'profile'
+              ? 'Kaldığın adıma dön'
+              : 'Profil ve analize devam et'
+          }
+        />
       )}
 
       {step === 'landingInfo' && (
@@ -564,6 +658,7 @@ const App = () => {
           matrix={matrix}
           roles={roles}
           opportunities={opportunities}
+          orientationResult={orientationResult}
           analysisSource={analysisSource}
           geminiErrorMessage={geminiError}
           onRetryAnalysis={() => {

@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Bot, Download, Grid3x3, Home, Loader2, Sparkles } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Bot, Download, Grid3x3, Home, Loader2, Sparkles } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
 import { OrientationCardCapture } from '../components/OrientationCardCapture.jsx';
 import { downloadOrientationCardPng } from '../lib/downloadOrientationCard.js';
-import { sanitizeOrientationBody } from '../lib/orientationQuiz.js';
+import { ORIENTATION_ARCHETYPE_LABELS, sanitizeOrientationBody } from '../lib/orientationQuiz.js';
 import { fetchOrientationGroqSupplement } from '../lib/orientationGroqEnrich.js';
 import { fetchOrientationMatrixHints } from '../lib/orientationMatrixHints.js';
 
@@ -40,7 +40,9 @@ export function OrientationResultPage({ result, onBack, onHome }) {
     year: 'numeric',
   }).format(new Date());
 
-  const archetypeLabel = result?.archetype ? ARCHETYPE_LABELS[result.archetype] ?? result.archetype : '';
+  const archetypeLabel = result?.archetype
+    ? ORIENTATION_ARCHETYPE_LABELS[result.archetype] ?? result.archetype
+    : '';
   const bodySafe = sanitizeOrientationBody(result?.body ?? '');
 
   useEffect(() => {
@@ -283,6 +285,24 @@ export function OrientationResultPage({ result, onBack, onHome }) {
             </Card>
           ) : null}
         </div>
+
+        {typeof onContinueToNext === 'function' && (
+          <div className="mx-auto mt-10 max-w-xl sm:max-w-2xl">
+            <Button
+              type="button"
+              size="lg"
+              className="w-full shadow-md shadow-violet-200/80"
+              onClick={onContinueToNext}
+            >
+              <ArrowRight className="h-5 w-5 shrink-0" aria-hidden />
+              {continueToNextLabel ?? 'Profil ve analize devam et'}
+            </Button>
+            <p className="mt-2 text-center text-xs leading-relaxed text-slate-600">
+              Kariyer analizi ve kişiselleştirilmiş rol önerileri için bir sonraki adımda üniversite profilini
+              tamamlayacaksın; yönelim sonucun analizde dikkate alınır.
+            </p>
+          </div>
+        )}
 
         <div className="mt-10">
           <p className="mb-3 text-center text-sm font-semibold text-slate-700">Kart önizleme — PNG indir</p>

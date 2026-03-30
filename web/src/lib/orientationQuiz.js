@@ -2,6 +2,18 @@
 
 const ARCHETYPES = ['frontend', 'backend', 'veri-bilimi', 'yapay-zeka', 'devops', 'urun-ux'];
 
+/** E-posta ve LLM özetinde kullanılan kısa Türkçe etiketler */
+export const ORIENTATION_ARCHETYPE_LABELS = {
+  frontend: 'Web arayüzü',
+  backend: 'Sunucu ve veri tarafı',
+  'veri-bilimi': 'Veri ve grafikler',
+  'yapay-zeka': 'Yapay zekâ ve akıllı sistemler',
+  devops: 'Yayın ve altyapı',
+  'urun-ux': 'Ürün ve kullanıcı deneyimi',
+};
+
+const PUSULA_ORIENTATION_FLOW_KEY = 'pusula_flow_orientation';
+
 /** Eski webhook / test metinlerinde kalan teknik sonekleri gizle */
 export function sanitizeOrientationBody(text) {
   if (typeof text !== 'string') return '';
@@ -403,4 +415,68 @@ export async function resolveOrientationResult(answers) {
     /* Uzak adres yok veya ağ hatası — yerel sonuç */
   }
   return local;
+}
+
+export function isValidFlowOrientationResult(r) {
+  return Boolean(
+    r &&
+      typeof r === 'object' &&
+      typeof r.archetype === 'string' &&
+      r.archetype.trim() &&
+      typeof r.headline === 'string' &&
+      r.headline.trim(),
+  );
+}
+
+export function saveFlowOrientationResult(r) {
+  if (!isValidFlowOrientationResult(r)) return;
+  try {
+    const minimal = {
+      archetype: r.archetype.trim(),
+      headline: r.headline.trim(),
+      subline: typeof r.subline === 'string' ? r.subline.trim() : '',
+      body: typeof r.body === 'string' ? r.body.slice(0, 12000) : '',
+      nextSteps: Array.isArray(r.nextSteps)
+        ? r.nextSteps.filter((x) => typeof x === 'string').map((x) => x.trim()).slice(0, 24)
+        : [],
+      scores: r.scores && typeof r.scores === 'object' ? r.scores : undefined,
+      source: r.source === 'remote' ? 'remote' : 'local',
+    };
+    localStorage.setItem(PUSULA_ORIENTATION_FLOW_KEY, JSON.stringify({ ...minimal, savedAt: Date.now() }));
+  } catch {
+    /* ignore */
+  }
+}
+
+export function loadFlowOrientationResult() {
+  try {
+    const raw = localStorage.getItem(PUSULA_ORIENTATION_FLOW_KEY);
+    if (!raw) return null;
+    const o = JSON.parse(raw);
+    if (!isValidFlowOrientationResult(o)) return null;
+    return o;
+  } catch {
+    return null;
+  }
+}
+
+export function clearFlowOrientationResult() {
+  try {
+    localStorage.removeItem(PUSULA_ORIENTATION_FLOW_KEY);
+  } catch {
+    /* ignore */
+  }
+}
+
+/** Groq kariyer analizi kullanıcı gövdesi için sıkıştırılmış yönelim özeti */
+export function orientationSummaryForLlm(r) {
+  if (!isValidFlowOrientationResult(r)) return null;
+  return {
+    archetypeId: r.archetype,
+    archetypeLabel: ORIENTATION_ARCHETYPE_LABELS[r.archetype] ?? r.archetype,
+    headline: r.headline,
+    subline: r.subline || undefined,
+    source: r.source,
+    scoreHints: r.scores && typeof r.scores === 'object' ? r.scores : undefined,
+  };
 }
