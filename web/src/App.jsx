@@ -14,7 +14,6 @@ import { RoadmapHubPage } from './pages/RoadmapHubPage.jsx';
 import { RoadmapTrackPage } from './pages/RoadmapTrackPage.jsx';
 import { OrientationQuizPage } from './pages/OrientationQuizPage.jsx';
 import { OrientationResultPage } from './pages/OrientationResultPage.jsx';
-import { InternshipListPage } from './pages/InternshipListPage.jsx';
 import { PusulaBadgesStrip } from './components/PusulaBadgesStrip.jsx';
 import { loadPusulaData, getDisciplineById } from './lib/dataLoader.js';
 import { runCareerAnalysis, runBarrierReframe } from './lib/gemini.js';
@@ -60,7 +59,6 @@ function stepLabel(step) {
     roadmapTrack: 'Keşif · Adım adım yol',
     orientationQuiz: 'Keşif · Yönelim testi',
     orientationResult: 'Keşif · Yönelim sonucu',
-    internshipList: 'Keşif · Güncel staj programları',
   };
   return map[step] ?? '';
 }
@@ -100,8 +98,6 @@ function getPreviousStep(current) {
       return 'home';
     case 'orientationResult':
       return 'orientationQuiz';
-    case 'internshipList':
-      return 'home';
     default:
       return null;
   }
@@ -417,9 +413,6 @@ const App = () => {
             setOrientationResult(null);
             setStep('orientationQuiz');
           }}
-          onOpenInternships={() => {
-            setStep('internshipList');
-          }}
           onOpenInfo={(sectionId) => {
             setLandingInfoSectionId(sectionId ?? null);
             setStep('landingInfo');
@@ -463,8 +456,6 @@ const App = () => {
       {step === 'orientationResult' && orientationResult && (
         <OrientationResultPage result={orientationResult} onBack={() => setStep('orientationQuiz')} onHome={goHome} />
       )}
-
-      {step === 'internshipList' && <InternshipListPage onBack={goHome} />}
 
       {step === 'landingInfo' && (
         <LandingInfoPage

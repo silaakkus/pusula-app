@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Briefcase, ChevronDown, Compass, Map, Rocket, RotateCcw, Shield, Sparkles } from 'lucide-react';
+import { ArrowRight, ChevronDown, Compass, Map, Rocket, RotateCcw, Shield, Sparkles } from 'lucide-react';
 import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
 import { getLlmBrandLabel } from '../lib/llmConfig.js';
@@ -19,7 +19,6 @@ export function LandingPage({
   onOpenInfo,
   onOpenRoadmaps,
   onOpenOrientation,
-  onOpenInternships,
   resumeAvailable,
   resumeSummary,
 }) {
@@ -99,7 +98,7 @@ export function LandingPage({
         )}
       </motion.div>
 
-      {(onOpenRoadmaps || onOpenOrientation || onOpenInternships) && (
+      {(onOpenRoadmaps || onOpenOrientation) && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -126,17 +125,6 @@ export function LandingPage({
             >
               <Sparkles className="h-5 w-5 shrink-0 text-violet-600" aria-hidden />
               <span aria-hidden>✨ </span>Hangi alana yakınsın?
-            </Button>
-          )}
-          {onOpenInternships && (
-            <Button
-              size="lg"
-              variant="ghost"
-              className="w-full border border-purple-200/80 bg-white/90 shadow-sm ring-1 ring-purple-100/80 sm:w-auto sm:min-w-[220px]"
-              onClick={onOpenInternships}
-            >
-              <Briefcase className="h-5 w-5 shrink-0 text-purple-600" aria-hidden />
-              <span aria-hidden>💼 </span>Güncel Staj Programları
             </Button>
           )}
         </motion.div>

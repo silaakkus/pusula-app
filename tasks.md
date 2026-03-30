@@ -129,7 +129,6 @@ Bu liste `prd.md` içeriğini adım adım koda dökmek için hazırlanmıştır.
 - [x] Fırsat verisi spesifikleştirildi: UP School geçmiş programları + SistersLab proje odaklı girişler + “kimler katılabilir” bilgisi (`opportunities.json`)
 - [x] Program öneri sıralaması role göre hassaslaştırıldı (`opportunitiesFilter.js`)
 - [x] Program adımı metinlerinde gerçekçilik düzeltmesi: “30 dk blok” yerine canlı ders/takvim-kayıt odaklı yönlendirme (`gemini.js`, `ResultsPage.jsx`, `barrierFallback.js`)
-- [x] Ana sayfa CTA: “Güncel Staj Programları” butonu eklendi; `/staj-listesi` akışı ve modern mor-beyaz kart tasarımlı liste ekranı eklendi (n8n webhook + `useEffect`) (`LandingPage.jsx`, `InternshipListPage.jsx`, `App.jsx`)
 
 ## V3 (Planlananlar)
 
@@ -137,3 +136,4 @@ Bu liste `prd.md` içeriğini adım adım koda dökmek için hazırlanmıştır.
 - [ ] UI’da filtre sekmeleri: “Stajlar”, “Yarışmalar”, “Bootcamp’ler” (aynı kart bileşeni, farklı endpoint)
 - [ ] Önceliklendirme skoru: son başvuru tarihi + rol tag uyumu + şehir/uzaktan uygunluğu
 - [ ] Veri tazeliği göstergesi: “Son güncelleme zamanı” ve stale-data uyarısı
+- [ ] API’siz kaynaklarda (örn. Youthall) doğrudan scraping yerine: n8n Cron + cache + normalize akışıyla “Güncel Staj Programları” sayfasını tekrar devreye alma (şimdilik ertelendi)
