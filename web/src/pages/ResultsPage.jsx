@@ -50,6 +50,18 @@ function isValidEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value).trim());
 }
 
+function normalizeProgramStepText(step) {
+  const text = String(step ?? '').trim();
+  if (!text) return '';
+  const lower = text.toLowerCase();
+  const hasThirtyMin = /30\s*dak/.test(lower);
+  const isProgramLike = /(program|up school|sisterslab|bootcamp|akademi|academy)/i.test(text);
+  if (hasThirtyMin && isProgramLike) {
+    return 'Programın başvuru/takvim sayfasını kontrol et; canlı ders saatlerinden uygun oturumu takvimine ekleyip kaydını tamamla.';
+  }
+  return text;
+}
+
 function resolveDayInLife(matrix, profile, role) {
   if (validateDayInLife(role?.dayInLife)) {
     return {
@@ -198,7 +210,7 @@ function buildRichWebhookPayload({
       roleName: typeof role?.roleName === 'string' ? role.roleName : '',
       tags: Array.isArray(role?.tags) ? role.tags : [],
       whyFits: Array.isArray(role?.whyFits) ? role.whyFits : [],
-      firstSteps: Array.isArray(role?.firstSteps) ? role.firstSteps : [],
+      firstSteps: Array.isArray(role?.firstSteps) ? role.firstSteps.map((s) => normalizeProgramStepText(s)) : [],
       starterResources: Array.isArray(role?.starterResources) ? role.starterResources : [],
       dayInLife: dil,
       salaryRange: {
@@ -538,7 +550,7 @@ export function ResultsPage({
                   </div>
                   <ol className="mt-2 list-inside list-decimal space-y-1 text-sm text-slate-600">
                     {(role.firstSteps ?? []).map((line, i) => (
-                      <li key={i}>{line}</li>
+                      <li key={i}>{normalizeProgramStepText(line)}</li>
                     ))}
                   </ol>
                 </div>

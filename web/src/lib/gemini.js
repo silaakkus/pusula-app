@@ -176,6 +176,18 @@ function splitLooseList(s) {
     .filter(Boolean);
 }
 
+function normalizeStepText(step) {
+  const text = String(step ?? '').trim();
+  if (!text) return '';
+  const lower = text.toLowerCase();
+  const hasThirtyMin = /30\s*dak/.test(lower);
+  const isProgramLike = /(program|up school|sisterslab|bootcamp|akademi|academy)/i.test(text);
+  if (hasThirtyMin && isProgramLike) {
+    return 'Programın başvuru/takvim sayfasını kontrol et; canlı ders saatlerinden uygun oturumu takvimine ekleyip kaydını tamamla.';
+  }
+  return text;
+}
+
 /** Groq/Gemini bazen internshipPrograms anahtarını farklı yazar */
 function pickInternshipProgramsRaw(r) {
   if (!r || typeof r !== 'object') return [];
@@ -296,7 +308,10 @@ function normalizeRole(r, index) {
     if (Array.isArray(r.resources)) {
       starterResources = r.resources.filter(isNonEmptyString).map((s) => s.trim());
     } else if (isNonEmptyString(r.resources)) {
-      const parts = r.resources.split(/[,;]\s*|\n/).map((x) => x.trim()).filter(Boolean);
+      const parts = r.resources
+        .split(/[,;]\s*|\n/)
+        .map((x) => x.trim())
+        .filter(Boolean);
       starterResources = parts.length ? parts : [r.resources.trim()];
     }
   }
@@ -304,7 +319,9 @@ function normalizeRole(r, index) {
     starterResources = r.starterResources.filter(isNonEmptyString).map((s) => s.trim());
   }
 
-  let firstSteps = Array.isArray(r?.firstSteps) ? r.firstSteps.filter(isNonEmptyString).map((s) => s.trim()) : [];
+  let firstSteps = Array.isArray(r?.firstSteps)
+    ? r.firstSteps.filter(isNonEmptyString).map((s) => normalizeStepText(s))
+    : [];
 
   let tags = [];
   if (usesCompact && Array.isArray(r.tags)) {
@@ -351,7 +368,7 @@ function normalizeRole(r, index) {
   if (!firstSteps.length) {
     const r0 = starterResources[0] ?? 'Patika.dev veya Kodluyoruz giriş modülü';
     firstSteps = [
-      `${r0} için 30 dakikalık bir blok ayır.`,
+      `${r0} için başvuru/takvim sayfasını kontrol et; canlı ders saatlerini takvimine ekleyip ilk oturuma kayıt ol.`,
       'Bu hafta tamamlayacağın tek küçük çıktıyı (ör. özet, mini proje) yaz.',
       'SistersLab, UP School veya WTM duyurularından bir etkinliği takvimine ekle.',
     ];
