@@ -66,11 +66,10 @@ const FLOW_STEP_LABELS = {
   card: 'Kariyer kartı',
 };
 
-function profileHeadlineFromObject(o) {
+export function profileHeadlineFromObject(o) {
   if (!o || typeof o !== 'object') return '';
-  const parts = [o.facultyLabel, o.departmentLabel, o.disciplineLabel].filter(
-    (x) => typeof x === 'string' && x.trim(),
-  );
+  // Kullanıcıya fakülte + bölüm göster; disiplin başlığı (ör. İİBF kümesi) özet satırında gizli kalsın.
+  const parts = [o.facultyLabel, o.departmentLabel].filter((x) => typeof x === 'string' && x.trim());
   return parts.length ? parts.join(' · ') : '';
 }
 
@@ -87,7 +86,7 @@ export function getResumeSummaryText() {
     const stepLabel = stepKey && FLOW_STEP_LABELS[stepKey] ? FLOW_STEP_LABELS[stepKey] : '';
     if (head && stepLabel) return `${head} · Kaldığın adım: ${stepLabel}`;
     if (head) return head;
-    if (s.profile.disciplineLabel) return s.profile.disciplineLabel;
+    if (stepLabel) return `Kaldığın adım: ${stepLabel}`;
   }
   // Akış özeti var ama profil nesnesi boş / eksik (eski veya bozuk kayıt)
   if (s && !s.profile && s.step && FLOW_STEP_LABELS[s.step]) {
@@ -99,7 +98,6 @@ export function getResumeSummaryText() {
     const draftNote =
       ' (henüz “Devam et” ile gönderilmedi — taslak)';
     if (head) return `${head}${draftNote}`;
-    if (d.disciplineLabel) return `${d.disciplineLabel}${draftNote}`;
   }
   if (hasProfileDraft()) return 'Taslak profil — “Kaldığın yerden devam et” ile profili tamamla';
   return 'Kayıtlı oturum';

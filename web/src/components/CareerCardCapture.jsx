@@ -16,7 +16,7 @@ export const CareerCardCapture = forwardRef(function CareerCardCapture(
       <div className="text-[8px] font-bold uppercase tracking-[0.18em] text-indigo-600">Pusula</div>
       <div className="mt-0.5 text-base font-extrabold leading-snug text-indigo-950">Kariyer Rota Kartı</div>
       <div className="mt-3 border-t border-slate-200 pt-3">
-        <div className="text-[10px] font-semibold text-slate-500">Disiplin / bölüm grubu</div>
+        <div className="text-[10px] font-semibold text-slate-500">Fakülte / bölüm</div>
         <div className="mt-1 text-xs font-bold leading-snug text-slate-900">{profileLabel || '—'}</div>
       </div>
       <div className="mt-3">

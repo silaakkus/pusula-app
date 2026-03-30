@@ -11,8 +11,9 @@ import { fetchOrientationMatrixHints } from '../lib/orientationMatrixHints.js';
 
 function splitOrientationStepLine(s) {
   const m = s.match(/^(.+?)\s+[—–-]\s+(.+)$/);
-  if (!m) return { lead: s, detail: null };
-  return { lead: m[1].trim(), detail: m[2].trim() };
+  if (!m) return { lead: String(s).trim(), detail: null };
+  const detail = m[2].trim();
+  return { lead: m[1].trim(), detail: detail || null };
 }
 
 export function OrientationResultPage({ result, onBack, onHome }) {
@@ -176,11 +177,19 @@ export function OrientationResultPage({ result, onBack, onHome }) {
                     return (
                       <li key={i} className="pl-1">
                         <span className="font-semibold text-slate-900">{lead}</span>
-                        {detail ? (
-                          <span className="mt-0.5 block text-sm font-normal leading-relaxed text-slate-600">
-                            {detail}
-                          </span>
-                        ) : null}
+                        {(() => {
+                          const fallbackDetail =
+                            !detail && lead
+                              ? `Bu adım için 30-45 dakika ayır; “${lead}” konusunda kısa bir başlangıç kaynağını baştan sona izle veya oku ve iki maddelik özet çıkar.`
+                              : null;
+                          const text = detail || fallbackDetail;
+                          if (!text) return null;
+                          return (
+                            <span className="mt-0.5 block text-sm font-normal leading-relaxed text-slate-600">
+                              {text}
+                            </span>
+                          );
+                        })()}
                       </li>
                     );
                   })}

@@ -24,7 +24,8 @@ export function LandingPage({
 }) {
   const brand = getLlmBrandLabel();
   const sections = useMemo(() => getLandingAccordionSections(brand), [brand]);
-  const [openId, setOpenId] = useState(null);
+  /** İlk konu açık başlar; “açıklama aşağıda” vaadi boş kalmaz. */
+  const [openId, setOpenId] = useState('privacy');
 
   const toggle = (id) => {
     setOpenId((prev) => (prev === id ? null : id));
@@ -165,7 +166,7 @@ export function LandingPage({
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.08 * idx }}
-              className="overflow-hidden rounded-2xl border border-white/35 bg-white/45 shadow-sm backdrop-blur-sm"
+              className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white/90 shadow-sm"
             >
               <button
                 type="button"
@@ -188,7 +189,7 @@ export function LandingPage({
                 />
               </button>
               {open && (
-                <div className="border-t border-white/25 bg-white/35 px-4 py-3 text-sm leading-relaxed text-slate-700">
+                <div className="border-t border-slate-200/80 bg-slate-50/95 px-4 py-3 text-sm leading-relaxed text-slate-800">
                   {s.detail}
                 </div>
               )}

@@ -9,6 +9,7 @@ import { logEvent } from '../lib/analytics.js';
 import { flowPreviousStepButtonClass } from '../lib/flowPreviousStepButton.js';
 import { InviteFriendCard } from '../components/InviteFriendCard.jsx';
 import { postInviterCompletionOnce } from '../lib/inviteReferral.js';
+import { profileHeadlineFromObject } from '../lib/profileDraft.js';
 
 export function FinalCardPage({
   profile,
@@ -67,7 +68,7 @@ export function FinalCardPage({
           <div className="flex w-full justify-center overflow-x-auto pb-4">
             <CareerCardCapture
               ref={cardRef}
-              profileLabel={profile?.disciplineLabel}
+              profileLabel={profileHeadlineFromObject(profile) || '—'}
               roles={roles}
               delta={delta}
               dateLabel={dateLabel}
