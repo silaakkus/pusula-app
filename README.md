@@ -49,7 +49,7 @@ Yayin Linki: **https://pusula-app-two.vercel.app**
 
 ## Kullanici testi
 
-Buildathon kapsaminda **7 katilimci** ile kullanici testi yuruttum. Katilimcilar uygulamayi **masaustu bilgisayar** ile **iPhone (iOS)** ve **Android** cihazlarda deneyerek ana akisi ve kritik ekranlari hem genis hem mobil gorunumde dogruladi; boylece farkli isletim sistemi ve tarayici ortamlarinda tutarlilik kontrol edildi.
+Buildathon kapsaminda **7 katilimci** ile kullanici testi yuruttum. Katilimcilar uygulamayi **masaustu bilgisayar** ile **iPhone (iOS)** ve **Android** cihazlarda denedi; ben de ana akisi ve kritik ekranlari hem genis hem mobil gorunumde bu oturumlarla birlikte gozden gecirdim. Deneyimin ardindan ayni kisilerden **Google Form** uzerinden yapilandirilmis geri bildirim topladim; boylece farkli isletim sistemi ve tarayici ortamlarinda tutarliligi kontrol ettim.
 
 ## Yol haritasi (sonraki guncellemeler)
 
