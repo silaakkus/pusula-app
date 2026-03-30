@@ -51,7 +51,7 @@ Yayin Linki: **https://pusula-app-two.vercel.app**
 
 Mevcut sürüm, tanımlı ürün ve teslimat hedeflerini karşılayan, üretim ortamında çalışan bir temel sunmaktadır. Sonraki güncellemelerde, planlanan **V3 kapsamındaki** geliştirmeleri önceliklendirerek depoya taşımayı hedefliyorum; böylece otomasyonun ölçeklenebilirliği, fırsat keşfi deneyimi, önceliklendirme ve veri güncelliği gibi başlıklarda sürdürülebilir ilerleme sağlanacaktır.
 
-**Kullanıcı geri bildirimi:** Yürütülen geri bildirim oturumlarında en güçlü talep, şirketlerin üniversite öğrencilerine yönelik açtığı **güncel staj fırsatlarının**, kullanıcının uygulamada ilerlediği **hedef rol ile hizalı** şekilde toplanması ve bu özetin **e-posta üzerinden** düzenli olarak iletilmesi yönünde öne çıkmaktadır. Bu bulgu, sonraki sürümlerde fırsat tarafı ve bildirim mimarisinin önceliklendirilmesine doğrudan girdi oluşturmaktadır.
+**Geri bildirimlerimden:** Pusula’yı deneyenlerle yaptığım görüşmelerde bana en çok şunu ilettiler: şirketlerin üniversite öğrencilerine yönelik açtığı **güncel staj fırsatlarının**, uygulamada ilerledikleri **hedef rolle uyumlu** şekilde toparlanmasını ve bu özetin **e-posta ile** düzenli olarak kendilerine ulaşmasını istiyorlar. Ben de sonraki güncellemelerde fırsat keşfini ve bildirim akışını bu ihtiyaca göre önceliklendirmeyi planlıyorum.
 
 Kapsam ve teknik iş kalemleri `tasks.md` dosyasındaki **«V3 (Planlananlar)»** bölümünde ayrıntılı olarak izlenebilir.
 
