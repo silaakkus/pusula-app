@@ -19,6 +19,8 @@ function readProfileDraftInitial() {
       learningStyle: 'mixed',
       goalId: 'explore',
       goalDetail: '',
+      disciplineFocus: '',
+      availability: 'medium',
       cityId: 'all',
     };
   }
@@ -31,6 +33,8 @@ function readProfileDraftInitial() {
     learningStyle: d.learningStyle ?? 'mixed',
     goalId: d.goalId ?? 'explore',
     goalDetail: typeof d.goalDetail === 'string' ? d.goalDetail : '',
+    disciplineFocus: typeof d.disciplineFocus === 'string' ? d.disciplineFocus : '',
+    availability: d.availability ?? 'medium',
     cityId: d.cityId ?? 'all',
   };
 }
@@ -42,6 +46,12 @@ const INTEREST_OPTIONS = [
   'Araştırma ve yazım',
   'Sosyal etki ve sürdürülebilirlik',
   'Oyun ve etkileşim',
+  'Yapay zeka araçlarıyla üretim',
+  'Siber güvenlik ve gizlilik',
+  'İş geliştirme ve girişimcilik',
+  'Sağlık / biyoteknoloji uygulamaları',
+  'Eğitim teknolojileri',
+  'Topluluk yönetimi',
 ];
 
 const STRENGTH_OPTIONS = [
@@ -51,6 +61,12 @@ const STRENGTH_OPTIONS = [
   'Öğrenmeye açıklık',
   'Detay ve düzen',
   'Yaratıcılık',
+  'Problem çözme',
+  'Planlama ve takip',
+  'Takım çalışması',
+  'Araştırma merakı',
+  'Sorumluluk alma',
+  'Hızlı uyum sağlama',
 ];
 
 const LEARNING_OPTIONS = [
@@ -75,6 +91,45 @@ const CITY_OPTIONS = [
   { id: 'other', label: 'Diğer şehir' },
 ];
 
+const DISCIPLINE_FOCUS_OPTIONS = {
+  'quant-analytics': [
+    'Veri analizi ve dashboard',
+    'Makine öğrenmesi temelleri',
+    'Risk / finansal modelleme',
+    'İş zekası ve karar desteği',
+  ],
+  'human-social': [
+    'UX araştırması ve kullanıcı görüşmeleri',
+    'İçerik stratejisi ve dijital anlatı',
+    'AI etik ve güvenilirlik',
+    'People analytics / İK analitiği',
+  ],
+  'life-sciences': [
+    'Biyoinformatik ve hesaplamalı analiz',
+    'Sağlık ürünleri ve dijital sağlık',
+    'Sürdürülebilirlik ve çevre verisi',
+    'Araştırma odaklı veri yorumlama',
+  ],
+  'business-econ': [
+    'Ürün yönetimi ve ürün stratejisi',
+    'İş analizi ve süreç iyileştirme',
+    'Büyüme / dijital pazarlama analitiği',
+    'Operasyon otomasyonu (no-code dahil)',
+  ],
+  'education-arts': [
+    'EdTech içerik ve öğrenme tasarımı',
+    'UI / görsel tasarım',
+    'Oyun topluluğu / içerik yönetimi',
+    'Yaratıcı kod ve etkileşimli medya',
+  ],
+};
+
+const AVAILABILITY_OPTIONS = [
+  { id: 'low', label: 'Haftada 2-4 saat (çok yoğun)' },
+  { id: 'medium', label: 'Haftada 5-8 saat (dengeli)' },
+  { id: 'high', label: 'Haftada 9+ saat (hızlı ilerleme)' },
+];
+
 const PREFER_NOT = 'Belirtmek istemiyorum';
 
 function toggleInList(list, item) {
@@ -95,8 +150,17 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
   const [learningStyle, setLearningStyle] = useState(draftIni.learningStyle);
   const [goalId, setGoalId] = useState(draftIni.goalId);
   const [goalDetail, setGoalDetail] = useState(draftIni.goalDetail);
+  const [disciplineFocus, setDisciplineFocus] = useState(draftIni.disciplineFocus);
+  const [availability, setAvailability] = useState(draftIni.availability);
   const [cityId, setCityId] = useState(draftIni.cityId);
   const [errors, setErrors] = useState({});
+  const focusOptions = useMemo(() => DISCIPLINE_FOCUS_OPTIONS[disciplineId] ?? [], [disciplineId]);
+
+  useEffect(() => {
+    if (!disciplineFocus) return;
+    if (focusOptions.includes(disciplineFocus)) return;
+    setDisciplineFocus('');
+  }, [disciplineFocus, focusOptions]);
 
   useEffect(() => {
     const row = disciplines.find((d) => d.disciplineId === disciplineId);
@@ -111,6 +175,8 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
         learningStyle,
         goalId,
         goalDetail,
+        disciplineFocus,
+        availability,
         cityId,
       });
     }, 450);
@@ -125,6 +191,8 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
     learningStyle,
     goalId,
     goalDetail,
+    disciplineFocus,
+    availability,
     cityId,
   ]);
 
@@ -151,6 +219,9 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
     if (!strengthSkip && effStrengths.length === 0) {
       next.strengths = 'En az bir güçlü yön seç veya “Belirtmek istemiyorum” kutusunu işaretle.';
     }
+    if (disciplineId && !disciplineFocus) {
+      next.disciplineFocus = 'Bölümüne yakın bir odak alanı seç.';
+    }
 
     setErrors(next);
     return Object.keys(next).length === 0;
@@ -164,7 +235,7 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
     const effInterests = interestSkip ? [PREFER_NOT] : interests;
     const effStrengths = strengthSkip ? [PREFER_NOT] : strengths;
     const goalLabel = GOAL_OPTIONS.find((g) => g.id === goalId)?.label ?? goalId;
-
+    const availabilityLabel = AVAILABILITY_OPTIONS.find((a) => a.id === availability)?.label ?? availability;
     const cityLabel = CITY_OPTIONS.find((c) => c.id === cityId)?.label ?? cityId;
 
     onSubmit({
@@ -174,6 +245,9 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
       strengths: effStrengths,
       learningStyle: LEARNING_OPTIONS.find((l) => l.id === learningStyle)?.label ?? learningStyle,
       goal: goalDetail.trim() ? `${goalLabel}: ${goalDetail.trim()}` : goalLabel,
+      disciplineFocus,
+      availability,
+      availabilityLabel,
       cityId,
       cityLabel,
     });
@@ -309,7 +383,45 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-800">6. Şehir (fırsat filtresi)</label>
+              <label className="mb-2 block text-sm font-semibold text-slate-800">6. Haftalık öğrenme zamanı</label>
+              <div className="space-y-2">
+                {AVAILABILITY_OPTIONS.map((opt) => (
+                  <label key={opt.id} className="flex cursor-pointer items-center gap-2 text-sm text-slate-700">
+                    <input
+                      type="radio"
+                      name="availability"
+                      checked={availability === opt.id}
+                      onChange={() => setAvailability(opt.id)}
+                    />
+                    {opt.label}
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <label className="mb-2 block text-sm font-semibold text-slate-800">7. Bölümüne yakın odak alanı</label>
+              <p className="mb-3 text-xs text-slate-500">
+                Seçimine göre analizde senin bölümüne yakın rol kombinasyonlarını daha güçlü ağırlıklandırıyoruz.
+              </p>
+              <select
+                value={disciplineFocus}
+                onChange={(e) => setDisciplineFocus(e.target.value)}
+                disabled={!disciplineId}
+                className="w-full rounded-2xl bg-white/80 px-4 py-3 text-base text-slate-900 ring-1 ring-black/5 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/40"
+              >
+                <option value="">{disciplineId ? 'Bir odak seçiniz…' : 'Önce bölüm/disiplin grubu seçiniz…'}</option>
+                {focusOptions.map((opt) => (
+                  <option key={opt} value={opt}>
+                    {opt}
+                  </option>
+                ))}
+              </select>
+              {errors.disciplineFocus && <p className="mt-2 text-sm text-red-600">{errors.disciplineFocus}</p>}
+            </div>
+
+            <div>
+              <label className="mb-2 block text-sm font-semibold text-slate-800">8. Şehir (fırsat filtresi)</label>
               <p className="mb-3 text-xs text-slate-500">
                 Yerel etkinlik ağırlıklı önerileri öne çıkarmak için; çevrim içi ve Türkiye geneli kaynaklar yine
                 listelenir.

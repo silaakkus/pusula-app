@@ -404,7 +404,7 @@ export function ResultsPage({
             </span>
           )}
         </div>
-        <h2 className="text-3xl font-extrabold tracking-tight text-indigo-900">Önerilen 3 rol</h2>
+        <h2 className="text-3xl font-extrabold tracking-tight text-indigo-900">Önerilen rol haritası</h2>
         <p className="mt-2 max-w-none text-sm text-slate-600">
           {profile?.disciplineLabel && (
             <>

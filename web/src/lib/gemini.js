@@ -9,6 +9,9 @@ import { loadPusulaSession } from './pusulaSession.js';
 import { getLlmProvider } from './llmConfig.js';
 import { groqGenerateText } from './groqClient.js';
 
+const MIN_ROLE_COUNT = 4;
+const MAX_ROLE_COUNT = 5;
+
 /**
  * Ücretsiz planda `gemini-2.0-flash` birçok projede kota limiti 0; yedek zincire alınmıyor.
  * .env ile `VITE_GEMINI_MODEL` geçersen önce o, sonra 1.5 ailesi yedekleri denenir.
@@ -363,9 +366,7 @@ function normalizeRole(r, index) {
   return out;
 }
 
-/**
- * Tam 3 rol; UI için whyFits / firstSteps / starterResources tamamlanır.
- */
+/** 4-5 rol; UI için whyFits / firstSteps / starterResources tamamlanır. */
 export function parseAndValidateCareerJson(rawText) {
   let obj = extractJsonObject(rawText);
   if (!obj || !Array.isArray(obj.roles)) {
@@ -378,8 +379,8 @@ export function parseAndValidateCareerJson(rawText) {
   let roles = Array.isArray(obj?.roles) ? obj.roles : null;
   if (!roles) throw new Error('Yanıtta roles dizisi yok');
 
-  roles = roles.slice(0, 5).map((r, i) => normalizeRole(r, i));
-  while (roles.length < 3) {
+  roles = roles.slice(0, MAX_ROLE_COUNT).map((r, i) => normalizeRole(r, i));
+  while (roles.length < MIN_ROLE_COUNT) {
     roles.push(
       normalizeRole(
         {
@@ -392,7 +393,7 @@ export function parseAndValidateCareerJson(rawText) {
       ),
     );
   }
-  roles = roles.slice(0, 3);
+  roles = roles.slice(0, MAX_ROLE_COUNT);
 
   for (const r of roles) {
     if (r.whyFits.length < 1) r.whyFits.push('Profilinle uyumlu bir geçiş alanı.');
@@ -441,7 +442,7 @@ Her zaman JSON formatında yanıt ver: {roles: [{title, why, tags, resources}]}
 Başka metin veya markdown kullanma; yalnızca tek bir JSON nesnesi.
 
 Ek teknik kurallar:
-- Tam olarak 3 rol üret.
+- 5 rol üret (minimum 4, ideal 5).
 - why: string veya string dizisi (en az iki net gerekçe).
 - tags: kısa etiket dizisi (örn. data, ux, pm).
 - resources: en az 3 kısa kaynak başlığı veya adı içeren dizi.
@@ -456,7 +457,7 @@ Her zaman TEK bir JSON nesnesi döndür; başka metin veya markdown yok.
 { "roles": [ { "title", "why", "tags", "resources", "employersTurkey", "salaryRange", "internshipPrograms", "applicationPrograms" } ] }
 
 Genel:
-- Tam olarak 3 rol.
+- 5 rol üret (minimum 4, ideal 5).
 - why: string veya string dizisi (en az iki gerekçe).
 - tags: kısa etiket dizisi (örn. data, ux, pm).
 - resources: en az 3 **somut** kaynak (metin linki değil; tek satırda okunur başlık). Yasak: "Veri analizi kitabı", "Python kursu" gibi genel etiket.
@@ -570,6 +571,9 @@ export async function runCareerAnalysis({ apiKey, profile, matrix }) {
       strengths: profile.strengths,
       learningStyle: profile.learningStyle,
       goal: profile.goal,
+      disciplineFocus: profile.disciplineFocus,
+      availability: profile.availability,
+      availabilityLabel: profile.availabilityLabel,
       cityId: profile.cityId,
       cityLabel: profile.cityLabel,
     },

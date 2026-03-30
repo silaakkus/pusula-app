@@ -99,12 +99,10 @@ const FALLBACK_INTERNSHIPS = [
   },
 ];
 
-/**
- * API başarısız olduğunda disiplin matrisinden tam 3 rol üretir (PRD şemasına uyumlu).
- */
+/** API başarısız olduğunda disiplin matrisinden 4 rol üretir. */
 export function rolesFromMatrix(disciplineRow) {
   if (!disciplineRow?.roleMatches?.length) return [];
-  return disciplineRow.roleMatches.slice(0, 3).map((rm) => {
+  return disciplineRow.roleMatches.slice(0, 4).map((rm) => {
     const rawEmployers =
       Array.isArray(rm.employersTurkey) && validateEmployersTurkey(rm.employersTurkey)
         ? rm.employersTurkey

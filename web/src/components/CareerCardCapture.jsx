@@ -20,9 +20,9 @@ export const CareerCardCapture = forwardRef(function CareerCardCapture(
         <div className="mt-1 text-xs font-bold leading-snug text-slate-900">{profileLabel || '—'}</div>
       </div>
       <div className="mt-3">
-        <div className="text-[10px] font-semibold text-slate-500">Önerilen 3 rol</div>
+        <div className="text-[10px] font-semibold text-slate-500">Öne çıkan rol örnekleri</div>
         <ol className="mt-1.5 list-decimal space-y-0.5 pl-3.5 text-[11px] font-medium leading-snug text-slate-800">
-          {roleNames.slice(0, 3).map((name, i) => (
+          {roleNames.slice(0, 4).map((name, i) => (
             <li key={i}>{name}</li>
           ))}
         </ol>
