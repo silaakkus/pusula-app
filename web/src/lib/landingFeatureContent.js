@@ -16,10 +16,10 @@ export function getLandingAccordionSections(brand) {
     },
     {
       id: 'feature-hizli-analiz',
-      title: 'Hızlı Analiz',
-      shortDesc: '5 dakikada kariyer rotanı belirle.',
+      title: 'Kişiselleştirilmiş rota',
+      shortDesc: 'Fakülte, bölüm ve teknoloji ilgilerinle eşleşen öneriler.',
       detail:
-        'Pusula, bölümün, ilgi alanların ve güçlü yönlerin üzerinden geçerek senin için en uygun teknoloji rolleri ve alanlarını çıkartır. Sorular sade tutulur; birkaç dakikada doldurup ilk rota taslağını görebilirsin.',
+        'Önce fakülte ve bölümünü seçersin; bölümüne özel ilgi ve keyif maddelerinin yanı sıra teknoloji dünyasında seni çeken alanlar, yapmak istediğin şeyler ve sana yakın rol/ortam tiplerini işaretlersin. Öğrenme stilin, hedefin ve şehir tercihin fırsat filtrelerine girer. Bu profil ve disiplin matrisi, Groq veya Gemini ile uyumlu rol, staj ve program önerileri üretmek için kullanılır.',
     },
     {
       id: 'feature-yerel-firsatlar',
@@ -30,9 +30,9 @@ export function getLandingAccordionSections(brand) {
     },
     {
       id: 'feature-ai-mentor',
-      title: 'AI Mentor',
-      shortDesc: `${b} ile sana özel öneriler.`,
-      detail: `${b} destekli mentor, seçilen kariyer rotalarına göre hangi becerileri geliştirmen, hangi kaynaklardan başlaman ve hangi adımları denemen gerektiği konusunda sana özel bir aksiyon listesi çıkarır.`,
+      title: 'Yapay zekâ önerileri',
+      shortDesc: `${b} ile rol metinleri ve program bağlantıları.`,
+      detail: `${b} ile rol açıklamaları, ilk adımlar, başlangıç kaynakları ve (varsa) staj / başvuru linkleri üretilir. Günün akışı, matris maaş bantları ve örnek işverenler yerel veri katmanından tamamlanır; bağlantılarda her zaman resmi sayfayı doğrula.`,
     },
   ];
 }

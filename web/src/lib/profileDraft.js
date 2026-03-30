@@ -48,7 +48,30 @@ export function hasProfileDraft() {
   if (d.workMode && d.workMode !== 'balanced') return true;
   if (d.workEnvironment && d.workEnvironment !== 'hybrid') return true;
   if (d.impactTheme && d.impactTheme !== 'social-impact') return true;
+  if (Array.isArray(d.techDomainPicks) && d.techDomainPicks.length > 0) return true;
+  if (Array.isArray(d.techHandsOnPicks) && d.techHandsOnPicks.length > 0) return true;
+  if (Array.isArray(d.techContextPicks) && d.techContextPicks.length > 0) return true;
+  if (d.techDomainSkip || d.techHandsOnSkip || d.techContextSkip) return true;
   return false;
+}
+
+const FLOW_STEP_LABELS = {
+  profile: 'Profil',
+  baseline: 'Ön anket',
+  analyzing: 'Analiz',
+  results: 'Sonuçlar',
+  barrier: 'Engel',
+  barrierReview: 'Engel özeti',
+  postsurvey: 'Son anket',
+  card: 'Kariyer kartı',
+};
+
+function profileHeadlineFromObject(o) {
+  if (!o || typeof o !== 'object') return '';
+  const parts = [o.facultyLabel, o.departmentLabel, o.disciplineLabel].filter(
+    (x) => typeof x === 'string' && x.trim(),
+  );
+  return parts.length ? parts.join(' · ') : '';
 }
 
 export function hasResumeAvailable() {
@@ -58,9 +81,20 @@ export function hasResumeAvailable() {
 
 export function getResumeSummaryText() {
   const s = loadFlowSnapshot();
-  if (s?.profile?.disciplineLabel) return s.profile.disciplineLabel;
+  if (s?.profile) {
+    const head = profileHeadlineFromObject(s.profile);
+    const stepKey = s.step;
+    const stepLabel = stepKey && FLOW_STEP_LABELS[stepKey] ? FLOW_STEP_LABELS[stepKey] : '';
+    if (head && stepLabel) return `${head} · Kaldığın adım: ${stepLabel}`;
+    if (head) return head;
+    if (s.profile.disciplineLabel) return s.profile.disciplineLabel;
+  }
   const d = loadProfileDraft();
-  if (d?.disciplineLabel) return `${d.disciplineLabel} (taslak)`;
-  if (hasProfileDraft()) return 'Taslak profil';
+  if (d) {
+    const head = profileHeadlineFromObject(d);
+    if (head) return `${head} (taslak)`;
+    if (d.disciplineLabel) return `${d.disciplineLabel} (taslak)`;
+  }
+  if (hasProfileDraft()) return 'Taslak profil — devam etmek için “Kaldığın yerden devam et”';
   return 'Kayıtlı oturum';
 }

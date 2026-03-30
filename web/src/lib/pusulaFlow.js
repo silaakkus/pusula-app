@@ -50,6 +50,9 @@ export function hasSavedFlow() {
 
 export function getSavedFlowSummary() {
   const s = loadFlowSnapshot();
-  if (!s?.profile?.disciplineLabel) return 'Kayıtlı oturum';
-  return s.profile.disciplineLabel;
+  if (!s?.profile) return 'Kayıtlı oturum';
+  const parts = [s.profile.facultyLabel, s.profile.departmentLabel, s.profile.disciplineLabel].filter(
+    (x) => typeof x === 'string' && x.trim(),
+  );
+  return parts.length ? parts.join(' · ') : s.profile.disciplineLabel || 'Kayıtlı oturum';
 }

@@ -62,7 +62,11 @@ export function LandingPage({
         transition={{ duration: 0.8, delay: 0.4 }}
         className="mb-8 w-full max-w-none text-lg leading-relaxed text-slate-600"
       >
-        <p>Kısa sorularla rota çıkar; detayları aşağıdan başlığa tıklayarak okuyabilirsin.</p>
+        <p>
+          Fakülte ve bölümünü seçip çok boyutlu profili doldurursun — bölüm ilgileri, teknolojide seni çeken üç soru grubu,
+          hedef ve tercihler; ardından rota ve öneriler oluşur. Aşağıdaki başlıklara tıklayarak gizlilik ve özellikleri
+          okuyabilirsin.
+        </p>
         {onOpenInfo && (
           <button
             type="button"
@@ -82,7 +86,7 @@ export function LandingPage({
         className="flex w-full max-w-none flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center sm:justify-center"
       >
         <Button size="lg" className="w-full sm:w-auto sm:min-w-[200px]" onClick={onStart}>
-          Rotanı Oluştur
+          Akışa başla — profil ve rota
           <ArrowRight className="transition-transform group-hover:translate-x-1" />
         </Button>
         {resumeAvailable && onResume && (
@@ -113,7 +117,7 @@ export function LandingPage({
               onClick={onOpenRoadmaps}
             >
               <Map className="h-5 w-5 shrink-0 text-indigo-600" aria-hidden />
-              <span aria-hidden>📚 </span>Öğrenme yolları
+              Öğrenme yolları
             </Button>
           )}
           {onOpenOrientation && (
@@ -124,7 +128,7 @@ export function LandingPage({
               onClick={onOpenOrientation}
             >
               <Sparkles className="h-5 w-5 shrink-0 text-violet-600" aria-hidden />
-              <span aria-hidden>✨ </span>Hangi alana yakınsın?
+              Yönelim testi — hangi alana yakınsın?
             </Button>
           )}
         </motion.div>
@@ -135,9 +139,9 @@ export function LandingPage({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.75 }}
-          className="mt-5 w-full max-w-none text-center text-xs text-slate-500"
+          className="mx-auto mt-5 max-w-2xl text-center text-xs leading-snug text-slate-500"
         >
-          Kayıtlı oturum: {resumeSummary}
+          <span className="font-semibold text-slate-600">Kayıtlı oturum:</span> {resumeSummary}
         </motion.p>
       )}
 
