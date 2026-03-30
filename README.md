@@ -21,7 +21,7 @@ uretir. Boylece kullanici, genel tavsiyeler yerine kendine ozel, uygulanabilir b
 
 Bu proje benim kisisel hikayemden dogdu. Hacettepe Universitesi'nde Istatistik okuyorum. YKS surecinde siralamam yeterli olsaydi Bilgisayar Muhendisligi okumayi istiyordum; ancak hedefledigim universitelerde bu bolum gelmedi. Buna ragmen teknoloji alaninda bir seyler uretmek istiyordum ama nereden baslayacagimi bilmiyordum.
 
-Bolum toplulugumuzda paylasilan programlari takip ederken UP School'un "Birbirini Gelistiren Kadinlar 2026" programini gordum. Ilk modulde basarili olanlara 46 dolar degerinde Google yapay zeka egitimi sunulmasi, teknoloji adımında kendimi gelistirmek adina atabileceğim ilk adımın bu olabileceğini düşündüm ve bu firsati degerlendirip programa basvurdum ve kabul edildim.
+Bolum toplulugumuzda paylasilan programlari takip ederken UP School'un "Birbirini Gelistiren Kadinlar 2026" programini gordum. Ilk modulde basarili olanlara 46 dolar degerinde Google yapay zeka egitimi sunuluyordu; bunun teknoloji alaninda kendimi gelistirmek icin atabilecegim somut bir ilk adim olabilecegini dusundum. Bu firsati degerlendirip programa basvurdum ve kabul edildim.
 
 Bu yolculukta ogrendigim en onemli sey, dogru yonlendirme oldugunda farkli bolumlerden gelen kadinlarin da teknolojiye guclu bir sekilde adim atabilecegiydi. Pusula'yi, bu bilinci ve programin ruhunu yansitan bir bitirme projesi olarak gelistirdim. Bugün Pusula ile, teknolojiye ilk adımını atan veya yolunu arayan kadınların teknoloji yolculuğunda daha net, daha güvenli ve daha cesur adımlar atmasına katkıda bulunmayı hedefliyorum.
 
@@ -40,6 +40,7 @@ Bu yolculukta ogrendigim en onemli sey, dogru yonlendirme oldugunda farkli bolum
 - Yol haritasi (roadmap) modulu
 - Engel yeniden cerceveleme adimi
 - PNG olarak indirilebilir "Kariyer Rota Karti"
+- Sonuclar ekranından **e-posta ile özet gönderimi** (n8n webhook)
 - n8n webhook entegrasyonu
 
 ## Canli Demo
@@ -59,6 +60,17 @@ Yayin Linki: **https://pusula-app-two.vercel.app**
 
 ### Sonuc / Oneri
 ![Sonuc Ekrani](assets/screenshots/results.png)
+
+### E-posta ile ozet (Sonuclar)
+Sonuclar sayfasında özetini adrese gönderebilirsin; arka planda n8n webhook ile işlenir. Ekran görüntüleri `assets/screenshots/` altında: `email-send.png` (uygulamada gönderim), `email-received.png` (gelen özet mail).
+
+**Uygulamada gönderim**
+
+![Sonuclar ekraninda e-posta gonderimi](assets/screenshots/email-send.png)
+
+**Gelen özet mail**
+
+![Posta kutusunda Pusula ozet maili](assets/screenshots/email-received.png)
 
 ### Kariyer Rota Karti
 ![Kariyer Rota Karti](assets/screenshots/career-card.png)
