@@ -28,6 +28,12 @@ function readProfileDraftInitial() {
       workEnvironment: 'hybrid',
       impactTheme: 'social-impact',
       cityId: 'all',
+      techDomainPicks: [],
+      techHandsOnPicks: [],
+      techContextPicks: [],
+      techDomainSkip: false,
+      techHandsOnSkip: false,
+      techContextSkip: false,
     };
   }
   return {
@@ -47,6 +53,12 @@ function readProfileDraftInitial() {
     workEnvironment: d.workEnvironment ?? 'hybrid',
     impactTheme: d.impactTheme ?? 'social-impact',
     cityId: d.cityId ?? 'all',
+    techDomainPicks: Array.isArray(d.techDomainPicks) ? d.techDomainPicks : [],
+    techHandsOnPicks: Array.isArray(d.techHandsOnPicks) ? d.techHandsOnPicks : [],
+    techContextPicks: Array.isArray(d.techContextPicks) ? d.techContextPicks : [],
+    techDomainSkip: Boolean(d.techDomainSkip),
+    techHandsOnSkip: Boolean(d.techHandsOnSkip),
+    techContextSkip: Boolean(d.techContextSkip),
   };
 }
 
@@ -131,11 +143,20 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
   const [workEnvironment, setWorkEnvironment] = useState(draftIni.workEnvironment);
   const [impactTheme, setImpactTheme] = useState(draftIni.impactTheme);
   const [cityId, setCityId] = useState(draftIni.cityId);
+  const [techDomainPicks, setTechDomainPicks] = useState(draftIni.techDomainPicks);
+  const [techHandsOnPicks, setTechHandsOnPicks] = useState(draftIni.techHandsOnPicks);
+  const [techContextPicks, setTechContextPicks] = useState(draftIni.techContextPicks);
+  const [techDomainSkip, setTechDomainSkip] = useState(draftIni.techDomainSkip);
+  const [techHandsOnSkip, setTechHandsOnSkip] = useState(draftIni.techHandsOnSkip);
+  const [techContextSkip, setTechContextSkip] = useState(draftIni.techContextSkip);
   const [errors, setErrors] = useState({});
   const selectedFaculty = useMemo(() => HACETTEPE_FACULTIES.find((f) => f.id === facultyId) ?? null, [facultyId]);
   const selectedDepartment = useMemo(() => getDepartmentById(facultyId, departmentId), [facultyId, departmentId]);
   const deptInterestOptions = selectedDepartment?.focusInterests ?? [];
   const joyOptions = selectedDepartment?.joyActivities ?? [];
+  const techDomainOptions = selectedDepartment?.techDomains ?? [];
+  const techHandsOnOptions = selectedDepartment?.techHandsOn ?? [];
+  const techContextOptions = selectedDepartment?.techContexts ?? [];
 
   useEffect(() => {
     if (!selectedFaculty) {
@@ -156,6 +177,12 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
   }, [deptInterestOptions, joyOptions]);
 
   useEffect(() => {
+    setTechDomainPicks((prev) => prev.filter((x) => techDomainOptions.includes(x)));
+    setTechHandsOnPicks((prev) => prev.filter((x) => techHandsOnOptions.includes(x)));
+    setTechContextPicks((prev) => prev.filter((x) => techContextOptions.includes(x)));
+  }, [techDomainOptions, techHandsOnOptions, techContextOptions]);
+
+  useEffect(() => {
     const row = disciplines.find((d) => d.disciplineId === disciplineId);
     const t = window.setTimeout(() => {
       saveProfileDraft({
@@ -169,6 +196,12 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
         joyActivities,
         deptInterestSkip,
         joySkip,
+        techDomainPicks,
+        techHandsOnPicks,
+        techContextPicks,
+        techDomainSkip,
+        techHandsOnSkip,
+        techContextSkip,
         learningStyle,
         goalId,
         goalDetail,
@@ -191,6 +224,12 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
     joyActivities,
     deptInterestSkip,
     joySkip,
+    techDomainPicks,
+    techHandsOnPicks,
+    techContextPicks,
+    techDomainSkip,
+    techHandsOnSkip,
+    techContextSkip,
     learningStyle,
     goalId,
     goalDetail,
@@ -211,6 +250,19 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
     if (checked) setJoyActivities([]);
   };
 
+  const handleTechDomainSkip = (checked) => {
+    setTechDomainSkip(checked);
+    if (checked) setTechDomainPicks([]);
+  };
+  const handleTechHandsOnSkip = (checked) => {
+    setTechHandsOnSkip(checked);
+    if (checked) setTechHandsOnPicks([]);
+  };
+  const handleTechContextSkip = (checked) => {
+    setTechContextSkip(checked);
+    if (checked) setTechContextPicks([]);
+  };
+
   const validate = () => {
     const next = {};
     if (!facultyId) next.facultyId = 'Lütfen fakülte seç.';
@@ -226,6 +278,22 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
       next.joyActivities = 'En az bir keyif aldığın aktivite seç veya “Belirtmek istemiyorum” kutusunu işaretle.';
     }
 
+    const effTechDomain = techDomainSkip ? [PREFER_NOT] : techDomainPicks;
+    const effTechHandsOn = techHandsOnSkip ? [PREFER_NOT] : techHandsOnPicks;
+    const effTechContext = techContextSkip ? [PREFER_NOT] : techContextPicks;
+    if (!techDomainSkip && effTechDomain.length === 0) {
+      next.techDomainPicks =
+        'Teknoloji alanlarından en az birini seç veya “Belirtmek istemiyorum” kutusunu işaretle.';
+    }
+    if (!techHandsOnSkip && effTechHandsOn.length === 0) {
+      next.techHandsOnPicks =
+        'Teknolojiyle yapmak istediğin en az bir maddeyi seç veya “Belirtmek istemiyorum” kutusunu işaretle.';
+    }
+    if (!techContextSkip && effTechContext.length === 0) {
+      next.techContextPicks =
+        'En az bir ortam/rol tipi seç veya “Belirtmek istemiyorum” kutusunu işaretle.';
+    }
+
     setErrors(next);
     return Object.keys(next).length === 0;
   };
@@ -237,6 +305,9 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
     const row = disciplines.find((d) => d.disciplineId === disciplineId);
     const effDeptInterests = deptInterestSkip ? [PREFER_NOT] : deptInterests;
     const effJoyActivities = joySkip ? [PREFER_NOT] : joyActivities;
+    const effTechDomain = techDomainSkip ? [PREFER_NOT] : techDomainPicks;
+    const effTechHandsOn = techHandsOnSkip ? [PREFER_NOT] : techHandsOnPicks;
+    const effTechContext = techContextSkip ? [PREFER_NOT] : techContextPicks;
     const goalLabel = GOAL_OPTIONS.find((g) => g.id === goalId)?.label ?? goalId;
     const availabilityLabel = AVAILABILITY_OPTIONS.find((a) => a.id === availability)?.label ?? availability;
     const workModeLabel = WORK_MODE_OPTIONS.find((w) => w.id === workMode)?.label ?? workMode;
@@ -255,6 +326,9 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
       strengths: effJoyActivities,
       deptInterests: effDeptInterests,
       joyActivities: effJoyActivities,
+      techDomainInterests: effTechDomain,
+      techHandsOnInterests: effTechHandsOn,
+      techContextInterests: effTechContext,
       learningStyle: LEARNING_OPTIONS.find((l) => l.id === learningStyle)?.label ?? learningStyle,
       goal: goalDetail.trim() ? `${goalLabel}: ${goalDetail.trim()}` : goalLabel,
       disciplineFocus: effDeptInterests[0] ?? '',
@@ -394,8 +468,128 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
               {errors.joyActivities && <p className="mt-2 text-sm text-red-600">{errors.joyActivities}</p>}
             </div>
 
+            <div className="rounded-2xl border border-indigo-100/80 bg-indigo-50/40 px-3 py-4 sm:px-4">
+              <p className="mb-4 text-xs leading-relaxed text-slate-600">
+                Aşağıdaki üç soru, <strong>bölümüne göre</strong> teknoloji dünyasında ilgini çeken yönleri ayırır; ana
+                akıştaki bölüm ilgilerinden farklıdır. İstersen her soruda &quot;Belirtmek istemiyorum&quot;
+                diyebilirsin.
+              </p>
+
+              <div className="mb-8">
+                <label className="mb-2 block text-sm font-semibold text-slate-800">
+                  5. Teknoloji dünyasında seni çeken alanlar
+                </label>
+                <label className="mb-3 flex cursor-pointer items-center gap-2 text-sm text-slate-600">
+                  <input
+                    type="checkbox"
+                    checked={techDomainSkip}
+                    onChange={(e) => handleTechDomainSkip(e.target.checked)}
+                  />
+                  Belirtmek istemiyorum
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {techDomainOptions.map((opt) => (
+                    <button
+                      key={opt}
+                      type="button"
+                      disabled={techDomainSkip || !selectedDepartment}
+                      onClick={() => setTechDomainPicks((prev) => toggleInList(prev, opt))}
+                      className={[
+                        'rounded-full border px-3 py-1.5 text-sm font-medium transition',
+                        techDomainSkip || !selectedDepartment
+                          ? 'cursor-not-allowed opacity-40'
+                          : techDomainPicks.includes(opt)
+                            ? 'border-indigo-600 bg-indigo-600 text-white'
+                            : 'border-slate-200 bg-white/80 text-slate-700 hover:border-indigo-300',
+                      ].join(' ')}
+                    >
+                      {opt}
+                    </button>
+                  ))}
+                </div>
+                {!selectedDepartment ? <p className="mt-2 text-xs text-slate-500">Önce bölüm seçiniz.</p> : null}
+                {errors.techDomainPicks && <p className="mt-2 text-sm text-red-600">{errors.techDomainPicks}</p>}
+              </div>
+
+              <div className="mb-8">
+                <label className="mb-2 block text-sm font-semibold text-slate-800">
+                  6. Teknolojiyle yapmayı veya öğrenmeyi istediğin şeyler
+                </label>
+                <label className="mb-3 flex cursor-pointer items-center gap-2 text-sm text-slate-600">
+                  <input
+                    type="checkbox"
+                    checked={techHandsOnSkip}
+                    onChange={(e) => handleTechHandsOnSkip(e.target.checked)}
+                  />
+                  Belirtmek istemiyorum
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {techHandsOnOptions.map((opt) => (
+                    <button
+                      key={opt}
+                      type="button"
+                      disabled={techHandsOnSkip || !selectedDepartment}
+                      onClick={() => setTechHandsOnPicks((prev) => toggleInList(prev, opt))}
+                      className={[
+                        'rounded-full border px-3 py-1.5 text-sm font-medium transition',
+                        techHandsOnSkip || !selectedDepartment
+                          ? 'cursor-not-allowed opacity-40'
+                          : techHandsOnPicks.includes(opt)
+                            ? 'border-indigo-600 bg-indigo-600 text-white'
+                            : 'border-slate-200 bg-white/80 text-slate-700 hover:border-indigo-300',
+                      ].join(' ')}
+                    >
+                      {opt}
+                    </button>
+                  ))}
+                </div>
+                {!selectedDepartment ? <p className="mt-2 text-xs text-slate-500">Önce bölüm seçiniz.</p> : null}
+                {errors.techHandsOnPicks && (
+                  <p className="mt-2 text-sm text-red-600">{errors.techHandsOnPicks}</p>
+                )}
+              </div>
+
+              <div>
+                <label className="mb-2 block text-sm font-semibold text-slate-800">
+                  7. Sana yakın hissettiren teknoloji ortamı veya rol tipi
+                </label>
+                <label className="mb-3 flex cursor-pointer items-center gap-2 text-sm text-slate-600">
+                  <input
+                    type="checkbox"
+                    checked={techContextSkip}
+                    onChange={(e) => handleTechContextSkip(e.target.checked)}
+                  />
+                  Belirtmek istemiyorum
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {techContextOptions.map((opt) => (
+                    <button
+                      key={opt}
+                      type="button"
+                      disabled={techContextSkip || !selectedDepartment}
+                      onClick={() => setTechContextPicks((prev) => toggleInList(prev, opt))}
+                      className={[
+                        'rounded-full border px-3 py-1.5 text-sm font-medium transition',
+                        techContextSkip || !selectedDepartment
+                          ? 'cursor-not-allowed opacity-40'
+                          : techContextPicks.includes(opt)
+                            ? 'border-indigo-600 bg-indigo-600 text-white'
+                            : 'border-slate-200 bg-white/80 text-slate-700 hover:border-indigo-300',
+                      ].join(' ')}
+                    >
+                      {opt}
+                    </button>
+                  ))}
+                </div>
+                {!selectedDepartment ? <p className="mt-2 text-xs text-slate-500">Önce bölüm seçiniz.</p> : null}
+                {errors.techContextPicks && (
+                  <p className="mt-2 text-sm text-red-600">{errors.techContextPicks}</p>
+                )}
+              </div>
+            </div>
+
             <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-800">5. Öğrenme stili</label>
+              <label className="mb-2 block text-sm font-semibold text-slate-800">8. Öğrenme stili</label>
               <div className="space-y-2">
                 {LEARNING_OPTIONS.map((opt) => (
                   <label key={opt.id} className="flex cursor-pointer items-center gap-2 text-sm text-slate-700">
@@ -412,7 +606,7 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-800">6. Hedef</label>
+              <label className="mb-2 block text-sm font-semibold text-slate-800">9. Hedef</label>
               <select
                 value={goalId}
                 onChange={(e) => setGoalId(e.target.value)}
@@ -435,7 +629,7 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-800">7. Haftalık öğrenme zamanı</label>
+              <label className="mb-2 block text-sm font-semibold text-slate-800">10. Haftalık öğrenme zamanı</label>
               <div className="space-y-2">
                 {AVAILABILITY_OPTIONS.map((opt) => (
                   <label key={opt.id} className="flex cursor-pointer items-center gap-2 text-sm text-slate-700">
@@ -452,7 +646,7 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-800">8. Çalışma modu tercihi</label>
+              <label className="mb-2 block text-sm font-semibold text-slate-800">11. Çalışma modu tercihi</label>
               <div className="space-y-2">
                 {WORK_MODE_OPTIONS.map((opt) => (
                   <label key={opt.id} className="flex cursor-pointer items-center gap-2 text-sm text-slate-700">
@@ -464,7 +658,7 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-800">9. Çalışma ortamı tercihi</label>
+              <label className="mb-2 block text-sm font-semibold text-slate-800">12. Çalışma ortamı tercihi</label>
               <div className="space-y-2">
                 {WORK_ENV_OPTIONS.map((opt) => (
                   <label key={opt.id} className="flex cursor-pointer items-center gap-2 text-sm text-slate-700">
@@ -481,7 +675,7 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-800">10. Etki yaratmak istediğin tema</label>
+              <label className="mb-2 block text-sm font-semibold text-slate-800">13. Etki yaratmak istediğin tema</label>
               <div className="space-y-2">
                 {IMPACT_THEME_OPTIONS.map((opt) => (
                   <label key={opt.id} className="flex cursor-pointer items-center gap-2 text-sm text-slate-700">
@@ -498,7 +692,7 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-800">11. Şehir (fırsat filtresi)</label>
+              <label className="mb-2 block text-sm font-semibold text-slate-800">14. Şehir (fırsat filtresi)</label>
               <p className="mb-3 text-xs text-slate-500">
                 Yerel etkinlik ağırlıklı önerileri öne çıkarmak için; çevrim içi ve Türkiye geneli kaynaklar yine
                 listelenir.

@@ -14,6 +14,14 @@ function esc(s) {
     .replace(/"/g, '&quot;');
 }
 
+/** Liste öğesi beklenmedik tip olursa boş / metin — HTML’de [object Object] önleme */
+function escLine(s) {
+  if (s == null) return '';
+  if (typeof s === 'string') return esc(s);
+  if (typeof s === 'number' || typeof s === 'boolean') return esc(String(s));
+  return '';
+}
+
 function safeHref(url) {
   const u = String(url ?? '').trim();
   return /^https?:\/\//i.test(u) ? u : '';
@@ -150,20 +158,38 @@ const always = [
 let profileHtml = '';
 if (
   profile.disciplineLabel ||
+  profile.facultyLabel ||
+  profile.departmentLabel ||
   profile.goal ||
   (profile.interests && profile.interests.length) ||
   (profile.strengths && profile.strengths.length) ||
+  (profile.techDomainInterests && profile.techDomainInterests.length) ||
+  (profile.techHandsOnInterests && profile.techHandsOnInterests.length) ||
+  (profile.techContextInterests && profile.techContextInterests.length) ||
   profile.learningStyle ||
+  profile.availabilityLabel ||
+  profile.workModeLabel ||
+  profile.workEnvironmentLabel ||
+  profile.impactThemeLabel ||
   city
 ) {
   profileHtml = `
   <div style="background:#f0f4ff;padding:14px 16px;border-radius:10px;margin-bottom:18px;border:1px solid #dbe4ff;">
     <strong style="color:#4338ca;">Profil özeti</strong>
-    ${profile.disciplineLabel ? `<p style="margin:8px 0 4px;color:#333;"><strong>Disiplin:</strong> ${esc(profile.disciplineLabel)}</p>` : ''}
+    ${profile.facultyLabel ? `<p style="margin:8px 0 4px;color:#333;"><strong>Fakülte:</strong> ${esc(profile.facultyLabel)}</p>` : ''}
+    ${profile.departmentLabel ? `<p style="margin:4px 0;color:#333;font-size:14px;"><strong>Bölüm:</strong> ${esc(profile.departmentLabel)}</p>` : ''}
+    ${profile.disciplineLabel ? `<p style="margin:4px 0;color:#333;font-size:14px;"><strong>Disiplin:</strong> ${esc(profile.disciplineLabel)}</p>` : ''}
     ${profile.goal ? `<p style="margin:4px 0;color:#555;font-size:14px;"><strong>Hedef:</strong> ${esc(profile.goal)}</p>` : ''}
     ${profile.interests && profile.interests.length ? `<p style="margin:4px 0;color:#555;font-size:14px;"><strong>İlgi alanları:</strong> ${esc(profile.interests.join(', '))}</p>` : ''}
     ${profile.strengths && profile.strengths.length ? `<p style="margin:4px 0;color:#555;font-size:14px;"><strong>Güçlü yönler:</strong> ${esc(profile.strengths.join(', '))}</p>` : ''}
+    ${profile.techDomainInterests && profile.techDomainInterests.length ? `<p style="margin:4px 0;color:#555;font-size:14px;"><strong>Teknoloji — çekici alanlar:</strong> ${esc(profile.techDomainInterests.join(', '))}</p>` : ''}
+    ${profile.techHandsOnInterests && profile.techHandsOnInterests.length ? `<p style="margin:4px 0;color:#555;font-size:14px;"><strong>Teknoloji — yapmak/öğrenmek:</strong> ${esc(profile.techHandsOnInterests.join(', '))}</p>` : ''}
+    ${profile.techContextInterests && profile.techContextInterests.length ? `<p style="margin:4px 0;color:#555;font-size:14px;"><strong>Teknoloji — ortam/rol:</strong> ${esc(profile.techContextInterests.join(', '))}</p>` : ''}
     ${profile.learningStyle ? `<p style="margin:4px 0;color:#555;font-size:14px;"><strong>Öğrenme stili:</strong> ${esc(profile.learningStyle)}</p>` : ''}
+    ${profile.availabilityLabel ? `<p style="margin:4px 0;color:#555;font-size:14px;"><strong>Zaman / yoğunluk:</strong> ${esc(profile.availabilityLabel)}</p>` : ''}
+    ${profile.workModeLabel ? `<p style="margin:4px 0;color:#555;font-size:14px;"><strong>Çalışma tarzı:</strong> ${esc(profile.workModeLabel)}</p>` : ''}
+    ${profile.workEnvironmentLabel ? `<p style="margin:4px 0;color:#555;font-size:14px;"><strong>Çalışma ortamı:</strong> ${esc(profile.workEnvironmentLabel)}</p>` : ''}
+    ${profile.impactThemeLabel ? `<p style="margin:4px 0;color:#555;font-size:14px;"><strong>Etki odağı:</strong> ${esc(profile.impactThemeLabel)}</p>` : ''}
     ${city ? `<p style="margin:4px 0;color:#555;font-size:14px;"><strong>Şehir / filtre:</strong> ${esc(city)}</p>` : ''}
   </div>`;
 }
@@ -182,9 +208,9 @@ if (rolesDetail.length) {
     .map((rd, i) => {
       const title = esc(rd.roleName || roles[i] || `Rol ${i + 1}`);
       const tags = (rd.tags || []).map((t) => esc(t)).join(', ');
-      const why = (rd.whyFits || []).map((w) => `<li>${esc(w)}</li>`).join('');
-      const steps = (rd.firstSteps || []).map((s) => `<li>${esc(s)}</li>`).join('');
-      const res = (rd.starterResources || []).map((s) => `<li>${esc(s)}</li>`).join('');
+      const why = (rd.whyFits || []).map((w) => `<li>${escLine(w)}</li>`).join('');
+      const steps = (rd.firstSteps || []).map((s) => `<li>${escLine(s)}</li>`).join('');
+      const res = (rd.starterResources || []).map((s) => `<li>${escLine(s)}</li>`).join('');
       const day = rd.dayInLife;
       const dayBlock = day
         ? `<p style="margin:10px 0 6px;font-size:13px;color:#444;"><strong>Günün akışı</strong><br/>

@@ -1,20 +1,41 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { lazy, Suspense, useCallback, useEffect, useMemo, useState } from 'react';
 import { Compass } from 'lucide-react';
 import { LandingPage } from './pages/LandingPage';
-import { LandingInfoPage } from './pages/LandingInfoPage';
-import { ProfilePage } from './pages/ProfilePage';
-import { BaselinePage } from './pages/BaselinePage';
-import { AnalyzingPage } from './pages/AnalyzingPage';
-import { ResultsPage } from './pages/ResultsPage';
-import { BarrierPage } from './pages/BarrierPage';
-import { BarrierReviewPage } from './pages/BarrierReviewPage';
-import { PostSurveyPage } from './pages/PostSurveyPage';
-import { FinalCardPage } from './pages/FinalCardPage';
-import { RoadmapHubPage } from './pages/RoadmapHubPage.jsx';
-import { RoadmapTrackPage } from './pages/RoadmapTrackPage.jsx';
-import { OrientationQuizPage } from './pages/OrientationQuizPage.jsx';
-import { OrientationResultPage } from './pages/OrientationResultPage.jsx';
 import { PusulaBadgesStrip } from './components/PusulaBadgesStrip.jsx';
+
+const LandingInfoPage = lazy(() =>
+  import('./pages/LandingInfoPage').then((m) => ({ default: m.LandingInfoPage })),
+);
+const ProfilePage = lazy(() => import('./pages/ProfilePage').then((m) => ({ default: m.ProfilePage })));
+const BaselinePage = lazy(() => import('./pages/BaselinePage').then((m) => ({ default: m.BaselinePage })));
+const AnalyzingPage = lazy(() => import('./pages/AnalyzingPage').then((m) => ({ default: m.AnalyzingPage })));
+const ResultsPage = lazy(() => import('./pages/ResultsPage').then((m) => ({ default: m.ResultsPage })));
+const BarrierPage = lazy(() => import('./pages/BarrierPage').then((m) => ({ default: m.BarrierPage })));
+const BarrierReviewPage = lazy(() =>
+  import('./pages/BarrierReviewPage').then((m) => ({ default: m.BarrierReviewPage })),
+);
+const PostSurveyPage = lazy(() => import('./pages/PostSurveyPage').then((m) => ({ default: m.PostSurveyPage })));
+const FinalCardPage = lazy(() => import('./pages/FinalCardPage').then((m) => ({ default: m.FinalCardPage })));
+const RoadmapHubPage = lazy(() =>
+  import('./pages/RoadmapHubPage.jsx').then((m) => ({ default: m.RoadmapHubPage })),
+);
+const RoadmapTrackPage = lazy(() =>
+  import('./pages/RoadmapTrackPage.jsx').then((m) => ({ default: m.RoadmapTrackPage })),
+);
+const OrientationQuizPage = lazy(() =>
+  import('./pages/OrientationQuizPage.jsx').then((m) => ({ default: m.OrientationQuizPage })),
+);
+const OrientationResultPage = lazy(() =>
+  import('./pages/OrientationResultPage.jsx').then((m) => ({ default: m.OrientationResultPage })),
+);
+
+function PageLoader() {
+  return (
+    <main className="mx-auto flex min-h-[38vh] w-full max-w-none items-center justify-center px-4 py-16 text-sm font-medium text-slate-600">
+      Yükleniyor…
+    </main>
+  );
+}
 import { loadPusulaData, getDisciplineById } from './lib/dataLoader.js';
 import { runCareerAnalysis, runBarrierReframe } from './lib/gemini.js';
 import { getLlmApiKey, getLlmProvider, getLlmBrandLabel } from './lib/llmConfig.js';
@@ -123,11 +144,27 @@ const App = () => {
   const [roadmapTrackId, setRoadmapTrackId] = useState(null);
   const [orientationResult, setOrientationResult] = useState(null);
 
-  const barrierProfileSummary = useMemo(
-    () =>
+  const barrierProfileSummary = useMemo(() => {
+    const techBlock = [
+      profile?.techDomainInterests?.length
+        ? `teknoloji alanları: ${profile.techDomainInterests.join(', ')}`
+        : '',
+      profile?.techHandsOnInterests?.length
+        ? `teknolojiyle yapmak: ${profile.techHandsOnInterests.join(', ')}`
+        : '',
+      profile?.techContextInterests?.length
+        ? `teknoloji ortamı/rol: ${profile.techContextInterests.join(', ')}`
+        : '',
+    ]
+      .filter(Boolean)
+      .join('; ');
+    return [
       `${profile?.disciplineLabel ?? ''}; ilgi: ${profile?.interests?.join(', ')}; güçlü yön: ${profile?.strengths?.join(', ')}; hedef: ${profile?.goal ?? ''}`,
-    [profile],
-  );
+      techBlock,
+    ]
+      .filter(Boolean)
+      .join(' | ');
+  }, [profile]);
 
   const navLabel = useMemo(() => stepLabel(step), [step]);
 
@@ -422,6 +459,7 @@ const App = () => {
         />
       )}
 
+      <Suspense fallback={<PageLoader />}>
       {step === 'roadmapHub' && (
         <RoadmapHubPage
           onBack={goHome}
@@ -587,6 +625,7 @@ const App = () => {
           onCardDownloaded={() => unlockPusulaBadge(BADGE_IDS.CARD)}
         />
       )}
+      </Suspense>
     </div>
   );
 };

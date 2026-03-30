@@ -1,5 +1,23 @@
-function makeDept(id, name, disciplineId, focusInterests, joyActivities) {
-  return { id, name, disciplineId, focusInterests, joyActivities };
+function makeDept(
+  id,
+  name,
+  disciplineId,
+  focusInterests,
+  joyActivities,
+  techDomains,
+  techHandsOn,
+  techContexts,
+) {
+  return {
+    id,
+    name,
+    disciplineId,
+    focusInterests,
+    joyActivities,
+    techDomains,
+    techHandsOn,
+    techContexts,
+  };
 }
 
 const PROFILE = {
@@ -27,6 +45,36 @@ const PROFILE = {
       'Hipotez test etmek',
       'Matematiksel düşünceyi uygulamaya çevirmek',
     ],
+    techDomains: [
+      'Yapay zekâ ve makine öğrenmesi',
+      'Veri mühendisliği ve analitik',
+      'Bulut ve ölçeklenebilir sistemler',
+      'Yazılım geliştirme (arka uç / ön uç)',
+      'Siber güvenlik',
+      'Gömülü sistemler ve IoT',
+      'BI ve iş zekası araçları',
+      'API, entegrasyon ve otomasyon',
+      'Bilimsel hesaplama ve simülasyon yazılımları',
+    ],
+    techHandsOn: [
+      'Küçük bir model veya script yazmak',
+      'Veri setini temizleyip analiz etmek',
+      'Dashboard veya otomatik rapor kurmak',
+      'Açık kaynak projeye katkıda bulunmak',
+      'Yarışma / challenge veri setiyle uğraşmak',
+      'No-code / low-code ile hızlı prototip',
+      'Notebook ortamında deney yapmak',
+      'Git ve sürüm kontrolü ile çalışmak',
+    ],
+    techContexts: [
+      'Startup veya hızlı ürün temposu',
+      'Kurumsal ürün / platform ekibi',
+      'Araştırma veya laboratuvar odaklı rol',
+      'Freelance ve proje bazlı çalışma',
+      'Teknik uzman (IC) derinleşmesi',
+      'Teknoloji ile iş / strateji kesişimi',
+      'Veri + yazılım hibrit rolleri',
+    ],
   },
   social: {
     disciplineId: 'human-social',
@@ -51,6 +99,33 @@ const PROFILE = {
       'Farklı bakış açılarını bir araya getirmek',
       'Sosyal problemleri çözüm odaklı ele almak',
       'Yazılı/sözlü anlatım üretmek',
+    ],
+    techDomains: [
+      'Dijital araştırma ve etnografi araçları',
+      'Sosyal dinleme ve anket platformları',
+      'İçerik üretim ve yayın teknolojileri',
+      'Erişilebilirlik ve kapsayıcı tasarım standartları',
+      'Gizlilik, güven ve veri etiği araçları',
+      'Topluluk ve üyelik yönetim platformları',
+      'Dijital kampanya ve ölçüm temelleri',
+      'CRM ve iletişim otomasyonu (giriş seviyesi)',
+    ],
+    techHandsOn: [
+      'Podcast / video üretim yazılımı denemek',
+      'Veri görselleştirmesiyle hikâye anlatmak',
+      'Basit web veya form tasarlamak',
+      'Dijital anket ve görüşme akışı kurmak',
+      'Sosyal medya analitiği özetine bakmak',
+      'Nitel notları dijital araçla düzenlemek',
+      'Küçük bir erişilebilirlik kontrolü listesi uygulamak',
+    ],
+    techContexts: [
+      'İletişim ve içerik teknolojileri ekipleri',
+      'Kamu / STK dijital projeleri',
+      'Kullanıcı ve toplulukla temaslı ürün rolleri',
+      'UX araştırması veya içgörü destek rolleri',
+      'EdTech içerik ve öğrenme deneyimi tarafı',
+      'Dijital haklar ve güven odaklı girişimler',
     ],
   },
   life: {
@@ -77,6 +152,33 @@ const PROFILE = {
       'Multidisipliner ekiplerle çalışmak',
       'Kanıta dayalı karar vermek',
     ],
+    techDomains: [
+      'Tıbbi görüntüleme ve cihaz yazılımları',
+      'Elektronik sağlık kayıtları ve klinik bilgi sistemleri',
+      'Omik, laboratuvar ve araştırma veri boru hatları',
+      'Klinik karar destek ve klinik analitik',
+      'Giyilebilir ve uzaktan izleme teknolojileri',
+      'Sağlıkta yapay zekâ ve sinyal işleme',
+      'Regülasyon, doğrulama ve kalite sistemleri',
+      'Halk sağlığı ve epidemiyoloji veri platformları',
+    ],
+    techHandsOn: [
+      'Sağlık veya bilim verisini görselleştirmek',
+      'Basit bir hesaplayıcı / simülasyon örneği denemek',
+      'Python veya R ile küçük analiz yapmak',
+      'Literatür tarama ve referans araçları kullanmak',
+      'Tekrarlanabilir analiz notu hazırlamak',
+      'Açık veri setiyle kısa bir kesit çıkarmak',
+      'Klinik veya lab sürecini akış şemasına dökmek',
+    ],
+    techContexts: [
+      'Klinik ve teknoloji kesişimi',
+      'Ar-Ge laboratuvarı ve bilim üretimi',
+      'Regülasyon, kalite ve dijital süreçler',
+      'Sağlık ürün ve yönetim teknolojileri',
+      'Akademi–sanayi iş birliği projeleri',
+      'Sağlıkta veri bilimi ve biostatistik rolleri',
+    ],
   },
   business: {
     disciplineId: 'business-econ',
@@ -101,6 +203,33 @@ const PROFILE = {
       'Paydaşlarla koordinasyon kurmak',
       'Bütçe ve etki hesabı yapmak',
       'Ürün fikrini test etmek',
+    ],
+    techDomains: [
+      'ERP, CRM ve kurumsal iş uygulamaları',
+      'İş zekası, raporlama ve KPI araçları',
+      'Finans, risk ve uyumluluk yazılımları',
+      'Satış ve pazarlama teknolojileri (MarTech)',
+      'Süreç otomasyonu (RPA) ve iş akışı',
+      'Bulut tabanlı iş çözümleri',
+      'Ödeme, e-ticaret ve müşteri deneyimi araçları',
+      'Ürün analitiği ve deney ölçümü',
+    ],
+    techHandsOn: [
+      'Tablolarda ileri formül veya kısa script denemek',
+      'Küçük bir iş sürecini dijitalleştirmek veya sadeleştirmek',
+      'KPI panosu veya kontrol paneli tasarlamak',
+      'A/B test veya basit ölçüm kurgusu kurmak',
+      'No-code ile mini ürün veya form prototipi',
+      'Veri hikâyesi sunumu hazırlamak',
+      'Paydaş anketi ve otomatik özet akışı',
+    ],
+    techContexts: [
+      'Ürün yönetimi ve büyüme ekipleri',
+      'İş analisti ve veri iletişimi rolleri',
+      'Operasyon ve süreç teknolojileri',
+      'Danışmanlık ve dijital dönüşüm projeleri',
+      'Satış ve pazarlama analitiği',
+      'Kurumsal inovasyon ve PoC birimleri',
     ],
   },
   educationArts: {
@@ -127,17 +256,62 @@ const PROFILE = {
       'Deneysel prototip denemek',
       'Kullanıcı geri bildirimiyle iyileştirme yapmak',
     ],
+    techDomains: [
+      'Web, mobil ve arayüz teknolojileri',
+      'Oyun, etkileşim ve gerçek zamanlı deneyim',
+      'Dijital illüstrasyon, 3D ve hareket',
+      'Öğrenme yönetim ve içerik platformları',
+      'Ses, video ve prodüksiyon yazılımları',
+      'Kreatif kod ve generatif / yapay zekâ araçları',
+      'Dijital erişilebilirlik ve tasarım sistemleri',
+    ],
+    techHandsOn: [
+      'Küçük bir web veya etkileşimli prototip yapmak',
+      'Dijital portföy veya moodboard hazırlamak',
+      'Eğitim içeriğini çevrim içi formatta düzenlemek',
+      'Erişilebilirlik ve UX kontrol listesi uygulamak',
+      'Kısa video veya ses kaydı üretmek',
+      'Topluluk yayını veya canlı oturum denemek',
+      'Basit bir oyun veya etkileşim fikri taslaklamak',
+    ],
+    techContexts: [
+      'Tasarım ve ürün odaklı teknoloji ekipleri',
+      'İçerik ve yayıncılık teknolojileri',
+      'EdTech ürün ve öğrenme deneyimi ekipleri',
+      'Yaratıcı ajans ve dijital prodüksiyon',
+      'Araştırma sunumu ve bilim iletişimi + dijital araçlar',
+      'Kültür ve sanat kurumlarının dijital projeleri',
+    ],
   },
   mixed: {
     disciplineId: 'business-econ',
     focus: ['Dijital dönüşüm', 'Süreç ve kalite', 'Kurumsal operasyon', 'Kullanıcı odaklı hizmet tasarımı'],
     joy: ['Plan yapıp takip etmek', 'Ekiplerle koordinasyon kurmak', 'Sistematik ilerlemek', 'Süreci iyileştirmek'],
+    techDomains: [
+      'Dijital dönüşüm ve otomasyon',
+      'Veri, raporlama ve görselleştirme',
+      'Ürün ve kullanıcı odaklı araçlar',
+      'İletişim ve iş birliği yazılımları',
+      'Bulut ve günlük kurumsal uygulamalar',
+    ],
+    techHandsOn: [
+      'Küçük bir süreci dijitalleştirmek veya sadeleştirmek',
+      'Form, anket veya basit sayfa hazırlamak',
+      'Tablolarda özet ve kontrol paneli fikri üretmek',
+      'Ekip içi otomasyon veya şablon düşünmek',
+    ],
+    techContexts: [
+      'Çok disiplinli proje ekipleri',
+      'Kurumsal süreç iyileştirme ve kalite',
+      'Proje bazlı danışmanlık ve uygulama',
+      'Teknoloji ve iş süreçlerini birlikte düşünen roller',
+    ],
   },
 };
 
 function withProfile(id, name, key) {
   const p = PROFILE[key];
-  return makeDept(id, name, p.disciplineId, p.focus, p.joy);
+  return makeDept(id, name, p.disciplineId, p.focus, p.joy, p.techDomains, p.techHandsOn, p.techContexts);
 }
 
 export const HACETTEPE_FACULTIES = [

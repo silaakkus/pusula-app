@@ -188,6 +188,107 @@ function normalizeStepText(step) {
   return text;
 }
 
+/**
+ * UP School program sayfasında listelenen / Pusula veri katmanında doğrulanmış adlar.
+ * "Simülasyon Programı", "X Patikası", "X Bootcamp" gibi rol-uyarlama isimleri YASAK — halüsinasyon.
+ */
+const UP_SCHOOL_KNOWN_FRAGMENTS = [
+  'birbirini geliştiren',
+  'future talent',
+  'ai-first',
+  'e-ticarette',
+  'google associate cloud engineer',
+  'java development',
+  'machine learning program',
+  'data analysis program',
+  'data science program',
+  'frontend development program',
+  '.net core',
+  'android development',
+  'ios development',
+  'digital marketing program',
+  'rpa program',
+  'teknolojide güvenlik akademisi',
+  'solana blockchain',
+  'sign up for a europeantech',
+  'growth companion',
+  'up ai',
+  'mentorluk ve kariyer',
+];
+
+const UP_SCHOOL_SAFE_LINE =
+  'UP School — resmi program listesinden rolüne uygun olanı seç: https://www.upschool.io/program';
+const PATIKA_SAFE_LINE = 'Patika.dev — patika ve bootcamp sayfaları: https://www.patika.dev/';
+const KODLUYORUZ_SAFE_LINE = 'Kodluyoruz — programlar ve bootcamp duyuruları: https://www.kodluyoruz.org/';
+
+function normResource(s) {
+  return String(s ?? '')
+    .toLowerCase()
+    .replace(/ı/g, 'i')
+    .replace(/ğ/g, 'g')
+    .replace(/ü/g, 'u')
+    .replace(/ş/g, 's')
+    .replace(/ö/g, 'o')
+    .replace(/ç/g, 'c');
+}
+
+/** resources[] satırı: marka + uydurma program adını generic güvenli satıra çevirir. */
+function sanitizeCareerResourceLine(line) {
+  const raw = String(line ?? '').trim();
+  if (!raw) return '';
+  const n = normResource(raw);
+
+  if (/up\s*school|upschool/.test(n)) {
+    const hit = UP_SCHOOL_KNOWN_FRAGMENTS.some((frag) => n.includes(normResource(frag)));
+    if (hit) return raw;
+    if (/upschool\.io\/program/.test(raw)) return raw;
+    return UP_SCHOOL_SAFE_LINE;
+  }
+
+  if (n.includes('patika')) {
+    if (/simulasyon|simulation/.test(n) || /simulasyon\s+patika|simulation\s+path/.test(n)) {
+      return PATIKA_SAFE_LINE;
+    }
+  }
+  if (n.includes('kodluyoruz') || n.includes('kodluyor')) {
+    if (/simulasyon|simulation/.test(n)) {
+      return KODLUYORUZ_SAFE_LINE;
+    }
+  }
+
+  return raw;
+}
+
+/** applicationPrograms kaydı: UP School için yalnızca bilinen isimler; değilse güvenli başlık. */
+function sanitizeLlmApplicationProgramRecord(p) {
+  if (!p || typeof p !== 'object') return p;
+  const name = String(p.name ?? '').trim();
+  if (!name) return p;
+  const n = normResource(name);
+  const url = String(p.url ?? '');
+  if (/up\s*school|upschool/.test(n) || /upschool\.io/i.test(url)) {
+    const hit = UP_SCHOOL_KNOWN_FRAGMENTS.some((frag) => n.includes(normResource(frag)));
+    if (!hit) {
+      return {
+        ...p,
+        name: 'UP School — programlar (resmi liste)',
+        url: /^https:\/\/(www\.)?upschool\.io\/program/i.test(url) ? url : 'https://www.upschool.io/program',
+      };
+    }
+  }
+  if (n.includes('patika') && /simulasyon|simulation/.test(n)) {
+    return { ...p, name: 'Patika.dev — öğrenme patikaları', url: /^https:\/\/www\.patika\.dev/i.test(url) ? url : 'https://www.patika.dev/' };
+  }
+  if ((n.includes('kodluyoruz') || n.includes('kodluyor')) && /simulasyon|simulation/.test(n)) {
+    return {
+      ...p,
+      name: 'Kodluyoruz — bootcamp ve programlar',
+      url: /^https:\/\/(www\.)?kodluyoruz\.org/i.test(url) ? url : 'https://www.kodluyoruz.org/',
+    };
+  }
+  return p;
+}
+
 /** Groq/Gemini bazen internshipPrograms anahtarını farklı yazar */
 function pickInternshipProgramsRaw(r) {
   if (!r || typeof r !== 'object') return [];
@@ -318,6 +419,7 @@ function normalizeRole(r, index) {
   if (!starterResources.length && Array.isArray(r?.starterResources)) {
     starterResources = r.starterResources.filter(isNonEmptyString).map((s) => s.trim());
   }
+  starterResources = starterResources.map(sanitizeCareerResourceLine).filter(Boolean);
 
   let firstSteps = Array.isArray(r?.firstSteps)
     ? r.firstSteps.filter(isNonEmptyString).map((s) => normalizeStepText(s))
@@ -333,12 +435,20 @@ function normalizeRole(r, index) {
 
   const employersTurkey = normalizeEmployersList(Array.isArray(r?.employersTurkey) ? r.employersTurkey : [], 8);
 
-  const internshipPrograms = normalizeInternshipProgramsWithLlmFallback(pickInternshipProgramsRaw(r), 6);
+  let internshipPrograms = normalizeInternshipProgramsWithLlmFallback(pickInternshipProgramsRaw(r), 6);
+  internshipPrograms = internshipPrograms.map((p) => {
+    if (!p?.name) return p;
+    const n = normResource(p.name);
+    if (!/up\s*school|upschool/.test(n)) return p;
+    const hit = UP_SCHOOL_KNOWN_FRAGMENTS.some((frag) => n.includes(normResource(frag)));
+    if (hit) return p;
+    return { ...p, name: 'UP School — programlar (resmi)', url: 'https://www.upschool.io/program' };
+  });
 
   const llmApplicationPrograms = normalizeLlmApplicationPrograms(
     Array.isArray(r?.applicationPrograms) ? r.applicationPrograms : [],
     5,
-  );
+  ).map(sanitizeLlmApplicationProgramRecord);
 
   const roleId = isNonEmptyString(r?.roleId) ? r.roleId.trim() : undefined;
 
@@ -508,6 +618,13 @@ PROGRAM VE EĞİTİM KALİTESİ:
   • internshipPrograms.eligibility alanı zorunlu ve net kitle tanımı içermeli.
   • applicationPrograms.forWho alanı "Kimler katılabilir: ..." formatında başlamalı.
 
+HALÜSİNASYON YASAĞI (kritik):
+- Rol adına göre uydurma program adı yazma (örn. "Simülasyon Programı", "Simülasyon Patikası", "Simülasyon Bootcamp").
+- UP School için YALNIZCA aşağıdaki katalogdaki tam program adlarından birini kullan veya genel yaz: "UP School — programlar: https://www.upschool.io/program"
+- Simülasyon / operasyon araştırması ilgisi için uygunsa tek istisna: "UP AI Growth Companion" (rol simülasyonu / mikro öğrenme; https://www.upschool.io/en/up veya upschool.io çatısı) — "UP School Simülasyon Programı" diye AYRI bir bootcamp adı uydurma.
+- Patika.dev için site dışında uydurma patika adı yazma; şüphede: "Patika.dev — https://www.patika.dev/"
+- Kodluyoruz için uydurma bootcamp adı yazma; şüphede: "Kodluyoruz — https://www.kodluyoruz.org/"
+
 SPESİFİK PROGRAM KATALOĞU (öncelikli kullan; role göre seç):
 - UP School: "Birbirini Geliştiren Kadınlar", "Future Talent Program", "AI-First Developer Programı" (https://upschool.io/)
 - UP School (program sayfasındaki geçmiş programlardan role göre seç): "E-Ticarette Güçlü Kadınlar Programı", "Google Associate Cloud Engineer Certificate Programme", "AI-First Developer Programı", "Java Development Programı", "Machine Learning Program", "Data Analysis Programı", "Data Science Programı", "Frontend Development Programı", "Digital Marketing Programı" (https://www.upschool.io/program)
@@ -609,6 +726,9 @@ export async function runCareerAnalysis({ apiKey, profile, matrix }) {
       impactThemeLabel: profile.impactThemeLabel,
       cityId: profile.cityId,
       cityLabel: profile.cityLabel,
+      techDomainInterests: profile.techDomainInterests,
+      techHandsOnInterests: profile.techHandsOnInterests,
+      techContextInterests: profile.techContextInterests,
     },
     matrixExcerpt: buildMatrixExcerpt(matrix, profile.disciplineId),
   };
