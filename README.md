@@ -47,6 +47,12 @@ Bu yolculukta ogrendigim en onemli sey, dogru yonlendirme oldugunda farkli bolum
 
 Yayin Linki: **https://pusula-app-two.vercel.app**
 
+## Yol haritasi (sonraki guncellemeler)
+
+Mevcut sürüm, tanımlı ürün ve teslimat hedeflerini karşılayan, üretim ortamında çalışan bir temel sunmaktadır. Sonraki güncellemelerde, planlanan **V3 kapsamındaki** geliştirmeleri önceliklendirerek depoya taşımayı hedefliyorum; böylece otomasyonun ölçeklenebilirliği, fırsat keşfi deneyimi, önceliklendirme ve veri güncelliği gibi başlıklarda sürdürülebilir ilerleme sağlanacaktır.
+
+Kapsam ve teknik iş kalemleri `tasks.md` dosyasındaki **«V3 (Planlananlar)»** bölümünde ayrıntılı olarak izlenebilir.
+
 ## Ekran Goruntuleri
 
 ### Landing
