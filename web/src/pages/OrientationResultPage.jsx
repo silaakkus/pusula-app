@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight, Bot, Download, Grid3x3, Home, Loader2, Sparkles } from 'lucide-react';
+import { ArrowLeft, Bot, Download, Grid3x3, Home, Loader2, Sparkles } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
 import { OrientationCardCapture } from '../components/OrientationCardCapture.jsx';
@@ -14,15 +14,6 @@ function splitOrientationStepLine(s) {
   if (!m) return { lead: s, detail: null };
   return { lead: m[1].trim(), detail: m[2].trim() };
 }
-
-const ARCHETYPE_LABELS = {
-  frontend: 'Web arayüzü',
-  backend: 'Sunucu ve veri tarafı',
-  'veri-bilimi': 'Veri ve grafikler',
-  'yapay-zeka': 'Yapay zekâ ve akıllı sistemler',
-  devops: 'Yayın ve altyapı',
-  'urun-ux': 'Ürün ve kullanıcı deneyimi',
-};
 
 export function OrientationResultPage({ result, onBack, onHome }) {
   const cardRef = useRef(null);
