@@ -52,6 +52,7 @@ Asagidaki goruntuler README'ye eklenecek sekilde proje icinde tutulabilir:
 
 - Landing ekrani
 - Profil akisi
+- Yönelim testi ekrani
 - Sonuc/oneri ekrani
 - Kariyer rota karti
 
