@@ -35,10 +35,12 @@ export function clearProfileDraft() {
 export function hasProfileDraft() {
   const d = loadProfileDraft();
   if (!d) return false;
+  if (d.facultyId && String(d.facultyId).trim()) return true;
+  if (d.departmentId && String(d.departmentId).trim()) return true;
   if (d.disciplineId && String(d.disciplineId).trim()) return true;
-  if (Array.isArray(d.interests) && d.interests.length > 0) return true;
-  if (Array.isArray(d.strengths) && d.strengths.length > 0) return true;
-  if (d.interestSkip || d.strengthSkip) return true;
+  if (Array.isArray(d.deptInterests) && d.deptInterests.length > 0) return true;
+  if (Array.isArray(d.joyActivities) && d.joyActivities.length > 0) return true;
+  if (d.deptInterestSkip || d.joySkip) return true;
   if (d.goalId && d.goalId !== 'explore') return true;
   if (d.cityId && d.cityId !== 'all') return true;
   if (d.learningStyle && d.learningStyle !== 'mixed') return true;

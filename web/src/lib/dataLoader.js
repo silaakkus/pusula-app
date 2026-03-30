@@ -194,6 +194,40 @@ export function findEmployersInMatrix(matrix, disciplineId, role) {
   return null;
 }
 
+function tagOverlapCount(a, b) {
+  const set = new Set((b ?? []).map((x) => String(x).trim().toLowerCase()).filter(Boolean));
+  let n = 0;
+  for (const t of a ?? []) {
+    if (set.has(String(t).trim().toLowerCase())) n += 1;
+  }
+  return n;
+}
+
+function bestRoleMatchByTags(row, role) {
+  if (!row?.roleMatches?.length) return null;
+  const roleTags = Array.isArray(role?.tags) ? role.tags : [];
+  if (!roleTags.length) return null;
+  let best = null;
+  let bestScore = 0;
+  for (const rm of row.roleMatches) {
+    const score = tagOverlapCount(rm.tags, roleTags);
+    if (score > bestScore) {
+      best = rm;
+      bestScore = score;
+    }
+  }
+  return bestScore > 0 ? best : null;
+}
+
+export function findEmployersInMatrixByTags(matrix, disciplineId, role) {
+  if (!Array.isArray(matrix) || !disciplineId || !role) return null;
+  const row = getDisciplineById(matrix, disciplineId);
+  if (!row?.roleMatches?.length) return null;
+  const rm = bestRoleMatchByTags(row, role);
+  if (rm?.employersTurkey && validateEmployersTurkey(rm.employersTurkey)) return rm.employersTurkey;
+  return null;
+}
+
 export function findInternshipProgramsInMatrix(matrix, disciplineId, role) {
   if (!Array.isArray(matrix) || !disciplineId || !role) return null;
   const row = getDisciplineById(matrix, disciplineId);
@@ -208,5 +242,14 @@ export function findInternshipProgramsInMatrix(matrix, disciplineId, role) {
     const rm = row.roleMatches.find((x) => (x.roleName ?? '').trim().toLowerCase() === name);
     if (rm?.internshipPrograms && validateInternshipPrograms(rm.internshipPrograms)) return rm.internshipPrograms;
   }
+  return null;
+}
+
+export function findInternshipProgramsInMatrixByTags(matrix, disciplineId, role) {
+  if (!Array.isArray(matrix) || !disciplineId || !role) return null;
+  const row = getDisciplineById(matrix, disciplineId);
+  if (!row?.roleMatches?.length) return null;
+  const rm = bestRoleMatchByTags(row, role);
+  if (rm?.internshipPrograms && validateInternshipPrograms(rm.internshipPrograms)) return rm.internshipPrograms;
   return null;
 }

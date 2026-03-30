@@ -20,7 +20,9 @@ import {
   DEFAULT_SALARY_RANGE,
   findDayInLifeInMatrix,
   findEmployersInMatrix,
+  findEmployersInMatrixByTags,
   findInternshipProgramsInMatrix,
+  findInternshipProgramsInMatrixByTags,
   findSalaryRangeInMatrix,
   validateDayInLife,
   validateSalaryRange,
@@ -111,9 +113,12 @@ function employerNameKey(name) {
 
 /** Matris rehberi + Groq employersTurkey; aynı isim tekil. */
 function resolveEmployers(matrix, profile, role) {
-  const fromMatrix = normalizeEmployersList(findEmployersInMatrix(matrix, profile?.disciplineId, role) ?? [], 8).map(
-    (e) => ({ ...e, _source: 'matrix' }),
-  );
+  const matrixDirect = findEmployersInMatrix(matrix, profile?.disciplineId, role) ?? [];
+  const matrixByTags = findEmployersInMatrixByTags(matrix, profile?.disciplineId, role) ?? [];
+  const fromMatrix = normalizeEmployersList([...matrixDirect, ...matrixByTags], 10).map((e) => ({
+    ...e,
+    _source: 'matrix',
+  }));
   const fromLlm = normalizeEmployersList(role?.employersTurkey, 6).map((e) => ({ ...e, _source: 'llm' }));
   const seen = new Set();
   const out = [];
@@ -133,10 +138,12 @@ function resolveInternships(matrix, profile, role) {
     ...p,
     _source: 'llm',
   }));
-  const fromMatrix = normalizeInternshipPrograms(
-    findInternshipProgramsInMatrix(matrix, profile?.disciplineId, role) ?? [],
-    6,
-  ).map((p) => ({ ...p, _source: 'matrix' }));
+  const matrixDirect = findInternshipProgramsInMatrix(matrix, profile?.disciplineId, role) ?? [];
+  const matrixByTags = findInternshipProgramsInMatrixByTags(matrix, profile?.disciplineId, role) ?? [];
+  const fromMatrix = normalizeInternshipPrograms([...matrixDirect, ...matrixByTags], 8).map((p) => ({
+    ...p,
+    _source: 'matrix',
+  }));
   const seen = new Set();
   const out = [];
   for (const p of fromLlm) {
@@ -269,7 +276,9 @@ function structuredSourceType(matrix, profile, role, analysisSource, kind) {
   }
   if (kind === 'employers') {
     const llmN = normalizeEmployersList(role?.employersTurkey, 6).length;
-    const matN = findEmployersInMatrix(matrix, profile?.disciplineId, role)?.length ?? 0;
+    const matDirectN = findEmployersInMatrix(matrix, profile?.disciplineId, role)?.length ?? 0;
+    const matTagN = findEmployersInMatrixByTags(matrix, profile?.disciplineId, role)?.length ?? 0;
+    const matN = Math.max(matDirectN, matTagN);
     if (llmN && matN) return 'mixed-employers';
     if (llmN) return 'llm';
     if (matN) return 'matrix';
@@ -278,7 +287,8 @@ function structuredSourceType(matrix, profile, role, analysisSource, kind) {
   if (kind === 'internships') {
     const llmN = normalizeInternshipProgramsWithLlmFallback(role?.internshipPrograms, 6).length;
     const matRaw = findInternshipProgramsInMatrix(matrix, profile?.disciplineId, role);
-    const matN = Array.isArray(matRaw) ? matRaw.length : 0;
+    const matTagRaw = findInternshipProgramsInMatrixByTags(matrix, profile?.disciplineId, role);
+    const matN = Math.max(Array.isArray(matRaw) ? matRaw.length : 0, Array.isArray(matTagRaw) ? matTagRaw.length : 0);
     if (llmN && matN) return 'mixed-internships';
     if (llmN) return 'llm';
     if (matN) return 'matrix';

@@ -22,6 +22,33 @@ function tagOverlapScore(oppTags, roleTags) {
   return n;
 }
 
+const TAG_PRIORITY_OPPORTUNITY_IDS = {
+  data: ['upschool-ai-literacy', 'upschool-future-talent', 'patika-ai-track', 'patika-dev'],
+  analytics: ['upschool-future-talent', 'patika-ai-track', 'academy-patika-upskill'],
+  'ai-ethics': ['upschool-ai-literacy', 'wtm-turkey', 'gdsc'],
+  pm: ['upschool-birgibi', 'yga-young-leaders', 'teknolojide-kadin-dernegi'],
+  ux: ['sisterslab', 'upschool-birgibi', 'wtm-turkey'],
+  hrtech: ['upschool-birgibi', 'teknolojide-kadin-dernegi', 'sisterslab-quest'],
+  fintech: ['academy-patika-upskill', 'upschool-future-talent', 'kariyer-net-staj'],
+  biotech: ['patika-dev', 'kariyer-net-staj', 'sisterslab'],
+  sustainability: ['yga-ignite', 'yga-young-leaders', 'teknolojide-kadin-dernegi'],
+  gamedev: ['tr-btk-hackathon', 'gdsc', 'open-source-tr'],
+  edtech: ['sisterslab', 'yga-young-leaders', 'teknolojide-kadin-dernegi'],
+  'marketing-analytics': ['academy-patika-upskill', 'upschool-birgibi', 'yga-young-leaders'],
+  research: ['gdsc', 'wtm-turkey', 'open-source-tr'],
+};
+
+function preferredOpportunityIdsForRole(roleTags) {
+  const ids = [];
+  for (const tag of roleTags) {
+    const list = TAG_PRIORITY_OPPORTUNITY_IDS[String(tag).toLowerCase()] ?? [];
+    for (const id of list) {
+      if (!ids.includes(id)) ids.push(id);
+    }
+  }
+  return ids;
+}
+
 /**
  * Rol için en az `minCount` fırsat; önce etiket eşleşmesine göre sıralanır, eksikse genel programlarla tamamlanır.
  */
@@ -29,9 +56,14 @@ export function opportunitiesForRole(role, allOpportunities, minCount = 3, userC
   const roleTags = role.tags ?? [];
   const cityPool = allOpportunities.filter((o) => opportunityMatchesCity(o, userCityId));
   const pool = cityPool.length >= minCount ? cityPool : allOpportunities;
+  const preferredIds = preferredOpportunityIdsForRole(roleTags);
 
   const scored = pool
-    .map((o) => ({ o, score: tagOverlapScore(o.targetTags, roleTags) }))
+    .map((o) => {
+      const overlap = tagOverlapScore(o.targetTags, roleTags);
+      const boost = preferredIds.includes(o.opportunityId) ? 2 : 0;
+      return { o, score: overlap + boost, overlap };
+    })
     .sort((a, b) => b.score - a.score);
 
   const picked = [];
@@ -46,15 +78,23 @@ export function opportunitiesForRole(role, allOpportunities, minCount = 3, userC
     }
   }
 
-  for (const { o } of scored) {
+  for (const pid of preferredIds) {
+    if (picked.length >= minCount + 1) break;
+    const row = pool.find((o) => o.opportunityId === pid);
+    if (!row || seen.has(row.opportunityId)) continue;
+    picked.push(row);
+    seen.add(row.opportunityId);
+  }
+
+  for (const { o, overlap } of scored) {
     if (picked.length >= minCount) break;
-    if (!seen.has(o.opportunityId)) {
+    if (!seen.has(o.opportunityId) && (overlap > 0 || picked.length < 2)) {
       picked.push(o);
       seen.add(o.opportunityId);
     }
   }
 
-  return picked.slice(0, Math.max(minCount, picked.length));
+  return picked.slice(0, Math.max(minCount, 5));
 }
 
 /**

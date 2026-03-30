@@ -565,10 +565,16 @@ export async function runCareerAnalysis({ apiKey, profile, matrix }) {
 
   const userPayload = {
     profile: {
+      facultyId: profile.facultyId,
+      facultyLabel: profile.facultyLabel,
+      departmentId: profile.departmentId,
+      departmentLabel: profile.departmentLabel,
       disciplineId: profile.disciplineId,
       disciplineLabel: profile.disciplineLabel,
       interests: profile.interests,
       strengths: profile.strengths,
+      deptInterests: profile.deptInterests,
+      joyActivities: profile.joyActivities,
       learningStyle: profile.learningStyle,
       goal: profile.goal,
       disciplineFocus: profile.disciplineFocus,

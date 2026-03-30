@@ -6,16 +6,19 @@ import { Card } from '../components/ui/Card';
 import { flowPreviousStepButtonClass } from '../lib/flowPreviousStepButton.js';
 import { clearProfileDraft, loadProfileDraft, saveProfileDraft } from '../lib/profileDraft.js';
 import { getLlmBrandLabel } from '../lib/llmConfig.js';
+import { HACETTEPE_FACULTIES, getDepartmentById } from '../lib/hacettepeDepartments.js';
 
 function readProfileDraftInitial() {
   const d = loadProfileDraft();
   if (!d || typeof d !== 'object') {
     return {
+      facultyId: '',
+      departmentId: '',
       disciplineId: '',
-      interests: [],
-      strengths: [],
-      interestSkip: false,
-      strengthSkip: false,
+      deptInterests: [],
+      joyActivities: [],
+      deptInterestSkip: false,
+      joySkip: false,
       learningStyle: 'mixed',
       goalId: 'explore',
       goalDetail: '',
@@ -25,11 +28,13 @@ function readProfileDraftInitial() {
     };
   }
   return {
+    facultyId: d.facultyId ?? '',
+    departmentId: d.departmentId ?? '',
     disciplineId: d.disciplineId ?? '',
-    interests: Array.isArray(d.interests) ? d.interests : [],
-    strengths: Array.isArray(d.strengths) ? d.strengths : [],
-    interestSkip: Boolean(d.interestSkip),
-    strengthSkip: Boolean(d.strengthSkip),
+    deptInterests: Array.isArray(d.deptInterests) ? d.deptInterests : [],
+    joyActivities: Array.isArray(d.joyActivities) ? d.joyActivities : [],
+    deptInterestSkip: Boolean(d.deptInterestSkip),
+    joySkip: Boolean(d.joySkip),
     learningStyle: d.learningStyle ?? 'mixed',
     goalId: d.goalId ?? 'explore',
     goalDetail: typeof d.goalDetail === 'string' ? d.goalDetail : '',
@@ -38,36 +43,6 @@ function readProfileDraftInitial() {
     cityId: d.cityId ?? 'all',
   };
 }
-
-const INTEREST_OPTIONS = [
-  'Veri ve analiz',
-  'Tasarım ve kullanıcı deneyimi',
-  'Ürün ve strateji',
-  'Araştırma ve yazım',
-  'Sosyal etki ve sürdürülebilirlik',
-  'Oyun ve etkileşim',
-  'Yapay zeka araçlarıyla üretim',
-  'Siber güvenlik ve gizlilik',
-  'İş geliştirme ve girişimcilik',
-  'Sağlık / biyoteknoloji uygulamaları',
-  'Eğitim teknolojileri',
-  'Topluluk yönetimi',
-];
-
-const STRENGTH_OPTIONS = [
-  'Analitik düşünme',
-  'Empati ve iletişim',
-  'Sunum ve ikna',
-  'Öğrenmeye açıklık',
-  'Detay ve düzen',
-  'Yaratıcılık',
-  'Problem çözme',
-  'Planlama ve takip',
-  'Takım çalışması',
-  'Araştırma merakı',
-  'Sorumluluk alma',
-  'Hızlı uyum sağlama',
-];
 
 const LEARNING_OPTIONS = [
   { id: 'project', label: 'Kendi kendime küçük projeler yaparak' },
@@ -91,39 +66,6 @@ const CITY_OPTIONS = [
   { id: 'other', label: 'Diğer şehir' },
 ];
 
-const DISCIPLINE_FOCUS_OPTIONS = {
-  'quant-analytics': [
-    'Veri analizi ve dashboard',
-    'Makine öğrenmesi temelleri',
-    'Risk / finansal modelleme',
-    'İş zekası ve karar desteği',
-  ],
-  'human-social': [
-    'UX araştırması ve kullanıcı görüşmeleri',
-    'İçerik stratejisi ve dijital anlatı',
-    'AI etik ve güvenilirlik',
-    'People analytics / İK analitiği',
-  ],
-  'life-sciences': [
-    'Biyoinformatik ve hesaplamalı analiz',
-    'Sağlık ürünleri ve dijital sağlık',
-    'Sürdürülebilirlik ve çevre verisi',
-    'Araştırma odaklı veri yorumlama',
-  ],
-  'business-econ': [
-    'Ürün yönetimi ve ürün stratejisi',
-    'İş analizi ve süreç iyileştirme',
-    'Büyüme / dijital pazarlama analitiği',
-    'Operasyon otomasyonu (no-code dahil)',
-  ],
-  'education-arts': [
-    'EdTech içerik ve öğrenme tasarımı',
-    'UI / görsel tasarım',
-    'Oyun topluluğu / içerik yönetimi',
-    'Yaratıcı kod ve etkileşimli medya',
-  ],
-};
-
 const AVAILABILITY_OPTIONS = [
   { id: 'low', label: 'Haftada 2-4 saat (çok yoğun)' },
   { id: 'medium', label: 'Haftada 5-8 saat (dengeli)' },
@@ -142,85 +84,105 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
   const draftIni = useMemo(() => readProfileDraftInitial(), []);
   const aiBrandLabel = getLlmBrandLabel();
 
+  const [facultyId, setFacultyId] = useState(draftIni.facultyId);
+  const [departmentId, setDepartmentId] = useState(draftIni.departmentId);
   const [disciplineId, setDisciplineId] = useState(draftIni.disciplineId);
-  const [interests, setInterests] = useState(draftIni.interests);
-  const [strengths, setStrengths] = useState(draftIni.strengths);
-  const [interestSkip, setInterestSkip] = useState(draftIni.interestSkip);
-  const [strengthSkip, setStrengthSkip] = useState(draftIni.strengthSkip);
+  const [deptInterests, setDeptInterests] = useState(draftIni.deptInterests);
+  const [joyActivities, setJoyActivities] = useState(draftIni.joyActivities);
+  const [deptInterestSkip, setDeptInterestSkip] = useState(draftIni.deptInterestSkip);
+  const [joySkip, setJoySkip] = useState(draftIni.joySkip);
   const [learningStyle, setLearningStyle] = useState(draftIni.learningStyle);
   const [goalId, setGoalId] = useState(draftIni.goalId);
   const [goalDetail, setGoalDetail] = useState(draftIni.goalDetail);
-  const [disciplineFocus, setDisciplineFocus] = useState(draftIni.disciplineFocus);
   const [availability, setAvailability] = useState(draftIni.availability);
   const [cityId, setCityId] = useState(draftIni.cityId);
   const [errors, setErrors] = useState({});
-  const focusOptions = useMemo(() => DISCIPLINE_FOCUS_OPTIONS[disciplineId] ?? [], [disciplineId]);
+  const selectedFaculty = useMemo(() => HACETTEPE_FACULTIES.find((f) => f.id === facultyId) ?? null, [facultyId]);
+  const selectedDepartment = useMemo(() => getDepartmentById(facultyId, departmentId), [facultyId, departmentId]);
+  const deptInterestOptions = selectedDepartment?.focusInterests ?? [];
+  const joyOptions = selectedDepartment?.joyActivities ?? [];
 
   useEffect(() => {
-    if (!disciplineFocus) return;
-    if (focusOptions.includes(disciplineFocus)) return;
-    setDisciplineFocus('');
-  }, [disciplineFocus, focusOptions]);
+    if (!selectedFaculty) {
+      if (departmentId) setDepartmentId('');
+      return;
+    }
+    const valid = selectedFaculty.departments.some((d) => d.id === departmentId);
+    if (!valid && departmentId) setDepartmentId('');
+  }, [selectedFaculty, departmentId]);
+
+  useEffect(() => {
+    setDisciplineId(selectedDepartment?.disciplineId ?? '');
+  }, [selectedDepartment]);
+
+  useEffect(() => {
+    setDeptInterests((prev) => prev.filter((x) => deptInterestOptions.includes(x)));
+    setJoyActivities((prev) => prev.filter((x) => joyOptions.includes(x)));
+  }, [deptInterestOptions, joyOptions]);
 
   useEffect(() => {
     const row = disciplines.find((d) => d.disciplineId === disciplineId);
     const t = window.setTimeout(() => {
       saveProfileDraft({
+        facultyId,
+        facultyLabel: selectedFaculty?.name ?? '',
+        departmentId,
+        departmentLabel: selectedDepartment?.name ?? '',
         disciplineId,
         disciplineLabel: row?.disciplineName ?? '',
-        interests,
-        strengths,
-        interestSkip,
-        strengthSkip,
+        deptInterests,
+        joyActivities,
+        deptInterestSkip,
+        joySkip,
         learningStyle,
         goalId,
         goalDetail,
-        disciplineFocus,
         availability,
         cityId,
       });
     }, 450);
     return () => window.clearTimeout(t);
   }, [
+    facultyId,
+    selectedFaculty,
+    departmentId,
+    selectedDepartment,
     disciplines,
     disciplineId,
-    interests,
-    strengths,
-    interestSkip,
-    strengthSkip,
+    deptInterests,
+    joyActivities,
+    deptInterestSkip,
+    joySkip,
     learningStyle,
     goalId,
     goalDetail,
-    disciplineFocus,
     availability,
     cityId,
   ]);
 
-  const handleInterestSkip = (checked) => {
-    setInterestSkip(checked);
-    if (checked) setInterests([]);
+  const handleDeptInterestSkip = (checked) => {
+    setDeptInterestSkip(checked);
+    if (checked) setDeptInterests([]);
   };
 
-  const handleStrengthSkip = (checked) => {
-    setStrengthSkip(checked);
-    if (checked) setStrengths([]);
+  const handleJoySkip = (checked) => {
+    setJoySkip(checked);
+    if (checked) setJoyActivities([]);
   };
 
   const validate = () => {
     const next = {};
-    if (!disciplineId) next.disciplineId = 'Lütfen bölüm/disiplin grubunu seç.';
+    if (!facultyId) next.facultyId = 'Lütfen fakülte seç.';
+    if (!departmentId) next.departmentId = 'Lütfen bölüm seç.';
 
-    const effInterests = interestSkip ? [PREFER_NOT] : interests;
-    const effStrengths = strengthSkip ? [PREFER_NOT] : strengths;
+    const effDeptInterests = deptInterestSkip ? [PREFER_NOT] : deptInterests;
+    const effJoyActivities = joySkip ? [PREFER_NOT] : joyActivities;
 
-    if (!interestSkip && effInterests.length === 0) {
-      next.interests = 'En az bir ilgi seç veya “Belirtmek istemiyorum” kutusunu işaretle.';
+    if (!deptInterestSkip && effDeptInterests.length === 0) {
+      next.deptInterests = 'En az bir bölüm-ilgisi seç veya “Belirtmek istemiyorum” kutusunu işaretle.';
     }
-    if (!strengthSkip && effStrengths.length === 0) {
-      next.strengths = 'En az bir güçlü yön seç veya “Belirtmek istemiyorum” kutusunu işaretle.';
-    }
-    if (disciplineId && !disciplineFocus) {
-      next.disciplineFocus = 'Bölümüne yakın bir odak alanı seç.';
+    if (!joySkip && effJoyActivities.length === 0) {
+      next.joyActivities = 'En az bir keyif aldığın aktivite seç veya “Belirtmek istemiyorum” kutusunu işaretle.';
     }
 
     setErrors(next);
@@ -232,20 +194,26 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
 
     clearProfileDraft();
     const row = disciplines.find((d) => d.disciplineId === disciplineId);
-    const effInterests = interestSkip ? [PREFER_NOT] : interests;
-    const effStrengths = strengthSkip ? [PREFER_NOT] : strengths;
+    const effDeptInterests = deptInterestSkip ? [PREFER_NOT] : deptInterests;
+    const effJoyActivities = joySkip ? [PREFER_NOT] : joyActivities;
     const goalLabel = GOAL_OPTIONS.find((g) => g.id === goalId)?.label ?? goalId;
     const availabilityLabel = AVAILABILITY_OPTIONS.find((a) => a.id === availability)?.label ?? availability;
     const cityLabel = CITY_OPTIONS.find((c) => c.id === cityId)?.label ?? cityId;
 
     onSubmit({
+      facultyId,
+      facultyLabel: selectedFaculty?.name ?? '',
+      departmentId,
+      departmentLabel: selectedDepartment?.name ?? '',
       disciplineId,
       disciplineLabel: row?.disciplineName ?? '',
-      interests: effInterests,
-      strengths: effStrengths,
+      interests: effDeptInterests,
+      strengths: effJoyActivities,
+      deptInterests: effDeptInterests,
+      joyActivities: effJoyActivities,
       learningStyle: LEARNING_OPTIONS.find((l) => l.id === learningStyle)?.label ?? learningStyle,
       goal: goalDetail.trim() ? `${goalLabel}: ${goalDetail.trim()}` : goalLabel,
-      disciplineFocus,
+      disciplineFocus: effDeptInterests[0] ?? '',
       availability,
       availabilityLabel,
       cityId,
@@ -262,46 +230,76 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
             Seni tanıyalım
           </h2>
           <p className="mb-8 text-sm leading-relaxed text-slate-600">
-            Cevapların {aiBrandLabel} analizi ve yerel fırsat önerileri için kullanılır (şehir seçimi fırsat
-            listesini öne çıkarır). İstemediğin alanlarda “Belirtmek istemiyorum” seçeneğini kullanabilirsin.
+            Cevapların {aiBrandLabel} analizi ve yerel fırsat önerileri için kullanılır. Fakülte → bölüm seçimi ve
+            bölümüne özel sorularla daha tutarlı rol eşleşmesi üretmeyi hedefliyoruz.
           </p>
 
           <div className="space-y-8">
             <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-800">1. Bölüm / disiplin grubu</label>
+              <label className="mb-2 block text-sm font-semibold text-slate-800">1. Fakülte (Hacettepe)</label>
               <select
-                value={disciplineId}
-                onChange={(e) => setDisciplineId(e.target.value)}
+                value={facultyId}
+                onChange={(e) => setFacultyId(e.target.value)}
                 className="w-full rounded-2xl bg-white/80 px-4 py-3 text-base text-slate-900 ring-1 ring-black/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/40"
               >
                 <option value="">Seçiniz…</option>
-                {disciplines.map((d) => (
-                  <option key={d.disciplineId} value={d.disciplineId}>
-                    {d.disciplineName}
+                {HACETTEPE_FACULTIES.map((f) => (
+                  <option key={f.id} value={f.id}>
+                    {f.name}
                   </option>
                 ))}
               </select>
-              {errors.disciplineId && <p className="mt-2 text-sm text-red-600">{errors.disciplineId}</p>}
+              {errors.facultyId && <p className="mt-2 text-sm text-red-600">{errors.facultyId}</p>}
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-800">2. İlgi alanları</label>
+              <label className="mb-2 block text-sm font-semibold text-slate-800">2. Bölüm</label>
+              <select
+                value={departmentId}
+                onChange={(e) => setDepartmentId(e.target.value)}
+                disabled={!selectedFaculty}
+                className="w-full rounded-2xl bg-white/80 px-4 py-3 text-base text-slate-900 ring-1 ring-black/5 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/40"
+              >
+                <option value="">{selectedFaculty ? 'Seçiniz…' : 'Önce fakülte seçiniz…'}</option>
+                {(selectedFaculty?.departments ?? []).map((d) => (
+                  <option key={d.id} value={d.id}>
+                    {d.name}
+                  </option>
+                ))}
+              </select>
+              {errors.departmentId && <p className="mt-2 text-sm text-red-600">{errors.departmentId}</p>}
+              {disciplineId ? (
+                <p className="mt-2 text-xs text-slate-500">
+                  Eşleşen disiplin grubu:{' '}
+                  <span className="font-semibold text-slate-700">
+                    {disciplines.find((d) => d.disciplineId === disciplineId)?.disciplineName ?? disciplineId}
+                  </span>
+                </p>
+              ) : null}
+            </div>
+
+            <div>
+              <label className="mb-2 block text-sm font-semibold text-slate-800">3. Bölüm bazlı ilgi alanları</label>
               <label className="mb-3 flex cursor-pointer items-center gap-2 text-sm text-slate-600">
-                <input type="checkbox" checked={interestSkip} onChange={(e) => handleInterestSkip(e.target.checked)} />
+                <input
+                  type="checkbox"
+                  checked={deptInterestSkip}
+                  onChange={(e) => handleDeptInterestSkip(e.target.checked)}
+                />
                 Belirtmek istemiyorum
               </label>
               <div className="flex flex-wrap gap-2">
-                {INTEREST_OPTIONS.map((opt) => (
+                {deptInterestOptions.map((opt) => (
                   <button
                     key={opt}
                     type="button"
-                    disabled={interestSkip}
-                    onClick={() => setInterests((prev) => toggleInList(prev, opt))}
+                    disabled={deptInterestSkip || !selectedDepartment}
+                    onClick={() => setDeptInterests((prev) => toggleInList(prev, opt))}
                     className={[
                       'rounded-full border px-3 py-1.5 text-sm font-medium transition',
-                      interestSkip
+                      deptInterestSkip || !selectedDepartment
                         ? 'cursor-not-allowed opacity-40'
-                        : interests.includes(opt)
+                        : deptInterests.includes(opt)
                           ? 'border-indigo-600 bg-indigo-600 text-white'
                           : 'border-slate-200 bg-white/80 text-slate-700 hover:border-indigo-300',
                     ].join(' ')}
@@ -310,27 +308,30 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
                   </button>
                 ))}
               </div>
-              {errors.interests && <p className="mt-2 text-sm text-red-600">{errors.interests}</p>}
+              {!selectedDepartment ? <p className="mt-2 text-xs text-slate-500">Önce bölüm seçiniz.</p> : null}
+              {errors.deptInterests && <p className="mt-2 text-sm text-red-600">{errors.deptInterests}</p>}
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-800">3. Güçlü yönler</label>
+              <label className="mb-2 block text-sm font-semibold text-slate-800">
+                4. Bölümünde yapmaktan keyif aldığın şeyler
+              </label>
               <label className="mb-3 flex cursor-pointer items-center gap-2 text-sm text-slate-600">
-                <input type="checkbox" checked={strengthSkip} onChange={(e) => handleStrengthSkip(e.target.checked)} />
+                <input type="checkbox" checked={joySkip} onChange={(e) => handleJoySkip(e.target.checked)} />
                 Belirtmek istemiyorum
               </label>
               <div className="flex flex-wrap gap-2">
-                {STRENGTH_OPTIONS.map((opt) => (
+                {joyOptions.map((opt) => (
                   <button
                     key={opt}
                     type="button"
-                    disabled={strengthSkip}
-                    onClick={() => setStrengths((prev) => toggleInList(prev, opt))}
+                    disabled={joySkip || !selectedDepartment}
+                    onClick={() => setJoyActivities((prev) => toggleInList(prev, opt))}
                     className={[
                       'rounded-full border px-3 py-1.5 text-sm font-medium transition',
-                      strengthSkip
+                      joySkip || !selectedDepartment
                         ? 'cursor-not-allowed opacity-40'
-                        : strengths.includes(opt)
+                        : joyActivities.includes(opt)
                           ? 'border-indigo-600 bg-indigo-600 text-white'
                           : 'border-slate-200 bg-white/80 text-slate-700 hover:border-indigo-300',
                     ].join(' ')}
@@ -339,11 +340,12 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
                   </button>
                 ))}
               </div>
-              {errors.strengths && <p className="mt-2 text-sm text-red-600">{errors.strengths}</p>}
+              {!selectedDepartment ? <p className="mt-2 text-xs text-slate-500">Önce bölüm seçiniz.</p> : null}
+              {errors.joyActivities && <p className="mt-2 text-sm text-red-600">{errors.joyActivities}</p>}
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-800">4. Öğrenme stili</label>
+              <label className="mb-2 block text-sm font-semibold text-slate-800">5. Öğrenme stili</label>
               <div className="space-y-2">
                 {LEARNING_OPTIONS.map((opt) => (
                   <label key={opt.id} className="flex cursor-pointer items-center gap-2 text-sm text-slate-700">
@@ -360,7 +362,7 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-800">5. Hedef</label>
+              <label className="mb-2 block text-sm font-semibold text-slate-800">6. Hedef</label>
               <select
                 value={goalId}
                 onChange={(e) => setGoalId(e.target.value)}
@@ -383,7 +385,7 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-800">6. Haftalık öğrenme zamanı</label>
+              <label className="mb-2 block text-sm font-semibold text-slate-800">7. Haftalık öğrenme zamanı</label>
               <div className="space-y-2">
                 {AVAILABILITY_OPTIONS.map((opt) => (
                   <label key={opt.id} className="flex cursor-pointer items-center gap-2 text-sm text-slate-700">
@@ -397,27 +399,6 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
                   </label>
                 ))}
               </div>
-            </div>
-
-            <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-800">7. Bölümüne yakın odak alanı</label>
-              <p className="mb-3 text-xs text-slate-500">
-                Seçimine göre analizde senin bölümüne yakın rol kombinasyonlarını daha güçlü ağırlıklandırıyoruz.
-              </p>
-              <select
-                value={disciplineFocus}
-                onChange={(e) => setDisciplineFocus(e.target.value)}
-                disabled={!disciplineId}
-                className="w-full rounded-2xl bg-white/80 px-4 py-3 text-base text-slate-900 ring-1 ring-black/5 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/40"
-              >
-                <option value="">{disciplineId ? 'Bir odak seçiniz…' : 'Önce bölüm/disiplin grubu seçiniz…'}</option>
-                {focusOptions.map((opt) => (
-                  <option key={opt} value={opt}>
-                    {opt}
-                  </option>
-                ))}
-              </select>
-              {errors.disciplineFocus && <p className="mt-2 text-sm text-red-600">{errors.disciplineFocus}</p>}
             </div>
 
             <div>
