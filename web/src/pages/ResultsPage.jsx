@@ -49,6 +49,62 @@ function inferSalaryReferencePeriod(text) {
   return '2025–2026 (tahmine dayalı)';
 }
 
+function parseSalaryBand(band) {
+  const nums = String(band ?? '')
+    .replace(/\./g, '')
+    .replace(/,/g, '.')
+    .match(/\d+(?:\.\d+)?/g);
+  if (!nums || nums.length < 2) return null;
+  const a = Number(nums[0]);
+  const b = Number(nums[1]);
+  if (!Number.isFinite(a) || !Number.isFinite(b)) return null;
+  return [Math.min(a, b), Math.max(a, b)];
+}
+
+function formatSalaryBand(min, max, template = 'TL') {
+  const nf = new Intl.NumberFormat('tr-TR', { maximumFractionDigits: 0 });
+  const unit = /₺/.test(template) ? '₺' : 'TL';
+  return `${nf.format(Math.round(min))} - ${nf.format(Math.round(max))} ${unit}`;
+}
+
+function calibrateLlmSalaryAgainstMatrix(llm, matrix) {
+  const lj = parseSalaryBand(llm?.junior);
+  const lm = parseSalaryBand(llm?.mid);
+  const ls = parseSalaryBand(llm?.senior);
+  const mj = parseSalaryBand(matrix?.junior);
+  const mm = parseSalaryBand(matrix?.mid);
+  const ms = parseSalaryBand(matrix?.senior);
+  if (!lj || !lm || !ls || !mj || !mm || !ms) return llm;
+
+  const llmMidAvg = (lm[0] + lm[1]) / 2;
+  const matrixMidAvg = (mm[0] + mm[1]) / 2;
+  if (!llmMidAvg || !matrixMidAvg) return llm;
+
+  // Groq bandı matris rehberinden aşırı saparsa (genelde düşük kalıyor), normalize et.
+  const ratio = llmMidAvg / matrixMidAvg;
+  if (ratio >= 0.72 && ratio <= 1.42) return llm;
+
+  const blend = (a, b) => a * 0.35 + b * 0.65;
+  const fix = (pairLlm, pairMat, floorPair) => {
+    const min = Math.max(Math.round(blend(pairLlm[0], pairMat[0])), floorPair?.[0] ?? 0);
+    const max = Math.max(Math.round(blend(pairLlm[1], pairMat[1])), min + 1500, floorPair?.[1] ?? 0);
+    return [min, max];
+  };
+
+  const j = fix(lj, mj);
+  const m = fix(lm, mm, j);
+  const s = fix(ls, ms, m);
+
+  return {
+    ...llm,
+    junior: formatSalaryBand(j[0], j[1], llm.junior || matrix.junior),
+    mid: formatSalaryBand(m[0], m[1], llm.mid || matrix.mid),
+    senior: formatSalaryBand(s[0], s[1], llm.senior || matrix.senior),
+    methodology:
+      'Groq tahmini, matris rehberindeki Türkiye bantlarıyla kalibre edilmiştir; şehir, şirket ve deneyime göre değişebilir. Bu değerler yaklaşık brüt aylık aralıklardır ve kesin teklif değildir.',
+  };
+}
+
 function getRoleTitlesForWebhook(roles) {
   return (roles ?? [])
     .map((r) => {
@@ -91,8 +147,10 @@ function resolveDayInLife(matrix, profile, role) {
 /** LLM (Groq/Gemini) maaş tahmini önce, ardından matris; ikisi de varsa UI’da yan yana. */
 function resolveSalaryBlocks(matrix, profile, role) {
   const blocks = [];
+  const fromMatrix = findSalaryRangeInMatrix(matrix, profile?.disciplineId, role);
+  const matrixValid = fromMatrix && validateSalaryRange(fromMatrix);
   if (validateSalaryRange(role?.salaryRange)) {
-    const sr = role.salaryRange;
+    const sr = matrixValid ? calibrateLlmSalaryAgainstMatrix(role.salaryRange, fromMatrix) : role.salaryRange;
     const methodology =
       typeof sr.methodology === 'string' && sr.methodology.trim()
         ? sr.methodology.trim()
@@ -111,8 +169,7 @@ function resolveSalaryBlocks(matrix, profile, role) {
       _from: 'llm',
     });
   }
-  const fromMatrix = findSalaryRangeInMatrix(matrix, profile?.disciplineId, role);
-  if (fromMatrix && validateSalaryRange(fromMatrix)) {
+  if (matrixValid) {
     blocks.push({
       junior: fromMatrix.junior.trim(),
       mid: fromMatrix.mid.trim(),
