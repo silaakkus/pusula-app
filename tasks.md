@@ -124,3 +124,16 @@ Bu liste `prd.md` içeriğini adım adım koda dökmek için hazırlanmıştır.
 - [x] Yönelim sonucu: disiplin matrisinden “Matris rehberi” kartı (`orientationMatrixHints.js`); `VITE_GROQ_API_KEY` ile Groq tamamlayıcı özet + ipuçları, görünür hâlde yükleme/hata/“Tekrar dene” (`orientationGroqEnrich.js`, `OrientationResultPage.jsx`)
 - [x] Arkadaş daveti: kullanıcıya görünen yardım metninden n8n / olay adı teknik ayrıntısı çıkarıldı (`InviteFriendCard.jsx`)
 - [x] `web/.env.example`: yönelim Groq ek önerisi için isteğe bağlı `VITE_GROQ_API_KEY` satırı
+- [x] Groq kariyer promptu güçlendirildi: disiplin/yetenek/pazar uygunluğu kuralları, güvenilir URL politikası, Youthall + LinkedIn + kurum bazlı program kataloğu (`gemini.js`)
+- [x] Profil soru seti genişletildi: bölüm bazlı ilgi/güçlü yön seçenekleri ciddi biçimde artırıldı (`hacettepeDepartments.js`, `ProfilePage.jsx`)
+- [x] Fırsat verisi spesifikleştirildi: UP School geçmiş programları + SistersLab proje odaklı girişler + “kimler katılabilir” bilgisi (`opportunities.json`)
+- [x] Program öneri sıralaması role göre hassaslaştırıldı (`opportunitiesFilter.js`)
+- [x] Program adımı metinlerinde gerçekçilik düzeltmesi: “30 dk blok” yerine canlı ders/takvim-kayıt odaklı yönlendirme (`gemini.js`, `ResultsPage.jsx`, `barrierFallback.js`)
+- [x] Ana sayfa CTA: “Güncel Staj Programları” butonu eklendi; `/staj-listesi` akışı ve modern mor-beyaz kart tasarımlı liste ekranı eklendi (n8n webhook + `useEffect`) (`LandingPage.jsx`, `InternshipListPage.jsx`, `App.jsx`)
+
+## V3 (Planlananlar)
+
+- [ ] Ölçeklenebilir n8n branch mimarisi: tek “fırsat merkezi” yerine staj / yarışma / bootcamp için ayrı webhook dalları
+- [ ] UI’da filtre sekmeleri: “Stajlar”, “Yarışmalar”, “Bootcamp’ler” (aynı kart bileşeni, farklı endpoint)
+- [ ] Önceliklendirme skoru: son başvuru tarihi + rol tag uyumu + şehir/uzaktan uygunluğu
+- [ ] Veri tazeliği göstergesi: “Son güncelleme zamanı” ve stale-data uyarısı
