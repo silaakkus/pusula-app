@@ -35,6 +35,7 @@ Bu yolculukta ogrendigim en onemli sey, dogru yonlendirme oldugunda farkli bolum
 ## Ozellikler
 
 - Cok adimli profil ve akis yonetimi
+- **Pusula** simgesine basarak ana menüye dönüş
 - Yönelim testi + sonuc yorumlama
 - AI destekli rol ve gelisim onerileri
 - Yol haritasi (roadmap) modulu
