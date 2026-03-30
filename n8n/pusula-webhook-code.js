@@ -60,7 +60,6 @@ if (data.event === 'davet_tamamlandi') {
     .toLowerCase();
   const rolesInvite = Array.isArray(data.roles) ? data.roles : [];
   const rolesText = rolesInvite.map((r) => esc(String(r))).join(', ');
-  const disc = esc(data.inviteeDiscipline ?? '');
   const city = esc(data.inviteeCity ?? '');
   if (!inv || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inv)) {
     return [];
@@ -69,7 +68,6 @@ if (data.event === 'davet_tamamlandi') {
   <p style="font-size:17px;font-weight:700;margin:0 0 12px;">Pusula — Davet haberi</p>
   <p style="margin:0 0 10px;font-size:15px;">Merhaba,</p>
   <p style="margin:0 0 10px;font-size:15px;">Paylaştığın Pusula linkiyle gelen bir kişi <strong>kariyer önerilerini</strong> (sonuç adımına) ulaştı.</p>
-  ${disc ? `<p style="margin:0 0 6px;font-size:14px;"><strong>Disiplin (özet):</strong> ${disc}</p>` : ''}
   ${city ? `<p style="margin:0 0 6px;font-size:14px;"><strong>Şehir / filtre:</strong> ${city}</p>` : ''}
   ${rolesText ? `<p style="margin:12px 0 0;font-size:14px;"><strong>Önerilen rol başlıkları:</strong> ${rolesText}</p>` : ''}
   <p style="margin:20px 0 0;font-size:13px;color:#64748b;">Bu ileti otomatik gönderilmiştir. Kişisel veri minimizasyonu için ayrıntılı profil eklenmez.</p>
@@ -156,6 +154,7 @@ const profile = data.profile || {};
 const roles = Array.isArray(data.roles) ? data.roles : [];
 const rolesDetail = Array.isArray(data.rolesDetail) ? data.rolesDetail : [];
 const opportunities = Array.isArray(data.opportunities) ? data.opportunities : [];
+const orientation = data.orientation && typeof data.orientation === 'object' ? data.orientation : null;
 
 const always = [
   { name: 'YGA — Geleceği Yazan Kadınlar', url: 'https://yga.org.tr' },
@@ -167,7 +166,6 @@ const always = [
 
 let profileHtml = '';
 if (
-  profile.disciplineLabel ||
   profile.facultyLabel ||
   profile.departmentLabel ||
   profile.goal ||
@@ -188,7 +186,6 @@ if (
     <strong style="color:#4338ca;">Profil özeti</strong>
     ${profile.facultyLabel ? `<p style="margin:8px 0 4px;color:#333;"><strong>Fakülte:</strong> ${esc(profile.facultyLabel)}</p>` : ''}
     ${profile.departmentLabel ? `<p style="margin:4px 0;color:#333;font-size:14px;"><strong>Bölüm:</strong> ${esc(profile.departmentLabel)}</p>` : ''}
-    ${profile.disciplineLabel ? `<p style="margin:4px 0;color:#333;font-size:14px;"><strong>Disiplin:</strong> ${esc(profile.disciplineLabel)}</p>` : ''}
     ${profile.goal ? `<p style="margin:4px 0;color:#555;font-size:14px;"><strong>Hedef:</strong> ${esc(profile.goal)}</p>` : ''}
     ${profile.interests && profile.interests.length ? `<p style="margin:4px 0;color:#555;font-size:14px;"><strong>İlgi alanları:</strong> ${esc(profile.interests.join(', '))}</p>` : ''}
     ${profile.strengths && profile.strengths.length ? `<p style="margin:4px 0;color:#555;font-size:14px;"><strong>Güçlü yönler:</strong> ${esc(profile.strengths.join(', '))}</p>` : ''}
