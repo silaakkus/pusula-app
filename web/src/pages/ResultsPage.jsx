@@ -43,6 +43,57 @@ const MATRIX_SALARY_METHODOLOGY =
 const LLM_SALARY_METHODOLOGY_FALLBACK =
   'Yapay zekâ tarafından üretilmiştir; LinkedIn, Kariyer.net, Glassdoor TR, Indeed TR ve benzeri kamuya açık ilan ve ücret göstergelerinin genel bandlarıyla uyumlu yaklaşık brüt aylık aralıklardır. Somut bir veri seti veya resmi istatistik iddiası yoktur; şehir ve sektöre göre sapma beklenir.';
 
+const ROLE_SALARY_BENCHMARKS_2025_2026 = [
+  {
+    keys: ['data analyst', 'veri analisti', 'business analyst', 'bi analyst'],
+    junior: [42000, 58000],
+    mid: [60000, 90000],
+    senior: [90000, 130000],
+  },
+  {
+    keys: ['data scientist', 'veri bilimci', 'machine learning', 'ml engineer', 'ai engineer'],
+    junior: [50000, 70000],
+    mid: [80000, 120000],
+    senior: [120000, 180000],
+  },
+  {
+    keys: ['backend', 'software engineer', 'yazılım geliştirici', 'full stack', 'fullstack'],
+    junior: [45000, 68000],
+    mid: [70000, 110000],
+    senior: [110000, 170000],
+  },
+  {
+    keys: ['frontend', 'react', 'web developer', 'ui developer'],
+    junior: [40000, 62000],
+    mid: [65000, 98000],
+    senior: [98000, 150000],
+  },
+  {
+    keys: ['product manager', 'urun yonetic', 'ürün yönetic', 'project manager', 'proje yonetic'],
+    junior: [50000, 75000],
+    mid: [80000, 125000],
+    senior: [125000, 185000],
+  },
+  {
+    keys: ['cyber', 'siber', 'security', 'güvenlik', 'guvenlik'],
+    junior: [50000, 75000],
+    mid: [80000, 125000],
+    senior: [125000, 185000],
+  },
+  {
+    keys: ['devops', 'cloud', 'sre', 'platform engineer'],
+    junior: [55000, 80000],
+    mid: [90000, 135000],
+    senior: [135000, 200000],
+  },
+  {
+    keys: ['qa', 'test engineer', 'quality assurance', 'automation tester'],
+    junior: [40000, 60000],
+    mid: [65000, 95000],
+    senior: [95000, 140000],
+  },
+];
+
 function inferSalaryReferencePeriod(text) {
   const m = String(text ?? '').match(/20\d{2}/g);
   if (m?.length) return [...new Set(m)].slice(0, 4).join(', ');
@@ -65,6 +116,39 @@ function formatSalaryBand(min, max, template = 'TL') {
   const nf = new Intl.NumberFormat('tr-TR', { maximumFractionDigits: 0 });
   const unit = /₺/.test(template) ? '₺' : 'TL';
   return `${nf.format(Math.round(min))} - ${nf.format(Math.round(max))} ${unit}`;
+}
+
+function normalizeSearchText(text) {
+  return String(text ?? '')
+    .toLowerCase()
+    .replace(/ı/g, 'i')
+    .replace(/ğ/g, 'g')
+    .replace(/ü/g, 'u')
+    .replace(/ş/g, 's')
+    .replace(/ö/g, 'o')
+    .replace(/ç/g, 'c');
+}
+
+function pickRoleSalaryBenchmark(role) {
+  const haystack = normalizeSearchText([role?.roleName, role?.title, ...(role?.tags ?? [])].join(' '));
+  for (const b of ROLE_SALARY_BENCHMARKS_2025_2026) {
+    if (b.keys.some((k) => haystack.includes(normalizeSearchText(k)))) return b;
+  }
+  return null;
+}
+
+function buildNoMatrixBenchmarkSalaryRange(role, templateBand) {
+  const b = pickRoleSalaryBenchmark(role);
+  if (!b) return null;
+  return {
+    junior: formatSalaryBand(b.junior[0], b.junior[1], templateBand),
+    mid: formatSalaryBand(b.mid[0], b.mid[1], templateBand),
+    senior: formatSalaryBand(b.senior[0], b.senior[1], templateBand),
+    source: 'LinkedIn Jobs TR · Kariyer.net · Glassdoor TR · Indeed TR (2025–2026 benchmark)',
+    referenceYear: '2025–2026',
+    methodology:
+      'Bu rol için Türkiye teknoloji pazarındaki 2025–2026 kamuya açık ilan/ücret göstergeleriyle oluşturulmuş benchmark banttır. Matris eşleşmesi bulunmadığında Groq tahmini bu banda yakınlaştırılır. Şehir, şirket tipi ve yan haklara göre gerçek teklif değişebilir.',
+  };
 }
 
 function calibrateLlmSalaryAgainstMatrix(llm, matrix) {
@@ -102,6 +186,44 @@ function calibrateLlmSalaryAgainstMatrix(llm, matrix) {
     senior: formatSalaryBand(s[0], s[1], llm.senior || matrix.senior),
     methodology:
       'Groq tahmini, matris rehberindeki Türkiye bantlarıyla kalibre edilmiştir; şehir, şirket ve deneyime göre değişebilir. Bu değerler yaklaşık brüt aylık aralıklardır ve kesin teklif değildir.',
+  };
+}
+
+function calibrateLlmSalaryWithoutMatrix(role, llm) {
+  const bench = buildNoMatrixBenchmarkSalaryRange(role, llm?.junior || 'TL');
+  if (!bench) return llm;
+  const lj = parseSalaryBand(llm?.junior);
+  const lm = parseSalaryBand(llm?.mid);
+  const ls = parseSalaryBand(llm?.senior);
+  const bj = parseSalaryBand(bench.junior);
+  const bm = parseSalaryBand(bench.mid);
+  const bs = parseSalaryBand(bench.senior);
+  if (!lj || !lm || !ls || !bj || !bm || !bs) return { ...llm, ...bench };
+
+  const llmMidAvg = (lm[0] + lm[1]) / 2;
+  const benchMidAvg = (bm[0] + bm[1]) / 2;
+  const ratio = llmMidAvg / benchMidAvg;
+  if (ratio >= 0.78 && ratio <= 1.35) {
+    return { ...llm, referenceYear: '2025–2026', methodology: bench.methodology };
+  }
+
+  const blend = (a, b) => a * 0.3 + b * 0.7;
+  const make = (lhs, rhs, floorPair) => {
+    const min = Math.max(Math.round(blend(lhs[0], rhs[0])), floorPair?.[0] ?? 0);
+    const max = Math.max(Math.round(blend(lhs[1], rhs[1])), min + 1500, floorPair?.[1] ?? 0);
+    return [min, max];
+  };
+  const j = make(lj, bj);
+  const m = make(lm, bm, j);
+  const s = make(ls, bs, m);
+  return {
+    ...llm,
+    junior: formatSalaryBand(j[0], j[1], llm.junior),
+    mid: formatSalaryBand(m[0], m[1], llm.mid),
+    senior: formatSalaryBand(s[0], s[1], llm.senior),
+    source: bench.source,
+    referenceYear: '2025–2026',
+    methodology: bench.methodology,
   };
 }
 
@@ -150,7 +272,9 @@ function resolveSalaryBlocks(matrix, profile, role) {
   const fromMatrix = findSalaryRangeInMatrix(matrix, profile?.disciplineId, role);
   const matrixValid = fromMatrix && validateSalaryRange(fromMatrix);
   if (validateSalaryRange(role?.salaryRange)) {
-    const sr = matrixValid ? calibrateLlmSalaryAgainstMatrix(role.salaryRange, fromMatrix) : role.salaryRange;
+    const sr = matrixValid
+      ? calibrateLlmSalaryAgainstMatrix(role.salaryRange, fromMatrix)
+      : calibrateLlmSalaryWithoutMatrix(role, role.salaryRange);
     const methodology =
       typeof sr.methodology === 'string' && sr.methodology.trim()
         ? sr.methodology.trim()
@@ -168,6 +292,20 @@ function resolveSalaryBlocks(matrix, profile, role) {
       referenceYear,
       _from: 'llm',
     });
+  }
+  if (!matrixValid && blocks.length === 0) {
+    const bench = buildNoMatrixBenchmarkSalaryRange(role, 'TL');
+    if (bench && validateSalaryRange(bench)) {
+      blocks.push({
+        junior: bench.junior,
+        mid: bench.mid,
+        senior: bench.senior,
+        source: bench.source,
+        methodology: bench.methodology,
+        referenceYear: bench.referenceYear,
+        _from: 'llm',
+      });
+    }
   }
   if (matrixValid) {
     blocks.push({

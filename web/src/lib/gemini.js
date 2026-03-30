@@ -723,7 +723,7 @@ BAĞLANTI GÜVENİLİRLİĞİ:
 
 salaryRange (her rol için zorunlu):
 - junior, mid, senior, source mutlaka dolu; Türkiye brüt aylık bandı; kesin ücret iddiası kurma.
-- referenceYear: veriyi hangi yıla veya döneme yakın düşündüğün (örn. "2025", "2024–2025") — tek kısa ifade.
+- referenceYear: yalnızca güncel dönem kullan: "2025", "2026" veya "2025–2026". 2024 ve öncesini yazma.
 - methodology: 3-5 tam cümle Türkçe; şunları açık yaz: (1) Örnekleme için hangi kaynak türlerini kullandın (LinkedIn/Kariyer.net/Glassdoor TR/Indeed TR/şirket kariyer sayfaları/sektör blogları vb.), (2) bandı hangi kariyer seviyesine göre yuvarladın, (3) şehir veya segment varsayımı (örn. İstanbul kurumsal teknoloji), (4) Bu çıktının tahmin olduğu ve gerçek tekliften sapabileceği.
 - source alanı kısa bir etiket cümlesi olabilir; ayrıntı methodology içinde olmalı.
 
