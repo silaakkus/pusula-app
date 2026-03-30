@@ -64,7 +64,7 @@ import {
 import { unlockPusulaBadge, BADGE_IDS } from './lib/pusulaBadges.js';
 import { ensureRoadmapBadgeIfProgressExists } from './lib/roadmapProgress.js';
 import { Button } from './components/ui/Button';
-import { loadFlowOrientationResult, orientationSummaryForLlm } from './lib/orientationQuiz.js';
+import { loadFlowOrientationResult, orientationSummaryForLlm, saveFlowOrientationResult } from './lib/orientationQuiz.js';
 
 function stepLabel(step) {
   const map = {
