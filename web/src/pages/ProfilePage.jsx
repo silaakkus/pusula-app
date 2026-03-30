@@ -5,6 +5,7 @@ import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
 import { flowPreviousStepButtonClass } from '../lib/flowPreviousStepButton.js';
 import { clearProfileDraft, loadProfileDraft, saveProfileDraft } from '../lib/profileDraft.js';
+import { getLlmBrandLabel } from '../lib/llmConfig.js';
 
 function readProfileDraftInitial() {
   const d = loadProfileDraft();
@@ -84,6 +85,7 @@ function toggleInList(list, item) {
 export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
   const disciplines = useMemo(() => matrix ?? [], [matrix]);
   const draftIni = useMemo(() => readProfileDraftInitial(), []);
+  const aiBrandLabel = getLlmBrandLabel();
 
   const [disciplineId, setDisciplineId] = useState(draftIni.disciplineId);
   const [interests, setInterests] = useState(draftIni.interests);
@@ -186,7 +188,7 @@ export function ProfilePage({ matrix, onPreviousStep, onSubmit }) {
             Seni tanıyalım
           </h2>
           <p className="mb-8 text-sm leading-relaxed text-slate-600">
-            Cevapların Gemini analizi ve yerel fırsat önerileri için kullanılır (şehir seçimi fırsat
+            Cevapların {aiBrandLabel} analizi ve yerel fırsat önerileri için kullanılır (şehir seçimi fırsat
             listesini öne çıkarır). İstemediğin alanlarda “Belirtmek istemiyorum” seçeneğini kullanabilirsin.
           </p>
 
