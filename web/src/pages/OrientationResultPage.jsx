@@ -180,7 +180,7 @@ export function OrientationResultPage({ result, onBack, onHome }) {
                         {(() => {
                           const fallbackDetail =
                             !detail && lead
-                              ? `Bu adım için 30-45 dakika ayır; “${lead}” konusunda kısa bir başlangıç kaynağını baştan sona izle veya oku ve iki maddelik özet çıkar.`
+                              ? `Başlıktaki “${lead}” adımında geçen teknik terimleri (örneğin kısaltmalar, araç adları) acemi diliyle kendine açıkla: her birinin ne anlama geldiğini, ne işe yaradığını ve bu adımda senden ne beklendiğini 2–3 cümlede özetle.`
                               : null;
                           const text = detail || fallbackDetail;
                           if (!text) return null;
