@@ -1,4 +1,4 @@
-# Pusula — Teknoloji yığını (Tech Stack)
+# Pusula — Teknoloji yığını (Tech Stack) 🛠️
 
 Bu doküman, projede **gerçekten kullanılan** teknolojileri ve seçim gerekçelerini özetler (buildathon `tech-stack.md` teslimi ile uyumlu).
 

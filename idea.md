@@ -1,6 +1,6 @@
 # Pusula 🧭
 
-> Üniversiteli kadınlar için Groq / Gemini destekli teknoloji kariyer rehberi
+> ✨ Teknolojiye ilk adım atan kadınlar için AI destekli kariyer keşif rehberi — Groq / Gemini ile güçlendirilir 🚀
 
 ---
 
@@ -16,7 +16,7 @@ Türkiye’de teknoloji alanına adım atmak isteyen birçok kadın üniversite 
 
 ## Kullanıcı
 
-**Kim?** Teknolojiye ilgi duyan veya yön arayan **üniversite öğrencisi kadınlar** (fakülte / bölüm çeşitliliği yüksek; teknoloji bölümü şartı yok).
+**Kim?** Teknolojiye **ilk adımını** atmak veya yolunu netleştirmek isteyen **kadınlar**; çoğu üniversite çağında ve akademik profil üzerinden ilerler (fakülte / bölüm çeşitliliği yüksek; klasik teknoloji diploması şartı yok).
 
 **Tipik ihtiyaçlar / hisler:**
 

@@ -1,4 +1,4 @@
-# Pusula — Kullanıcı akışı (User Flow)
+# Pusula — Kullanıcı akışı (User Flow) 🧭
 
 Bu doküman, uygulamanın **güncel** uçtan uca akışını adım adım tanımlar. Diyagram için aşağıdaki **ASCII akış** kullanılabilir.
 

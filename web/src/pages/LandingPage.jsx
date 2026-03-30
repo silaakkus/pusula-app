@@ -45,7 +45,7 @@ export function LandingPage({
             {brand} Destekli
           </span>
           <span className="text-[13px] font-semibold text-indigo-800">
-            Üniversiteli Kadınlar İçin Teknoloji Kariyer Rehberi
+            Teknolojiye İlk Adım Atan Kadınlar İçin AI Destekli Kariyer Keşif Rehberi
           </span>
         </Badge>
       </motion.div>

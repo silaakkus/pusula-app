@@ -1,12 +1,12 @@
-## Pusula — PRD (Ürün Gereksinim Belgesi)
+## Pusula — PRD (Ürün Gereksinim Belgesi) 🧭
 
 ### 1) Ürün Vizyonu ve Değer Önerisi
 
-Pusula, üniversite eğitimi alan kadın öğrencilerin akademik arka planlarını teknoloji ekosistemiyle entegre eden AI tabanlı bir kariyer keşif ve rehberlik platformudur.
+Pusula, **teknolojiye ilk adım atan kadınlar** için akademik ve kişisel arka planlarını teknoloji ekosistemiyle birleştiren **AI destekli kariyer keşif ve rehberlik** platformudur.
 
 - **Temel sorun**: Öğrencilerin kendi bölümlerini (İstatistik, Psikoloji, İşletme, Biyoloji, Matematik vb.) teknoloji sektöründen bağımsız görmeleri ve sektördeki somut yerel fırsatlara (burs, topluluk, eğitim) erişim yollarını bilmemeleri.
 - **Çözüm**: Akademik disiplin fark etmeksizin, kullanıcının mevcut yetkinliklerini Gemini AI ile analiz ederek **“Sektörel Uyumluluk Analizi”** ve **“Yerel Fırsat Radarı”** sunmak.
-- **Kapsam kararı (yerel odak)**: Ürün bilinçli olarak **Türkiye’deki kadın öğrencilere** odaklanır; bu yüzden öneriler ve fırsat radarı Türkiye’de erişilebilir kaynak/program/topluluklar üzerinden kurgulanır.
+- **Kapsam kararı (yerel odak)**: Ürün bilinçli olarak **Türkiye’de teknoloji kariyerine adım atan kadınlara** odaklanır; bu yüzden öneriler ve fırsat radarı Türkiye’de erişilebilir kaynak/program/topluluklar üzerinden kurgulanır.
 
 ### 2) Kullanıcı Segmentasyonu (Multidisipliner Yaklaşım)
 

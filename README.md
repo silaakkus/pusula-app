@@ -1,4 +1,4 @@
-# Pusula
+# Pusula 🧭
 
 Pusula, universitede okuyan kadin ogrencilerin bolumlerinden bagimsiz olarak teknoloji kariyerine guvenli bir giris yapabilmeleri icin tasarlanmis, yapay zeka destekli bir kariyer yonlendirme uygulamasidir.
 
@@ -23,7 +23,7 @@ Bu proje benim kisisel hikayemden dogdu. Hacettepe Universitesi'nde Istatistik o
 
 Bolum toplulugumuzda paylasilan programlari takip ederken UP School'un "Birbirini Gelistiren Kadinlar 2026" programini gordum. Ilk modulde basarili olanlara 46 dolar degerinde Google yapay zeka egitimi sunulmasi, teknoloji adımında kendimi gelistirmek adina atabileceğim ilk adımın bu olabileceğini düşündüm ve bu firsati degerlendirip programa basvurdum ve kabul edildim.
 
-Bu yolculukta ogrendigim en onemli sey, dogru yonlendirme oldugunda farkli bolumlerden gelen kadinlarin da teknolojiye guclu bir sekilde adim atabilecegiydi. Pusula'yi, bu bilinci ve programin ruhunu yansitan bir bitirme projesi olarak gelistirdim. Bugun Pusula ile, universiteye yeni adim atmis veya yonunu arayan kadinlarin teknoloji yolculugunda daha net, daha guvenli ve daha cesur adimlar atmasina katkida bulunmayi hedefliyorum.
+Bu yolculukta ogrendigim en onemli sey, dogru yonlendirme oldugunda farkli bolumlerden gelen kadinlarin da teknolojiye guclu bir sekilde adim atabilecegiydi. Pusula'yi, bu bilinci ve programin ruhunu yansitan bir bitirme projesi olarak gelistirdim. Bugün Pusula ile, teknolojiye ilk adımını atan veya yolunu arayan kadınların teknoloji yolculuğunda daha net, daha güvenli ve daha cesur adımlar atmasına katkıda bulunmayı hedefliyorum.
 
 ## AI'nin Rolü
 
@@ -69,7 +69,7 @@ Pusula, universitede okuyan kadin ogrencilerin teknoloji dunyasina geciste yasad
 
 Uygulama yalnizca tavsiye veren bir sayfa degil; adim adim ilerleyen bir deneyim sunuyor. Kullanici once profilini olusturuyor, ardindan yonelim testiyle hangi teknoloji alanina daha yakin oldugunu goruyor. Sonraki asamada AI, bu sinyalleri yorumlayip rol onerileri, baslangic aksiyonlari ve ogrenme yol haritalari sunuyor. Ayrica kullanicinin zorlandigi noktalar icin "engel yeniden cerceveleme" adimi eklenerek motivasyonun korunmasi hedefleniyor. Surecin sonunda olusan Kariyer Rota Karti PNG olarak indirilebiliyor ve paylasilabiliyor.
 
-Pusula'nin en guclu tarafi, teknik dili sadeleştirip eyleme donuk bir rehberlige cevirmesi. Bu projeyle amacim, "teknoloji kariyeri bana uzak" hissini azaltmak ve her ogrencinin kendi hizinda ama net bir yonle ilerleyebilecegi erisilebilir bir kariyer deneyimi sunmak.
+Pusula'nın en güçlü tarafı, teknik dili sadeleştirip eyleme dönük bir rehberliğe çevirmesidir. Bu projeyle amacım, “teknoloji kariyeri bana uzak” hissini azaltmak ve teknolojiye adım atan her kadının kendi hızında ama net bir yönle ilerleyebileceği erişilebilir bir deneyim sunmaktır.
 
 ## Gelistirme
 
