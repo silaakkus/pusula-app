@@ -41,7 +41,7 @@ Bu yolculukta ogrendigim en onemli sey, dogru yonlendirme oldugunda farkli bolum
 - Engel yeniden cerceveleme adimi
 - PNG olarak indirilebilir "Kariyer Rota Karti"
 - Sonuclar ekranından **e-posta ile özet gönderimi** (n8n webhook)
-- n8n webhook entegrasyonu
+- Yönelim testi sonucunu **AI ile yorumlayıp alan önerisi** (n8n webhook)
 
 ## Canli Demo
 
