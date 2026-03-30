@@ -51,6 +51,8 @@ Yayin Linki: **https://pusula-app-two.vercel.app**
 
 Mevcut sürüm, tanımlı ürün ve teslimat hedeflerini karşılayan, üretim ortamında çalışan bir temel sunmaktadır. Sonraki güncellemelerde, planlanan **V3 kapsamındaki** geliştirmeleri önceliklendirerek depoya taşımayı hedefliyorum; böylece otomasyonun ölçeklenebilirliği, fırsat keşfi deneyimi, önceliklendirme ve veri güncelliği gibi başlıklarda sürdürülebilir ilerleme sağlanacaktır.
 
+**Kullanıcı geri bildirimi:** Yürütülen geri bildirim oturumlarında en güçlü talep, şirketlerin üniversite öğrencilerine yönelik açtığı **güncel staj fırsatlarının**, kullanıcının uygulamada ilerlediği **hedef rol ile hizalı** şekilde toplanması ve bu özetin **e-posta üzerinden** düzenli olarak iletilmesi yönünde öne çıkmaktadır. Bu bulgu, sonraki sürümlerde fırsat tarafı ve bildirim mimarisinin önceliklendirilmesine doğrudan girdi oluşturmaktadır.
+
 Kapsam ve teknik iş kalemleri `tasks.md` dosyasındaki **«V3 (Planlananlar)»** bölümünde ayrıntılı olarak izlenebilir.
 
 ## Ekran Goruntuleri
