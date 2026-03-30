@@ -9,6 +9,103 @@ import { ORIENTATION_ARCHETYPE_LABELS, sanitizeOrientationBody } from '../lib/or
 import { fetchOrientationGroqSupplement } from '../lib/orientationGroqEnrich.js';
 import { fetchOrientationMatrixHints } from '../lib/orientationMatrixHints.js';
 
+const STEP_TERM_EXPLANATIONS = [
+  {
+    key: 'http',
+    label: 'HTTP',
+    text:
+      'Tarayıcı ile sunucu arasında istek ve yanıtların nasıl taşındığını belirleyen web protokolüdür; bir sayfayı açtığında veya bir API çağırdığında arka planda HTTP kullanılır.',
+  },
+  {
+    key: 'rest',
+    label: 'REST',
+    text:
+      'Web servislerini kaynak odaklı ve URL tabanlı tasarlamaya yönelik bir stildir; genelde JSON dönen, HTTP üzerinden çalışan API’leri tarif eder.',
+  },
+  {
+    key: 'crud',
+    label: 'CRUD',
+    text:
+      'Veriyle ilgili dört temel işlemi (Create, Read, Update, Delete) ifade eder; örneğin bir tablodaki kayıt ekleme, listeleme, güncelleme ve silme adımları.',
+  },
+  {
+    key: 'sql',
+    label: 'SQL',
+    text:
+      'İlişkisel veritabanlarıyla konuşmak için kullanılan sorgu dilidir; tablolardan veri seçmek, filtrelemek, eklemek ve güncellemek için kullanılır.',
+  },
+  {
+    key: 'migration',
+    label: 'Migration',
+    text:
+      'Veritabanı şemasını (tablolar, sütunlar vb.) kontrollü biçimde değiştiren sürümlenmiş adımlardır; örneğin yeni sütun eklemek veya bir alanın tipini değiştirmek için çalıştırılır.',
+  },
+  {
+    key: 'fastapi',
+    label: 'FastAPI',
+    text:
+      'Python ile hızlıca modern web API’leri geliştirmeye yarayan bir framework’tür; tip ipuçları sayesinde otomatik dokümantasyon ve doğrulama sağlar.',
+  },
+  {
+    key: 'express',
+    label: 'Express',
+    text:
+      'Node.js üzerinde çalışan minimal web framework’tür; HTTP isteklerini karşılamak ve basit API’ler veya sunucu taraflı uygulamalar yazmak için kullanılır.',
+  },
+  {
+    key: 'react',
+    label: 'React',
+    text:
+      'Kullanıcı arayüzü bileşenleri oluşturmaya yarayan bir JavaScript kütüphanesidir; tek sayfa uygulamalarda sayfanın parçalarını duruma göre günceller.',
+  },
+  {
+    key: 'vue',
+    label: 'Vue',
+    text:
+      'Web arayüzleri oluşturmak için kullanılan, öğrenmesi görece kolay bir JavaScript framework’üdür; bileşen temelli yapı ve reaktif veri akışı sunar.',
+  },
+  {
+    key: 'dom',
+    label: 'DOM',
+    text:
+      'Tarayıcının HTML sayfasını ağaç yapısına dönüştürülmüş hâlidir; JavaScript ile butonlara tıklanınca metin değiştirmek gibi işlemler DOM’u güncelleyerek yapılır.',
+  },
+  {
+    key: 'spa',
+    label: 'SPA',
+    text:
+      'Single Page Application kısaltmasıdır; sayfa her tıklamada tamamen yenilenmek yerine, JavaScript ile içerik parça parça güncellenir.',
+  },
+  {
+    key: 'mdn',
+    label: 'MDN',
+    text:
+      'Mozilla Developer Network’ün kısaltmasıdır; HTML, CSS, JavaScript ve web API’leri için güvenilir ve örnekli dokümantasyon sağlar.',
+  },
+  {
+    key: 'html',
+    label: 'HTML',
+    text:
+      'Bir web sayfasındaki başlık, paragraf, liste ve görsel gibi öğelerin iskeletini tanımlayan işaretleme dilidir.',
+  },
+  {
+    key: 'css',
+    label: 'CSS',
+    text:
+      'Web sayfasındaki renk, yazı tipi, boşluk ve yerleşim gibi görsel stilleri tanımlayan dilidir; HTML iskeletinin nasıl görüneceğini belirler.',
+  },
+];
+
+function buildStepTermExplanation(lead) {
+  if (!lead) return null;
+  const lower = lead.toLowerCase();
+  const parts = STEP_TERM_EXPLANATIONS.filter((t) => lower.includes(t.key)).map(
+    (t) => `${t.label}: ${t.text}`,
+  );
+  if (parts.length === 0) return null;
+  return parts.join(' ');
+}
+
 function splitOrientationStepLine(s) {
   const m = s.match(/^(.+?)\s+[—–-]\s+(.+)$/);
   if (!m) return { lead: String(s).trim(), detail: null };
@@ -178,10 +275,11 @@ export function OrientationResultPage({ result, onBack, onHome }) {
                       <li key={i} className="pl-1">
                         <span className="font-semibold text-slate-900">{lead}</span>
                         {(() => {
+                          const termsExplanation = !detail && lead ? buildStepTermExplanation(lead) : null;
                           const fallbackDetail =
-                            !detail && lead
-                              ? `Başlıktaki “${lead}” adımında geçen teknik terimleri (örneğin kısaltmalar, araç adları) acemi diliyle kendine açıkla: her birinin ne anlama geldiğini, ne işe yaradığını ve bu adımda senden ne beklendiğini 2–3 cümlede özetle.`
-                              : null;
+                            !detail && lead && !termsExplanation
+                              ? `Başlıktaki terimleri kendi cümlelerinle açıkla: her birinin ne işe yaradığını ve bu adımda senden ne beklendiğini 2–3 cümlede özetle.`
+                              : termsExplanation;
                           const text = detail || fallbackDetail;
                           if (!text) return null;
                           return (
