@@ -115,8 +115,8 @@ Sonuçlar sayfasında özetini adrese gönderebilirsin; arka planda n8n webhook 
 ### Yönelim Kartı (PNG İndir)
 ![Yönelim Kartı PNG İndir](assets/screenshots/orientation-card-png.png)
 
-### Öğrenme Yolları (Hub)
-![Öğrenme Yolları Hub](assets/screenshots/roadmap-hub.png)
+### Öğrenme Yolları Seçim Ekranı
+![Öğrenme Yolları Seçim Ekranı](assets/screenshots/roadmap-hub.png)
 
 ### Öğrenme Yolu Detayı
 ![Öğrenme Yolu Detayı](assets/screenshots/roadmap-track.png)
