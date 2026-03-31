@@ -129,6 +129,12 @@ Bu liste `prd.md` içeriğini adım adım koda dökmek için hazırlanmıştır.
 - [x] Fırsat verisi spesifikleştirildi: UP School geçmiş programları + SistersLab proje odaklı girişler + “kimler katılabilir” bilgisi (`opportunities.json`)
 - [x] Program öneri sıralaması role göre hassaslaştırıldı (`opportunitiesFilter.js`)
 - [x] Program adımı metinlerinde gerçekçilik düzeltmesi: “30 dk blok” yerine canlı ders/takvim-kayıt odaklı yönlendirme (`gemini.js`, `ResultsPage.jsx`, `barrierFallback.js`)
+- [x] Landing bilgi adımı eklendi: karşılama ile profil arasında kısa bilgilendirme ekranı (`LandingInfoPage.jsx`)
+- [x] Uygulama üst kısmındaki **Pusula** simgesi ile ana menüye hızlı dönüş davranışı (`App.jsx` + ilgili sayfa başlıkları)
+- [x] Sonuçlar ekranından e-posta özeti gönderimi: n8n webhook tetikleme, başarı/hata durumu ve tekrar gönderme akışı (`ResultsPage.jsx`, `VITE_N8N_WEBHOOK_URL`)
+- [x] Yönelim sonucu uzak akışla üretim: n8n `Webhook (POST) -> Code in JavaScript -> Respond to Webhook` hattı ve uygulama tarafında gösterim (`orientationQuiz.js`, `n8n/orientation-webhook-code.js`)
+- [x] Sonuç payload'ında yönelim özeti ile zengin gövde gönderimi (roller, maaş, staj/program, orientation alanları) (`ResultsPage.jsx`, `buildResultsEmailPayload`)
+- [x] Mobil/masaüstü kullanıcı deneyimi doğrulaması: 7 katılımcı, masaüstü + iPhone + Android test oturumları ve Google Form geri bildirim toplama (README "Kullanıcı testi")
 
 ## V3 (Planlananlar)
 
