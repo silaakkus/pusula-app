@@ -1,92 +1,99 @@
 # Pusula 🧭
 
-Pusula, universitede okuyan kadin ogrencilerin bolumlerinden bagimsiz olarak teknoloji kariyerine guvenli bir giris yapabilmeleri icin tasarlanmis, yapay zeka destekli bir kariyer yonlendirme uygulamasidir.
+Pusula, üniversitede okuyan kadın öğrencilerin bölümlerinden bağımsız olarak teknoloji kariyerine güvenli bir giriş yapabilmeleri için tasarlanmış, yapay zeka destekli bir kariyer yönlendirme uygulamasıdır.
 
 ## Problem
 
-Bir cok ogrenci "Bolumum teknolojiye ne kadar yakin?", "Nereden baslamaliyim?", "Hangi rol bana uygun?" sorularina net cevap bulamiyor. Internette cok fazla daginik kaynak var; ancak kisinin bolumune, ilgilerine ve ogrenme bicimine gore kisisel bir rota cikarmak zor.
+Birçok öğrenci "Bölümüm teknolojiye ne kadar yakın?", "Nereden başlamalıyım?", "Hangi rol bana uygun?" sorularına net cevap bulamıyor. İnternette çok fazla dağınık kaynak var; ancak kişinin bölümüne, ilgilerine ve öğrenme biçimine göre kişisel bir rota çıkarmak zor.
 
-## Cozum
+## Çözüm
 
-Pusula, kullanicidan topladigi profil sinyallerini (fakulte, bolum, ilgi alanlari, hedef, calisma tercihi) AI ile yorumlayarak:
+Pusula, kullanıcıdan topladığı profil sinyallerini (fakülte, bölüm, ilgi alanları, hedef, çalışma tercihi) AI ile yorumlayarak:
 
-- uygun rol onerileri,
-- baslangic adimlari,
-- ogrenme yol haritalari,
-- ve paylasilabilir kariyer karti
+- uygun rol önerileri,
+- başlangıç adımları,
+- öğrenme yol haritaları,
+- ve paylaşılabilir kariyer kartı
 
-uretir. Boylece kullanici, genel tavsiyeler yerine kendine ozel, uygulanabilir bir ilk planla ilerler.
+üretir. Böylece kullanıcı, genel tavsiyeler yerine kendine özel, uygulanabilir bir ilk planla ilerler.
 
 ## Proje Hikayesi
 
-Bu proje benim kisisel hikayemden dogdu. Hacettepe Universitesi'nde Istatistik okuyorum. YKS surecinde siralamam yeterli olsaydi Bilgisayar Muhendisligi okumayi istiyordum; ancak hedefledigim universitelerde bu bolum gelmedi. Buna ragmen teknoloji alaninda bir seyler uretmek istiyordum ama nereden baslayacagimi bilmiyordum.
+Bu proje benim kişisel hikayemden doğdu. Hacettepe Üniversitesi'nde İstatistik okuyorum. YKS sürecinde sıralamam yeterli olsaydı Bilgisayar Mühendisliği okumayı istiyordum; ancak hedeflediğim üniversitelerde bu bölüm gelmedi. Buna rağmen teknoloji alanında bir şeyler üretmek istiyordum ama nereden başlayacağımı bilmiyordum.
 
-Bolum toplulugumuzda paylasilan programlari takip ederken UP School'un "Birbirini Gelistiren Kadinlar 2026" programini gordum. Ilk modulde basarili olanlara 46 dolar degerinde Google yapay zeka egitimi sunuluyordu; bunun teknoloji alaninda kendimi gelistirmek icin atabilecegim somut bir ilk adim olabilecegini dusundum. Bu firsati degerlendirip programa basvurdum ve kabul edildim.
+Bölüm topluluğumuzda paylaşılan programları takip ederken UP School'un "Birbirini Geliştiren Kadınlar 2026" programını gördüm. İlk modülde başarılı olanlara 46 dolar değerinde Google yapay zeka eğitimi sunuluyordu; bunun teknoloji alanında kendimi geliştirmek için atabileceğim somut bir ilk adım olabileceğini düşündüm. Bu fırsatı değerlendirip programa başvurdum ve kabul edildim.
 
-Bu yolculukta ogrendigim en onemli sey, dogru yonlendirme oldugunda farkli bolumlerden gelen kadinlarin da teknolojiye guclu bir sekilde adim atabilecegiydi. Pusula'yi, bu bilinci ve programin ruhunu yansitan bir bitirme projesi olarak gelistirdim. Bugün Pusula ile, teknolojiye ilk adımını atan veya yolunu arayan kadınların teknoloji yolculuğunda daha net, daha güvenli ve daha cesur adımlar atmasına katkıda bulunmayı hedefliyorum.
+Bu yolculukta öğrendiğim en önemli şey, doğru yönlendirme olduğunda farklı bölümlerden gelen kadınların da teknolojiye güçlü bir şekilde adım atabildiğiydi. Pusula'yı, bu bilinci ve programın ruhunu yansıtan bir bitirme projesi olarak geliştirdim. Bugün Pusula ile, teknolojiye ilk adımını atan veya yolunu arayan kadınların teknoloji yolculuğunda daha net, daha güvenli ve daha cesur adımlar atmasına katkıda bulunmayı hedefliyorum.
 
-## AI'nin Rolü
+## AI'nın Rolü
 
-- Profil verilerini baglamsal olarak yorumlar.
-- Rol/alan onerilerini kisisellestirir.
-- Yönelim testini zenginlestirerek aciklayici aksiyon adimlari uretir.
-- Kariyer adimlarini daha anlasilir ve uygulanabilir hale getirir.
+- Profil verilerini bağlamsal olarak yorumlar.
+- Rol ve alan önerilerini kişiselleştirir.
+- Yönelim testini zenginleştirerek açıklayıcı aksiyon adımları üretir.
+- Kariyer adımlarını daha anlaşılır ve uygulanabilir hale getirir.
 
-## Ozellikler
+## Özellikler
 
-- Cok adimli profil ve akis yonetimi
-- **Pusula** simgesine basarak ana menüye dönüş
-- Yönelim testi: sonuç metni **n8n** üzerinde **Webhook (POST) → Code in JavaScript → Respond to Webhook** akışıyla üretilir ve uygulama sonuç ekranında gösterilir; **Groq** ile üretilen ek AI özeti ve ipuçları da **aynı ekranda** birlikte sunulur
-- AI destekli rol ve gelisim onerileri
-- Yol haritasi (roadmap) modulu
-- Engel yeniden cerceveleme adimi
-- PNG olarak indirilebilir "Kariyer Rota Karti"
-- Sonuclar ekranından **e-posta ile özet gönderimi** (n8n webhook)
+### 🧭 Çok Adımlı Profil ve Akış Yönetimi
+Kullanıcı fakülte, bölüm, ilgi alanları, hedef ve çalışma tercihi gibi çok boyutlu profil bilgilerini adım adım girer. Her adım bir rozet olarak işaretlenir; Pusula simgesine basarak ana menüye dönülebilir.
 
-## Canli Demo
+### 🎯 Yönelim Testi — Hangi Alana Yakınsın?
+6 soruluk, doğru/yanlış cevabı olmayan bir test. Her soru kullanıcının teknoloji dünyasındaki rol tipine yakınlığını ölçer. Sonuç ekranında üç katmanlı bir çıktı sunulur:
 
-Yayin Linki: **https://pusula-app-two.vercel.app**
+- **Güncellenmiş Özet:** Kullanıcının profiline ve test yanıtlarına göre hangi alana yakın olduğunu, neden uygun olduğunu ve ilk başlangıç adımlarını — her adımın altında teknik terimlerin sade dille açıklamasıyla birlikte — listeler.
+- **Matris Rehberi:** Pusula'nın üniversite disiplin matrisinden, seçilen yöne yakın rollerin kısa özetini gösterir. Her rol için örnek başlangıç aksiyonları ve hangi disiplinlerden gelen öğrencilere uygun olduğu belirtilir.
+- **Groq Ek Önerisi:** Pusula özetiyle aynı teste dayanarak Groq'un tamamlayıcı bakış açısı ve hızlı ipuçları üretilir. Zaman çizelgeli öneriler (30 gün HTML/CSS, 2 hafta JavaScript vb.) ve somut proje fikirleri içerir.
 
-## Kullanici testi
+Sonuç ekranında ayrıca **Yönelim Kartı** önizlemesi yer alır; kart PNG olarak indirilebilir.
 
-Buildathon kapsaminda **7 katilimci** ile kullanici testi yuruttum. Katilimcilar uygulamayi **masaustu bilgisayar** ile **iPhone (iOS)** ve **Android** cihazlarda denedi; ben de ana akisi ve kritik ekranlari hem genis hem mobil gorunumde bu oturumlarla birlikte gozden gecirdim. Deneyimin ardindan ayni kisilerden **Google Form** uzerinden yapilandirilmis geri bildirim topladim; boylece farkli isletim sistemi ve tarayici ortamlarinda tutarliligi kontrol ettim.
+### 🗺️ Kişiselleştirilmiş Rol ve Rota Önerisi
+Profil ve yönelim testi verileri Groq AI tarafından yorumlanır; kullanıcıya bölümüyle uyumlu 3-4 kariyer rolü, her rol için "Neden sana uygun?" açıklaması ve ilk 3 somut başlangıç adımı sunulur. Öneriler genel tavsiye değil; fakülte ve ilgi alanına göre kişiselleştirilmiş çıktılardır.
 
-## Yol haritasi (sonraki guncellemeler)
+### 💼 Staj, Program ve Maaş Bilgisi
+Her rol önerisiyle birlikte; o alanda staj veren firmalar, kendini geliştirmek için katılabileceğin programlar ve güncel maaş aralıkları hem AI çıktısı hem matris verisi olarak gösterilir. Kullanıcı "peki bu rolde ne kazanırım, nereden başlarım?" sorularına aynı ekranda yanıt bulur.
 
-Şu an yayında olan sürümü, tanımlı ürün ve teslimat hedeflerini karşılayan ve üretimde çalışan bir **temel** olarak görüyorum. Sonraki güncellemelerde **V3** kapsamında planladığım geliştirmeleri öncelik sırasıyla depoya taşımayı hedefliyorum; özellikle otomasyonun ölçeklenebilirliği, fırsat keşfi deneyimi, önceliklendirme ve veri güncelliği başlıklarında adım adım ilerlemek istiyorum.
+### 🚧 Engel Yeniden Çerçeveleme Adımı
+"Geç kaldım", "bölümüm uygun değil", "zamanım yok" gibi kullanıcının hissettiği engeller seçilir. Groq bu engelleri analiz ederek kişiye özel, motivasyon artırıcı bir konuşma üretir. Kullanıcı ardından özgüven düzeyini tekrar seçer; başlangıç ve bitiş skorları arasındaki fark **özgüven deltası (Δ)** olarak hesaplanır.
 
-**Geri bildirimlerimden:** Pusula’yı deneyenlerle yaptığım görüşmelerde bana en çok şunu ilettiler: şirketlerin üniversite öğrencilerine yönelik açtığı **güncel staj fırsatlarının**, uygulamada ilerledikleri **hedef rolle uyumlu** şekilde toparlanmasını ve bu özetin **e-posta ile** düzenli olarak kendilerine ulaşmasını istiyorlar. Ben de sonraki güncellemelerde fırsat keşfini ve bildirim akışını bu ihtiyaca göre önceliklendirmeyi planlıyorum.
+### 🪪 İndirilebilir Kariyer Rota Kartı
+Tüm akışın sonunda kullanıcının profili, önerilen roller ve özgüven deltası bir kart tasarımına dönüşür. Kart **PNG olarak indirilebilir** ve sosyal medyada paylaşılabilir. Kullanıcı kartını paylaştığında bağlantıları da Pusula'ya yönlendirilir; onlar da rota oluşturursa kullanıcıya otomatik bildirim maili gönderilir.
 
-Kapsam ve teknik iş kalemleri `tasks.md` dosyasındaki **«V3 (Planlananlar)»** bölümünde ayrıntılı olarak izlenebilir.
+### 📧 E-posta ile Özet Gönderimi (n8n Otomasyonu)
+Sonuçlar ekranından kullanıcı, tüm kariyer analizini (rol önerileri, maaş ve staj bağlantıları, program önerileri) tek tıkla kendi e-posta adresine gönderebilir. Arka planda n8n webhook akışı çalışır; kullanıcının elinde kalıcı, başvurulabilir bir özet belgesi olur.
 
-## Ekran Goruntuleri
+### 📚 Öğrenme Yolları Modülü
+6 farklı teknoloji alanı kart formatında sunulur:
+
+- 🖥️ Web sitesinin görünen yüzü
+- ⚙️ Görünmeyen taraf: sunucu ve veri
+- 📊 Sayılar ve tablolarla hikâye çıkarmak
+- 🤖 Yapay zeka ve akıllı sistemler
+- 🚀 Kodun çalışır halde kalması
+- 🧭 Kullanıcı için doğru şeyi yapmak
+
+Her kartın açıklaması teknik jargon kullanmadan yazılmıştır. Karta tıklandığında adım adım içerik açılır; her adımın altında o konuya uygun kaynak linkleri (MDN, FastAPI, PostgreSQL dokümantasyonu vb.) ve o kaynakta ne öğreneceğine dair kısa açıklama yer alır. Kullanıcı adımı tamamladığında "Öğrenildi" olarak işaretler, ilerleme çubuğu ve adım sayacı anlık güncellenir. İlerleme bu tarayıcıda saklanır.
+
+### 🔄 Kaldığın Yerden Devam Et
+Ana sayfada "Kaldığın yerden devam et" butonu, kullanıcının daha önce tamamladığı adımları hatırlayarak akışı doğru noktadan yeniden başlatır. Rota yarıda kalmışsa sıfırdan başlamak gerekmez; bu özellik uygulamayı tek seferlik bir test olmaktan çıkarıp tekrar ziyaret edilen bir rehbere dönüştürür.
+
+## Canlı Demo
+
+- 🌐 Yayın Linki: https://pusula-app-two.vercel.app
+- 🎬 Demo Video: [buraya Loom linki ekle]
+
+## Ekran Görüntüleri
 
 ### Landing
 ![Landing](assets/screenshots/landing.png)
 
-### Profil Akisi
+### Profil Akışı
 ![Profil Akisi](assets/screenshots/profile-flow.png)
 
-### Yonelim Testi
-![Yonelim Testi](assets/screenshots/orientation-quiz.png)
-
-### Ogrenme Yollari (Hub)
-![Ogrenme Yollari Hub](assets/screenshots/roadmap-hub.png)
-
-### Ogrenme Yolu Detayi
-![Ogrenme Yolu Detayi](assets/screenshots/roadmap-track.png)
-
-### Yönelim Sonuç Detayı
-![Yönelim Sonuç Detayı](assets/screenshots/orientation-result-detail.png)
-
-### Yönelim Kartı (PNG İndir)
-![Yönelim Kartı PNG İndir](assets/screenshots/orientation-card-png.png)
-
-### Sonuc / Oneri
+### Sonuç / Öneri
 ![Sonuc Ekrani](assets/screenshots/results.png)
 
-### E-posta ile ozet (Sonuclar)
-Sonuclar sayfasında özetini adrese gönderebilirsin; arka planda n8n webhook ile işlenir. Ekran görüntüleri `assets/screenshots/` altında: `email-send.png` (uygulamada gönderim), `email-received.png` (gelen özet mail).
+### E-posta ile Özet (Sonuçlar)
+Sonuçlar sayfasında özetini adrese gönderebilirsin; arka planda n8n webhook ile işlenir. Ekran görüntüleri `assets/screenshots/` altında: `email-send.png` (uygulamada gönderim), `email-received.png` (gelen özet mail).
 
 **Uygulamada gönderim**
 
@@ -96,21 +103,54 @@ Sonuclar sayfasında özetini adrese gönderebilirsin; arka planda n8n webhook i
 
 ![Posta kutusunda Pusula ozet maili](assets/screenshots/email-received.png)
 
-### Kariyer Rota Karti
+### Kariyer Rota Kartı
 ![Kariyer Rota Karti](assets/screenshots/career-card.png)
 
-## Portfolyo Metni (200 kelime)
+### Yönelim Testi
+![Yonelim Testi](assets/screenshots/orientation-quiz.png)
 
-Pusula, universitede okuyan kadin ogrencilerin teknoloji dunyasina geciste yasadigi belirsizlik problemini cozen AI destekli bir web uygulamasidir. Projenin cikis noktasi, bolumu teknoloji odakli olmayan ogrencilerin "Bana uygun alan hangisi, ilk adimi nasil atacagim?" sorularina net bir yanit bulamamasiydi. Pusula bu sorunu, kullanicidan topladigi cok boyutlu profil verisiyle ele aliyor: fakulte-bolum bilgisi, ilgi alanlari, hedefler, ogrenme stili ve calisma tercihleri bir araya getirilerek kisisel bir rota uretiliyor.
+### Yönelim Sonuç Detayı
+![Yönelim Sonuç Detayı](assets/screenshots/orientation-result-detail.png)
 
-Uygulama yalnizca tavsiye veren bir sayfa degil; adim adim ilerleyen bir deneyim sunuyor. Kullanici once profilini olusturuyor, ardindan yonelim testiyle hangi teknoloji alanina daha yakin oldugunu goruyor. Sonraki asamada AI, bu sinyalleri yorumlayip rol onerileri, baslangic aksiyonlari ve ogrenme yol haritalari sunuyor. Ayrica kullanicinin zorlandigi noktalar icin "engel yeniden cerceveleme" adimi eklenerek motivasyonun korunmasi hedefleniyor. Surecin sonunda olusan Kariyer Rota Karti PNG olarak indirilebiliyor ve paylasilabiliyor.
+### Yönelim Kartı (PNG İndir)
+![Yönelim Kartı PNG İndir](assets/screenshots/orientation-card-png.png)
 
-Pusula'nın en güçlü tarafı, teknik dili sadeleştirip eyleme dönük bir rehberliğe çevirmesidir. Bu projeyle amacım, “teknoloji kariyeri bana uzak” hissini azaltmak ve teknolojiye adım atan her kadının kendi hızında ama net bir yönle ilerleyebileceği erişilebilir bir deneyim sunmaktır.
+### Öğrenme Yolları (Hub)
+![Ogrenme Yollari Hub](assets/screenshots/roadmap-hub.png)
 
-## Gelistirme
+### Öğrenme Yolu Detayı
+![Ogrenme Yolu Detayi](assets/screenshots/roadmap-track.png)
 
-On yuz `web/` klasorundedir.
+## Kullanılan Teknolojiler
 
+- **Frontend:** React
+- **AI:** Groq (aktif) — Gemini API entegrasyonu mevcut, geliştirme sürecinde kota sınırı nedeniyle Groq'a geçildi
+- **Otomasyon:** n8n (webhook akışı)
+- **Yayınlama:** Vercel
+
+## Kullanıcı Testi
+
+Buildathon kapsamında **7 katılımcı** ile kullanıcı testi yürüttüm. Katılımcılar uygulamayı **masaüstü bilgisayar** ile **iPhone (iOS)** ve **Android** cihazlarda denedi; ana akışı ve kritik ekranları hem geniş hem mobil görünümde gözden geçirdim. Deneyimin ardından aynı kişilerden **Google Form** üzerinden yapılandırılmış geri bildirim topladım; böylece farklı işletim sistemi ve tarayıcı ortamlarında tutarlılığı kontrol ettim.
+
+**En sık gelen geri bildirim:** Hedef rolle uyumlu güncel staj fırsatlarının toparlanıp e-posta ile düzenli gönderilmesi istendi. Bu özellik bir sonraki sürümde önceliklendirilecek.
+
+## Yol Haritası
+
+Şu an yayında olan sürümü, tanımlı ürün ve teslimat hedeflerini karşılayan ve üretimde çalışan bir **temel** olarak görüyorum. Sonraki güncellemelerde **V3** kapsamında planladığım geliştirmeleri öncelik sırasıyla depoya taşımayı hedefliyorum; özellikle otomasyonun ölçeklenebilirliği, fırsat keşfi deneyimi, önceliklendirme ve veri güncelliği başlıklarında adım adım ilerlemek istiyorum.
+
+Kapsam ve teknik iş kalemleri `tasks.md` dosyasındaki "V3 (Planlananlar)" bölümünde ayrıntılı olarak izlenebilir.
+
+## Portfolyo Metni
+
+Pusula, üniversitede okuyan kadın öğrencilerin teknoloji dünyasına geçişte yaşadığı belirsizlik problemini çözen AI destekli bir web uygulamasıdır. Projenin çıkış noktası, bölümü teknoloji odaklı olmayan öğrencilerin "Bana uygun alan hangisi, ilk adımı nasıl atacağım?" sorularına net bir yanıt bulamamasıydı. Pusula bu sorunu, kullanıcıdan topladığı çok boyutlu profil verisiyle ele alıyor: fakülte-bölüm bilgisi, ilgi alanları, hedefler, öğrenme stili ve çalışma tercihleri bir araya getirilerek kişisel bir rota üretiliyor.
+
+Uygulama yalnızca tavsiye veren bir sayfa değil; adım adım ilerleyen bir deneyim sunuyor. Kullanıcı önce profilini oluşturuyor, ardından yönelim testiyle hangi teknoloji alanına daha yakın olduğunu görüyor. Sonraki aşamada AI, bu sinyalleri yorumlayıp rol önerileri, başlangıç aksiyonları ve öğrenme yol haritaları sunuyor. Ayrıca kullanıcının zorlandığı noktalar için "engel yeniden çerçeveleme" adımı eklenerek motivasyonun korunması hedefleniyor. Sürecin sonunda oluşan Kariyer Rota Kartı PNG olarak indirilebiliyor ve paylaşılabiliyor.
+
+Pusula'nın en güçlü tarafı, teknik dili sadeleştirip eyleme dönük bir rehberliğe çevirmesidir. Bu projeyle amacım, "teknoloji kariyeri bana uzak" hissini azaltmak ve teknolojiye adım atan her kadının kendi hızında ama net bir yönle ilerleyebileceği erişilebilir bir deneyim sunmaktır.
+
+## Geliştirme
+
+Ön yüz `web/` klasöründedir.
 ```bash
 cd web
 npm install
@@ -118,10 +158,9 @@ npm run dev
 ```
 
 Build:
-
 ```bash
 cd web
 npm run build
 ```
 
-Ortam degiskenleri icin `web/.env.example` dosyasina bakin.
+Ortam değişkenleri için `web/.env.example` dosyasına bakın.
