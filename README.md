@@ -79,7 +79,7 @@ Ana sayfada "Kaldığın yerden devam et" butonu, kullanıcının daha önce tam
 ## Canlı Demo
 
 - 🌐 Yayın Linki: https://pusula-app-two.vercel.app
-- 🎬 Demo Video: [buraya Loom linki ekle]
+- 🎬 Demo Video: [Loom Demo](https://www.loom.com/share/69c4abcb6d6b42748d136837395f6b9d)
 
 ## Ekran Görüntüleri
 
@@ -116,10 +116,10 @@ Sonuçlar sayfasında özetini adrese gönderebilirsin; arka planda n8n webhook 
 ![Yönelim Kartı PNG İndir](assets/screenshots/orientation-card-png.png)
 
 ### Öğrenme Yolları (Hub)
-![Ogrenme Yollari Hub](assets/screenshots/roadmap-hub.png)
+![Öğrenme Yolları Hub](assets/screenshots/roadmap-hub.png)
 
 ### Öğrenme Yolu Detayı
-![Ogrenme Yolu Detayi](assets/screenshots/roadmap-track.png)
+![Öğrenme Yolu Detayı](assets/screenshots/roadmap-track.png)
 
 ## Kullanılan Teknolojiler
 
