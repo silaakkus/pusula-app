@@ -76,6 +76,12 @@ Kapsam ve teknik iş kalemleri `tasks.md` dosyasındaki **«V3 (Planlananlar)»*
 ### Ogrenme Yolu Detayi
 ![Ogrenme Yolu Detayi](assets/screenshots/roadmap-track.png)
 
+### Yönelim Sonuç Detayı
+![Yönelim Sonuç Detayı](assets/screenshots/orientation-result-detail.png)
+
+### Yönelim Kartı (PNG İndir)
+![Yönelim Kartı PNG İndir](assets/screenshots/orientation-card-png.png)
+
 ### Sonuc / Oneri
 ![Sonuc Ekrani](assets/screenshots/results.png)
 
