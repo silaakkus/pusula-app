@@ -70,6 +70,12 @@ Kapsam ve teknik iş kalemleri `tasks.md` dosyasındaki **«V3 (Planlananlar)»*
 ### Yonelim Testi
 ![Yonelim Testi](assets/screenshots/orientation-quiz.png)
 
+### Ogrenme Yollari (Hub)
+![Ogrenme Yollari Hub](assets/screenshots/roadmap-hub.png)
+
+### Ogrenme Yolu Detayi
+![Ogrenme Yolu Detayi](assets/screenshots/roadmap-track.png)
+
 ### Sonuc / Oneri
 ![Sonuc Ekrani](assets/screenshots/results.png)
 
